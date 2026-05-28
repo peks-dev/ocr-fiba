@@ -67,6 +67,17 @@ def main():
         help="Override results directory (e.g. --output-dir results-new)",
     )
     parser.add_argument(
+        "--run-layout",
+        action="store_true",
+        help="Guardar cada hoja en layout auditable runs/{run_id}/",
+    )
+    parser.add_argument(
+        "--runs-dir",
+        type=str,
+        default=None,
+        help="Directorio base para --run-layout (default: dataset/runs)",
+    )
+    parser.add_argument(
         "--grid-removal",
         choices=["inpaint", "handwriting"],
         default=None,
@@ -87,7 +98,12 @@ def main():
 
     sheets = args.only if args.only else [s for s in ALL_SHEETS if s not in args.skip]
 
+    if args.run_layout and args.output_dir:
+        print("Error: --output-dir no se puede combinar con --run-layout. Usa --runs-dir.", file=sys.stderr)
+        sys.exit(1)
+
     results_dir = Path(args.output_dir) if args.output_dir else RESULTS_DIR
+    runs_dir = Path(args.runs_dir) if args.runs_dir else DATASET_DIR / "runs"
 
     config = PipelineConfig(
         cropper_provider="openrouter",
@@ -112,16 +128,28 @@ def main():
             print(f"\n⚠ {sheet_id}: no se encontró imagen, saltando...", file=sys.stderr)
             continue
 
-        output_dir = results_dir / sheet_id
+        output_dir = None if args.run_layout else results_dir / sheet_id
         print(f"\n{'='*60}", file=sys.stderr)
         print(f"  {sheet_id}: {image_path.name}", file=sys.stderr)
-        print(f"  Output: {output_dir}", file=sys.stderr)
+        if args.run_layout:
+            print(f"  Runs dir: {runs_dir}", file=sys.stderr)
+        else:
+            print(f"  Output: {output_dir}", file=sys.stderr)
         print(f"{'='*60}", file=sys.stderr)
 
         try:
-            result = pipeline.process(image_path, output_dir=output_dir)
-            result_path = output_dir / "result.json"
-            pipeline.save_result(result, result_path)
+            result = pipeline.process(
+                image_path,
+                output_dir=output_dir,
+                runs_dir=runs_dir,
+                use_run_layout=args.run_layout,
+            )
+            if args.run_layout:
+                run_context = pipeline.last_context
+                result_path = run_context.result_path if run_context else None
+            else:
+                result_path = output_dir / "result.json"
+                pipeline.save_result(result, result_path)
 
             status = result.get("match_status", "unknown")
             warnings = len(result.get("validation_warnings", []))
@@ -130,6 +158,7 @@ def main():
                 "image": image_path.name,
                 "status": status,
                 "warnings": warnings,
+                "result_path": str(result_path) if result_path else None,
             })
             print(f"  ✓ {sheet_id}: {status} ({warnings} warnings)", file=sys.stderr)
 

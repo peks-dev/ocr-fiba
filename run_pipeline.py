@@ -59,6 +59,21 @@ def main():
         help="Directorio donde se guardarán los recortes y resultado",
     )
     parser.add_argument(
+        "--run-layout",
+        action="store_true",
+        help="Guardar la ejecución en layout auditable runs/{run_id}/",
+    )
+    parser.add_argument(
+        "--runs-dir",
+        default="runs",
+        help="Directorio base para --run-layout (default: runs)",
+    )
+    parser.add_argument(
+        "--run-id",
+        default=None,
+        help="Run ID opcional para --run-layout",
+    )
+    parser.add_argument(
         "--cropper",
         choices=["interfaze", "gemini", "glm", "docstrange", "qubrid", "openrouter"],
         default="gemini",
@@ -151,6 +166,12 @@ def main():
         output_dir = Path(args.output_dir)
         if not output_dir.is_absolute():
             output_dir = Path(__file__).resolve().parent / output_dir
+    if args.run_layout and output_dir is not None:
+        print("Error: --output-dir no se puede combinar con --run-layout. Usa --runs-dir.", file=sys.stderr)
+        sys.exit(1)
+    runs_dir = Path(args.runs_dir)
+    if not runs_dir.is_absolute():
+        runs_dir = Path(__file__).resolve().parent / runs_dir
 
     # Build config
     validation_plugins: list[str] | str | None = None
@@ -194,13 +215,24 @@ def main():
     # Run pipeline
     try:
         pipeline = FibaOcrPipeline(config)
-        result = pipeline.process(image_path, output_dir=output_dir)
+        result = pipeline.process(
+            image_path,
+            output_dir=output_dir,
+            run_id=args.run_id,
+            runs_dir=runs_dir,
+            use_run_layout=args.run_layout,
+        )
 
-        # Save result
-        if output_dir is None:
-            output_dir = Path("outputs") / f"{image_path.stem}-sections"
-        result_path = output_dir / "result.json"
-        pipeline.save_result(result, result_path)
+        if args.run_layout:
+            result_path = pipeline.last_context.result_path if pipeline.last_context else None
+            if result_path:
+                print(f"Resultado guardado en: {result_path}", file=sys.stderr)
+        else:
+            # Save result
+            if output_dir is None:
+                output_dir = Path("outputs") / f"{image_path.stem}-sections"
+            result_path = output_dir / "result.json"
+            pipeline.save_result(result, result_path)
 
         _output_success(result, args.json_output)
 

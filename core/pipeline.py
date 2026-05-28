@@ -20,8 +20,10 @@ from pathlib import Path
 from typing import Any
 
 from config.pipeline_config import PipelineConfig
+from core.artifacts import ArtifactStore
 from core.toolbox import OcrToolbox
 from core.tracing import RunTracer
+from core.types import RunContext
 from providers.base import TokenUsage
 
 
@@ -38,8 +40,17 @@ class FibaOcrPipeline:
         self.cropper = self.toolbox.cropper
         self.extractor = self.toolbox.extractor
         self.validation_engine = self.toolbox.validation_engine
+        self.last_context: RunContext | None = None
 
-    def process(self, image_path: Path, output_dir: Path | None = None) -> dict[str, Any]:
+    def process(
+        self,
+        image_path: Path,
+        output_dir: Path | None = None,
+        *,
+        run_id: str | None = None,
+        runs_dir: Path = Path("runs"),
+        use_run_layout: bool = False,
+    ) -> dict[str, Any]:
         """
         Run the full pipeline on a FIBA scoresheet image.
 
@@ -47,14 +58,27 @@ class FibaOcrPipeline:
             image_path: Path to a raw photo of a FIBA scoresheet.
                         The preprocessor will isolate the sheet automatically.
             output_dir: Directory for intermediate outputs. Defaults to outputs/<stem>-sections.
+            run_id: Optional run identifier for canonical run layout.
+            runs_dir: Base directory for canonical run layout.
+            use_run_layout: Store artifacts under runs/{run_id}/.
 
         Returns:
             Final extracted and validated JSON result.
         """
-        if output_dir is None:
+        if output_dir is None and not use_run_layout:
             output_dir = Path("outputs") / f"{image_path.stem}-sections"
-        context = self.toolbox.create_context(image_path, output_dir)
+        context = self.toolbox.create_context(
+            image_path,
+            output_dir,
+            run_id=run_id,
+            runs_dir=runs_dir,
+            use_run_layout=use_run_layout,
+        )
+        self.last_context = context
         tracer = RunTracer(context)
+        artifact_store = ArtifactStore(context) if context.layout == "run" else None
+        if artifact_store:
+            artifact_store.copy_input()
         self.total_usage = TokenUsage()
 
         print(f"\n=== FIBA OCR Pipeline (Model-Agnostic) ===", file=sys.stderr)
@@ -138,6 +162,8 @@ class FibaOcrPipeline:
         print(f"\nPipeline finalizado.", file=sys.stderr)
         print(f"Estado: {result.get('match_status')}", file=sys.stderr)
         print(f"Total tokens: {self.total_usage.total_tokens}", file=sys.stderr)
+        if artifact_store:
+            artifact_store.write_result(result)
         tracer.write()
 
         return result
