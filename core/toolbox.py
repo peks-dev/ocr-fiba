@@ -9,7 +9,7 @@ structured contract around them.
 from __future__ import annotations
 
 import time
-from collections.abc import Iterator
+from collections.abc import Callable, Iterator
 from contextlib import contextmanager
 from pathlib import Path
 from typing import Any
@@ -26,6 +26,8 @@ from core.types import Artifact, ProviderUsage, RunContext, StepTrace, ToolResul
 from providers import create_provider
 from providers.base import TokenUsage
 from validation import ValidationEngine
+
+ProgressCallback = Callable[[str, dict[str, Any]], None]
 
 
 class OcrToolbox:
@@ -350,6 +352,7 @@ class OcrToolbox:
         run_id: str | None = None,
         runs_dir: Path = Path("runs"),
         use_run_layout: bool = False,
+        progress_callback: ProgressCallback | None = None,
     ) -> ToolResult:
         context = self.create_context(
             image_path,
@@ -359,32 +362,46 @@ class OcrToolbox:
             use_run_layout=use_run_layout,
         )
         tracer = RunTracer(context)
-        artifact_store = ArtifactStore(context)
-        input_artifact = artifact_store.copy_input()
+        artifact_store = ArtifactStore(context) if context.layout == "run" else None
+        run_artifacts: list[Artifact] = []
+        if artifact_store:
+            run_artifacts.append(artifact_store.copy_input())
         total_usage = TokenUsage()
         started = time.monotonic()
 
+        _emit(progress_callback, "pipeline_start", context=context)
+        _emit(progress_callback, "step_start", step="preprocess_sheet", context=context)
         preprocess = self.preprocess_sheet(context, tracer=tracer)
+        _emit(progress_callback, "step_complete", step="preprocess_sheet", result=preprocess)
         processed_image = Path(preprocess.data["processed_image"])
 
+        _emit(progress_callback, "step_start", step="detect_sections", context=context)
         detection = self.detect_sections(context, processed_image, tracer=tracer)
+        _emit(progress_callback, "step_complete", step="detect_sections", result=detection)
         crop_usage = detection.usage
         if crop_usage:
             total_usage.add(_to_token_usage(crop_usage))
 
+        _emit(progress_callback, "step_start", step="crop_team_fouls", context=context)
         fouls = self.crop_team_fouls(context, tracer=tracer)
+        _emit(progress_callback, "step_complete", step="crop_team_fouls", result=fouls)
         fouls_usage = fouls.usage
         if fouls_usage:
             total_usage.add(_to_token_usage(fouls_usage))
 
-        self.enhance_sections(context, tracer=tracer)
+        _emit(progress_callback, "step_start", step="enhance_sections", context=context)
+        enhanced = self.enhance_sections(context, tracer=tracer)
+        _emit(progress_callback, "step_complete", step="enhance_sections", result=enhanced)
 
+        _emit(progress_callback, "step_start", step="extract_sections", context=context)
         extraction = self.extract_sections(context, tracer=tracer)
+        _emit(progress_callback, "step_complete", step="extract_sections", result=extraction)
         extract_usage = extraction.usage
         if extract_usage:
             total_usage.add(_to_token_usage(extract_usage))
 
         elapsed_ms = int((time.monotonic() - started) * 1000)
+        _emit(progress_callback, "step_start", step="build_final_output", context=context)
         built = self.build_final_output(
             context,
             extraction.data["extracted"],
@@ -392,15 +409,24 @@ class OcrToolbox:
             token_usage=total_usage,
             tracer=tracer,
         )
+        _emit(progress_callback, "step_complete", step="build_final_output", result=built)
+        _emit(progress_callback, "step_start", step="validate_result", context=context)
         validated = self.validate_result(context, built.data["result"], tracer=tracer)
-        result_artifact = artifact_store.write_result(validated.data["result"])
+        _emit(progress_callback, "step_complete", step="validate_result", result=validated)
+        result_artifact = artifact_store.write_result(validated.data["result"]) if artifact_store else None
+        if result_artifact:
+            run_artifacts.append(result_artifact)
         tracer.write()
-        trace_artifact = artifact_store.add_file(
-            context.trace_path,
-            name="trace.json",
-            kind="trace",
-            mime_type="application/json",
-        )
+        if artifact_store:
+            trace_artifact = artifact_store.add_file(
+                context.trace_path,
+                name="trace.json",
+                kind="trace",
+                mime_type="application/json",
+            )
+            run_artifacts.append(trace_artifact)
+
+        _emit(progress_callback, "pipeline_complete", context=context, total_usage=total_usage)
 
         return ToolResult(
             success=True,
@@ -411,8 +437,11 @@ class OcrToolbox:
                 "result": validated.data["result"],
                 "total_usage": total_usage,
                 "context": context,
+                "result_path": context.result_path,
+                "trace_path": context.trace_path,
+                "artifacts_dir": context.artifacts_dir,
             },
-            artifacts=[input_artifact, result_artifact, trace_artifact],
+            artifacts=run_artifacts,
             warnings=validated.warnings,
             usage=ProviderUsage.from_usage(
                 total_usage,
@@ -498,3 +527,12 @@ def _to_token_usage(usage: ProviderUsage) -> TokenUsage:
         completion_tokens=usage.completion_tokens,
         total_tokens=usage.total_tokens,
     )
+
+
+def _emit(
+    progress_callback: ProgressCallback | None,
+    event: str,
+    **payload: Any,
+) -> None:
+    if progress_callback:
+        progress_callback(event, payload)
