@@ -1,0 +1,110 @@
+{
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": ["string", "null"],
+      "description": "Nombre visible del equipo en la franja superior de esta sección. Transcribe literalmente lo escrito; usa null si la franja está vacía o ilegible."
+    },
+    "team_fouls_quarters": {
+      "type": "array",
+      "items": { "type": ["integer", "null"] }
+    },
+    "captain": {
+      "type": ["string", "null"],
+      "description": "Texto visible en la fila Entrenador/Cap de esta sección. Transcribe solo el nombre escrito en esa línea."
+    },
+    "players": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": ["string", "null"],
+            "description": "Nombre manuscrito visible en la celda amplia de nombre de esta misma fila. Transcribe literalmente; conserva ñ y tildes; no completes con nombres comunes."
+          },
+          "number": {
+            "type": ["string", "null"],
+            "description": "Dorsal visible en la columna de número del jugador de esta misma fila. Mantén ceros iniciales, por ejemplo 01. Usa null si la celda de número está vacía o cancelada con una raya horizontal larga."
+          },
+          "points": {
+            "type": "object",
+            "properties": {
+              "one_point": {
+                "type": "integer",
+                "description": "Valor visible en la columna de tiros de 1 punto de esta misma fila. Usa 0 si la celda está vacía."
+              },
+              "two_point": {
+                "type": "integer",
+                "description": "Valor visible en la columna de canastas de 2 puntos de esta misma fila. Usa 0 si la celda está vacía."
+              },
+              "tree_point": {
+                "type": "integer",
+                "description": "Valor visible en la columna de triples / 3 puntos de esta misma fila. Usa 0 si la celda está vacía."
+              }
+            },
+            "required": ["one_point", "two_point", "tree_point"],
+            "additionalProperties": false
+          },
+          "foul_cells": {
+            "type": "array",
+            "description": "Clasificación visual de las 5 casillas de faltas personales del jugador, de izquierda a derecha. Debe tener exactamente 5 valores.",
+            "minItems": 5,
+            "maxItems": 5,
+            "items": {
+              "type": "object",
+              "properties": {
+                "kind": {
+                  "type": "string",
+                  "enum": ["empty", "illegible", "P", "T", "U", "D", "C", "B", "AD"],
+                  "description": "Tipo base visible en la casilla. Usa empty para casilla vacía o cancelada con una raya horizontal larga, e illegible para marca presente no legible."
+                },
+                "free_throws": {
+                  "type": ["integer", "null"],
+                  "enum": [1, 2, 3, null],
+                  "description": "Dígito pequeño 1, 2 o 3 visible junto al tipo base en la misma casilla. Usa null si no hay dígito visible."
+                }
+              },
+              "required": ["kind", "free_throws"],
+              "additionalProperties": false
+            }
+          },
+          "fouls": {
+            "type": "array",
+            "description": "Lista derivada de foul_cells, conservando solo códigos de falta visibles y omitiendo empty/illegible.",
+            "items": {
+              "type": "string",
+              "enum": [
+                "P", "P1", "P2", "P3",
+                "T", "T1", "T2", "T3",
+                "U", "U1", "U2", "U3",
+                "D", "D1", "D2", "D3",
+                "C", "C1", "C2", "C3",
+                "B", "B1", "B2", "B3",
+                "AD", "AD1", "AD2", "AD3"
+              ]
+            }
+          },
+          "entry_mark": {
+            "type": "object",
+            "description": "Clasificación visual de la marca en la columna E / Entrada e Inicial.",
+            "properties": {
+              "state": {
+                "type": "string",
+                "enum": ["empty", "entered", "starter", "illegible"],
+                "description": "empty = sin marca o raya horizontal larga de cancelación; entered = X simple; starter = X dentro de círculo o rodeada; illegible = marca presente no clasificable."
+              }
+            },
+            "required": ["state"],
+            "additionalProperties": false
+          },
+          "entered": { "type": "boolean" },
+          "started": { "type": "boolean" }
+        },
+        "required": ["name", "number", "points", "foul_cells", "fouls", "entry_mark", "entered", "started"],
+        "additionalProperties": false
+      }
+    }
+  },
+  "required": ["name", "team_fouls_quarters", "captain", "players"],
+  "additionalProperties": false
+}

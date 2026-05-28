@@ -1,0 +1,35 @@
+{
+  "type": "object",
+  "properties": {
+    "team_a": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "period": { "type": ["integer", "null"], "minimum": 1 },
+          "player_number": { "type": ["string", "null"] },
+          "points": { "type": "integer" },
+          "running_score": { "type": ["integer", "null"] }
+        },
+        "required": ["period", "player_number", "points", "running_score"],
+        "additionalProperties": false
+      }
+    },
+    "team_b": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "period": { "type": ["integer", "null"], "minimum": 1 },
+          "player_number": { "type": ["string", "null"] },
+          "points": { "type": "integer" },
+          "running_score": { "type": ["integer", "null"] }
+        },
+        "required": ["period", "player_number", "points", "running_score"],
+        "additionalProperties": false
+      }
+    }
+  },
+  "required": ["team_a", "team_b"],
+  "additionalProperties": false
+}

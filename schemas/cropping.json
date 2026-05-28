@@ -1,0 +1,23 @@
+{
+  "type": "object",
+  "properties": {
+    "sections": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": { "type": "string", "enum": ["header", "team_a", "team_b", "progressive_score", "footer"] },
+          "x_min": { "type": "integer" },
+          "y_min": { "type": "integer" },
+          "x_max": { "type": "integer" },
+          "y_max": { "type": "integer" },
+          "confidence": { "type": ["number", "null"] }
+        },
+        "required": ["name", "x_min", "y_min", "x_max", "y_max", "confidence"],
+        "additionalProperties": false
+      }
+    }
+  },
+  "required": ["sections"],
+  "additionalProperties": false
+}

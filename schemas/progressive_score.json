@@ -1,0 +1,37 @@
+{
+  "type": "object",
+  "properties": {
+    "team_a": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "player_number": {
+            "type": ["string", "null"],
+            "description": "Dorsal manuscrito del jugador junto a la marca. Usa null si el dorsal no es legible."
+          },
+          "running_score": { "type": "integer" }
+        },
+        "required": ["player_number", "running_score"],
+        "additionalProperties": false
+      }
+    },
+    "team_b": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "player_number": {
+            "type": ["string", "null"],
+            "description": "Dorsal manuscrito del jugador junto a la marca. Usa null si el dorsal no es legible."
+          },
+          "running_score": { "type": "integer" }
+        },
+        "required": ["player_number", "running_score"],
+        "additionalProperties": false
+      }
+    }
+  },
+  "required": ["team_a", "team_b"],
+  "additionalProperties": false
+}

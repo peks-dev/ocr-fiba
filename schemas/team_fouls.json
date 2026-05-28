@@ -1,0 +1,34 @@
+{
+  "type": "object",
+  "properties": {
+    "periodos": {
+      "type": "array",
+      "description": "Evaluación de los 4 períodos del partido.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "cuarto": {
+            "type": "integer",
+            "description": "Número del período (1, 2, 3 o 4)"
+          },
+          "casillas": {
+            "type": "array",
+            "description": "Lectura visual de las 4 casillas de izquierda a derecha.",
+            "items": {
+              "type": "string",
+              "enum": ["X", "linea_clausura", "vacia"]
+            }
+          },
+          "total_faltas": {
+            "type": "integer",
+            "description": "Suma total de valores 'X' en el array de casillas."
+          }
+        },
+        "required": ["cuarto", "casillas", "total_faltas"],
+        "additionalProperties": false
+      }
+    }
+  },
+  "required": ["periodos"],
+  "additionalProperties": false
+}

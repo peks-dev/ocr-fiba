@@ -1,0 +1,35 @@
+{
+  "type": "object",
+  "properties": {
+    "league": {
+      "type": ["string", "null"],
+      "description": "Nombre de la liga u organización visible en el encabezado. Transcribe literalmente."
+    },
+    "tournament": {
+      "type": ["string", "null"],
+      "description": "Nombre del torneo o temporada visible. Lee el año completo tal como aparece, por ejemplo clausura 2025-26."
+    },
+    "date": {
+      "type": ["string", "null"],
+      "description": "Fecha visible en el campo Fecha. Conserva formato dd/mm/aaaa si aparece así."
+    },
+    "time": {
+      "type": ["string", "null"],
+      "description": "Hora visible en el campo Hora. Conserva formato hh:mm si aparece así."
+    },
+    "gender": {
+      "type": ["string", "null"],
+      "description": "Rama/género visible en el encabezado."
+    },
+    "first_judge": {
+      "type": ["string", "null"],
+      "description": "Primer juez/árbitro visible. Incluye inicial manuscrita si aparece antes del nombre; omite puntos."
+    },
+    "second_judge": {
+      "type": ["string", "null"],
+      "description": "Segundo juez/árbitro visible. Incluye inicial manuscrita si aparece antes del nombre; omite puntos."
+    }
+  },
+  "required": ["league", "tournament", "date", "time", "gender", "first_judge", "second_judge"],
+  "additionalProperties": false
+}
