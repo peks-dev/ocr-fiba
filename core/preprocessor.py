@@ -6,7 +6,7 @@ and applies contrast/sharpness enhancement. This step is critical for
 reliable OCR: without it, background clutter and perspective skew degrade
 extraction quality significantly.
 
-Migrated from scan_sheet.py into the pipeline as step 0.
+Migrated from the legacy standalone sheet scanner into pipeline step 0.
 """
 
 from __future__ import annotations
