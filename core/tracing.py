@@ -51,8 +51,13 @@ class RunTracer:
         return to_jsonable(
             {
                 "run_id": self.context.run_id,
+                "layout": self.context.layout,
                 "input": self.context.input_path,
+                "run_dir": self.context.run_dir,
                 "output_dir": self.context.output_dir,
+                "artifacts_dir": self.context.artifacts_dir,
+                "raw_dir": self.context.raw_dir,
+                "result_path": self.context.result_path,
                 "steps": self._steps,
             }
         )

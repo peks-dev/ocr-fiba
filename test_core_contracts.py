@@ -70,6 +70,43 @@ class CoreContractsTest(unittest.TestCase):
             self.assertEqual(artifact.name, "sample.json")
             self.assertEqual(store.to_list()[0]["kind"], "json")
 
+    def test_run_context_can_create_canonical_run_layout(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            context = RunContext.create_run(
+                Path("input.jpg"),
+                Path(tmp),
+                run_id="run_test",
+            )
+            context.ensure_dirs()
+
+            run_dir = Path(tmp) / "run_test"
+            self.assertEqual(context.layout, "run")
+            self.assertEqual(context.run_dir, run_dir)
+            self.assertEqual(context.input_dir, run_dir / "input")
+            self.assertEqual(context.artifacts_dir, run_dir / "artifacts")
+            self.assertEqual(context.raw_dir, run_dir / "raw")
+            self.assertEqual(context.trace_path, run_dir / "trace.json")
+            self.assertEqual(context.result_path, run_dir / "result.json")
+            self.assertTrue(context.input_dir.exists())
+            self.assertTrue(context.artifacts_dir.exists())
+            self.assertTrue(context.raw_dir.exists())
+
+    def test_artifact_store_copies_input_and_writes_result(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            source = Path(tmp) / "source.jpg"
+            source.write_bytes(b"image")
+            context = RunContext.create_run(source, Path(tmp) / "runs", run_id="run_test")
+            store = ArtifactStore(context)
+
+            input_artifact = store.copy_input()
+            result_artifact = store.write_result({"ok": True})
+
+            self.assertTrue((context.input_dir / "source.jpg").exists())
+            self.assertTrue(context.result_path.exists())
+            self.assertEqual(input_artifact.kind, "input")
+            self.assertEqual(result_artifact.kind, "result")
+            self.assertEqual(json.loads(context.result_path.read_text(encoding="utf-8")), {"ok": True})
+
 
 if __name__ == "__main__":
     unittest.main()

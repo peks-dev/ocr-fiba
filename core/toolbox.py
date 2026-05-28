@@ -15,6 +15,7 @@ from pathlib import Path
 from typing import Any
 
 from config.pipeline_config import PipelineConfig
+from core.artifacts import ArtifactStore
 from core.cropper import Cropper
 from core.enhancer import enhance_sections as enhance_section_images
 from core.extractor import Extractor
@@ -46,7 +47,11 @@ class OcrToolbox:
         output_dir: Path | None = None,
         *,
         run_id: str | None = None,
+        runs_dir: Path = Path("runs"),
+        use_run_layout: bool = False,
     ) -> RunContext:
+        if use_run_layout:
+            return RunContext.create_run(image_path, runs_dir, run_id=run_id)
         if output_dir is None:
             output_dir = Path("outputs") / f"{image_path.stem}-sections"
         return RunContext.create(image_path, output_dir, run_id=run_id)
@@ -343,9 +348,19 @@ class OcrToolbox:
         output_dir: Path | None = None,
         *,
         run_id: str | None = None,
+        runs_dir: Path = Path("runs"),
+        use_run_layout: bool = False,
     ) -> ToolResult:
-        context = self.create_context(image_path, output_dir, run_id=run_id)
+        context = self.create_context(
+            image_path,
+            output_dir,
+            run_id=run_id,
+            runs_dir=runs_dir,
+            use_run_layout=use_run_layout,
+        )
         tracer = RunTracer(context)
+        artifact_store = ArtifactStore(context)
+        input_artifact = artifact_store.copy_input()
         total_usage = TokenUsage()
         started = time.monotonic()
 
@@ -378,7 +393,14 @@ class OcrToolbox:
             tracer=tracer,
         )
         validated = self.validate_result(context, built.data["result"], tracer=tracer)
+        result_artifact = artifact_store.write_result(validated.data["result"])
         tracer.write()
+        trace_artifact = artifact_store.add_file(
+            context.trace_path,
+            name="trace.json",
+            kind="trace",
+            mime_type="application/json",
+        )
 
         return ToolResult(
             success=True,
@@ -390,6 +412,7 @@ class OcrToolbox:
                 "total_usage": total_usage,
                 "context": context,
             },
+            artifacts=[input_artifact, result_artifact, trace_artifact],
             warnings=validated.warnings,
             usage=ProviderUsage.from_usage(
                 total_usage,

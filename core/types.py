@@ -159,10 +159,14 @@ class RunContext:
 
     run_id: str
     input_path: Path
+    run_dir: Path
+    input_dir: Path
     output_dir: Path
     artifacts_dir: Path
     raw_dir: Path
     trace_path: Path
+    result_path: Path
+    layout: str = "legacy"
 
     @classmethod
     def create(
@@ -176,15 +180,45 @@ class RunContext:
         return cls(
             run_id=run_id,
             input_path=input_path,
+            run_dir=output_dir,
+            input_dir=output_dir / "input",
             output_dir=output_dir,
             artifacts_dir=output_dir,
             raw_dir=output_dir / "raw",
             trace_path=output_dir / "trace.json",
+            result_path=output_dir / "result.json",
+            layout="legacy",
+        )
+
+    @classmethod
+    def create_run(
+        cls,
+        input_path: Path,
+        runs_dir: Path = Path("runs"),
+        *,
+        run_id: str | None = None,
+    ) -> RunContext:
+        run_id = run_id or new_run_id()
+        run_dir = runs_dir / run_id
+        return cls(
+            run_id=run_id,
+            input_path=input_path,
+            run_dir=run_dir,
+            input_dir=run_dir / "input",
+            output_dir=run_dir / "artifacts",
+            artifacts_dir=run_dir / "artifacts",
+            raw_dir=run_dir / "raw",
+            trace_path=run_dir / "trace.json",
+            result_path=run_dir / "result.json",
+            layout="run",
         )
 
     def ensure_dirs(self) -> None:
+        self.run_dir.mkdir(parents=True, exist_ok=True)
+        self.input_dir.mkdir(parents=True, exist_ok=True)
         self.output_dir.mkdir(parents=True, exist_ok=True)
         self.artifacts_dir.mkdir(parents=True, exist_ok=True)
+        self.raw_dir.mkdir(parents=True, exist_ok=True)
 
     def artifact(self, name: str, *, kind: str = "file", mime_type: str | None = None) -> Artifact:
         return Artifact(name=name, path=self.artifacts_dir / name, kind=kind, mime_type=mime_type)
