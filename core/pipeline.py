@@ -25,6 +25,8 @@ from core.enhancer import enhance_sections
 from core.extractor import Extractor
 from core.output_builder import build_final_output
 from core.preprocessor import preprocess_sheet
+from core.tracing import RunTracer
+from core.types import Artifact, ProviderUsage, RunContext
 from providers.base import TokenUsage
 from providers import create_provider
 from validation import ValidationEngine
@@ -90,6 +92,8 @@ class FibaOcrPipeline:
         """
         if output_dir is None:
             output_dir = Path("outputs") / f"{image_path.stem}-sections"
+        context = RunContext.create(image_path, output_dir)
+        tracer = RunTracer(context)
 
         print(f"\n=== FIBA OCR Pipeline (Model-Agnostic) ===", file=sys.stderr)
         print(f"Imagen: {image_path.name}", file=sys.stderr)
@@ -103,21 +107,64 @@ class FibaOcrPipeline:
 
         # [0/7] Preprocess: isolate sheet from photo, correct perspective
         print("[0/7] Aislando hoja y corrigiendo perspectiva...", file=sys.stderr)
-        output_dir.mkdir(parents=True, exist_ok=True)
+        context.ensure_dirs()
         preprocessed_path = output_dir / f"{image_path.stem}-recortada.jpg"
-        try:
-            preprocess_sheet(image_path, preprocessed_path)
-            print(f"  Hoja aislada: {preprocessed_path.name}", file=sys.stderr)
-            processed_image = preprocessed_path
-        except ValueError as e:
-            print(f"  Preprocesamiento falló ({e}), usando imagen original", file=sys.stderr)
-            processed_image = image_path
+        with tracer.step("preprocess_sheet", input={"image_path": image_path}) as trace:
+            try:
+                preprocess_sheet(image_path, preprocessed_path)
+                print(f"  Hoja aislada: {preprocessed_path.name}", file=sys.stderr)
+                processed_image = preprocessed_path
+                trace.complete(
+                    output={"processed_image": processed_image},
+                    artifacts=[
+                        Artifact(
+                            name=preprocessed_path.name,
+                            path=preprocessed_path,
+                            kind="image",
+                            mime_type="image/jpeg",
+                        )
+                    ],
+                )
+            except ValueError as e:
+                print(f"  Preprocesamiento falló ({e}), usando imagen original", file=sys.stderr)
+                processed_image = image_path
+                trace.complete(
+                    output={"processed_image": processed_image},
+                    warnings=[
+                        {
+                            "type": "preprocess_fallback",
+                            "message": str(e),
+                            "fallback": "original_image",
+                        }
+                    ],
+                )
 
         # [1/7] Detect and crop main sections
         print("[1/7] Detectando y recortando secciones principales...", file=sys.stderr)
-        pixel_boxes, crop_meta = self.cropper.detect_and_crop_sections(
-            processed_image, output_dir
-        )
+        with tracer.step("detect_sections", input={"image_path": processed_image}) as trace:
+            pixel_boxes, crop_meta = self.cropper.detect_and_crop_sections(
+                processed_image, output_dir
+            )
+            trace.complete(
+                output={"sections": [box.name for box in pixel_boxes]},
+                artifacts=[
+                    Artifact(name="boxes.json", path=output_dir / "boxes.json", kind="json"),
+                    *[
+                        Artifact(
+                            name=f"{box.name}.png",
+                            path=output_dir / f"{box.name}.png",
+                            kind="image",
+                            mime_type="image/png",
+                        )
+                        for box in pixel_boxes
+                    ],
+                ],
+                usage=ProviderUsage.from_usage(
+                    crop_meta.usage,
+                    provider=crop_meta.detector,
+                    model=crop_meta.model,
+                ),
+            )
         self.total_usage.add(TokenUsage(
             prompt_tokens=crop_meta.usage.get("prompt_tokens", 0) or 0,
             completion_tokens=crop_meta.usage.get("completion_tokens", 0) or 0,
@@ -128,7 +175,28 @@ class FibaOcrPipeline:
 
         # [2/7] Sub-crop team fouls
         print("[2/7] Recortando faltas de equipo...", file=sys.stderr)
-        fouls_boxes, fouls_meta = self.cropper.detect_and_crop_team_fouls(output_dir)
+        with tracer.step("crop_team_fouls", input={"sections_dir": output_dir}) as trace:
+            fouls_boxes, fouls_meta = self.cropper.detect_and_crop_team_fouls(output_dir)
+            trace.complete(
+                output={"sections": [box.name for box in fouls_boxes]},
+                artifacts=[
+                    Artifact(name="fouls_boxes.json", path=output_dir / "fouls_boxes.json", kind="json"),
+                    *[
+                        Artifact(
+                            name=f"{box.name}.png",
+                            path=output_dir / f"{box.name}.png",
+                            kind="image",
+                            mime_type="image/png",
+                        )
+                        for box in fouls_boxes
+                    ],
+                ],
+                usage=ProviderUsage.from_usage(
+                    fouls_meta.usage,
+                    provider=fouls_meta.detector,
+                    model=fouls_meta.model,
+                ),
+            )
         self.total_usage.add(TokenUsage(
             prompt_tokens=fouls_meta.usage.get("prompt_tokens", 0) or 0,
             completion_tokens=fouls_meta.usage.get("completion_tokens", 0) or 0,
@@ -147,35 +215,74 @@ class FibaOcrPipeline:
         }[grid_mode]
         gamma_label = f" γ={self.config.gamma}" if self.config.gamma and self.config.gamma != 1.0 else ""
         print(f"[3/7] Mejorando imágenes{grid_label}{gamma_label}...", file=sys.stderr)
-        enhanced = enhance_sections(
-            output_dir,
-            grid_removal=self.config.grid_removal,
-            gamma=self.config.gamma,
-        )
+        with tracer.step(
+            "enhance_sections",
+            input={
+                "sections_dir": output_dir,
+                "grid_removal": self.config.grid_removal,
+                "gamma": self.config.gamma,
+            },
+        ) as trace:
+            enhanced = enhance_sections(
+                output_dir,
+                grid_removal=self.config.grid_removal,
+                gamma=self.config.gamma,
+            )
+            trace.complete(
+                output={"enhanced": enhanced},
+                artifacts=[
+                    Artifact(
+                        name=name,
+                        path=output_dir / name,
+                        kind="image",
+                        mime_type="image/png",
+                    )
+                    for name in enhanced
+                ],
+            )
         for name in enhanced:
             print(f"  - {name}", file=sys.stderr)
 
         # [4/7] Extract data from all sections
         print("[4/7] Extrayendo datos...", file=sys.stderr)
-        extracted, extract_usage = self.extractor.extract_all_sections(
-            output_dir,
-            max_workers=self.config.extractor_max_workers,
-        )
+        with tracer.step("extract_sections", input={"sections_dir": output_dir}) as trace:
+            extracted, extract_usage = self.extractor.extract_all_sections(
+                output_dir,
+                max_workers=self.config.extractor_max_workers,
+            )
+            trace.complete(
+                output={"sections": [key for key in extracted.keys() if key != "_meta"]},
+                usage=ProviderUsage.from_usage(
+                    extract_usage,
+                    provider=self.config.extractor_provider,
+                    model=self.config.extractor_model,
+                ),
+            )
         self.total_usage.add(extract_usage)
 
         # [5/7] Build normalized output
         print("[5/7] Construyendo resultado final...", file=sys.stderr)
         elapsed_ms = int((time.monotonic() - started) * 1000)
-        result = build_final_output(
-            extracted,
-            processing_time_ms=elapsed_ms,
-            model=self.config.extractor_model,
-            token_usage={
-                "prompt_tokens": self.total_usage.prompt_tokens,
-                "completion_tokens": self.total_usage.completion_tokens,
-                "total_tokens": self.total_usage.total_tokens,
-            },
-        )
+        with tracer.step("build_final_output") as trace:
+            result = build_final_output(
+                extracted,
+                processing_time_ms=elapsed_ms,
+                model=self.config.extractor_model,
+                token_usage={
+                    "prompt_tokens": self.total_usage.prompt_tokens,
+                    "completion_tokens": self.total_usage.completion_tokens,
+                    "total_tokens": self.total_usage.total_tokens,
+                },
+            )
+            trace.complete(
+                output={
+                    "has_header": bool(result.get("header")),
+                    "has_team_a": bool(result.get("team_a")),
+                    "has_team_b": bool(result.get("team_b")),
+                    "has_progressive_score": bool(result.get("progressive_score")),
+                    "has_footer": bool(result.get("footer")),
+                }
+            )
 
         # Add cropper info to meta
         result["meta"]["cropper"] = f"{self.config.cropper_provider}:{self.config.cropper_model}"
@@ -184,11 +291,23 @@ class FibaOcrPipeline:
         # [6/7] Validate
         print("[6/7] Ejecutando validación...", file=sys.stderr)
         print(f"  Plugins activos: {self.validation_engine.active_plugins}", file=sys.stderr)
-        result = self.validation_engine.validate(result)
+        with tracer.step(
+            "validate_result",
+            input={"plugins": self.validation_engine.active_plugins},
+        ) as trace:
+            result = self.validation_engine.validate(result)
+            trace.complete(
+                output={
+                    "match_status": result.get("match_status"),
+                    "warnings": len(result.get("validation_warnings", [])),
+                },
+                warnings=result.get("validation_warnings", []),
+            )
 
         print(f"\nPipeline finalizado.", file=sys.stderr)
         print(f"Estado: {result.get('match_status')}", file=sys.stderr)
         print(f"Total tokens: {self.total_usage.total_tokens}", file=sys.stderr)
+        tracer.write()
 
         return result
 
