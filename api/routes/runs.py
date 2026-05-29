@@ -3,8 +3,10 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
-from fastapi import APIRouter, HTTPException, Query
+from fastapi import APIRouter, Query
 from fastapi.responses import FileResponse
+
+from api.errors import error_response
 
 router = APIRouter(prefix="/v1/runs", tags=["runs"])
 
@@ -16,7 +18,7 @@ def get_run(
 ) -> dict:
     run_dir = _resolve_run_dir(runs_dir, run_id)
     if not run_dir.exists():
-        raise HTTPException(status_code=404, detail="Run not found")
+        raise error_response(404, "RUN_NOT_FOUND", "Run not found")
 
     return {
         "run_id": run_id,
@@ -56,27 +58,27 @@ def get_run_artifact(
     artifacts_dir = (_resolve_run_dir(runs_dir, run_id) / "artifacts").resolve()
     artifact_path = (artifacts_dir / name).resolve()
     if not _is_relative_to(artifact_path, artifacts_dir):
-        raise HTTPException(status_code=400, detail="Invalid artifact path")
+        raise error_response(400, "INVALID_ARTIFACT_PATH", "Invalid artifact path")
     if not artifact_path.exists() or not artifact_path.is_file():
-        raise HTTPException(status_code=404, detail="Artifact not found")
+        raise error_response(404, "ARTIFACT_NOT_FOUND", "Artifact not found")
     return FileResponse(artifact_path)
 
 
 def _resolve_run_dir(runs_dir: str, run_id: str) -> Path:
     if "/" in run_id or "\\" in run_id or run_id in {"", ".", ".."}:
-        raise HTTPException(status_code=400, detail="Invalid run_id")
+        raise error_response(400, "INVALID_RUN_ID", "Invalid run_id")
     return Path(runs_dir) / run_id
 
 
 def _read_json(path: Path, not_found_message: str) -> dict:
     if not path.exists() or not path.is_file():
-        raise HTTPException(status_code=404, detail=not_found_message)
+        raise error_response(404, "RUN_FILE_NOT_FOUND", not_found_message)
     try:
         data = json.loads(path.read_text(encoding="utf-8"))
     except json.JSONDecodeError as exc:
-        raise HTTPException(status_code=500, detail=f"Invalid JSON file: {path.name}") from exc
+        raise error_response(500, "INVALID_RUN_JSON", f"Invalid JSON file: {path.name}") from exc
     if not isinstance(data, dict):
-        raise HTTPException(status_code=500, detail=f"Expected JSON object: {path.name}")
+        raise error_response(500, "INVALID_RUN_JSON", f"Expected JSON object: {path.name}")
     return data
 
 
