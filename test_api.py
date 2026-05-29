@@ -29,6 +29,19 @@ class ApiTest(unittest.TestCase):
         routes = {getattr(route, "path", "") for route in app.routes}
         self.assertIn("/health", routes)
 
+    def test_unexpected_errors_return_standard_json(self) -> None:
+        app = create_app()
+        handler = app.exception_handlers[Exception]
+
+        response = run_async(handler(None, RuntimeError("secret internal detail")))
+        payload = json.loads(response.body.decode("utf-8"))
+
+        self.assertEqual(response.status_code, 500)
+        self.assertEqual(payload["success"], False)
+        self.assertEqual(payload["error"]["code"], "INTERNAL_SERVER_ERROR")
+        self.assertEqual(payload["error"]["message"], "Internal server error")
+        self.assertNotIn("secret internal detail", json.dumps(payload))
+
     def test_get_run_files(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             run_dir = Path(tmp) / "run_test"
