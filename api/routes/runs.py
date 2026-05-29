@@ -42,17 +42,12 @@ def get_run(
     if not run_dir.exists():
         raise error_response(404, "RUN_NOT_FOUND", "Run not found")
 
-    return {
-        "run_id": run_id,
-        "run_dir": str(run_dir),
-        "input_dir": str(run_dir / "input"),
-        "artifacts_dir": str(run_dir / "artifacts"),
-        "raw_dir": str(run_dir / "raw"),
-        "trace_path": str(run_dir / "trace.json"),
-        "result_path": str(run_dir / "result.json"),
-        "has_trace": (run_dir / "trace.json").exists(),
-        "has_result": (run_dir / "result.json").exists(),
-    }
+    detail = _run_summary(run_dir)
+    artifacts_dir = (run_dir / "artifacts").resolve()
+    artifacts = _list_artifact_files(artifacts_dir, limit=500) if artifacts_dir.is_dir() else []
+    detail["artifacts_count"] = len(artifacts)
+    detail["artifacts"] = artifacts[:20]
+    return detail
 
 
 @router.get("/{run_id}/trace")

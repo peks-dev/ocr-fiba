@@ -51,6 +51,10 @@ class ApiTest(unittest.TestCase):
             artifact_response = get_run_artifact("run_test", "header.png", runs_dir=tmp)
 
             self.assertTrue(run_response["has_trace"])
+            self.assertTrue(run_response["has_result"])
+            self.assertEqual(run_response["match_status"], "success")
+            self.assertEqual(run_response["artifacts_count"], 1)
+            self.assertEqual(run_response["artifacts"][0]["name"], "header.png")
             self.assertEqual(trace_response["run_id"], "run_test")
             self.assertEqual(result_response["match_status"], "success")
             self.assertEqual(artifacts_response["count"], 1)
