@@ -11,7 +11,14 @@ from fastapi.responses import FileResponse
 
 from api.main import create_app
 from api.routes.pipeline import _parse_options_json, upload_and_run_full_pipeline
-from api.routes.runs import list_runs, get_run, get_run_artifact, get_run_result, get_run_trace
+from api.routes.runs import (
+    list_runs,
+    get_run,
+    get_run_artifact,
+    get_run_result,
+    get_run_trace,
+    list_run_artifacts,
+)
 from core.types import Artifact, RunContext, ToolResult
 
 
@@ -40,13 +47,41 @@ class ApiTest(unittest.TestCase):
             run_response = get_run("run_test", runs_dir=tmp)
             trace_response = get_run_trace("run_test", runs_dir=tmp)
             result_response = get_run_result("run_test", runs_dir=tmp)
+            artifacts_response = list_run_artifacts("run_test", runs_dir=tmp)
             artifact_response = get_run_artifact("run_test", "header.png", runs_dir=tmp)
 
             self.assertTrue(run_response["has_trace"])
             self.assertEqual(trace_response["run_id"], "run_test")
             self.assertEqual(result_response["match_status"], "success")
+            self.assertEqual(artifacts_response["count"], 1)
+            self.assertEqual(artifacts_response["artifacts"][0]["name"], "header.png")
+            self.assertEqual(artifacts_response["artifacts"][0]["size_bytes"], 5)
             self.assertIsInstance(artifact_response, FileResponse)
             self.assertEqual(Path(artifact_response.path).read_bytes(), b"image")
+
+    def test_list_run_artifacts_returns_nested_files(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            artifacts_dir = Path(tmp) / "run_test" / "artifacts"
+            nested_dir = artifacts_dir / "crops"
+            nested_dir.mkdir(parents=True)
+            (artifacts_dir / "header.png").write_bytes(b"image")
+            (nested_dir / "team.png").write_bytes(b"team")
+
+            response = list_run_artifacts("run_test", runs_dir=tmp)
+
+            self.assertEqual(response["count"], 2)
+            self.assertEqual(
+                [artifact["name"] for artifact in response["artifacts"]],
+                ["crops/team.png", "header.png"],
+            )
+
+    def test_list_run_artifacts_missing_run_returns_404(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            with self.assertRaises(HTTPException) as exc:
+                list_run_artifacts("missing", runs_dir=tmp)
+
+            self.assertEqual(exc.exception.status_code, 404)
+            self.assertEqual(exc.exception.detail["error"]["code"], "RUN_NOT_FOUND")
 
     def test_list_runs_returns_run_summaries(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:

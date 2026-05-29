@@ -71,6 +71,36 @@ def get_run_result(
     return _read_json(_resolve_run_dir(runs_dir, run_id) / "result.json", "Result not found")
 
 
+@router.get("/{run_id}/artifacts")
+def list_run_artifacts(
+    run_id: str,
+    runs_dir: Annotated[str, Query()] = "runs",
+    limit: Annotated[int, Query(ge=1, le=500)] = 200,
+) -> dict:
+    run_dir = _resolve_run_dir(runs_dir, run_id)
+    if not run_dir.exists():
+        raise error_response(404, "RUN_NOT_FOUND", "Run not found")
+
+    artifacts_dir = (run_dir / "artifacts").resolve()
+    if not artifacts_dir.exists():
+        return {
+            "run_id": run_id,
+            "artifacts_dir": str(artifacts_dir),
+            "count": 0,
+            "artifacts": [],
+        }
+    if not artifacts_dir.is_dir():
+        raise error_response(500, "INVALID_ARTIFACTS_DIR", "artifacts is not a directory")
+
+    artifacts = _list_artifact_files(artifacts_dir, limit)
+    return {
+        "run_id": run_id,
+        "artifacts_dir": str(artifacts_dir),
+        "count": len(artifacts),
+        "artifacts": artifacts,
+    }
+
+
 @router.get("/{run_id}/artifacts/{name:path}", response_class=FileResponse)
 def get_run_artifact(
     run_id: str,
@@ -139,6 +169,28 @@ def _list_input_files(input_dir: Path) -> list[str]:
     if not input_dir.exists() or not input_dir.is_dir():
         return []
     return sorted(path.name for path in input_dir.iterdir() if path.is_file())
+
+
+def _list_artifact_files(artifacts_dir: Path, limit: int) -> list[dict]:
+    artifacts = []
+    for path in sorted(artifacts_dir.rglob("*")):
+        if len(artifacts) >= limit:
+            break
+        if not path.is_file():
+            continue
+        resolved_path = path.resolve()
+        if not _is_relative_to(resolved_path, artifacts_dir):
+            continue
+        relative_name = resolved_path.relative_to(artifacts_dir).as_posix()
+        artifacts.append(
+            {
+                "name": relative_name,
+                "path": str(resolved_path),
+                "size_bytes": resolved_path.stat().st_size,
+                "modified_at": resolved_path.stat().st_mtime,
+            }
+        )
+    return artifacts
 
 
 def _is_relative_to(path: Path, parent: Path) -> bool:
