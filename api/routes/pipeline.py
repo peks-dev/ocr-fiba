@@ -44,18 +44,18 @@ async def upload_and_run_full_pipeline(
     options_json: Annotated[str | None, Form()] = None,
 ) -> dict:
     options = _parse_options_json(options_json)
-    toolbox = OcrToolbox(_build_config(options))
     filename = _safe_upload_filename(file.filename)
-    context = toolbox.create_context(
-        Path(filename),
-        run_id=run_id,
-        runs_dir=Path(runs_dir),
-        use_run_layout=True,
-    )
-    context.ensure_dirs()
-    input_path = context.input_dir / filename
 
     try:
+        toolbox = OcrToolbox(_build_config(options))
+        context = toolbox.create_context(
+            Path(filename),
+            run_id=run_id,
+            runs_dir=Path(runs_dir),
+            use_run_layout=True,
+        )
+        context.ensure_dirs()
+        input_path = context.input_dir / filename
         content = await file.read()
         if not content:
             raise error_response(400, "EMPTY_UPLOAD", "Uploaded file is empty")

@@ -1,11 +1,16 @@
 from __future__ import annotations
 
+from pathlib import Path
+
 from fastapi import FastAPI
 
 from api.routes import pipeline, runs
+from helpers.image_utils import load_dotenv
 
 
 def create_app() -> FastAPI:
+    load_dotenv(Path(__file__).resolve().parents[1] / ".env")
+
     app = FastAPI(
         title="FIBA OCR Engine API",
         version="0.1.0",

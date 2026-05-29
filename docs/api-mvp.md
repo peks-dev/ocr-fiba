@@ -20,6 +20,29 @@ http://127.0.0.1:8000
 curl http://127.0.0.1:8000/health
 ```
 
+## Smoke test
+
+Con el servidor levantado, se puede validar el flujo principal de la API:
+
+```bash
+python scripts/smoke_api.py
+```
+
+Por default usa el stack configurado del MVP: cropper `openrouter` con `google/gemini-3-flash-preview` y extractor `docstrange` con `nanonets-ocr-3`. Tambien busca la primera imagen disponible en `dataset/sheet-*`, o se puede pasar una imagen explicita:
+
+```bash
+python scripts/smoke_api.py --image dataset/sheet-001/hoja.jpg
+```
+
+Opciones utiles:
+
+```bash
+python scripts/smoke_api.py \
+  --base-url http://127.0.0.1:8000 \
+  --runs-dir runs \
+  --cleanup
+```
+
 ## Ejecutar pipeline con upload
 
 ```bash
@@ -166,4 +189,3 @@ El nombre del artefacto debe ser relativo al directorio `artifacts` del run.
 | `INVALID_ARTIFACT_PATH` | El path del artefacto intenta salir de `artifacts`. |
 | `ARTIFACT_NOT_FOUND` | El artefacto no existe o no es archivo. |
 | `INVALID_OPTIONS_JSON` | `options_json` no es JSON valido. |
-

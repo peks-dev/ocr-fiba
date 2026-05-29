@@ -28,8 +28,8 @@ class PipelineConfig:
     """
 
     # === Cropping Phase ===
-    cropper_provider: ProviderType = "gemini"
-    cropper_model: str = "gemini-3-flash-preview"
+    cropper_provider: ProviderType = "openrouter"
+    cropper_model: str = "google/gemini-3-flash-preview"
 
     # === Extraction Phase ===
     extractor_provider: ProviderType = "docstrange"

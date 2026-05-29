@@ -16,8 +16,8 @@ class SectionOverrideRequest(BaseModel):
 
 
 class PipelineOptions(BaseModel):
-    cropper_provider: ProviderName = "gemini"
-    cropper_model: str = "gemini-3-flash-preview"
+    cropper_provider: ProviderName = "openrouter"
+    cropper_model: str = "google/gemini-3-flash-preview"
     extractor_provider: ProviderName = "docstrange"
     extractor_model: str = "nanonets-ocr-3"
     extractor_reasoning: dict[str, Any] | None = None

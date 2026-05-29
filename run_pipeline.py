@@ -76,13 +76,13 @@ def main():
     parser.add_argument(
         "--cropper",
         choices=["interfaze", "gemini", "glm", "docstrange", "qubrid", "openrouter"],
-        default="gemini",
-        help="Proveedor para detección de secciones (default: gemini)",
+        default="openrouter",
+        help="Proveedor para detección de secciones (default: openrouter)",
     )
     parser.add_argument(
         "--cropper-model",
-        default="gemini-3-flash-preview",
-        help="Modelo del cropper (default: gemini-3-flash-preview)",
+        default="google/gemini-3-flash-preview",
+        help="Modelo del cropper (default: google/gemini-3-flash-preview)",
     )
     parser.add_argument(
         "--extractor",
