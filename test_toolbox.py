@@ -66,6 +66,8 @@ class ToolboxTest(unittest.TestCase):
 
             payload = json.loads(context.trace_path.read_text(encoding="utf-8"))
             self.assertEqual(payload["run_id"], "run_test")
+            self.assertEqual(payload["status"], "completed")
+            self.assertIn("total_usage", payload)
             self.assertEqual(payload["steps"][-1]["step"], "validate_result")
 
     def test_run_full_pipeline_is_single_orchestrator(self) -> None:
@@ -155,6 +157,10 @@ class ToolboxTest(unittest.TestCase):
             self.assertEqual(result.data["total_usage"].total_tokens, 10)
             self.assertTrue(result.data["result_path"].exists())
             self.assertTrue(result.data["trace_path"].exists())
+            trace_payload = json.loads(result.data["trace_path"].read_text(encoding="utf-8"))
+            self.assertEqual(trace_payload["result_summary"]["match_status"], "success")
+            self.assertEqual(trace_payload["result_summary"]["total_tokens"], 10)
+            self.assertEqual([artifact["kind"] for artifact in trace_payload["run_artifacts"]], ["input", "result"])
             self.assertIn(("step_start", "preprocess_sheet"), events)
             self.assertIn(("step_complete", "validate_result"), events)
             self.assertEqual([artifact.kind for artifact in result.artifacts], ["input", "result", "trace"])

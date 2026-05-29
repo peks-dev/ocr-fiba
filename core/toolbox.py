@@ -416,6 +416,15 @@ class OcrToolbox:
         result_artifact = artifact_store.write_result(validated.data["result"]) if artifact_store else None
         if result_artifact:
             run_artifacts.append(result_artifact)
+        tracer.set_result_summary(
+            {
+                "match_status": validated.data["result"].get("match_status"),
+                "validation_warnings": len(validated.data["result"].get("validation_warnings", [])),
+                "total_tokens": validated.data["result"].get("meta", {}).get("total_tokens", 0),
+                "result_path": context.result_path,
+            }
+        )
+        tracer.set_run_artifacts(run_artifacts)
         tracer.write()
         if artifact_store:
             trace_artifact = artifact_store.add_file(

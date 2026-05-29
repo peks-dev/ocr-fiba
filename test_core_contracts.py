@@ -7,7 +7,7 @@ from pathlib import Path
 
 from core.artifacts import ArtifactStore
 from core.tracing import RunTracer
-from core.types import ProviderUsage, RunContext, ToolResult
+from core.types import Artifact, ProviderUsage, RunContext, ToolResult
 
 
 class CoreContractsTest(unittest.TestCase):
@@ -46,12 +46,24 @@ class CoreContractsTest(unittest.TestCase):
             tracer = RunTracer(context)
 
             with tracer.step("preprocess_sheet") as step:
-                step.complete(output={"processed_image": "input.jpg"})
+                step.complete(
+                    output={"processed_image": "input.jpg"},
+                    artifacts=[Artifact(name="input.jpg", path=Path("input.jpg"))],
+                    usage=ProviderUsage(provider="docstrange", model="nanonets-ocr-3", total_tokens=123),
+                )
+            tracer.set_result_summary({"match_status": "success"})
 
             tracer.write()
 
             payload = json.loads(context.trace_path.read_text(encoding="utf-8"))
             self.assertEqual(payload["run_id"], "run_test")
+            self.assertEqual(payload["status"], "completed")
+            self.assertEqual(payload["step_count"], 1)
+            self.assertEqual(payload["artifact_count"], 1)
+            self.assertEqual(payload["total_usage"]["total_tokens"], 123)
+            self.assertEqual(payload["result_summary"]["match_status"], "success")
+            self.assertIsNotNone(payload["started_at_iso"])
+            self.assertIsNotNone(payload["completed_at_iso"])
             self.assertEqual(payload["steps"][0]["step"], "preprocess_sheet")
             self.assertEqual(payload["steps"][0]["status"], "completed")
 
