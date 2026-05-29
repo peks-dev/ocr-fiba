@@ -11,7 +11,7 @@ from fastapi.responses import FileResponse
 
 from api.main import create_app
 from api.routes.pipeline import _parse_options_json, upload_and_run_full_pipeline
-from api.routes.runs import get_run, get_run_artifact, get_run_result, get_run_trace
+from api.routes.runs import list_runs, get_run, get_run_artifact, get_run_result, get_run_trace
 from core.types import Artifact, RunContext, ToolResult
 
 
@@ -47,6 +47,37 @@ class ApiTest(unittest.TestCase):
             self.assertEqual(result_response["match_status"], "success")
             self.assertIsInstance(artifact_response, FileResponse)
             self.assertEqual(Path(artifact_response.path).read_bytes(), b"image")
+
+    def test_list_runs_returns_run_summaries(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            run_dir = Path(tmp) / "run_test"
+            input_dir = run_dir / "input"
+            input_dir.mkdir(parents=True)
+            (input_dir / "sheet.jpg").write_bytes(b"image")
+            (run_dir / "trace.json").write_text(
+                json.dumps({"run_id": "run_test", "steps": []}),
+                encoding="utf-8",
+            )
+            (run_dir / "result.json").write_text(
+                json.dumps({"match_status": "success"}),
+                encoding="utf-8",
+            )
+
+            response = list_runs(runs_dir=tmp)
+
+            self.assertEqual(response["count"], 1)
+            self.assertEqual(response["runs"][0]["run_id"], "run_test")
+            self.assertTrue(response["runs"][0]["has_trace"])
+            self.assertTrue(response["runs"][0]["has_result"])
+            self.assertEqual(response["runs"][0]["match_status"], "success")
+            self.assertEqual(response["runs"][0]["input_files"], ["sheet.jpg"])
+
+    def test_list_runs_missing_directory_returns_empty(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            response = list_runs(runs_dir=str(Path(tmp) / "missing"))
+
+            self.assertEqual(response["count"], 0)
+            self.assertEqual(response["runs"], [])
 
     def test_artifact_path_rejects_traversal(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
