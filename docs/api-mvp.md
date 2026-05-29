@@ -179,6 +179,22 @@ curl -o team.png \
 
 El nombre del artefacto debe ser relativo al directorio `artifacts` del run.
 
+## Borrar run
+
+```bash
+curl -X DELETE "http://127.0.0.1:8000/v1/runs/run_demo?runs_dir=runs"
+```
+
+Respuesta:
+
+```json
+{
+  "success": true,
+  "run_id": "run_demo",
+  "deleted": true
+}
+```
+
 ## Codigos de error comunes
 
 | Codigo | Caso |
@@ -186,6 +202,7 @@ El nombre del artefacto debe ser relativo al directorio `artifacts` del run.
 | `RUN_NOT_FOUND` | El run solicitado no existe. |
 | `RUN_FILE_NOT_FOUND` | No existe `trace.json` o `result.json`. |
 | `INVALID_RUN_ID` | El `run_id` contiene separadores o valores no permitidos. |
+| `INVALID_RUN_DIR` | El path del run no es un directorio. |
 | `INVALID_ARTIFACT_PATH` | El path del artefacto intenta salir de `artifacts`. |
 | `ARTIFACT_NOT_FOUND` | El artefacto no existe o no es archivo. |
 | `INVALID_OPTIONS_JSON` | `options_json` no es JSON valido. |

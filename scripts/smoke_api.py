@@ -105,7 +105,7 @@ def main() -> int:
         return 1
     finally:
         if args.cleanup:
-            cleanup_run(args.runs_dir, run_id)
+            cleanup_run(session, base_url, runs_dir=args.runs_dir, run_id=run_id, timeout=args.timeout)
 
 
 def parse_args() -> argparse.Namespace:
@@ -214,7 +214,27 @@ def download_artifact(
     require(len(response.content) > 0, f"Artifact download is empty: {artifact_name}")
 
 
-def cleanup_run(runs_dir: str, run_id: str) -> None:
+def cleanup_run(
+    session: requests.Session,
+    base_url: str,
+    *,
+    runs_dir: str,
+    run_id: str,
+    timeout: float,
+) -> None:
+    try:
+        response = session.delete(
+            f"{base_url}/v1/runs/{run_id}",
+            params={"runs_dir": runs_dir},
+            timeout=timeout,
+        )
+        if response.status_code in {200, 404}:
+            print(f"cleanup: API returned HTTP {response.status_code} for {run_id}")
+            return
+        print(f"cleanup: API returned HTTP {response.status_code}; falling back to local delete", file=sys.stderr)
+    except requests.RequestException as exc:
+        print(f"cleanup: API request failed ({exc}); falling back to local delete", file=sys.stderr)
+
     run_dir = Path(runs_dir).expanduser() / run_id
     if not run_dir.is_absolute():
         run_dir = PROJECT_ROOT / run_dir

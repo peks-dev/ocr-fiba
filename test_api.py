@@ -13,6 +13,7 @@ from api.main import create_app
 from api.routes.pipeline import _parse_options_json, upload_and_run_full_pipeline
 from api.routes.runs import (
     list_runs,
+    delete_run,
     get_run,
     get_run_artifact,
     get_run_result,
@@ -99,6 +100,27 @@ class ApiTest(unittest.TestCase):
 
             self.assertEqual(exc.exception.status_code, 404)
             self.assertEqual(exc.exception.detail["error"]["code"], "RUN_NOT_FOUND")
+
+    def test_delete_run_removes_run_directory(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            run_dir = Path(tmp) / "run_test"
+            (run_dir / "artifacts").mkdir(parents=True)
+            (run_dir / "artifacts" / "header.png").write_bytes(b"image")
+
+            response = delete_run("run_test", runs_dir=tmp)
+
+            self.assertTrue(response["success"])
+            self.assertTrue(response["deleted"])
+            self.assertEqual(response["run_id"], "run_test")
+            self.assertFalse(run_dir.exists())
+
+    def test_delete_run_rejects_traversal(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            with self.assertRaises(HTTPException) as exc:
+                delete_run("../outside", runs_dir=tmp)
+
+            self.assertEqual(exc.exception.status_code, 400)
+            self.assertEqual(exc.exception.detail["error"]["code"], "INVALID_RUN_ID")
 
     def test_list_runs_returns_run_summaries(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:

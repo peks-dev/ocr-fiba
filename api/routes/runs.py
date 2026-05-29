@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import shutil
 from pathlib import Path
 from typing import Annotated
 
@@ -48,6 +49,25 @@ def get_run(
     detail["artifacts_count"] = len(artifacts)
     detail["artifacts"] = artifacts[:20]
     return detail
+
+
+@router.delete("/{run_id}")
+def delete_run(
+    run_id: str,
+    runs_dir: Annotated[str, Query()] = "runs",
+) -> dict:
+    run_dir = _resolve_run_dir(runs_dir, run_id)
+    if not run_dir.exists():
+        raise error_response(404, "RUN_NOT_FOUND", "Run not found")
+    if not run_dir.is_dir():
+        raise error_response(400, "INVALID_RUN_DIR", "Run path is not a directory")
+
+    shutil.rmtree(run_dir)
+    return {
+        "success": True,
+        "run_id": run_id,
+        "deleted": True,
+    }
 
 
 @router.get("/{run_id}/trace")
