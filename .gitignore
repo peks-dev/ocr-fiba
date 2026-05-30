@@ -21,5 +21,6 @@ Thumbs.db
 outputs/
 runs/
 .devin/
+.engram/
 dataset/
 dataset/results/
