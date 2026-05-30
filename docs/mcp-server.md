@@ -28,6 +28,8 @@ export OCR_RUNS_DIR="/srv/ocr-engine/runs"
 
 In production mode the API ignores client-provided `runs_dir` and uses `OCR_RUNS_DIR`.
 
+Production API responses also hide local filesystem paths and expose relative API links instead. MCP tools should rely on `run_id`, artifact names, and resource/API links rather than local paths.
+
 ## Run Locally With STDIO
 
 ```bash

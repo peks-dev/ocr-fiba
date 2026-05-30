@@ -49,6 +49,19 @@ curl "http://127.0.0.1:8000/v1/runs" \
 
 En `OCR_ENV=production`, `OCR_ENGINE_API_KEY` es obligatorio al arrancar la app. Tambien se ignora cualquier `runs_dir` recibido del cliente y se usa siempre `OCR_RUNS_DIR`.
 
+En produccion, las respuestas publicas tambien ocultan paths locales del filesystem como `run_dir`, `input_dir`, `artifacts_dir`, `raw_dir`, `trace_path`, `result_path` y `artifact.path`. En su lugar, cuando aplica, se agregan links relativos:
+
+```json
+{
+  "links": {
+    "run": "/v1/runs/run_demo",
+    "result": "/v1/runs/run_demo/result",
+    "trace": "/v1/runs/run_demo/trace",
+    "artifacts": "/v1/runs/run_demo/artifacts"
+  }
+}
+```
+
 ## Smoke test
 
 Con el servidor levantado, se puede validar el flujo principal de la API:

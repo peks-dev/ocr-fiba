@@ -8,6 +8,7 @@ from fastapi import APIRouter, File, Form, UploadFile
 from pydantic import ValidationError
 
 from api.errors import engine_error_response, error_response
+from api.responses import sanitize_for_public_response
 from api.schemas import PipelineOptions, RunFullPipelineRequest
 from api.settings import resolve_runs_dir
 from config.pipeline_config import PipelineConfig, SectionOverride
@@ -31,7 +32,7 @@ def run_full_pipeline(request: RunFullPipelineRequest) -> dict:
             runs_dir=runs_dir,
             use_run_layout=True,
         )
-        return result.to_dict()
+        return sanitize_for_public_response(result.to_dict())
     except OcrEngineError as exc:
         raise engine_error_response(exc) from exc
     except ValueError as exc:
@@ -69,7 +70,7 @@ async def upload_and_run_full_pipeline(
             runs_dir=resolved_runs_dir,
             use_run_layout=True,
         )
-        return result.to_dict()
+        return sanitize_for_public_response(result.to_dict())
     except OcrEngineError as exc:
         raise engine_error_response(exc) from exc
     except ValueError as exc:

@@ -11,6 +11,7 @@ from fastapi.responses import FileResponse
 
 from api.auth import is_auth_exempt, is_authorized, unauthorized_response
 from api.main import create_app
+from api.responses import sanitize_for_public_response
 from api.routes.pipeline import _parse_options_json, upload_and_run_full_pipeline
 from api.routes.runs import (
     list_runs,
@@ -77,6 +78,51 @@ class ApiTest(unittest.TestCase):
             clear=True,
         ):
             self.assertEqual(resolve_runs_dir("/tmp/user-controlled"), Path("/srv/ocr-runs"))
+
+    def test_public_response_sanitizer_keeps_paths_in_development(self) -> None:
+        payload = {
+            "run_id": "run_test",
+            "run_dir": "/tmp/runs/run_test",
+            "artifacts": [{"name": "header.png", "path": "/tmp/header.png"}],
+        }
+
+        with patch.dict("os.environ", {"OCR_ENV": "development"}, clear=True):
+            sanitized = sanitize_for_public_response(payload)
+
+        self.assertEqual(sanitized["run_dir"], "/tmp/runs/run_test")
+        self.assertEqual(sanitized["artifacts"][0]["path"], "/tmp/header.png")
+
+    def test_public_response_sanitizer_removes_paths_in_production(self) -> None:
+        payload = {
+            "run_id": "run_test",
+            "run_dir": "/tmp/runs/run_test",
+            "input_dir": "/tmp/runs/run_test/input",
+            "artifacts_dir": "/tmp/runs/run_test/artifacts",
+            "trace_path": "/tmp/runs/run_test/trace.json",
+            "result_path": "/tmp/runs/run_test/result.json",
+            "artifacts": [{"name": "header.png", "path": "/tmp/header.png"}],
+            "data": {
+                "result_path": "/tmp/runs/run_test/result.json",
+                "trace_path": "/tmp/runs/run_test/trace.json",
+            },
+        }
+
+        with patch.dict(
+            "os.environ",
+            {"OCR_ENV": "production", "OCR_ENGINE_API_KEY": "secret"},
+            clear=True,
+        ):
+            sanitized = sanitize_for_public_response(payload)
+
+        self.assertNotIn("run_dir", sanitized)
+        self.assertNotIn("input_dir", sanitized)
+        self.assertNotIn("artifacts_dir", sanitized)
+        self.assertNotIn("trace_path", sanitized)
+        self.assertNotIn("result_path", sanitized)
+        self.assertNotIn("path", sanitized["artifacts"][0])
+        self.assertNotIn("result_path", sanitized["data"])
+        self.assertNotIn("trace_path", sanitized["data"])
+        self.assertEqual(sanitized["links"]["result"], "/v1/runs/run_test/result")
 
     def test_unexpected_errors_return_standard_json(self) -> None:
         app = create_app()
@@ -265,10 +311,40 @@ class ApiTest(unittest.TestCase):
 
             self.assertTrue((server_runs_dir / "run_test" / "input" / "sheet.jpg").exists())
             self.assertFalse(user_runs_dir.exists())
-            self.assertEqual(
-                response["data"]["result_path"],
-                str(server_runs_dir / "run_test" / "result.json"),
-            )
+            self.assertTrue((server_runs_dir / "run_test" / "result.json").exists())
+            self.assertNotIn("result_path", response["data"])
+
+    def test_upload_pipeline_sanitizes_paths_in_production(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            server_runs_dir = Path(tmp) / "server-runs"
+            fake_file = FakeUploadFile("sheet.jpg", b"image")
+
+            with patch.dict(
+                "os.environ",
+                {
+                    "OCR_ENV": "production",
+                    "OCR_ENGINE_API_KEY": "secret",
+                    "OCR_RUNS_DIR": str(server_runs_dir),
+                },
+                clear=True,
+            ):
+                with patch("api.routes.pipeline.OcrToolbox", FakeToolbox):
+                    response = run_async(
+                        upload_and_run_full_pipeline(
+                            file=fake_file,
+                            run_id="run_test",
+                            runs_dir="/tmp/user-controlled",
+                            options_json=None,
+                        )
+                    )
+
+            self.assertTrue(response["success"])
+            self.assertEqual(response["run_id"], "run_test")
+            self.assertIn("links", response)
+            self.assertNotIn("result_path", response["data"])
+            self.assertNotIn("trace_path", response["data"])
+            self.assertNotIn("artifacts_dir", response["data"])
+            self.assertNotIn("path", response["artifacts"][0])
 
 
 class FakeToolbox:
