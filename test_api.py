@@ -67,6 +67,27 @@ class ApiTest(unittest.TestCase):
         with patch.dict("os.environ", {"OCR_ENV": "development"}, clear=True):
             self.assertEqual(resolve_runs_dir("/tmp/dev-runs"), Path("/tmp/dev-runs"))
 
+    def test_default_max_upload_mb_is_20(self) -> None:
+        with patch.dict("os.environ", {"OCR_ENV": "development"}, clear=True):
+            settings = get_api_settings()
+
+        self.assertEqual(settings.max_upload_mb, 20)
+        self.assertEqual(settings.max_upload_bytes, 20 * 1024 * 1024)
+
+    def test_max_upload_mb_can_be_overridden(self) -> None:
+        with patch.dict("os.environ", {"OCR_MAX_UPLOAD_MB": "5"}, clear=True):
+            settings = get_api_settings()
+
+        self.assertEqual(settings.max_upload_mb, 5)
+        self.assertEqual(settings.max_upload_bytes, 5 * 1024 * 1024)
+
+    def test_max_upload_mb_must_be_positive(self) -> None:
+        with patch.dict("os.environ", {"OCR_MAX_UPLOAD_MB": "0"}, clear=True):
+            with self.assertRaises(RuntimeError) as exc:
+                get_api_settings()
+
+        self.assertIn("OCR_MAX_UPLOAD_MB", str(exc.exception))
+
     def test_resolve_runs_dir_ignores_requested_path_in_production(self) -> None:
         with patch.dict(
             "os.environ",
@@ -283,6 +304,27 @@ class ApiTest(unittest.TestCase):
             self.assertTrue(response["success"])
             self.assertEqual(response["run_id"], "run_test")
             self.assertEqual(response["data"]["result_path"], str(Path(tmp) / "run_test" / "result.json"))
+
+    def test_upload_pipeline_rejects_large_file(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            run_dir = Path(tmp) / "run_test"
+            fake_file = FakeUploadFile("sheet.jpg", b"x" * (1024 * 1024 + 1))
+
+            with patch.dict("os.environ", {"OCR_MAX_UPLOAD_MB": "1"}, clear=True):
+                with patch("api.routes.pipeline.OcrToolbox", FakeToolbox):
+                    with self.assertRaises(HTTPException) as exc:
+                        run_async(
+                            upload_and_run_full_pipeline(
+                                file=fake_file,
+                                run_id="run_test",
+                                runs_dir=tmp,
+                                options_json=None,
+                            )
+                        )
+
+        self.assertEqual(exc.exception.status_code, 413)
+        self.assertEqual(exc.exception.detail["error"]["code"], "UPLOAD_TOO_LARGE")
+        self.assertFalse(run_dir.exists())
 
     def test_upload_pipeline_uses_server_runs_dir_in_production(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:

@@ -30,6 +30,7 @@ Variables relevantes:
 OCR_ENV=development        # default
 OCR_ENGINE_API_KEY=...     # requerido si OCR_ENV=production
 OCR_RUNS_DIR=runs          # directorio server-side para runs
+OCR_MAX_UPLOAD_MB=20       # limite de upload por imagen
 ```
 
 Si `OCR_ENGINE_API_KEY` no esta configurada en development, la API no exige autenticacion. Esto es util para desarrollo local.
@@ -61,6 +62,8 @@ En produccion, las respuestas publicas tambien ocultan paths locales del filesys
   }
 }
 ```
+
+Los uploads que exceden `OCR_MAX_UPLOAD_MB` devuelven `UPLOAD_TOO_LARGE` con HTTP 413.
 
 ## Smoke test
 

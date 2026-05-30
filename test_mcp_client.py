@@ -4,11 +4,14 @@ import base64
 import unittest
 from typing import Any
 
-from adapters.mcp.client import OcrApiClient, OcrApiError
+from adapters.mcp.client import DEFAULT_TIMEOUT_SECONDS, OcrApiClient, OcrApiError
 from adapters.mcp.tools import process_api_response
 
 
 class OcrApiClientTest(unittest.TestCase):
+    def test_default_timeout_is_300_seconds(self) -> None:
+        self.assertEqual(DEFAULT_TIMEOUT_SECONDS, 300)
+
     def test_run_full_pipeline_posts_json(self) -> None:
         session = FakeSession(
             FakeResponse(

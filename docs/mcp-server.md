@@ -9,7 +9,7 @@ The MCP server does not import or execute the OCR core. It calls the HTTP API an
 ```bash
 export OCR_API_BASE_URL="http://127.0.0.1:8000"
 export OCR_API_KEY=""  # set this to OCR_ENGINE_API_KEY when API auth is enabled
-export OCR_API_TIMEOUT_SECONDS=120
+export OCR_API_TIMEOUT_SECONDS=300
 ```
 
 When the OCR API has `OCR_ENGINE_API_KEY` configured, the MCP server sends it as:
@@ -24,11 +24,14 @@ For production-like API runs, configure the API with:
 export OCR_ENV=production
 export OCR_ENGINE_API_KEY="same-secret-used-by-mcp"
 export OCR_RUNS_DIR="/srv/ocr-engine/runs"
+export OCR_MAX_UPLOAD_MB=20
 ```
 
 In production mode the API ignores client-provided `runs_dir` and uses `OCR_RUNS_DIR`.
 
 Production API responses also hide local filesystem paths and expose relative API links instead. MCP tools should rely on `run_id`, artifact names, and resource/API links rather than local paths.
+
+`OCR_API_TIMEOUT_SECONDS` is the MCP server's HTTP request timeout while waiting for the OCR API to finish the current synchronous request. It is not an internal pipeline timeout. For longer production jobs, async run creation + polling should replace long-held HTTP requests.
 
 ## Run Locally With STDIO
 

@@ -135,7 +135,7 @@ def create_mcp() -> FastMCP:
 
 
 def _client() -> OcrApiClient:
-    timeout = int(os.getenv("OCR_API_TIMEOUT_SECONDS", "120"))
+    timeout = int(os.getenv("OCR_API_TIMEOUT_SECONDS", "300"))
     return OcrApiClient(timeout_seconds=timeout)
 
 

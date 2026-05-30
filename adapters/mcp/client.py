@@ -10,7 +10,7 @@ from typing import Any
 import requests
 
 
-DEFAULT_TIMEOUT_SECONDS = 120
+DEFAULT_TIMEOUT_SECONDS = 300
 
 
 @dataclass(frozen=True)

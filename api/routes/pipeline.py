@@ -10,7 +10,7 @@ from pydantic import ValidationError
 from api.errors import engine_error_response, error_response
 from api.responses import sanitize_for_public_response
 from api.schemas import PipelineOptions, RunFullPipelineRequest
-from api.settings import resolve_runs_dir
+from api.settings import get_api_settings, resolve_runs_dir
 from config.pipeline_config import PipelineConfig, SectionOverride
 from core.exceptions import OcrEngineError
 from core.toolbox import OcrToolbox
@@ -51,6 +51,18 @@ async def upload_and_run_full_pipeline(
 
     try:
         resolved_runs_dir = resolve_runs_dir(runs_dir)
+        content = await file.read()
+        if not content:
+            raise error_response(400, "EMPTY_UPLOAD", "Uploaded file is empty")
+        max_upload_mb = get_api_settings().max_upload_mb
+        max_upload_bytes = max_upload_mb * 1024 * 1024
+        if len(content) > max_upload_bytes:
+            raise error_response(
+                413,
+                "UPLOAD_TOO_LARGE",
+                f"Uploaded file exceeds {max_upload_mb} MB limit",
+            )
+
         toolbox = OcrToolbox(_build_config(options))
         context = toolbox.create_context(
             Path(filename),
@@ -60,9 +72,6 @@ async def upload_and_run_full_pipeline(
         )
         context.ensure_dirs()
         input_path = context.input_dir / filename
-        content = await file.read()
-        if not content:
-            raise error_response(400, "EMPTY_UPLOAD", "Uploaded file is empty")
         input_path.write_bytes(content)
         result = toolbox.run_full_pipeline(
             input_path,
