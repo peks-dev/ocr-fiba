@@ -4,6 +4,7 @@ import argparse
 import asyncio
 import base64
 import json
+import os
 import time
 from pathlib import Path
 from typing import Any
@@ -21,6 +22,7 @@ def main() -> None:
         run_smoke(
             mcp_url=args.mcp_url,
             api_url=args.api_url,
+            api_key=args.api_key,
             image_path=image_path,
             run_id=run_id,
             cleanup=args.cleanup,
@@ -32,6 +34,7 @@ async def run_smoke(
     *,
     mcp_url: str,
     api_url: str,
+    api_key: str | None,
     image_path: Path,
     run_id: str,
     cleanup: bool,
@@ -91,7 +94,12 @@ async def run_smoke(
             raise AssertionError("list_run_artifacts did not return artifacts")
 
     if cleanup:
-        response = requests.delete(f"{api_url.rstrip('/')}/v1/runs/{run_id}", timeout=30)
+        headers = {"Authorization": f"Bearer {api_key}"} if api_key else None
+        response = requests.delete(
+            f"{api_url.rstrip('/')}/v1/runs/{run_id}",
+            headers=headers,
+            timeout=30,
+        )
         if response.status_code != 200:
             raise AssertionError(f"cleanup failed: HTTP {response.status_code} {response.text}")
         print("cleanup: API returned HTTP 200")
@@ -133,6 +141,7 @@ def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Smoke test the FIBA OCR MCP server.")
     parser.add_argument("--mcp-url", default="http://127.0.0.1:8765/mcp")
     parser.add_argument("--api-url", default="http://127.0.0.1:8000")
+    parser.add_argument("--api-key", default=os.getenv("OCR_API_KEY"))
     parser.add_argument("--image", default=None)
     parser.add_argument("--run-id", default=None)
     parser.add_argument("--cleanup", action="store_true")
