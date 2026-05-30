@@ -20,6 +20,25 @@ http://127.0.0.1:8000
 curl http://127.0.0.1:8000/health
 ```
 
+## Autenticacion
+
+La API puede ejecutarse en modo local abierto o con API key simple.
+
+Si `OCR_ENGINE_API_KEY` no esta configurada, la API no exige autenticacion. Esto es util para desarrollo local.
+
+Si `OCR_ENGINE_API_KEY` esta configurada, todas las rutas excepto `/health` requieren:
+
+```text
+Authorization: Bearer <OCR_ENGINE_API_KEY>
+```
+
+Ejemplo:
+
+```bash
+curl "http://127.0.0.1:8000/v1/runs" \
+  -H "Authorization: Bearer $OCR_ENGINE_API_KEY"
+```
+
 ## Smoke test
 
 Con el servidor levantado, se puede validar el flujo principal de la API:

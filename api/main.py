@@ -1,10 +1,12 @@
 from __future__ import annotations
 
+import os
 from pathlib import Path
 
 from fastapi import FastAPI, Request
 from fastapi.responses import JSONResponse
 
+from api.auth import is_auth_exempt, is_authorized, unauthorized_response
 from api.routes import pipeline, runs
 from helpers.image_utils import load_dotenv
 
@@ -18,6 +20,15 @@ def create_app() -> FastAPI:
     )
     app.include_router(pipeline.router)
     app.include_router(runs.router)
+
+    @app.middleware("http")
+    async def api_key_auth(request: Request, call_next):
+        if is_auth_exempt(request.url.path):
+            return await call_next(request)
+        expected_key = os.getenv("OCR_ENGINE_API_KEY")
+        if not is_authorized(request.headers.get("authorization", ""), expected_key):
+            return unauthorized_response()
+        return await call_next(request)
 
     @app.get("/health", tags=["health"])
     def health() -> dict[str, str]:

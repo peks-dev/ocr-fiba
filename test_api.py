@@ -9,6 +9,7 @@ from unittest.mock import patch
 from fastapi import HTTPException
 from fastapi.responses import FileResponse
 
+from api.auth import is_auth_exempt, is_authorized, unauthorized_response
 from api.main import create_app
 from api.routes.pipeline import _parse_options_json, upload_and_run_full_pipeline
 from api.routes.runs import (
@@ -29,6 +30,29 @@ class ApiTest(unittest.TestCase):
 
         routes = {getattr(route, "path", "") for route in app.routes}
         self.assertIn("/health", routes)
+
+    def test_health_is_auth_exempt(self) -> None:
+        self.assertTrue(is_auth_exempt("/health"))
+        self.assertFalse(is_auth_exempt("/v1/runs"))
+
+    def test_api_key_auth_allows_local_mode_without_expected_key(self) -> None:
+        self.assertTrue(is_authorized("", None))
+
+    def test_api_key_auth_rejects_missing_or_invalid_bearer_token(self) -> None:
+        self.assertFalse(is_authorized("", "secret"))
+        self.assertFalse(is_authorized("Bearer wrong", "secret"))
+        self.assertFalse(is_authorized("Basic secret", "secret"))
+
+    def test_api_key_auth_accepts_valid_bearer_token(self) -> None:
+        self.assertTrue(is_authorized("Bearer secret", "secret"))
+
+    def test_unauthorized_response_uses_standard_error_shape(self) -> None:
+        response = unauthorized_response()
+        payload = json.loads(response.body.decode("utf-8"))
+
+        self.assertEqual(response.status_code, 401)
+        self.assertEqual(payload["success"], False)
+        self.assertEqual(payload["error"]["code"], "UNAUTHORIZED")
 
     def test_unexpected_errors_return_standard_json(self) -> None:
         app = create_app()

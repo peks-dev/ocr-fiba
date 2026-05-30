@@ -8,8 +8,14 @@ The MCP server does not import or execute the OCR core. It calls the HTTP API an
 
 ```bash
 export OCR_API_BASE_URL="http://127.0.0.1:8000"
-export OCR_API_KEY=""  # optional for local dev
+export OCR_API_KEY=""  # set this to OCR_ENGINE_API_KEY when API auth is enabled
 export OCR_API_TIMEOUT_SECONDS=120
+```
+
+When the OCR API has `OCR_ENGINE_API_KEY` configured, the MCP server sends it as:
+
+```text
+Authorization: Bearer <OCR_API_KEY>
 ```
 
 ## Run Locally With STDIO
