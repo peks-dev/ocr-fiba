@@ -7,6 +7,7 @@ from fastapi import APIRouter, Query
 from fastapi.responses import FileResponse
 
 from api.errors import error_response
+from api.settings import resolve_runs_dir
 from services.run_repository import RunRepository, RunRepositoryError
 
 router = APIRouter(prefix="/v1/runs", tags=["runs"])
@@ -95,6 +96,6 @@ def get_run_artifact(
 
 def _run_repository_call(runs_dir: str, callback: Callable[[RunRepository], T]) -> T:
     try:
-        return callback(RunRepository(runs_dir))
+        return callback(RunRepository(resolve_runs_dir(runs_dir)))
     except RunRepositoryError as exc:
         raise error_response(exc.status_code, exc.code, exc.message) from exc

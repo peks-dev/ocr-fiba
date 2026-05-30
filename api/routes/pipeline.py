@@ -9,6 +9,7 @@ from pydantic import ValidationError
 
 from api.errors import engine_error_response, error_response
 from api.schemas import PipelineOptions, RunFullPipelineRequest
+from api.settings import resolve_runs_dir
 from config.pipeline_config import PipelineConfig, SectionOverride
 from core.exceptions import OcrEngineError
 from core.toolbox import OcrToolbox
@@ -22,11 +23,12 @@ def run_full_pipeline(request: RunFullPipelineRequest) -> dict:
     image_path = _resolve_input_file(request.image_path)
 
     try:
+        runs_dir = resolve_runs_dir(request.runs_dir)
         toolbox = OcrToolbox(_build_config(request.options))
         result = toolbox.run_full_pipeline(
             image_path,
             run_id=request.run_id,
-            runs_dir=Path(request.runs_dir),
+            runs_dir=runs_dir,
             use_run_layout=True,
         )
         return result.to_dict()
@@ -47,11 +49,12 @@ async def upload_and_run_full_pipeline(
     filename = _safe_upload_filename(file.filename)
 
     try:
+        resolved_runs_dir = resolve_runs_dir(runs_dir)
         toolbox = OcrToolbox(_build_config(options))
         context = toolbox.create_context(
             Path(filename),
             run_id=run_id,
-            runs_dir=Path(runs_dir),
+            runs_dir=resolved_runs_dir,
             use_run_layout=True,
         )
         context.ensure_dirs()
@@ -63,7 +66,7 @@ async def upload_and_run_full_pipeline(
         result = toolbox.run_full_pipeline(
             input_path,
             run_id=context.run_id,
-            runs_dir=Path(runs_dir),
+            runs_dir=resolved_runs_dir,
             use_run_layout=True,
         )
         return result.to_dict()

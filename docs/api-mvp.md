@@ -24,7 +24,15 @@ curl http://127.0.0.1:8000/health
 
 La API puede ejecutarse en modo local abierto o con API key simple.
 
-Si `OCR_ENGINE_API_KEY` no esta configurada, la API no exige autenticacion. Esto es util para desarrollo local.
+Variables relevantes:
+
+```bash
+OCR_ENV=development        # default
+OCR_ENGINE_API_KEY=...     # requerido si OCR_ENV=production
+OCR_RUNS_DIR=runs          # directorio server-side para runs
+```
+
+Si `OCR_ENGINE_API_KEY` no esta configurada en development, la API no exige autenticacion. Esto es util para desarrollo local.
 
 Si `OCR_ENGINE_API_KEY` esta configurada, todas las rutas excepto `/health` requieren:
 
@@ -38,6 +46,8 @@ Ejemplo:
 curl "http://127.0.0.1:8000/v1/runs" \
   -H "Authorization: Bearer $OCR_ENGINE_API_KEY"
 ```
+
+En `OCR_ENV=production`, `OCR_ENGINE_API_KEY` es obligatorio al arrancar la app. Tambien se ignora cualquier `runs_dir` recibido del cliente y se usa siempre `OCR_RUNS_DIR`.
 
 ## Smoke test
 

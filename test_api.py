@@ -21,6 +21,7 @@ from api.routes.runs import (
     get_run_trace,
     list_run_artifacts,
 )
+from api.settings import get_api_settings, resolve_runs_dir
 from core.types import Artifact, RunContext, ToolResult
 
 
@@ -53,6 +54,29 @@ class ApiTest(unittest.TestCase):
         self.assertEqual(response.status_code, 401)
         self.assertEqual(payload["success"], False)
         self.assertEqual(payload["error"]["code"], "UNAUTHORIZED")
+
+    def test_production_requires_api_key(self) -> None:
+        with patch.dict("os.environ", {"OCR_ENV": "production"}, clear=True):
+            with self.assertRaises(RuntimeError) as exc:
+                get_api_settings()
+
+        self.assertIn("OCR_ENGINE_API_KEY", str(exc.exception))
+
+    def test_resolve_runs_dir_uses_requested_path_in_development(self) -> None:
+        with patch.dict("os.environ", {"OCR_ENV": "development"}, clear=True):
+            self.assertEqual(resolve_runs_dir("/tmp/dev-runs"), Path("/tmp/dev-runs"))
+
+    def test_resolve_runs_dir_ignores_requested_path_in_production(self) -> None:
+        with patch.dict(
+            "os.environ",
+            {
+                "OCR_ENV": "production",
+                "OCR_ENGINE_API_KEY": "secret",
+                "OCR_RUNS_DIR": "/srv/ocr-runs",
+            },
+            clear=True,
+        ):
+            self.assertEqual(resolve_runs_dir("/tmp/user-controlled"), Path("/srv/ocr-runs"))
 
     def test_unexpected_errors_return_standard_json(self) -> None:
         app = create_app()
@@ -213,6 +237,38 @@ class ApiTest(unittest.TestCase):
             self.assertTrue(response["success"])
             self.assertEqual(response["run_id"], "run_test")
             self.assertEqual(response["data"]["result_path"], str(Path(tmp) / "run_test" / "result.json"))
+
+    def test_upload_pipeline_uses_server_runs_dir_in_production(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            server_runs_dir = Path(tmp) / "server-runs"
+            user_runs_dir = Path(tmp) / "user-controlled"
+            fake_file = FakeUploadFile("sheet.jpg", b"image")
+
+            with patch.dict(
+                "os.environ",
+                {
+                    "OCR_ENV": "production",
+                    "OCR_ENGINE_API_KEY": "secret",
+                    "OCR_RUNS_DIR": str(server_runs_dir),
+                },
+                clear=True,
+            ):
+                with patch("api.routes.pipeline.OcrToolbox", FakeToolbox):
+                    response = run_async(
+                        upload_and_run_full_pipeline(
+                            file=fake_file,
+                            run_id="run_test",
+                            runs_dir=str(user_runs_dir),
+                            options_json=None,
+                        )
+                    )
+
+            self.assertTrue((server_runs_dir / "run_test" / "input" / "sheet.jpg").exists())
+            self.assertFalse(user_runs_dir.exists())
+            self.assertEqual(
+                response["data"]["result_path"],
+                str(server_runs_dir / "run_test" / "result.json"),
+            )
 
 
 class FakeToolbox:

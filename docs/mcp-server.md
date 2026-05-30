@@ -18,6 +18,16 @@ When the OCR API has `OCR_ENGINE_API_KEY` configured, the MCP server sends it as
 Authorization: Bearer <OCR_API_KEY>
 ```
 
+For production-like API runs, configure the API with:
+
+```bash
+export OCR_ENV=production
+export OCR_ENGINE_API_KEY="same-secret-used-by-mcp"
+export OCR_RUNS_DIR="/srv/ocr-engine/runs"
+```
+
+In production mode the API ignores client-provided `runs_dir` and uses `OCR_RUNS_DIR`.
+
 ## Run Locally With STDIO
 
 ```bash
