@@ -31,7 +31,7 @@ In production mode the API ignores client-provided `runs_dir` and uses `OCR_RUNS
 
 Production API responses also hide local filesystem paths and expose relative API links instead. MCP tools should rely on `run_id`, artifact names, and resource/API links rather than local paths.
 
-`OCR_API_TIMEOUT_SECONDS` is the MCP server's HTTP request timeout while waiting for the OCR API to finish the current synchronous request. It is not an internal pipeline timeout. For longer production jobs, async run creation + polling should replace long-held HTTP requests.
+`OCR_API_TIMEOUT_SECONDS` is the MCP server's HTTP request timeout for individual API requests. OCR execution uses async run creation + polling rather than long-held HTTP requests.
 
 ## Run Locally With STDIO
 
@@ -60,8 +60,10 @@ adapters.mcp.server:app
 ## Tools
 
 ```text
-process_scoresheet_from_path(image_path, run_id?, options?)
-process_scoresheet_base64(image_base64, filename?, run_id?, options?)
+submit_scoresheet_from_path(image_path, run_id?, options?)
+submit_scoresheet_base64(image_base64, filename?, run_id?, options?)
+poll_run(run_id)
+wait_for_run(run_id, timeout_seconds?, poll_interval_seconds?)
 list_runs(limit?)
 inspect_run(run_id)
 get_run_result(run_id)
@@ -70,7 +72,16 @@ list_run_artifacts(run_id, limit?)
 get_artifact(run_id, artifact_name)
 ```
 
-`process_scoresheet_from_path` requires the image path to be accessible to the OCR API service. For remote users, `process_scoresheet_base64` is the safer first interface because it uploads the image through the MCP tool call.
+`submit_scoresheet_from_path` requires the image path to be accessible to the OCR API service. For remote users, `submit_scoresheet_base64` is the safer first interface because it uploads the image through the MCP tool call.
+
+Recommended agent workflow:
+
+```text
+submit_scoresheet_base64
+wait_for_run
+get_run_result
+get_run_trace or list_run_artifacts when review is needed
+```
 
 ## Resources
 

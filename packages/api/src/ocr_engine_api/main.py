@@ -6,7 +6,7 @@ from fastapi import FastAPI, Request
 from fastapi.responses import JSONResponse
 
 from ocr_engine_api.auth import is_auth_exempt, is_authorized, unauthorized_response
-from ocr_engine_api.routes import pipeline, runs
+from ocr_engine_api.routes import runs
 from ocr_engine_api.settings import get_api_settings
 from ocr_engine_core.utils.image_utils import load_dotenv
 
@@ -19,7 +19,6 @@ def create_app() -> FastAPI:
         title="FIBA OCR Engine API",
         version="0.1.0",
     )
-    app.include_router(pipeline.router)
     app.include_router(runs.router)
 
     @app.middleware("http")

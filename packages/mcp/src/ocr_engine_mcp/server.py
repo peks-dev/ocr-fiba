@@ -14,36 +14,6 @@ def create_mcp() -> FastMCP:
     mcp = FastMCP(name="FIBA OCR Engine")
 
     @mcp.tool
-    def process_scoresheet_from_path(
-        image_path: str,
-        run_id: str | None = None,
-        options: dict[str, Any] | None = None,
-    ) -> dict[str, Any]:
-        """Process a scoresheet image path that is accessible to the OCR API service."""
-        return mcp_tools.process_scoresheet_from_path(
-            _client(),
-            image_path,
-            run_id=run_id,
-            options=options,
-        )
-
-    @mcp.tool
-    def process_scoresheet_base64(
-        image_base64: str,
-        filename: str = "scoresheet.jpg",
-        run_id: str | None = None,
-        options: dict[str, Any] | None = None,
-    ) -> dict[str, Any]:
-        """Upload a base64-encoded scoresheet image and process it with the OCR API."""
-        return mcp_tools.process_scoresheet_base64(
-            _client(),
-            image_base64,
-            filename=filename,
-            run_id=run_id,
-            options=options,
-        )
-
-    @mcp.tool
     def submit_scoresheet_from_path(
         image_path: str,
         run_id: str | None = None,

@@ -8,13 +8,8 @@ from fastapi import APIRouter, File, Form, Query, UploadFile
 from fastapi.responses import FileResponse
 
 from ocr_engine_api.errors import error_response
+from ocr_engine_api.pipeline_options import build_config, parse_options_json, unsupported_upload_type_error
 from ocr_engine_api.responses import sanitize_for_public_response
-from ocr_engine_api.routes.pipeline import (
-    _build_config,
-    _parse_options_json,
-    _resolve_input_file,
-    _safe_upload_filename,
-)
 from ocr_engine_api.schemas import CreateRunRequest
 from ocr_engine_api.settings import resolve_runs_dir
 from ocr_engine_api.services.run_executor import RunExecutor
@@ -40,7 +35,7 @@ async def create_run(
         image_path,
         run_id=context.run_id,
         runs_dir=runs_dir,
-        config=_build_config(request.options),
+        config=build_config(request.options),
     )
     return sanitize_for_public_response({"success": True, **status})
 
@@ -52,7 +47,7 @@ async def upload_and_create_run(
     runs_dir: Annotated[str, Form()] = "runs",
     options_json: Annotated[str | None, Form()] = None,
 ) -> dict:
-    options = _parse_options_json(options_json)
+    options = parse_options_json(options_json)
     filename = _safe_upload_filename(file.filename)
     resolved_runs_dir = resolve_runs_dir(runs_dir)
 
@@ -82,7 +77,7 @@ async def upload_and_create_run(
         input_path,
         run_id=context.run_id,
         runs_dir=resolved_runs_dir,
-        config=_build_config(options),
+        config=build_config(options),
     )
     return sanitize_for_public_response({"success": True, **status})
 
@@ -174,3 +169,20 @@ def _run_repository_call(runs_dir: str, callback: Callable[[RunRepository], T]) 
         raise error_response(exc.status_code, exc.code, exc.message) from exc
     except OcrEngineError as exc:
         raise error_response(500, exc.code, exc.message, retryable=exc.retryable) from exc
+
+
+def _resolve_input_file(value: str) -> Path:
+    image_path = Path(value).expanduser().resolve()
+    if not image_path.exists():
+        raise error_response(404, "INPUT_IMAGE_NOT_FOUND", f"Input image not found: {image_path}")
+    if not image_path.is_file():
+        raise error_response(400, "INPUT_IMAGE_INVALID", f"Input path is not a file: {image_path}")
+    return image_path
+
+
+def _safe_upload_filename(filename: str | None) -> str:
+    name = Path(filename or "upload.jpg").name
+    suffix = Path(name).suffix.lower()
+    if suffix not in {".jpg", ".jpeg", ".png", ".webp"}:
+        raise unsupported_upload_type_error()
+    return name

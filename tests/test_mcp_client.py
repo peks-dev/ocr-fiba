@@ -5,56 +5,12 @@ import unittest
 from typing import Any
 
 from ocr_engine_mcp.client import DEFAULT_TIMEOUT_SECONDS, OcrApiClient, OcrApiError
-from ocr_engine_mcp.tools import process_api_response, submit_scoresheet_base64, wait_for_run
+from ocr_engine_mcp.tools import submit_scoresheet_base64, wait_for_run
 
 
 class OcrApiClientTest(unittest.TestCase):
     def test_default_timeout_is_300_seconds(self) -> None:
         self.assertEqual(DEFAULT_TIMEOUT_SECONDS, 300)
-
-    def test_run_full_pipeline_posts_json(self) -> None:
-        session = FakeSession(
-            FakeResponse(
-                200,
-                {
-                    "success": True,
-                    "run_id": "run_test",
-                    "status": "completed",
-                    "data": {"result": {"match_status": "success"}},
-                },
-            )
-        )
-        client = OcrApiClient("http://api.test", api_key="secret", session=session)
-
-        response = client.run_full_pipeline(
-            "/data/sheet.jpg",
-            run_id="run_test",
-            options={"gamma": 0.7},
-        )
-
-        self.assertTrue(response["success"])
-        self.assertEqual(session.calls[0]["method"], "POST")
-        self.assertEqual(session.calls[0]["url"], "http://api.test/v1/pipeline/full")
-        self.assertEqual(session.calls[0]["json"]["image_path"], "/data/sheet.jpg")
-        self.assertEqual(session.calls[0]["headers"]["Authorization"], "Bearer secret")
-
-    def test_upload_scoresheet_base64_posts_multipart(self) -> None:
-        session = FakeSession(FakeResponse(200, {"success": True, "run_id": "run_upload"}))
-        client = OcrApiClient("http://api.test", session=session)
-
-        response = client.upload_scoresheet_base64(
-            base64.b64encode(b"image").decode("ascii"),
-            filename="sheet.jpg",
-            run_id="run_upload",
-            options={"grid_removal": False},
-        )
-
-        self.assertEqual(response["run_id"], "run_upload")
-        call = session.calls[0]
-        self.assertEqual(call["url"], "http://api.test/v1/pipeline/full/upload")
-        self.assertEqual(call["data"]["run_id"], "run_upload")
-        self.assertIn("options_json", call["data"])
-        self.assertEqual(call["files"]["file"][0], "sheet.jpg")
 
     def test_submit_scoresheet_base64_posts_async_multipart(self) -> None:
         session = FakeSession(FakeResponse(200, {"success": True, "run_id": "run_async", "status": "queued"}))
@@ -138,7 +94,7 @@ class OcrApiClientTest(unittest.TestCase):
         client = OcrApiClient("http://api.test", session=FakeSession(FakeResponse(200, {})))
 
         with self.assertRaises(OcrApiError) as exc:
-            client.upload_scoresheet_base64("not-valid-base64")
+            client.submit_scoresheet_base64("not-valid-base64")
 
         self.assertEqual(exc.exception.status_code, 400)
         self.assertEqual(exc.exception.code, "INVALID_IMAGE_BASE64")
@@ -163,29 +119,6 @@ class OcrApiClientTest(unittest.TestCase):
         self.assertEqual(exc.exception.status_code, 404)
         self.assertEqual(exc.exception.code, "RUN_NOT_FOUND")
         self.assertEqual(exc.exception.message, "Run not found")
-
-    def test_process_api_response_returns_agent_friendly_summary(self) -> None:
-        response = process_api_response(
-            {
-                "success": True,
-                "run_id": "run_test",
-                "status": "completed",
-                "data": {
-                    "result": {
-                        "match_status": "needs_review",
-                        "validation_warnings": [{"type": "score_mismatch"}],
-                        "meta": {"total_tokens": 10},
-                    },
-                    "result_path": "runs/run_test/result.json",
-                    "trace_path": "runs/run_test/trace.json",
-                },
-            }
-        )
-
-        self.assertTrue(response["success"])
-        self.assertEqual(response["summary"]["match_status"], "needs_review")
-        self.assertEqual(response["resources"]["result"], "result://run_test")
-        self.assertIn("Review validation warnings before trusting the extraction.", response["next_actions"])
 
     def test_submit_tool_returns_agent_friendly_next_actions(self) -> None:
         client = OcrApiClient(

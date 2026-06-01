@@ -51,59 +51,6 @@ class OcrApiClient:
         self.timeout_seconds = timeout_seconds
         self.session = session or requests.Session()
 
-    def run_full_pipeline(
-        self,
-        image_path: str,
-        *,
-        run_id: str | None = None,
-        runs_dir: str | None = None,
-        options: dict[str, Any] | None = None,
-    ) -> dict[str, Any]:
-        payload: dict[str, Any] = {
-            "image_path": image_path,
-        }
-        if run_id:
-            payload["run_id"] = run_id
-        if runs_dir:
-            payload["runs_dir"] = runs_dir
-        if options:
-            payload["options"] = options
-        response = self.session.post(
-            self._url("/v1/pipeline/full"),
-            json=payload,
-            headers=self._headers(),
-            timeout=self.timeout_seconds,
-        )
-        return self._json_response(response)
-
-    def upload_scoresheet(
-        self,
-        image_bytes: bytes,
-        *,
-        filename: str = "scoresheet.jpg",
-        run_id: str | None = None,
-        runs_dir: str | None = None,
-        options: dict[str, Any] | None = None,
-    ) -> dict[str, Any]:
-        data: dict[str, str] = {}
-        if run_id:
-            data["run_id"] = run_id
-        if runs_dir:
-            data["runs_dir"] = runs_dir
-        if options:
-            data["options_json"] = json.dumps(options)
-        files = {
-            "file": (Path(filename).name or "scoresheet.jpg", image_bytes),
-        }
-        response = self.session.post(
-            self._url("/v1/pipeline/full/upload"),
-            data=data,
-            files=files,
-            headers=self._headers(),
-            timeout=self.timeout_seconds,
-        )
-        return self._json_response(response)
-
     def submit_scoresheet_from_path(
         self,
         image_path: str,
@@ -156,29 +103,6 @@ class OcrApiClient:
             timeout=self.timeout_seconds,
         )
         return self._json_response(response)
-
-    def upload_scoresheet_base64(
-        self,
-        image_base64: str,
-        *,
-        filename: str = "scoresheet.jpg",
-        run_id: str | None = None,
-        runs_dir: str | None = None,
-        options: dict[str, Any] | None = None,
-    ) -> dict[str, Any]:
-        try:
-            image_bytes = base64.b64decode(image_base64, validate=True)
-        except ValueError as exc:
-            raise OcrApiError(400, "INVALID_IMAGE_BASE64", "image_base64 must be valid base64") from exc
-        if not image_bytes:
-            raise OcrApiError(400, "EMPTY_IMAGE", "image_base64 decoded to empty bytes")
-        return self.upload_scoresheet(
-            image_bytes,
-            filename=filename,
-            run_id=run_id,
-            runs_dir=runs_dir,
-            options=options,
-        )
 
     def submit_scoresheet_base64(
         self,

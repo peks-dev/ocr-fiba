@@ -12,8 +12,8 @@ from fastapi.responses import FileResponse
 
 from ocr_engine_api.auth import is_auth_exempt, is_authorized, unauthorized_response
 from ocr_engine_api.main import create_app
+from ocr_engine_api.pipeline_options import parse_options_json
 from ocr_engine_api.responses import sanitize_for_public_response
-from ocr_engine_api.routes.pipeline import _parse_options_json, upload_and_run_full_pipeline
 from ocr_engine_api.routes.runs import (
     create_run,
     list_runs,
@@ -284,41 +284,20 @@ class ApiTest(unittest.TestCase):
 
     def test_parse_options_json_rejects_invalid_json(self) -> None:
         with self.assertRaises(HTTPException) as exc:
-            _parse_options_json("{invalid")
+            parse_options_json("{invalid")
         self.assertEqual(exc.exception.status_code, 400)
         self.assertEqual(exc.exception.detail["error"]["code"], "INVALID_OPTIONS_JSON")
 
-    def test_upload_pipeline_saves_file_and_returns_tool_result(self) -> None:
-        with tempfile.TemporaryDirectory() as tmp:
-            fake_file = FakeUploadFile("sheet.jpg", b"image")
-
-            with patch("ocr_engine_api.routes.pipeline.OcrToolbox", FakeToolbox):
-                response = run_async(
-                    upload_and_run_full_pipeline(
-                        file=fake_file,
-                        run_id="run_test",
-                        runs_dir=tmp,
-                        options_json=None,
-                    )
-                )
-
-            input_path = Path(tmp) / "run_test" / "input" / "sheet.jpg"
-            self.assertTrue(input_path.exists())
-            self.assertEqual(input_path.read_bytes(), b"image")
-            self.assertTrue(response["success"])
-            self.assertEqual(response["run_id"], "run_test")
-            self.assertEqual(response["data"]["result_path"], str(Path(tmp) / "run_test" / "result.json"))
-
-    def test_upload_pipeline_rejects_large_file(self) -> None:
+    def test_async_upload_rejects_large_file(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             run_dir = Path(tmp) / "run_test"
             fake_file = FakeUploadFile("sheet.jpg", b"x" * (1024 * 1024 + 1))
 
             with patch.dict("os.environ", {"OCR_MAX_UPLOAD_MB": "1"}, clear=True):
-                with patch("ocr_engine_api.routes.pipeline.OcrToolbox", FakeToolbox):
+                with patch("ocr_engine_api.services.run_executor.OcrToolbox", FakeToolbox):
                     with self.assertRaises(HTTPException) as exc:
                         run_async(
-                            upload_and_run_full_pipeline(
+                            upload_and_create_run(
                                 file=fake_file,
                                 run_id="run_test",
                                 runs_dir=tmp,
@@ -330,7 +309,7 @@ class ApiTest(unittest.TestCase):
         self.assertEqual(exc.exception.detail["error"]["code"], "UPLOAD_TOO_LARGE")
         self.assertFalse(run_dir.exists())
 
-    def test_upload_pipeline_uses_server_runs_dir_in_production(self) -> None:
+    def test_async_upload_uses_server_runs_dir_in_production(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             server_runs_dir = Path(tmp) / "server-runs"
             user_runs_dir = Path(tmp) / "user-controlled"
@@ -345,22 +324,23 @@ class ApiTest(unittest.TestCase):
                 },
                 clear=True,
             ):
-                with patch("ocr_engine_api.routes.pipeline.OcrToolbox", FakeToolbox):
+                with patch("ocr_engine_api.services.run_executor.OcrToolbox", FakeToolbox):
                     response = run_async(
-                        upload_and_run_full_pipeline(
+                        upload_and_create_run(
                             file=fake_file,
                             run_id="run_test",
                             runs_dir=str(user_runs_dir),
                             options_json=None,
                         )
                     )
+                    wait_for_status("run_test", "completed", str(server_runs_dir))
 
             self.assertTrue((server_runs_dir / "run_test" / "input" / "sheet.jpg").exists())
             self.assertFalse(user_runs_dir.exists())
             self.assertTrue((server_runs_dir / "run_test" / "result.json").exists())
-            self.assertNotIn("result_path", response["data"])
+            self.assertNotIn("run_dir", response)
 
-    def test_upload_pipeline_sanitizes_paths_in_production(self) -> None:
+    def test_async_upload_sanitizes_paths_in_production(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             server_runs_dir = Path(tmp) / "server-runs"
             fake_file = FakeUploadFile("sheet.jpg", b"image")
@@ -374,23 +354,22 @@ class ApiTest(unittest.TestCase):
                 },
                 clear=True,
             ):
-                with patch("ocr_engine_api.routes.pipeline.OcrToolbox", FakeToolbox):
+                with patch("ocr_engine_api.services.run_executor.OcrToolbox", FakeToolbox):
                     response = run_async(
-                        upload_and_run_full_pipeline(
+                        upload_and_create_run(
                             file=fake_file,
                             run_id="run_test",
                             runs_dir="/tmp/user-controlled",
                             options_json=None,
                         )
                     )
+                    wait_for_status("run_test", "completed", str(server_runs_dir))
 
             self.assertTrue(response["success"])
             self.assertEqual(response["run_id"], "run_test")
             self.assertIn("links", response)
-            self.assertNotIn("result_path", response["data"])
-            self.assertNotIn("trace_path", response["data"])
-            self.assertNotIn("artifacts_dir", response["data"])
-            self.assertNotIn("path", response["artifacts"][0])
+            self.assertNotIn("run_dir", response)
+            self.assertNotIn("input_dir", response)
 
     def test_async_upload_creates_queued_run_and_background_completes(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:

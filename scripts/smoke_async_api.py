@@ -10,15 +10,8 @@ from typing import Any
 
 import requests
 
-from smoke_api import (
-    SmokeFailure,
-    cleanup_run,
-    get_json,
-    parse_json_response,
-    require,
-    resolve_image,
-    upload_image,
-)
+PROJECT_ROOT = Path(__file__).resolve().parents[1]
+IMAGE_SUFFIXES = {".jpg", ".jpeg", ".png", ".webp"}
 
 
 def main() -> int:
@@ -133,6 +126,127 @@ def wait_for_run(
             raise SmokeFailure("Run failed", detail)
         time.sleep(interval)
     raise SmokeFailure(f"Run did not complete within {timeout} seconds", last_detail)
+
+
+def get_json(
+    session: requests.Session,
+    url: str,
+    *,
+    params: dict[str, str] | None = None,
+    timeout: float,
+) -> dict[str, Any]:
+    response = session.get(url, params=params, timeout=timeout)
+    return parse_json_response(response)
+
+
+def upload_image(
+    session: requests.Session,
+    url: str,
+    *,
+    image_path: Path,
+    run_id: str,
+    runs_dir: str,
+    options_json: str | None,
+    timeout: float,
+) -> dict[str, Any]:
+    data = {"run_id": run_id, "runs_dir": runs_dir}
+    if options_json:
+        try:
+            json.loads(options_json)
+        except json.JSONDecodeError as exc:
+            raise SmokeFailure("--options-json must be valid JSON") from exc
+        data["options_json"] = options_json
+
+    with image_path.open("rb") as file_obj:
+        files = {"file": (image_path.name, file_obj, guess_mime_type(image_path))}
+        response = session.post(url, data=data, files=files, timeout=timeout)
+    return parse_json_response(response)
+
+
+def parse_json_response(response: requests.Response) -> dict[str, Any]:
+    try:
+        payload = response.json()
+    except ValueError as exc:
+        raise SmokeFailure(f"Expected JSON response from {response.url}") from exc
+    if response.status_code >= 400:
+        raise SmokeFailure(f"HTTP {response.status_code} from {response.url}", payload)
+    require(isinstance(payload, dict), f"Expected JSON object from {response.url}", payload)
+    return payload
+
+
+def cleanup_run(
+    session: requests.Session,
+    base_url: str,
+    *,
+    runs_dir: str,
+    run_id: str,
+    timeout: float,
+) -> None:
+    try:
+        response = session.delete(
+            f"{base_url}/v1/runs/{run_id}",
+            params={"runs_dir": runs_dir},
+            timeout=timeout,
+        )
+        if response.status_code in {200, 404}:
+            print(f"cleanup: API returned HTTP {response.status_code} for {run_id}")
+            return
+        print(f"cleanup: API returned HTTP {response.status_code}; falling back to local delete", file=sys.stderr)
+    except requests.RequestException as exc:
+        print(f"cleanup: API request failed ({exc}); falling back to local delete", file=sys.stderr)
+
+    run_dir = Path(runs_dir).expanduser() / run_id
+    if not run_dir.is_absolute():
+        run_dir = PROJECT_ROOT / run_dir
+    if run_dir.exists():
+        import shutil
+
+        shutil.rmtree(run_dir)
+        print(f"cleanup: removed {run_dir}")
+
+
+def resolve_image(value: Path | None) -> Path:
+    if value is not None:
+        image_path = value.expanduser().resolve()
+        require(image_path.exists(), f"Image not found: {image_path}")
+        require(image_path.is_file(), f"Image path is not a file: {image_path}")
+        require(image_path.suffix.lower() in IMAGE_SUFFIXES, f"Unsupported image extension: {image_path.suffix}")
+        return image_path
+
+    dataset_dir = PROJECT_ROOT / "dataset"
+    candidates = sorted(
+        path
+        for suffix in IMAGE_SUFFIXES
+        for path in dataset_dir.glob(f"sheet-*/*{suffix}")
+        if path.is_file()
+    )
+    require(
+        bool(candidates),
+        "No dataset image found. Pass --image /path/to/sheet.jpg or place images under dataset/sheet-*.",
+    )
+    return candidates[0].resolve()
+
+
+def guess_mime_type(path: Path) -> str:
+    suffix = path.suffix.lower()
+    if suffix in {".jpg", ".jpeg"}:
+        return "image/jpeg"
+    if suffix == ".png":
+        return "image/png"
+    if suffix == ".webp":
+        return "image/webp"
+    return "application/octet-stream"
+
+
+def require(condition: bool, message: str, payload: Any | None = None) -> None:
+    if not condition:
+        raise SmokeFailure(message, payload)
+
+
+class SmokeFailure(Exception):
+    def __init__(self, message: str, payload: Any | None = None) -> None:
+        super().__init__(message)
+        self.payload = payload
 
 
 if __name__ == "__main__":
