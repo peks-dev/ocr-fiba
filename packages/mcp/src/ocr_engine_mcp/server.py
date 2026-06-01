@@ -44,6 +44,55 @@ def create_mcp() -> FastMCP:
         )
 
     @mcp.tool
+    def submit_scoresheet_from_path(
+        image_path: str,
+        run_id: str | None = None,
+        options: dict[str, Any] | None = None,
+    ) -> dict[str, Any]:
+        """Submit a scoresheet image path for async OCR processing and return a run id."""
+        return mcp_tools.submit_scoresheet_from_path(
+            _client(),
+            image_path,
+            run_id=run_id,
+            options=options,
+        )
+
+    @mcp.tool
+    def submit_scoresheet_base64(
+        image_base64: str,
+        filename: str = "scoresheet.jpg",
+        run_id: str | None = None,
+        options: dict[str, Any] | None = None,
+    ) -> dict[str, Any]:
+        """Upload a base64-encoded scoresheet image for async OCR processing and return a run id."""
+        return mcp_tools.submit_scoresheet_base64(
+            _client(),
+            image_base64,
+            filename=filename,
+            run_id=run_id,
+            options=options,
+        )
+
+    @mcp.tool
+    def poll_run(run_id: str) -> dict[str, Any]:
+        """Poll one async OCR run and return its current status."""
+        return mcp_tools.poll_run(_client(), run_id)
+
+    @mcp.tool
+    def wait_for_run(
+        run_id: str,
+        timeout_seconds: float = 300,
+        poll_interval_seconds: float = 2,
+    ) -> dict[str, Any]:
+        """Wait for an async OCR run to complete, fail, or time out."""
+        return mcp_tools.wait_for_run(
+            _client(),
+            run_id,
+            timeout_seconds=timeout_seconds,
+            poll_interval_seconds=poll_interval_seconds,
+        )
+
+    @mcp.tool
     def list_runs(limit: int = 20) -> dict[str, Any]:
         """List recent OCR runs."""
         try:

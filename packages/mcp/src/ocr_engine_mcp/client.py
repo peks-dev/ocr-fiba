@@ -3,6 +3,7 @@ from __future__ import annotations
 import base64
 import json
 import os
+import time
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
@@ -103,6 +104,59 @@ class OcrApiClient:
         )
         return self._json_response(response)
 
+    def submit_scoresheet_from_path(
+        self,
+        image_path: str,
+        *,
+        run_id: str | None = None,
+        runs_dir: str | None = None,
+        options: dict[str, Any] | None = None,
+    ) -> dict[str, Any]:
+        payload: dict[str, Any] = {
+            "image_path": image_path,
+        }
+        if run_id:
+            payload["run_id"] = run_id
+        if runs_dir:
+            payload["runs_dir"] = runs_dir
+        if options:
+            payload["options"] = options
+        response = self.session.post(
+            self._url("/v1/runs"),
+            json=payload,
+            headers=self._headers(),
+            timeout=self.timeout_seconds,
+        )
+        return self._json_response(response)
+
+    def submit_scoresheet(
+        self,
+        image_bytes: bytes,
+        *,
+        filename: str = "scoresheet.jpg",
+        run_id: str | None = None,
+        runs_dir: str | None = None,
+        options: dict[str, Any] | None = None,
+    ) -> dict[str, Any]:
+        data: dict[str, str] = {}
+        if run_id:
+            data["run_id"] = run_id
+        if runs_dir:
+            data["runs_dir"] = runs_dir
+        if options:
+            data["options_json"] = json.dumps(options)
+        files = {
+            "file": (Path(filename).name or "scoresheet.jpg", image_bytes),
+        }
+        response = self.session.post(
+            self._url("/v1/runs/upload"),
+            data=data,
+            files=files,
+            headers=self._headers(),
+            timeout=self.timeout_seconds,
+        )
+        return self._json_response(response)
+
     def upload_scoresheet_base64(
         self,
         image_base64: str,
@@ -126,6 +180,29 @@ class OcrApiClient:
             options=options,
         )
 
+    def submit_scoresheet_base64(
+        self,
+        image_base64: str,
+        *,
+        filename: str = "scoresheet.jpg",
+        run_id: str | None = None,
+        runs_dir: str | None = None,
+        options: dict[str, Any] | None = None,
+    ) -> dict[str, Any]:
+        try:
+            image_bytes = base64.b64decode(image_base64, validate=True)
+        except ValueError as exc:
+            raise OcrApiError(400, "INVALID_IMAGE_BASE64", "image_base64 must be valid base64") from exc
+        if not image_bytes:
+            raise OcrApiError(400, "EMPTY_IMAGE", "image_base64 decoded to empty bytes")
+        return self.submit_scoresheet(
+            image_bytes,
+            filename=filename,
+            run_id=run_id,
+            runs_dir=runs_dir,
+            options=options,
+        )
+
     def list_runs(self, *, limit: int = 50, runs_dir: str | None = None) -> dict[str, Any]:
         params: dict[str, Any] = {"limit": limit}
         if runs_dir:
@@ -140,6 +217,41 @@ class OcrApiClient:
 
     def get_run(self, run_id: str, *, runs_dir: str | None = None) -> dict[str, Any]:
         return self._get_run_json(f"/v1/runs/{run_id}", runs_dir=runs_dir)
+
+    def poll_run(self, run_id: str, *, runs_dir: str | None = None) -> dict[str, Any]:
+        return self.get_run(run_id, runs_dir=runs_dir)
+
+    def wait_for_run(
+        self,
+        run_id: str,
+        *,
+        timeout_seconds: float = DEFAULT_TIMEOUT_SECONDS,
+        poll_interval_seconds: float = 2.0,
+        runs_dir: str | None = None,
+    ) -> dict[str, Any]:
+        deadline = time.monotonic() + timeout_seconds
+        last_run: dict[str, Any] | None = None
+        while time.monotonic() < deadline:
+            run = self.poll_run(run_id, runs_dir=runs_dir)
+            last_run = run
+            status = run.get("status")
+            if status == "completed":
+                return run
+            if status == "failed":
+                error = run.get("error") if isinstance(run.get("error"), dict) else {}
+                raise OcrApiError(
+                    422,
+                    str(error.get("code") or "RUN_FAILED"),
+                    str(error.get("message") or "Run failed"),
+                    {"run": run},
+                )
+            time.sleep(max(poll_interval_seconds, 0.1))
+        raise OcrApiError(
+            408,
+            "RUN_TIMEOUT",
+            f"Run did not complete within {timeout_seconds} seconds",
+            {"run": last_run} if last_run else None,
+        )
 
     def get_run_result(self, run_id: str, *, runs_dir: str | None = None) -> dict[str, Any]:
         return self._get_run_json(f"/v1/runs/{run_id}/result", runs_dir=runs_dir)
