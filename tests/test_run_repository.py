@@ -65,6 +65,48 @@ class RunRepositoryTest(unittest.TestCase):
             self.assertEqual(repository.get_trace("run_test")["run_id"], "run_test")
             self.assertEqual(repository.get_result("run_test")["match_status"], "success")
 
+    def test_status_lifecycle_is_persisted(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            repository = RunRepository(tmp)
+
+            created = repository.create_status("run_test")
+            running = repository.update_status(
+                "run_test",
+                status="running",
+                progress={"current_step": "preprocess_sheet", "completed_steps": [], "step_count": None},
+            )
+            completed = repository.update_status("run_test", status="completed")
+
+            self.assertEqual(created["status"], "queued")
+            self.assertEqual(running["status"], "running")
+            self.assertEqual(running["progress"]["current_step"], "preprocess_sheet")
+            self.assertEqual(completed["status"], "completed")
+            self.assertIsNotNone(completed["completed_at"])
+            self.assertEqual(repository.get_status("run_test")["links"]["result"], "/v1/runs/run_test/result")
+
+    def test_get_result_returns_409_for_active_run(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            repository = RunRepository(tmp)
+            repository.create_status("run_test")
+
+            with self.assertRaises(RunRepositoryError) as exc:
+                repository.get_result("run_test")
+
+            self.assertEqual(exc.exception.status_code, 409)
+            self.assertEqual(exc.exception.code, "RUN_NOT_COMPLETED")
+
+    def test_get_result_returns_422_for_failed_run(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            repository = RunRepository(tmp)
+            repository.create_status("run_test")
+            repository.update_status("run_test", status="failed", error={"code": "PIPELINE_FAILED"})
+
+            with self.assertRaises(RunRepositoryError) as exc:
+                repository.get_result("run_test")
+
+            self.assertEqual(exc.exception.status_code, 422)
+            self.assertEqual(exc.exception.code, "RUN_FAILED")
+
     def test_list_artifacts_returns_nested_files(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             artifacts_dir = Path(tmp) / "run_test" / "artifacts"

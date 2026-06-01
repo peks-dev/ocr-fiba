@@ -32,14 +32,14 @@ def _sanitize(value: Any) -> Any:
                 continue
             sanitized[key] = _sanitize(item)
         if isinstance(run_id, str) and run_id:
-            sanitized.setdefault("links", _run_links(run_id))
+            sanitized.setdefault("links", run_links(run_id))
         return sanitized
     if isinstance(value, list):
         return [_sanitize(item) for item in value]
     return value
 
 
-def _run_links(run_id: str) -> dict[str, str]:
+def run_links(run_id: str) -> dict[str, str]:
     return {
         "run": f"/v1/runs/{run_id}",
         "result": f"/v1/runs/{run_id}/result",

@@ -2,8 +2,27 @@ from __future__ import annotations
 
 import json
 import shutil
+import time
 from dataclasses import dataclass
 from pathlib import Path
+
+from ocr_engine_api.responses import run_links
+
+
+RUN_STATUS_QUEUED = "queued"
+RUN_STATUS_RUNNING = "running"
+RUN_STATUS_COMPLETED = "completed"
+RUN_STATUS_FAILED = "failed"
+RUN_STATUS_CANCELLED = "cancelled"
+ACTIVE_RUN_STATUSES = {RUN_STATUS_QUEUED, RUN_STATUS_RUNNING}
+FAILED_RUN_STATUSES = {RUN_STATUS_FAILED}
+VALID_RUN_STATUSES = {
+    RUN_STATUS_QUEUED,
+    RUN_STATUS_RUNNING,
+    RUN_STATUS_COMPLETED,
+    RUN_STATUS_FAILED,
+    RUN_STATUS_CANCELLED,
+}
 
 
 @dataclass(frozen=True)
@@ -49,6 +68,80 @@ class RunRepository:
         detail["artifacts"] = artifacts[:20]
         return detail
 
+    def create_status(self, run_id: str, *, status: str = RUN_STATUS_QUEUED) -> dict:
+        if status not in VALID_RUN_STATUSES:
+            raise RunRepositoryError(400, "INVALID_RUN_STATUS", "Invalid run status")
+        now = time.time()
+        run_dir = self.resolve_run_dir(run_id)
+        run_dir.mkdir(parents=True, exist_ok=True)
+        status_payload = {
+            "run_id": run_id,
+            "status": status,
+            "created_at": now,
+            "started_at": now if status == RUN_STATUS_RUNNING else None,
+            "completed_at": now if status in {RUN_STATUS_COMPLETED, RUN_STATUS_FAILED} else None,
+            "updated_at": now,
+            "progress": None,
+            "error": None,
+            "links": run_links(run_id),
+        }
+        self._write_status(run_id, status_payload)
+        return status_payload
+
+    def update_status(
+        self,
+        run_id: str,
+        *,
+        status: str | None = None,
+        progress: dict | None = None,
+        error: dict | None = None,
+    ) -> dict:
+        if status is not None and status not in VALID_RUN_STATUSES:
+            raise RunRepositoryError(400, "INVALID_RUN_STATUS", "Invalid run status")
+
+        current = self.get_status(run_id)
+        now = time.time()
+        next_status = status or current.get("status") or RUN_STATUS_QUEUED
+        current["status"] = next_status
+        current["updated_at"] = now
+        current["links"] = run_links(run_id)
+
+        if progress is not None:
+            current["progress"] = progress
+        if error is not None:
+            current["error"] = error
+        elif next_status != RUN_STATUS_FAILED:
+            current["error"] = None
+
+        if next_status == RUN_STATUS_RUNNING and current.get("started_at") is None:
+            current["started_at"] = now
+        if next_status in {RUN_STATUS_COMPLETED, RUN_STATUS_FAILED, RUN_STATUS_CANCELLED}:
+            current["completed_at"] = current.get("completed_at") or now
+
+        self._write_status(run_id, current)
+        return current
+
+    def get_status(self, run_id: str) -> dict:
+        run_dir = self.resolve_run_dir(run_id)
+        if not run_dir.exists():
+            raise RunRepositoryError(404, "RUN_NOT_FOUND", "Run not found")
+        status = _read_optional_json(run_dir / "status.json")
+        if status is None:
+            return {
+                "run_id": run_id,
+                "status": RUN_STATUS_COMPLETED if (run_dir / "result.json").exists() else None,
+                "created_at": None,
+                "started_at": None,
+                "completed_at": None,
+                "updated_at": run_dir.stat().st_mtime,
+                "progress": None,
+                "error": None,
+                "links": run_links(run_id),
+            }
+        status.setdefault("run_id", run_id)
+        status.setdefault("links", run_links(run_id))
+        return status
+
     def delete_run(self, run_id: str) -> dict:
         run_dir = self.resolve_run_dir(run_id)
         if not run_dir.exists():
@@ -67,6 +160,11 @@ class RunRepository:
         return self._read_json(self.resolve_run_dir(run_id) / "trace.json", "Trace not found")
 
     def get_result(self, run_id: str) -> dict:
+        status = self.get_status(run_id)
+        if status.get("status") in ACTIVE_RUN_STATUSES:
+            raise RunRepositoryError(409, "RUN_NOT_COMPLETED", "Run is not completed yet")
+        if status.get("status") in FAILED_RUN_STATUSES:
+            raise RunRepositoryError(422, "RUN_FAILED", "Run failed")
         return self._read_json(self.resolve_run_dir(run_id) / "result.json", "Result not found")
 
     def list_artifacts(self, run_id: str, *, limit: int = 200) -> dict:
@@ -118,13 +216,28 @@ class RunRepository:
             raise RunRepositoryError(500, "INVALID_RUN_JSON", f"Expected JSON object: {path.name}")
         return data
 
+    def _write_status(self, run_id: str, status: dict) -> None:
+        status_path = self.resolve_run_dir(run_id) / "status.json"
+        status_path.parent.mkdir(parents=True, exist_ok=True)
+        tmp_path = status_path.with_suffix(".json.tmp")
+        tmp_path.write_text(json.dumps(status, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+        tmp_path.replace(status_path)
+
     def _run_summary(self, run_dir: Path) -> dict:
         result_path = run_dir / "result.json"
         trace_path = run_dir / "trace.json"
         input_dir = run_dir / "input"
         result = _read_optional_json(result_path)
+        status = _read_optional_json(run_dir / "status.json") or {}
+        run_status = status.get("status")
+        if run_status is None and result_path.exists():
+            run_status = RUN_STATUS_COMPLETED
         return {
             "run_id": run_dir.name,
+            "status": run_status,
+            "progress": status.get("progress"),
+            "error": status.get("error"),
+            "links": status.get("links") or run_links(run_dir.name),
             "run_dir": str(run_dir),
             "input_dir": str(input_dir),
             "artifacts_dir": str(run_dir / "artifacts"),

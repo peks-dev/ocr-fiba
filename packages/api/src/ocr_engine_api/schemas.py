@@ -33,3 +33,10 @@ class RunFullPipelineRequest(BaseModel):
     run_id: str | None = None
     runs_dir: str = "runs"
     options: PipelineOptions = Field(default_factory=PipelineOptions)
+
+
+class CreateRunRequest(BaseModel):
+    image_path: str
+    run_id: str | None = None
+    runs_dir: str = "runs"
+    options: PipelineOptions = Field(default_factory=PipelineOptions)

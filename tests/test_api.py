@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import json
 import tempfile
+import time
 import unittest
 from pathlib import Path
 from unittest.mock import patch
@@ -14,6 +15,7 @@ from ocr_engine_api.main import create_app
 from ocr_engine_api.responses import sanitize_for_public_response
 from ocr_engine_api.routes.pipeline import _parse_options_json, upload_and_run_full_pipeline
 from ocr_engine_api.routes.runs import (
+    create_run,
     list_runs,
     delete_run,
     get_run,
@@ -21,7 +23,9 @@ from ocr_engine_api.routes.runs import (
     get_run_result,
     get_run_trace,
     list_run_artifacts,
+    upload_and_create_run,
 )
+from ocr_engine_api.schemas import CreateRunRequest
 from ocr_engine_api.settings import get_api_settings, resolve_runs_dir
 from ocr_engine_core.types import Artifact, RunContext, ToolResult
 
@@ -388,6 +392,54 @@ class ApiTest(unittest.TestCase):
             self.assertNotIn("artifacts_dir", response["data"])
             self.assertNotIn("path", response["artifacts"][0])
 
+    def test_async_upload_creates_queued_run_and_background_completes(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            fake_file = FakeUploadFile("sheet.jpg", b"image")
+
+            with patch("ocr_engine_api.services.run_executor.OcrToolbox", FakeToolbox):
+                response = run_async(
+                    upload_and_create_run(
+                        file=fake_file,
+                        run_id="run_async",
+                        runs_dir=tmp,
+                        options_json=None,
+                    )
+                )
+                queued = run_async(get_run("run_async", runs_dir=tmp))
+                completed = wait_for_status("run_async", "completed", tmp)
+                result = run_async(get_run_result("run_async", runs_dir=tmp))
+
+            self.assertTrue(response["success"])
+            self.assertEqual(response["run_id"], "run_async")
+            self.assertEqual(response["status"], "queued")
+            self.assertIn(queued["status"], {"queued", "running", "completed"})
+            self.assertEqual(completed["status"], "completed")
+            self.assertEqual(result["match_status"], "success")
+            self.assertTrue((Path(tmp) / "run_async" / "status.json").exists())
+
+    def test_async_create_run_from_server_path(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            image_path = Path(tmp) / "sheet.jpg"
+            runs_dir = Path(tmp) / "runs"
+            image_path.write_bytes(b"image")
+
+            with patch("ocr_engine_api.services.run_executor.OcrToolbox", FakeToolbox):
+                response = run_async(
+                    create_run(
+                        CreateRunRequest(
+                            image_path=str(image_path),
+                            run_id="run_async_path",
+                            runs_dir=str(runs_dir),
+                        ),
+                    )
+                )
+                wait_for_status("run_async_path", "completed", str(runs_dir))
+
+            self.assertTrue(response["success"])
+            self.assertEqual(response["run_id"], "run_async_path")
+            self.assertEqual(response["status"], "queued")
+            self.assertTrue((runs_dir / "run_async_path" / "result.json").exists())
+
 
 class FakeToolbox:
     def __init__(self, config) -> None:
@@ -396,7 +448,16 @@ class FakeToolbox:
     def create_context(self, image_path, output_dir=None, *, run_id=None, runs_dir=Path("runs"), use_run_layout=False):
         return RunContext.create_run(Path(image_path), Path(runs_dir), run_id=run_id)
 
-    def run_full_pipeline(self, image_path, output_dir=None, *, run_id=None, runs_dir=Path("runs"), use_run_layout=False):
+    def run_full_pipeline(
+        self,
+        image_path,
+        output_dir=None,
+        *,
+        run_id=None,
+        runs_dir=Path("runs"),
+        use_run_layout=False,
+        progress_callback=None,
+    ):
         context = RunContext.create_run(Path(image_path), Path(runs_dir), run_id=run_id)
         context.ensure_dirs()
         context.result_path.write_text(json.dumps({"match_status": "success"}), encoding="utf-8")
@@ -422,6 +483,17 @@ def run_async(coro):
     import asyncio
 
     return asyncio.run(coro)
+
+
+def wait_for_status(run_id: str, expected_status: str, runs_dir: str, *, timeout: float = 2.0) -> dict:
+    deadline = time.monotonic() + timeout
+    last_response = None
+    while time.monotonic() < deadline:
+        last_response = run_async(get_run(run_id, runs_dir=runs_dir))
+        if last_response.get("status") == expected_status:
+            return last_response
+        time.sleep(0.01)
+    raise AssertionError(f"Run {run_id} did not reach {expected_status}: {last_response}")
 
 
 class FakeUploadFile:
