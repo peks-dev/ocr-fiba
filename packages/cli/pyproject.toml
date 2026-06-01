@@ -1,0 +1,21 @@
+[project]
+name = "ocr-engine-cli"
+version = "0.1.0"
+description = "CLI tools for the FIBA OCR engine"
+requires-python = ">=3.12"
+dependencies = [
+    "ocr-engine-core",
+]
+
+[project.scripts]
+ocr-run = "ocr_engine_cli.run_pipeline:main"
+ocr-dataset = "ocr_engine_cli.run_dataset:main"
+ocr-binarize = "ocr_engine_cli.binarize_image:main"
+ocr-progressive-score = "ocr_engine_cli.cv_progressive_score:main"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/ocr_engine_cli"]

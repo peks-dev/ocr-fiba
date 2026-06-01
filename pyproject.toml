@@ -1,15 +1,34 @@
 [project]
-name = "ocr-engine"
+name = "ocr-engine-workspace"
 version = "0.1.0"
-description = "FIBA scoresheet OCR pipeline — model-agnostic extraction engine"
+description = "FIBA scoresheet OCR monorepo workspace"
 requires-python = ">=3.12"
 dependencies = [
-    "fastapi>=0.115",
-    "fastmcp==3.2.4",
-    "opencv-python-headless>=4.10",
-    "numpy>=2.0",
-    "Pillow>=11.0",
-    "python-multipart>=0.0.9",
-    "requests>=2.32",
-    "uvicorn>=0.30",
+    "ocr-engine-core",
+    "ocr-engine-api",
+    "ocr-engine-cli",
+    "ocr-engine-mcp",
+]
+
+[tool.uv.workspace]
+members = [
+    "packages/core-engine",
+    "packages/api",
+    "packages/cli",
+    "packages/mcp",
+]
+
+[tool.uv.sources]
+ocr-engine-core = { workspace = true }
+ocr-engine-api = { workspace = true }
+ocr-engine-cli = { workspace = true }
+ocr-engine-mcp = { workspace = true }
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = [
+    "packages/core-engine/src",
+    "packages/api/src",
+    "packages/cli/src",
+    "packages/mcp/src",
 ]
