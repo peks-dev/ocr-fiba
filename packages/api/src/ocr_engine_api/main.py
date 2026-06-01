@@ -6,7 +6,8 @@ from fastapi import FastAPI, Request
 from fastapi.responses import JSONResponse
 
 from ocr_engine_api.auth import is_auth_exempt, is_authorized, unauthorized_response
-from ocr_engine_api.routes import runs
+from ocr_engine_api.auth_api_key import is_api_key_request, validate_api_key
+from ocr_engine_api.routes import me, runs
 from ocr_engine_api.settings import get_api_settings
 from ocr_engine_core.utils.image_utils import load_dotenv
 
@@ -21,10 +22,26 @@ def create_app() -> FastAPI:
     )
     app.include_router(runs.router)
 
+    if settings.has_supabase:
+        app.include_router(me.router)
+
     @app.middleware("http")
     async def api_key_auth(request: Request, call_next):
         if is_auth_exempt(request.url.path):
             return await call_next(request)
+
+        # /v1/me/* endpoints handle their own auth via Supabase JWT dependency
+        if request.url.path.startswith("/v1/me/"):
+            return await call_next(request)
+
+        # API key validation: Supabase-backed or legacy static key
+        if settings.has_supabase and is_api_key_request(request):
+            result = validate_api_key(request)
+            if result is not None:
+                return result
+            return await call_next(request)
+
+        # Fallback: static bearer key (development / legacy)
         if not is_authorized(request.headers.get("authorization", ""), settings.api_key):
             return unauthorized_response()
         return await call_next(request)

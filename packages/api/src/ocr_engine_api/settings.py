@@ -11,6 +11,9 @@ class ApiSettings:
     api_key: str | None
     runs_dir: Path
     max_upload_mb: int
+    supabase_url: str
+    supabase_service_key: str
+    supabase_jwt_secret: str
 
     @property
     def is_production(self) -> bool:
@@ -20,6 +23,10 @@ class ApiSettings:
     def max_upload_bytes(self) -> int:
         return self.max_upload_mb * 1024 * 1024
 
+    @property
+    def has_supabase(self) -> bool:
+        return bool(self.supabase_url and self.supabase_service_key and self.supabase_jwt_secret)
+
 
 def get_api_settings() -> ApiSettings:
     env = os.getenv("OCR_ENV", "development").strip().lower() or "development"
@@ -28,6 +35,9 @@ def get_api_settings() -> ApiSettings:
         api_key=os.getenv("OCR_ENGINE_API_KEY"),
         runs_dir=Path(os.getenv("OCR_RUNS_DIR", "runs")),
         max_upload_mb=int(os.getenv("OCR_MAX_UPLOAD_MB", "20")),
+        supabase_url=os.getenv("SUPABASE_URL", ""),
+        supabase_service_key=os.getenv("SUPABASE_SERVICE_KEY", ""),
+        supabase_jwt_secret=os.getenv("SUPABASE_JWT_SECRET", ""),
     )
     validate_api_settings(settings)
     return settings
