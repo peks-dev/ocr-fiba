@@ -6,7 +6,7 @@ from ocr_engine_api.api_keys import (
     generate_api_key,
     get_account_by_supabase_user_id,
     list_api_keys,
-    revoke_api_key,
+    delete_api_key as delete_api_key_record,
     store_api_key,
 )
 from ocr_engine_api.auth_supabase import require_supabase_user
@@ -84,9 +84,9 @@ async def delete_api_key(
     key_id: str,
     user: dict = Depends(require_supabase_user),
 ) -> dict:
-    """Revoke an API key by its ID."""
+    """Delete an API key by its ID."""
     account_id = _get_account_id(user)
-    result = revoke_api_key(key_id, account_id)
+    result = delete_api_key_record(key_id, account_id)
     if not result:
         raise error_response(404, "API_KEY_NOT_FOUND", "API key not found or does not belong to this account")
-    return {"success": True, "key_id": key_id, "status": "revoked"}
+    return {"success": True, "key_id": key_id, "status": "deleted"}

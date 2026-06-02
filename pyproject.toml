@@ -32,3 +32,11 @@ pythonpath = [
     "packages/cli/src",
     "packages/mcp/src",
 ]
+
+[dependency-groups]
+dev = [
+    "pytest>=9.0.3",
+]
+
+[tool.ocr_engine.workspace]
+web = "packages/web"

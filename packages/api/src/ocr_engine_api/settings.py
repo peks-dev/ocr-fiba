@@ -13,7 +13,9 @@ class ApiSettings:
     max_upload_mb: int
     supabase_url: str
     supabase_service_key: str
+    supabase_publishable_key: str
     supabase_jwt_secret: str
+    cors_origins: tuple[str, ...]
 
     @property
     def is_production(self) -> bool:
@@ -37,7 +39,14 @@ def get_api_settings() -> ApiSettings:
         max_upload_mb=int(os.getenv("OCR_MAX_UPLOAD_MB", "20")),
         supabase_url=os.getenv("SUPABASE_URL", ""),
         supabase_service_key=os.getenv("SUPABASE_SERVICE_KEY", ""),
+        supabase_publishable_key=(
+            os.getenv("SUPABASE_PUBLISHABLE_KEY")
+            or os.getenv("SUPABASE_ANON_KEY")
+            or os.getenv("NEXT_PUBLIC_SUPABASE_ANON_KEY")
+            or ""
+        ),
         supabase_jwt_secret=os.getenv("SUPABASE_JWT_SECRET", ""),
+        cors_origins=parse_cors_origins(os.getenv("OCR_CORS_ORIGINS", "http://localhost:3000,http://127.0.0.1:3000")),
     )
     validate_api_settings(settings)
     return settings
@@ -55,3 +64,8 @@ def resolve_runs_dir(requested_runs_dir: str | Path | None = None) -> Path:
     if settings.is_production:
         return settings.runs_dir
     return Path(requested_runs_dir) if requested_runs_dir else settings.runs_dir
+
+
+def parse_cors_origins(value: str) -> tuple[str, ...]:
+    """Parse comma-separated CORS origins from environment."""
+    return tuple(origin.strip() for origin in value.split(",") if origin.strip())

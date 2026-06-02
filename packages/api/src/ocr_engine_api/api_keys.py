@@ -2,7 +2,6 @@ from __future__ import annotations
 
 import hashlib
 import secrets
-from datetime import datetime, timezone
 
 from ocr_engine_api.supabase_client import get_supabase_client
 
@@ -45,15 +44,12 @@ def store_api_key(account_id: str, key_hash: str, key_prefix: str, name: str = "
     return result.data[0] if result.data else {}
 
 
-def revoke_api_key(key_id: str, account_id: str) -> dict:
-    """Mark an API key as revoked. Returns the updated row."""
+def delete_api_key(key_id: str, account_id: str) -> dict:
+    """Delete an API key row. Returns the deleted row when available."""
     client = get_supabase_client()
     result = (
         client.table("api_keys")
-        .update({
-            "status": "revoked",
-            "revoked_at": datetime.now(timezone.utc).isoformat(),
-        })
+        .delete()
         .eq("id", key_id)
         .eq("account_id", account_id)
         .execute()
