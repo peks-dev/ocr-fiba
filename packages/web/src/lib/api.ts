@@ -14,6 +14,17 @@ export type ApiKeyRecord = {
 
 export type ApiEnvelope<T> = T & { success: boolean };
 
+export type RunStatus = "queued" | "pending" | "running" | "completed" | "failed" | "cancelled" | "skipped" | string;
+
+export type RunRecord = {
+  success?: boolean;
+  run_id: string;
+  status: RunStatus;
+  created_at?: string;
+  updated_at?: string;
+  error?: unknown;
+};
+
 export class OcrApiError extends Error {
   constructor(
     message: string,
@@ -32,11 +43,7 @@ export async function apiFetch<T>(
 ): Promise<T> {
   const response = await fetch(`${siteConfig.apiBaseUrl}${path}`, {
     ...init,
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${session.access_token}`,
-      ...(init.headers || {}),
-    },
+    headers: buildHeaders(session, init),
     cache: "no-store",
   });
 
@@ -50,6 +57,17 @@ export async function apiFetch<T>(
   }
 
   return payload as T;
+}
+
+function buildHeaders(session: Pick<Session, "access_token">, init: RequestInit) {
+  const headers = new Headers(init.headers);
+  headers.set("Authorization", `Bearer ${session.access_token}`);
+
+  if (!(init.body instanceof FormData) && !headers.has("Content-Type")) {
+    headers.set("Content-Type", "application/json");
+  }
+
+  return headers;
 }
 
 export async function listApiKeys(session: Pick<Session, "access_token">) {
@@ -77,4 +95,23 @@ export async function deleteApiKey(session: Pick<Session, "access_token">, keyId
   return apiFetch<ApiEnvelope<{ key_id: string; status: "deleted" | string }>>(`/v1/me/api-keys/${keyId}`, session, {
     method: "DELETE",
   });
+}
+
+
+export async function uploadRun(session: Pick<Session, "access_token">, file: File) {
+  const formData = new FormData();
+  formData.append("file", file);
+  return apiFetch<ApiEnvelope<RunRecord>>("/v1/runs/upload", session, {
+    method: "POST",
+    body: formData,
+    headers: {},
+  });
+}
+
+export async function getRun(session: Pick<Session, "access_token">, runId: string) {
+  return apiFetch<RunRecord>(`/v1/runs/${encodeURIComponent(runId)}`, session);
+}
+
+export async function getRunResult<T>(session: Pick<Session, "access_token">, runId: string) {
+  return apiFetch<T>(`/v1/runs/${encodeURIComponent(runId)}/result`, session);
 }

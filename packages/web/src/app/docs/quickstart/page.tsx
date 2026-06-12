@@ -23,7 +23,7 @@ const mcpExample = `{
 }`;
 
 function CodeBlock({ children }: { children: string }) {
-  return <pre className="overflow-x-auto rounded-3xl border border-slate-200 bg-slate-950 p-5 text-sm leading-6 text-emerald-100 shadow-sm dark:border-slate-800"><code>{children}</code></pre>;
+  return <pre className="overflow-x-auto rounded-card bg-inverse p-4 text-sm leading-6 text-inverse-foreground shadow-sm sm:p-5"><code>{children}</code></pre>;
 }
 
 export default async function QuickstartPage() {
@@ -33,17 +33,17 @@ export default async function QuickstartPage() {
   } = await supabase.auth.getUser();
 
   return (
-    <article className="space-y-8">
+    <article className="space-y-6 sm:space-y-8">
       <div>
-        <p className="text-sm font-semibold uppercase tracking-[0.22em] text-emerald-500">Quickstart</p>
-        <h1 className="mt-3 text-4xl font-semibold tracking-tight text-slate-950 dark:text-white">Use your OCR API key locally</h1>
-        <p className="mt-4 max-w-3xl text-base leading-7 text-slate-600 dark:text-slate-300">
-          Signed in as <span className="font-semibold text-slate-900 dark:text-white">{user?.email}</span>. Generate a key in the dashboard, copy it once, then use it with the local API and MCP server.
+        <p className="text-xs font-semibold uppercase tracking-[0.22em] text-primary-deep sm:text-sm">Quickstart</p>
+        <h1 className="mt-3 text-3xl font-semibold tracking-tight text-ink sm:text-4xl">Use your OCR API key locally</h1>
+        <p className="mt-4 max-w-3xl text-sm leading-6 text-muted sm:text-base sm:leading-7">
+          Signed in as <span className="font-semibold text-ink">{user?.email}</span>. Generate a key in the dashboard, copy it once, then use it with the local API and MCP server.
         </p>
       </div>
 
-      <section className="grid gap-5 rounded-3xl border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-800 dark:bg-slate-950">
-        <h2 className="text-2xl font-semibold text-slate-950 dark:text-white">1. Start local services</h2>
+      <section className="grid gap-5 rounded-panel border border-border bg-surface p-5 shadow-sm sm:p-6">
+        <h2 className="text-xl font-semibold text-ink sm:text-2xl">1. Start local services</h2>
         <CodeBlock>{`# API
 uv run ocr-api
 
@@ -51,20 +51,20 @@ uv run ocr-api
 uv run python mcp_server.py`}</CodeBlock>
       </section>
 
-      <section className="grid gap-5 rounded-3xl border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-800 dark:bg-slate-950">
-        <h2 className="text-2xl font-semibold text-slate-950 dark:text-white">2. Submit a scoresheet</h2>
+      <section className="grid gap-5 rounded-panel border border-border bg-surface p-5 shadow-sm sm:p-6">
+        <h2 className="text-xl font-semibold text-ink sm:text-2xl">2. Submit a scoresheet</h2>
         <CodeBlock>{apiExample}</CodeBlock>
       </section>
 
-      <section className="grid gap-5 rounded-3xl border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-800 dark:bg-slate-950">
-        <h2 className="text-2xl font-semibold text-slate-950 dark:text-white">3. Poll and fetch result</h2>
+      <section className="grid gap-5 rounded-panel border border-border bg-surface p-5 shadow-sm sm:p-6">
+        <h2 className="text-xl font-semibold text-ink sm:text-2xl">3. Poll and fetch result</h2>
         <CodeBlock>{pollExample}</CodeBlock>
         <CodeBlock>{resultExample}</CodeBlock>
       </section>
 
-      <section className="grid gap-5 rounded-3xl border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-800 dark:bg-slate-950">
-        <h2 className="text-2xl font-semibold text-slate-950 dark:text-white">4. MCP local config</h2>
-        <p className="text-sm leading-6 text-slate-600 dark:text-slate-300">Use the generated API key as the bearer token for local MCP smoke testing.</p>
+      <section className="grid gap-5 rounded-panel border border-border bg-surface p-5 shadow-sm sm:p-6">
+        <h2 className="text-xl font-semibold text-ink sm:text-2xl">4. MCP local config</h2>
+        <p className="text-sm leading-6 text-muted">Use the generated API key as the bearer token for local MCP smoke testing.</p>
         <CodeBlock>{mcpExample}</CodeBlock>
       </section>
     </article>

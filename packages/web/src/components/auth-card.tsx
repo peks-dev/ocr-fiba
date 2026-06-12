@@ -58,52 +58,58 @@ export function AuthCard() {
   }
 
   return (
-    <div className="w-full max-w-md rounded-3xl border border-white/10 bg-white/90 p-8 shadow-2xl shadow-slate-950/10 backdrop-blur dark:bg-slate-950/80">
-      <div className="mb-8">
-        <p className="text-sm font-semibold uppercase tracking-[0.24em] text-emerald-500">Beta access</p>
-        <h1 className="mt-3 text-3xl font-semibold tracking-tight text-slate-950 dark:text-white">
+    <div className="w-full max-w-md rounded-panel border border-border bg-surface p-6 shadow-xl shadow-ink/5 sm:p-8">
+      <div className="mb-7">
+        <p className="text-xs font-semibold uppercase tracking-[0.24em] text-primary-deep">Beta access</p>
+        <h1 className="mt-3 text-2xl font-semibold tracking-tight text-ink sm:text-3xl">
           {mode === "signup" ? "Create your OCR account" : "Welcome back"}
         </h1>
-        <p className="mt-3 text-sm leading-6 text-slate-600 dark:text-slate-300">
+        <p className="mt-3 text-sm leading-6 text-muted">
           Sign up or log in to generate API keys and start using the FIBA scoresheet OCR API locally.
         </p>
       </div>
 
-      <div className="mb-6 grid grid-cols-2 rounded-full bg-slate-100 p-1 text-sm font-medium dark:bg-slate-900">
+      <div className="mb-6 grid grid-cols-2 rounded-full bg-elevated p-1 text-sm font-medium" role="tablist" aria-label="Authentication mode">
         <button
           type="button"
+          role="tab"
+          aria-selected={mode === "signup"}
           onClick={() => setMode("signup")}
-          className={`rounded-full px-4 py-2 transition ${mode === "signup" ? "bg-white text-slate-950 shadow-sm dark:bg-slate-800 dark:text-white" : "text-slate-500"}`}
+          className={`rounded-full px-4 py-2 transition ${mode === "signup" ? "bg-surface text-ink shadow-sm" : "text-faint hover:text-muted"}`}
         >
           Sign Up
         </button>
         <button
           type="button"
+          role="tab"
+          aria-selected={mode === "login"}
           onClick={() => setMode("login")}
-          className={`rounded-full px-4 py-2 transition ${mode === "login" ? "bg-white text-slate-950 shadow-sm dark:bg-slate-800 dark:text-white" : "text-slate-500"}`}
+          className={`rounded-full px-4 py-2 transition ${mode === "login" ? "bg-surface text-ink shadow-sm" : "text-faint hover:text-muted"}`}
         >
           Log In
         </button>
       </div>
 
       <form className="space-y-4" onSubmit={handleSubmit}>
-        <label className="block text-sm font-medium text-slate-700 dark:text-slate-200">
+        <label className="block text-sm font-medium text-ink">
           Email
           <input
-            className="mt-2 w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-slate-950 outline-none transition focus:border-emerald-400 focus:ring-4 focus:ring-emerald-400/10 dark:border-slate-800 dark:bg-slate-900 dark:text-white"
+            className="mt-2 w-full rounded-field border border-border bg-surface px-4 py-3 text-ink outline-none transition placeholder:text-faint focus:border-primary focus:ring-4 focus:ring-primary/15"
             type="email"
             autoComplete="email"
+            placeholder="you@example.com"
             value={email}
             onChange={(event) => setEmail(event.target.value)}
             required
           />
         </label>
-        <label className="block text-sm font-medium text-slate-700 dark:text-slate-200">
+        <label className="block text-sm font-medium text-ink">
           Password
           <input
-            className="mt-2 w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-slate-950 outline-none transition focus:border-emerald-400 focus:ring-4 focus:ring-emerald-400/10 dark:border-slate-800 dark:bg-slate-900 dark:text-white"
+            className="mt-2 w-full rounded-field border border-border bg-surface px-4 py-3 text-ink outline-none transition placeholder:text-faint focus:border-primary focus:ring-4 focus:ring-primary/15"
             type="password"
             autoComplete={mode === "signup" ? "new-password" : "current-password"}
+            placeholder={mode === "signup" ? "At least 6 characters" : "Your password"}
             minLength={6}
             value={password}
             onChange={(event) => setPassword(event.target.value)}
@@ -112,16 +118,16 @@ export function AuthCard() {
         </label>
 
         {error ? (
-          <p className="rounded-2xl bg-red-50 p-3 text-sm text-red-700 dark:bg-red-950/40 dark:text-red-200">
+          <p className="rounded-field bg-danger-soft p-3 text-sm text-danger" role="alert">
             {error.includes("Email not confirmed")
               ? "Email not confirmed. Please confirm the signup email in Supabase/email inbox, then log in with the same password."
               : error}
           </p>
         ) : null}
-        {message ? <p className="rounded-2xl bg-emerald-50 p-3 text-sm text-emerald-700 dark:bg-emerald-950/40 dark:text-emerald-200">{message}</p> : null}
+        {message ? <p className="rounded-field bg-success-soft p-3 text-sm text-success">{message}</p> : null}
 
         <button
-          className="w-full rounded-2xl bg-slate-950 px-5 py-3 font-semibold text-white transition hover:-translate-y-0.5 hover:bg-slate-800 disabled:cursor-not-allowed disabled:opacity-60 dark:bg-emerald-400 dark:text-slate-950 dark:hover:bg-emerald-300"
+          className="w-full rounded-field bg-primary px-5 py-3 font-semibold text-primary-contrast transition hover:bg-primary/85 disabled:cursor-not-allowed disabled:opacity-60"
           type="submit"
           disabled={isLoading}
         >

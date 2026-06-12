@@ -1,52 +1,147 @@
 @import "tailwindcss";
 
-:root {
-  --background: #f8fafc;
-  --foreground: #0f172a;
-}
+/* ============================================================================
+   DESIGN TOKENS
+   ----------------------------------------------------------------------------
+   To re-theme the whole app, swap ONLY the 5 palette colors below (and their
+   dark-mode values). Every component uses the semantic tokens derived from
+   them — never raw Tailwind colors.
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: Arial, Helvetica, sans-serif;
-  --font-mono: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+   Palette slots:
+     1. --palette-primary     brand color: CTAs, highlights, charts
+     2. --palette-accent      secondary highlight: gradients, decorative
+     3. --palette-ink         main text color
+     4. --palette-surface     cards / panels
+     5. --palette-background  page background
+
+   --palette-primary-contrast is the readable text color ON TOP of primary
+   (adjust it together with primary, e.g. white for a dark primary).
+
+   Typography: swap the next/font imports in src/app/layout.tsx — they feed
+   --font-display (headings) and --font-text (body) consumed below.
+   ========================================================================== */
+
+:root {
+  --palette-primary: #34d399;
+  --palette-primary-contrast: #022c22;
+  --palette-accent: #38bdf8;
+  --palette-ink: #0f172a;
+  --palette-surface: #ffffff;
+  --palette-background: #f8fafc;
+
+  /* Status colors live outside the palette on purpose: errors stay red and
+     warnings stay amber no matter the brand theme. */
+  --status-success: #047857;
+  --status-success-soft: #d1fae5;
+  --status-danger: #b91c1c;
+  --status-danger-soft: #fee2e2;
+  --status-warning: #b45309;
+  --status-warning-soft: #fef3c7;
+
+  /* Inverse panels (the dark hero/detail cards). They flip per mode so they
+     stay dark in both light and dark themes. */
+  --surface-inverse: #0f172a;
+  --on-inverse: #f8fafc;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #020617;
-    --foreground: #e2e8f0;
+    --palette-primary: #34d399;
+    --palette-primary-contrast: #022c22;
+    --palette-accent: #38bdf8;
+    --palette-ink: #e2e8f0;
+    --palette-surface: #0b1222;
+    --palette-background: #020617;
+
+    --status-success: #6ee7b7;
+    --status-success-soft: rgba(6, 78, 59, 0.45);
+    --status-danger: #fca5a5;
+    --status-danger-soft: rgba(127, 29, 29, 0.4);
+    --status-warning: #fcd34d;
+    --status-warning-soft: rgba(120, 53, 15, 0.45);
+
+    --surface-inverse: #0b1222;
+    --on-inverse: #e2e8f0;
   }
 }
 
-* {
-  box-sizing: border-box;
+@theme inline {
+  /* Semantic colors (the only colors components should use) */
+  --color-background: var(--palette-background);
+  --color-surface: var(--palette-surface);
+  --color-ink: var(--palette-ink);
+  --color-primary: var(--palette-primary);
+  --color-primary-contrast: var(--palette-primary-contrast);
+  --color-accent: var(--palette-accent);
+
+  /* Derived shades — recomputed automatically when the palette changes */
+  --color-primary-deep: color-mix(in oklab, var(--palette-primary) 65%, var(--palette-ink));
+  --color-muted: color-mix(in oklab, var(--palette-ink) 64%, var(--palette-background));
+  --color-faint: color-mix(in oklab, var(--palette-ink) 42%, var(--palette-background));
+  --color-border: color-mix(in oklab, var(--palette-ink) 13%, var(--palette-background));
+  --color-elevated: color-mix(in oklab, var(--palette-ink) 4%, var(--palette-surface));
+
+  --color-inverse: var(--surface-inverse);
+  --color-inverse-foreground: var(--on-inverse);
+
+  --color-success: var(--status-success);
+  --color-success-soft: var(--status-success-soft);
+  --color-danger: var(--status-danger);
+  --color-danger-soft: var(--status-danger-soft);
+  --color-warning: var(--status-warning);
+  --color-warning-soft: var(--status-warning-soft);
+
+  /* Typography */
+  --font-heading: var(--font-display), ui-sans-serif, system-ui, sans-serif;
+  --font-body: var(--font-text), ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--font-text), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+
+  /* Shape */
+  --radius-panel: 1.75rem;
+  --radius-card: 1.25rem;
+  --radius-field: 1rem;
 }
 
-html {
-  min-height: 100%;
-}
+@layer base {
+  * {
+    box-sizing: border-box;
+  }
 
-body {
-  min-height: 100%;
-  background:
-    radial-gradient(circle at top left, rgba(52, 211, 153, 0.18), transparent 32rem),
-    radial-gradient(circle at top right, rgba(56, 189, 248, 0.12), transparent 28rem),
-    var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
-}
+  html {
+    min-height: 100%;
+  }
 
-::selection {
-  background: rgba(52, 211, 153, 0.35);
-}
+  body {
+    min-height: 100%;
+    background:
+      radial-gradient(circle at top left, color-mix(in oklab, var(--palette-primary) 16%, transparent), transparent 32rem),
+      radial-gradient(circle at top right, color-mix(in oklab, var(--palette-accent) 11%, transparent), transparent 28rem),
+      var(--palette-background);
+    color: var(--palette-ink);
+    font-family: var(--font-body);
+  }
 
-button:not(:disabled),
-[role="button"]:not(:disabled),
-a[href] {
-  cursor: pointer;
-}
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: var(--font-heading);
+  }
 
-button:disabled {
-  cursor: not-allowed;
+  ::selection {
+    background: color-mix(in oklab, var(--palette-primary) 35%, transparent);
+  }
+
+  button:not(:disabled),
+  [role="button"]:not(:disabled),
+  a[href] {
+    cursor: pointer;
+  }
+
+  button:disabled {
+    cursor: not-allowed;
+  }
 }
