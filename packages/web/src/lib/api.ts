@@ -98,9 +98,16 @@ export async function deleteApiKey(session: Pick<Session, "access_token">, keyId
 }
 
 
-export async function uploadRun(session: Pick<Session, "access_token">, file: File) {
+export async function uploadRun(
+  session: Pick<Session, "access_token">,
+  file: File,
+  options?: { validationPlugins?: string[] | "all" },
+) {
   const formData = new FormData();
   formData.append("file", file);
+  if (options?.validationPlugins) {
+    formData.append("options_json", JSON.stringify({ validation_plugins: options.validationPlugins }));
+  }
   return apiFetch<ApiEnvelope<RunRecord>>("/v1/runs/upload", session, {
     method: "POST",
     body: formData,
