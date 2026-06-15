@@ -11,6 +11,7 @@ const links = [
   { href: "/dashboard/api-keys", label: "Dashboard" },
   { href: "/dashboard/demos/single-player", label: "Single Player" },
   { href: "/dashboard/demos/referee", label: "Arbitros" },
+  { href: "/dashboard/demos/club", label: "Club" },
   { href: "/docs/quickstart", label: "Quickstart" },
 ];
 
