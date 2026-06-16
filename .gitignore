@@ -24,3 +24,11 @@ runs/
 .engram/
 dataset/
 dataset/results/
+
+# Graphify (version selected graphify-out artifacts, ignore temp/local state)
+graphify-out/.graphify_*
+graphify-out/.needs_update
+graphify-out/cost.json
+graphify-out/obsidian/
+graphify-out/cypher.txt
+graphify-out/*.tmp

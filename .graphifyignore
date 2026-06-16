@@ -1,0 +1,37 @@
+# Dependencias Web / JavaScript
+node_modules/
+dist/
+build/
+.next/
+
+# Entornos Python
+.venv/
+venv/
+env/
+__pycache__/
+.pytest_cache/
+.env
+
+# Imágenes crudas de FIBA para OCR (solo quieres mapear el código, no las fotos)
+dataset/
+raw_images/
+test_scans/
+score_sheets_samples/
+
+# Carpetas de estado propias de las herramientas de IA
+graphify-out/
+.engram/
+.claude/
+.agents/
+.codex/
+
+# Archivos compilados o exportados
+*.pdf
+*.csv
+
+# Lockfiles / generated metadata too noisy for graph context
+uv.lock
+package-lock.json
+pnpm-lock.yaml
+yarn.lock
+*.tsbuildinfo

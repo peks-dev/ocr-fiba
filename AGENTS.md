@@ -201,6 +201,49 @@ These are the **only** SKILL.md files justified by repeated patterns (each appea
 | Web dashboard | `packages/web/` | Next.js 15 app, Supabase auth, API key management |
 | Database | `supabase/` | Versioned SQL migrations |
 
+
+## Graphify workflow
+
+This repo treats Graphify as a **versioned agent-context artifact**, not just a local cache. The goal is for future agents to answer codebase questions from `graphify-out/` without rebuilding from scratch.
+
+### What to keep in git
+
+Track:
+
+- `.graphifyignore` — corpus exclusions for graph generation.
+- `graphify-out/graph.json` — raw graph used by Graphify queries.
+- `graphify-out/GRAPH_REPORT.md` — human/agent-readable graph report.
+- `graphify-out/manifest.json` — file manifest used for incremental updates.
+- `graphify-out/graph.html` — optional interactive graph for manual inspection.
+
+Do **not** track temporary/local Graphify state (`graphify-out/.graphify_*`, `cost.json`, generated Obsidian exports, cypher exports, temp chunks). `.gitignore` contains the exact ignore rules.
+
+### Required process before commits that change code structure
+
+When a change adds/removes/renames modules, routes, components, public functions, or architecture-relevant docs:
+
+```bash
+graphify . --update
+# then inspect and stage code + selected graphify artifacts together
+git add <changed files> .graphifyignore graphify-out/graph.json graphify-out/GRAPH_REPORT.md graphify-out/manifest.json graphify-out/graph.html
+```
+
+Commit the graph update **in the same commit as the code change** when it describes that change. For graph-only refreshes, use a separate commit such as:
+
+```text
+chore(repo): update graphify graph
+```
+
+### Hooks policy
+
+Do not use Graphify post-commit/post-checkout hooks in this repo. They run after the commit and leave generated artifacts dirty, which is the wrong timing for versioned graph outputs. Prefer explicit `graphify . --update` before staging.
+
+If a local hook exists, remove it with:
+
+```bash
+graphify hook uninstall
+```
+
 ## Out of scope (do not touch)
 
 - `runs/`, `outputs/`, `dataset/results/` — runtime artifacts, gitignored.
