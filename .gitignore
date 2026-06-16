@@ -30,5 +30,6 @@ graphify-out/.graphify_*
 graphify-out/.needs_update
 graphify-out/cost.json
 graphify-out/obsidian/
+graphify-out/cache/
 graphify-out/cypher.txt
 graphify-out/*.tmp

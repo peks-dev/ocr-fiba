@@ -223,7 +223,7 @@ Do **not** track temporary/local Graphify state (`graphify-out/.graphify_*`, `co
 When a change adds/removes/renames modules, routes, components, public functions, or architecture-relevant docs:
 
 ```bash
-graphify . --update
+graphify update .
 # then inspect and stage code + selected graphify artifacts together
 git add <changed files> .graphifyignore graphify-out/graph.json graphify-out/GRAPH_REPORT.md graphify-out/manifest.json graphify-out/graph.html
 ```
@@ -236,7 +236,7 @@ chore(repo): update graphify graph
 
 ### Hooks policy
 
-Do not use Graphify post-commit/post-checkout hooks in this repo. They run after the commit and leave generated artifacts dirty, which is the wrong timing for versioned graph outputs. Prefer explicit `graphify . --update` before staging.
+Do not use Graphify post-commit/post-checkout hooks in this repo. They run after the commit and leave generated artifacts dirty, which is the wrong timing for versioned graph outputs. Prefer explicit `graphify update .` before staging.
 
 If a local hook exists, remove it with:
 
