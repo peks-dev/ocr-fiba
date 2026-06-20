@@ -5,7 +5,7 @@
 
 ## Context
 
-Next.js 15 dashboard for the FIBA OCR engine. Currently ships a minimal Supabase-authenticated dashboard for managing API keys and a `/docs/quickstart` page. Future DEMO pages (single-player stats, referee helper, club analysis) will live here too.
+Next.js 15 web app for the FIBA OCR engine. It now separates the admin surface (`/admin`, including API key management) from invite-only tester demos under `/test/player`, `/test/referee`, and `/test/club`, plus a `/docs/quickstart` page.
 
 ## Stack
 
@@ -30,9 +30,15 @@ packages/web/
     │   ├── globals.css             # Tailwind entry
     │   ├── login/page.tsx          # Login + signup (AuthCard)
     │   ├── auth/callback/route.ts  # Supabase email-confirmation code exchange
-    │   ├── dashboard/
-    │   │   ├── layout.tsx          # Auth gate: redirects to /login if no user
-    │   │   └── api-keys/page.tsx   # ApiKeysPanel
+    │   ├── admin/
+    │   │   ├── layout.tsx          # Admin auth gate + Nav
+    │   │   ├── page.tsx            # Tester invitations + account overview
+    │   │   └── api-keys/page.tsx   # ApiKeysPanel for admins
+    │   ├── test/
+    │   │   ├── layout.tsx          # Signed-in tester/admin Nav
+    │   │   ├── player/             # Single-player demo
+    │   │   ├── referee/            # Referee helper demo
+    │   │   └── club/               # Club analysis demo
     │   └── docs/
     │       ├── layout.tsx
     │       └── quickstart/         # Public quickstart (does not require login)
@@ -58,20 +64,19 @@ packages/web/
 - Components are server components unless they need state, effects, or browser APIs — then add `'use client'` at the top.
 - All Supabase I/O goes through `lib/supabase/server.ts` (RSC) or `lib/supabase/client.ts` (client). **Never** instantiate `createClient` directly in a component or page.
 
-### 2. Auth gate lives in `dashboard/layout.tsx`
+### 2. Auth and role gates live in shared layouts/helpers
 
-`app/dashboard/layout.tsx` is the **only** place that checks for a Supabase user on the server. If `user` is null, it calls `redirect("/login")`. Individual pages under `dashboard/*` do not re-check auth.
+`app/admin/layout.tsx` calls `requireAdminAccount()` and is the source of truth for admin-only pages. `app/test/layout.tsx` loads the signed-in account for navigation, while each demo segment (`app/test/<demo>/layout.tsx`) calls `requireDemoAccess("player" | "referee" | "club")`. Individual pages inside those segments should not duplicate auth checks.
 
 ```tsx
-// src/app/dashboard/layout.tsx — pattern
-const supabase = await createClient();
-const { data: { user } } = await supabase.auth.getUser();
-if (!user) redirect("/login");
+// src/app/admin/layout.tsx — pattern
+const { user, account } = await requireAdminAccount();
+return <Nav email={user.email} role={account.role} assignedDemo={account.assigned_demo} />;
 ```
 
 ### 3. API calls go through `lib/api.ts`
 
-Browser-side API calls use the helpers in `lib/api.ts`, which attach the API key as `Authorization: Bearer ocr_...`. The key is supplied by the dashboard UI (loaded server-side in the page that owns the keys list).
+Browser-side API calls use the helpers in `lib/api.ts`, which attach the API key as `Authorization: Bearer ocr_...`. API key management lives under `/admin/api-keys`; testers should not see API-key routes or nav links.
 
 ### 4. Toasts via `sonner`
 
@@ -103,7 +108,7 @@ A common bug in this app: an effect depending on `session`/`refresh` triggers a 
 - **NEVER** store an API key in localStorage or any client-side storage. The key is fetched per session from the server.
 - **NEVER** redirect on the client when the layout already redirects on the server.
 - New env vars prefixed with `NEXT_PUBLIC_` must be added to `lib/env.ts` with a typed accessor.
-- Components should not block the dashboard render waiting for non-essential data. Use `<Suspense>` with a fallback.
+- Components should not block the admin/test render waiting for non-essential data. Use `<Suspense>` with a fallback.
 
 ## Auto-invoke skills (per task)
 
@@ -118,9 +123,10 @@ A common bug in this app: an effect depending on `session`/`refresh` triggers a 
 
 ## References
 
-- `app/dashboard/layout.tsx` — auth gate
+- `app/admin/layout.tsx` — admin auth gate
+- `app/test/layout.tsx` and `app/test/<demo>/layout.tsx` — signed-in/demo gates
 - `lib/supabase/server.ts` — RSC Supabase client
 - `lib/supabase/client.ts` — browser Supabase client
 - `components/api-keys-panel.tsx` — fetch-once pattern for client effects
 - `components/nav.tsx` — `signOut` + toast pattern
-- `app/docs/quickstart/` — public docs structure
+- `app/docs/quickstart/` — docs structure

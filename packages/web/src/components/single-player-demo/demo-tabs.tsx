@@ -1,23 +1,28 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-const BASE_PATH = "/dashboard/demos/single-player";
+const DEFAULT_BASE_PATH = "/test/player";
 
-const tabs = [
-  { href: `${BASE_PATH}/capture`, label: "Capture game" },
-  { href: `${BASE_PATH}/progress`, label: "Progress" },
-  { href: `${BASE_PATH}/history`, label: "History" },
-];
-
-export function DemoTabs() {
+export function DemoTabs({ basePath = DEFAULT_BASE_PATH }: { basePath?: string }) {
   const pathname = usePathname();
+  const [currentPathname, setCurrentPathname] = useState<string | null>(null);
+  const tabs = [
+    { href: `${basePath}/capture`, label: "Capture game" },
+    { href: `${basePath}/progress`, label: "Progress" },
+    { href: `${basePath}/history`, label: "History" },
+  ];
+
+  useEffect(() => {
+    setCurrentPathname(pathname);
+  }, [pathname]);
 
   return (
     <nav className="-mx-1 mt-5 flex gap-2 overflow-x-auto px-1 pb-1 sm:mt-6">
       {tabs.map((tab) => {
-        const isActive = pathname.startsWith(tab.href);
+        const isActive = Boolean(currentPathname?.startsWith(tab.href));
         return (
           <Link
             key={tab.href}

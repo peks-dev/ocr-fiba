@@ -1,6 +1,6 @@
 # FIBA OCR Engine
 
-Monorepo for the FIBA scoresheet OCR engine. Extracts structured basketball game data from score sheet images and exposes the pipeline through an HTTP API, a CLI, an MCP server, and a Next.js dashboard.
+Monorepo for the FIBA scoresheet OCR engine. Extracts structured basketball game data from score sheet images and exposes the pipeline through an HTTP API, a CLI, an MCP server, and a Next.js web app.
 
 > **AI agents**: read [`AGENTS.md`](./AGENTS.md) instead — it contains the same project knowledge plus machine-actionable conventions, scopes, and auto-invoke skills.
 
@@ -13,7 +13,7 @@ Monorepo for the FIBA scoresheet OCR engine. Extracts structured basketball game
 │   ├── api/           # FastAPI HTTP adapter (depends on core-engine)
 │   ├── cli/           # Command-line tools (depends on core-engine)
 │   ├── mcp/           # MCP server adapter (talks to the API over HTTP)
-│   └── web/           # Next.js 15 dashboard (Supabase auth, API keys, quickstart)
+│   └── web/           # Next.js 15 web app (Supabase auth, admin, tester demos)
 ├── supabase/          # Versioned SQL migrations
 ├── scripts/           # Smoke tests and ops utilities
 ├── runs/              # Runtime output (gitignored, not in packages)
@@ -64,7 +64,7 @@ OCR_RUNS_DIR=runs
 OCR_MAX_UPLOAD_MB=20
 ```
 
-For the Supabase-backed web dashboard, also set:
+For the Supabase-backed web app, also set:
 
 ```bash
 SUPABASE_URL=...
@@ -105,7 +105,7 @@ MCP_TRANSPORT=http MCP_HOST=127.0.0.1 MCP_PORT=8001 \
   python -m adapters.mcp.server
 ```
 
-### Run the web dashboard
+### Run the web app
 
 ```bash
 cd packages/web

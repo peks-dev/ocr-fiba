@@ -7,20 +7,34 @@ import { toast } from "sonner";
 
 import { createClient } from "@/lib/supabase/client";
 
-const links = [
-  { href: "/dashboard/api-keys", label: "Dashboard" },
-  { href: "/dashboard/demos/single-player", label: "Single Player" },
-  { href: "/dashboard/demos/referee", label: "Arbitros" },
-  { href: "/dashboard/demos/club", label: "Club" },
+type AccountRole = "admin" | "tester";
+type AssignedDemo = "referee" | "player" | "club";
+
+const adminLinks = [
+  { href: "/admin", label: "Admin" },
+  { href: "/admin/api-keys", label: "API Keys" },
+  { href: "/test/player", label: "Single Player" },
+  { href: "/test/referee", label: "Arbitros" },
+  { href: "/test/club", label: "Club" },
   { href: "/docs/quickstart", label: "Quickstart" },
 ];
 
-export function Nav({ email }: { email?: string }) {
+const testerLinks: Record<AssignedDemo, { href: string; label: string }[]> = {
+  player: [{ href: "/test/player", label: "My Demo" }],
+  referee: [{ href: "/test/referee", label: "My Demo" }],
+  club: [{ href: "/test/club", label: "My Demo" }],
+};
+
+export function Nav({ email, role, assignedDemo }: { email?: string; role?: AccountRole; assignedDemo?: AssignedDemo | null }) {
   const pathname = usePathname();
+  const [currentPathname, setCurrentPathname] = useState<string | null>(null);
   const router = useRouter();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const links = role === "admin" ? adminLinks : assignedDemo ? testerLinks[assignedDemo] : [];
+  const homeHref = role === "admin" ? "/admin" : links[0]?.href || "/login";
 
   useEffect(() => {
+    setCurrentPathname(pathname);
     setIsMenuOpen(false);
   }, [pathname]);
 
@@ -37,13 +51,13 @@ export function Nav({ email }: { email?: string }) {
   }
 
   function isActive(href: string) {
-    return pathname === href || pathname.startsWith(`${href}/`);
+    return currentPathname === href || Boolean(currentPathname?.startsWith(`${href}/`));
   }
 
   return (
     <header className="sticky top-0 z-20 border-b border-border bg-surface/85 backdrop-blur-xl">
       <div className="mx-auto flex max-w-6xl items-center justify-between gap-3 px-4 py-3 sm:px-6">
-        <Link href="/dashboard/api-keys" className="flex items-center gap-3 font-heading font-semibold text-ink">
+        <Link href={homeHref} className="flex items-center gap-3 font-heading font-semibold text-ink">
           <span className="grid size-9 place-items-center rounded-card bg-primary text-sm text-primary-contrast">OCR</span>
           <span>FIBA OCR</span>
         </Link>

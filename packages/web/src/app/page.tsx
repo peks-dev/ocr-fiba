@@ -1,12 +1,8 @@
 import { redirect } from "next/navigation";
 
-import { createClient } from "@/lib/supabase/server";
+import { destinationForAccount, getCurrentUserAccount } from "@/lib/auth/account";
 
 export default async function Home() {
-  const supabase = await createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-
-  redirect(user ? "/dashboard/api-keys" : "/login");
+  const current = await getCurrentUserAccount();
+  redirect(current ? destinationForAccount(current.account) : "/login");
 }

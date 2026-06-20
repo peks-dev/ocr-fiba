@@ -7,10 +7,10 @@ import { readClubStore } from "./storage";
 import type { ClubStore } from "./types";
 import { EmptyState, MiniStat, Panel, ResultChip } from "./ui";
 
-const CAPTURE_PATH = "/dashboard/demos/club/capture";
+const DEFAULT_BASE_PATH = "/test/club";
 const INITIAL_STORE: ClubStore = { clubName: "My Club", roster: [], games: [] };
 
-export function OverviewClient() {
+export function OverviewClient({ basePath = DEFAULT_BASE_PATH }: { basePath?: string }) {
   const [store, setStore] = useState<ClubStore>(INITIAL_STORE);
   const [isBooting, setIsBooting] = useState(true);
 
@@ -25,12 +25,12 @@ export function OverviewClient() {
   const regular = [...summary].filter((item) => item.games >= 2).sort((a, b) => b.regularity - a.regularity)[0];
   const totalPoints = store.games.reduce((sum, game) => sum + game.stats.reduce((inner, stat) => inner + stat.totalPoints, 0), 0);
 
-  if (isBooting) return <Panel className="p-6 text-muted">Loading club dashboard...</Panel>;
+  if (isBooting) return <Panel className="p-6 text-muted">Loading club analysis...</Panel>;
 
   if (store.games.length === 0) {
     return (
       <Panel className="p-5 sm:p-8">
-        <EmptyState title="Import the first game to create your roster." description="Upload a FIBA scoresheet, choose your team, and the demo will create the roster from extracted player names automatically." ctaHref={CAPTURE_PATH} ctaLabel="Capture first game" />
+        <EmptyState title="Import the first game to create your roster." description="Upload a FIBA scoresheet, choose your team, and the demo will create the roster from extracted player names automatically." ctaHref={`${basePath}/capture`} ctaLabel="Capture first game" />
       </Panel>
     );
   }

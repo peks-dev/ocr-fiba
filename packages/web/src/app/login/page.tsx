@@ -3,10 +3,10 @@ import { Suspense } from "react";
 import { AuthCard } from "@/components/auth-card";
 
 const flowSteps = [
-  "Supabase Auth creates the beta user session",
-  "Database trigger provisions the account row",
-  "FastAPI issues hashed OCR API keys",
-  "Quickstart documents API and MCP usage",
+  "Admin sends a Supabase invitation",
+  "Tester creates a password from the invite link",
+  "Account role and assigned demo gate access",
+  "The demo runs OCR without exposing API keys",
 ];
 
 export default function LoginPage() {
@@ -39,7 +39,7 @@ export default function LoginPage() {
             <p className="text-sm font-semibold uppercase tracking-[0.3em] text-primary">Local-first beta</p>
             <h2 className="mt-6 max-w-lg text-4xl font-semibold tracking-tight xl:text-5xl">Turn FIBA scoresheets into structured data.</h2>
             <p className="mt-6 max-w-md text-lg leading-8 text-inverse-foreground/75">
-              This minimal dashboard validates signup, account provisioning, API key generation, and service auth before deployment.
+              This invite-only beta gives each tester access to one assigned demo while keeping admin controls separate.
             </p>
           </div>
           <div className="grid gap-4 rounded-panel border border-inverse-foreground/10 bg-inverse-foreground/10 p-6 backdrop-blur">

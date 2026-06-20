@@ -141,7 +141,7 @@ export function CaptureClient() {
     const next = addClubGame(rosterUpdate.store, finalGame);
     setStore(next);
     writeClubStore(next);
-    toast.success(rosterUpdate.addedCount > 0 ? `Game saved and ${rosterUpdate.addedCount} roster players added from OCR.` : "Game saved to club dashboard.");
+    toast.success(rosterUpdate.addedCount > 0 ? `Game saved and ${rosterUpdate.addedCount} roster players added from OCR.` : "Game saved to club analysis.");
   }
 
   if (isBooting) return <Panel className="p-6 text-muted">Loading capture...</Panel>;

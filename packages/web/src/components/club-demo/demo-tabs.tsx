@@ -1,23 +1,29 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-const BASE_PATH = "/dashboard/demos/club";
+const DEFAULT_BASE_PATH = "/test/club";
 
-const tabs = [
-  { href: `${BASE_PATH}/overview`, label: "Overview" },
-  { href: `${BASE_PATH}/roster`, label: "Roster" },
-  { href: `${BASE_PATH}/capture`, label: "Capture game" },
-  { href: `${BASE_PATH}/players`, label: "Players" },
-];
-
-export function DemoTabs() {
+export function DemoTabs({ basePath = DEFAULT_BASE_PATH }: { basePath?: string }) {
   const pathname = usePathname();
+  const [currentPathname, setCurrentPathname] = useState<string | null>(null);
+  const tabs = [
+    { href: `${basePath}/overview`, label: "Overview" },
+    { href: `${basePath}/roster`, label: "Roster" },
+    { href: `${basePath}/capture`, label: "Capture game" },
+    { href: `${basePath}/players`, label: "Players" },
+  ];
+
+  useEffect(() => {
+    setCurrentPathname(pathname);
+  }, [pathname]);
+
   return (
     <nav className="-mx-1 mt-5 flex gap-2 overflow-x-auto px-1 pb-1 sm:mt-6" aria-label="Club demo sections">
       {tabs.map((tab) => {
-        const isActive = pathname.startsWith(tab.href);
+        const isActive = Boolean(currentPathname?.startsWith(tab.href));
         return (
           <Link
             key={tab.href}

@@ -41,11 +41,20 @@ export async function apiFetch<T>(
   session: Pick<Session, "access_token">,
   init: RequestInit = {},
 ): Promise<T> {
-  const response = await fetch(`${siteConfig.apiBaseUrl}${path}`, {
-    ...init,
-    headers: buildHeaders(session, init),
-    cache: "no-store",
-  });
+  let response: Response;
+  try {
+    response = await fetch(`${siteConfig.apiBaseUrl}${path}`, {
+      ...init,
+      headers: buildHeaders(session, init),
+      cache: "no-store",
+    });
+  } catch {
+    throw new OcrApiError(
+      `Could not reach the OCR API at ${siteConfig.apiBaseUrl}. Start the FastAPI server with ocr-api and check NEXT_PUBLIC_OCR_API_URL.`,
+      0,
+      "network_error",
+    );
+  }
 
   const contentType = response.headers.get("content-type") || "";
   const payload = contentType.includes("application/json") ? await response.json() : await response.text();

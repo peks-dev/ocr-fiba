@@ -38,7 +38,7 @@ export default async function QuickstartPage() {
         <p className="text-xs font-semibold uppercase tracking-[0.22em] text-primary-deep sm:text-sm">Quickstart</p>
         <h1 className="mt-3 text-3xl font-semibold tracking-tight text-ink sm:text-4xl">Use your OCR API key locally</h1>
         <p className="mt-4 max-w-3xl text-sm leading-6 text-muted sm:text-base sm:leading-7">
-          Signed in as <span className="font-semibold text-ink">{user?.email}</span>. Generate a key in the dashboard, copy it once, then use it with the local API and MCP server.
+          Signed in as <span className="font-semibold text-ink">{user?.email}</span>. Generate a key from the admin API keys page, copy it once, then use it with the local API and MCP server.
         </p>
       </div>
 

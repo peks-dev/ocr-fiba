@@ -7,11 +7,10 @@ import { readClubStore } from "./storage";
 import type { ClubStore } from "./types";
 import { EmptyState, MiniStat, Panel } from "./ui";
 
-const ROSTER_PATH = "/dashboard/demos/club/roster";
-const CAPTURE_PATH = "/dashboard/demos/club/capture";
+const DEFAULT_BASE_PATH = "/test/club";
 const INITIAL_STORE: ClubStore = { clubName: "My Club", roster: [], games: [] };
 
-export function PlayersClient() {
+export function PlayersClient({ basePath = DEFAULT_BASE_PATH }: { basePath?: string }) {
   const [store, setStore] = useState<ClubStore>(INITIAL_STORE);
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [isBooting, setIsBooting] = useState(true);
@@ -32,7 +31,7 @@ export function PlayersClient() {
   if (store.roster.length === 0) {
     return (
       <Panel className="p-5 sm:p-8">
-        <EmptyState title="No roster players" description="Add players before opening individual progress profiles." ctaHref={ROSTER_PATH} ctaLabel="Create roster" />
+        <EmptyState title="No roster players" description="Add players before opening individual progress profiles." ctaHref={`${basePath}/roster`} ctaLabel="Create roster" />
       </Panel>
     );
   }
@@ -74,7 +73,7 @@ export function PlayersClient() {
 
             {series.length === 0 ? (
               <div className="mt-6">
-                <EmptyState title="No games for this player yet" description="Import a scoresheet where this jersey number appears to unlock the player profile." ctaHref={CAPTURE_PATH} ctaLabel="Capture game" />
+                <EmptyState title="No games for this player yet" description="Import a scoresheet where this jersey number appears to unlock the player profile." ctaHref={`${basePath}/capture`} ctaLabel="Capture game" />
               </div>
             ) : (
               <div className="mt-5 space-y-6">

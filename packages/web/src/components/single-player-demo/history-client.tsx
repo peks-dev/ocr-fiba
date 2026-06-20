@@ -8,9 +8,9 @@ import { sortMostRecentFirst } from "./stats-utils";
 import type { SavedSinglePlayerGame } from "./types";
 import { EmptyState, GameDetailCard, MiniStat, Panel, ResultChip } from "./ui";
 
-const CAPTURE_PATH = "/dashboard/demos/single-player/capture";
+const DEFAULT_BASE_PATH = "/test/player";
 
-export function HistoryClient() {
+export function HistoryClient({ basePath = DEFAULT_BASE_PATH }: { basePath?: string }) {
   const [games, setGames] = useState<SavedSinglePlayerGame[]>([]);
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [isBooting, setIsBooting] = useState(true);
@@ -112,7 +112,7 @@ export function HistoryClient() {
           <EmptyState
             title="No games in your history"
             description="Capture a game and save your stats to be able to review it here later."
-            ctaHref={CAPTURE_PATH}
+            ctaHref={`${basePath}/capture`}
             ctaLabel="Capture a game"
           />
         </div>

@@ -11,7 +11,7 @@ const bodyFont = Inter({ subsets: ["latin"], variable: "--font-text" });
 
 export const metadata: Metadata = {
   title: "FIBA OCR Engine",
-  description: "Beta dashboard for FIBA scoresheet OCR API keys and quickstart docs.",
+  description: "Invite-only FIBA scoresheet OCR demos and admin controls.",
 };
 
 export default function RootLayout({

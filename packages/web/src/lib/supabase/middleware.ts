@@ -3,6 +3,11 @@ import { type NextRequest, NextResponse } from "next/server";
 
 import { siteConfig } from "@/lib/env";
 
+type MiddlewareAccount = {
+  role: "admin" | "tester" | string;
+  assigned_demo: "referee" | "player" | "club" | null;
+};
+
 export async function updateSession(request: NextRequest) {
   let supabaseResponse = NextResponse.next({ request });
 
@@ -30,7 +35,7 @@ export async function updateSession(request: NextRequest) {
   } = await supabase.auth.getUser();
 
   const path = request.nextUrl.pathname;
-  const isProtected = path.startsWith("/dashboard") || path.startsWith("/docs");
+  const isProtected = path.startsWith("/docs") || path.startsWith("/admin") || path.startsWith("/test");
   const isAuthPage = path === "/login";
 
   if (isProtected && !user) {
@@ -41,11 +46,30 @@ export async function updateSession(request: NextRequest) {
   }
 
   if (isAuthPage && user) {
+    const account = await getAccountForUser(supabase, user.id);
     const url = request.nextUrl.clone();
-    url.pathname = "/dashboard/api-keys";
-    url.search = "";
-    return NextResponse.redirect(url);
+    url.pathname = account ? destinationForMiddlewareAccount(account) : "/login";
+    url.search = account ? "" : "?error=Account%20not%20provisioned";
+    if (url.pathname !== "/login") return NextResponse.redirect(url);
   }
 
   return supabaseResponse;
+}
+
+async function getAccountForUser(supabase: ReturnType<typeof createServerClient>, userId: string) {
+  const { data } = await supabase
+    .from("accounts")
+    .select("role,assigned_demo")
+    .eq("supabase_user_id", userId)
+    .maybeSingle();
+
+  return data as MiddlewareAccount | null;
+}
+
+function destinationForMiddlewareAccount(account: MiddlewareAccount) {
+  if (account.role === "admin") return "/admin";
+  if (account.assigned_demo === "referee") return "/test/referee";
+  if (account.assigned_demo === "club") return "/test/club";
+  if (account.assigned_demo === "player") return "/test/player";
+  return "/login";
 }

@@ -15,9 +15,9 @@ import {
 import type { SavedSinglePlayerGame } from "./types";
 import { EmptyState, Panel } from "./ui";
 
-const CAPTURE_PATH = "/dashboard/demos/single-player/capture";
+const DEFAULT_BASE_PATH = "/test/player";
 
-export function ProgressClient() {
+export function ProgressClient({ basePath = DEFAULT_BASE_PATH }: { basePath?: string }) {
   const [games, setGames] = useState<SavedSinglePlayerGame[]>([]);
   const [period, setPeriod] = useState<GamesPeriod>("5");
   const [isBooting, setIsBooting] = useState(true);
@@ -43,7 +43,7 @@ export function ProgressClient() {
         <EmptyState
           title="No games saved yet"
           description="Capture a game from a FIBA scoresheet and save it to start measuring your averages and long-term progress."
-          ctaHref={CAPTURE_PATH}
+          ctaHref={`${basePath}/capture`}
           ctaLabel="Capture your first game"
         />
       </Panel>

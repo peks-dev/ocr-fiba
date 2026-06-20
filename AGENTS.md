@@ -11,7 +11,7 @@
 
 ## Project summary
 
-Monorepo that extracts structured basketball game data from FIBA score sheet images. The pipeline is exposed through a FastAPI HTTP API, a CLI, an MCP server adapter, and a Next.js dashboard. Authentication is Supabase-backed (with a static-bearer fallback for local dev).
+Monorepo that extracts structured basketball game data from FIBA score sheet images. The pipeline is exposed through a FastAPI HTTP API, a CLI, an MCP server adapter, and a Next.js web app. Authentication is Supabase-backed (with a static-bearer fallback for local dev).
 
 ## Stack
 
@@ -71,7 +71,7 @@ export NEXT_PUBLIC_SUPABASE_ANON_KEY=...
 │   ├── api/           # FastAPI HTTP adapter (depends on core-engine)
 │   ├── cli/           # Command-line tools (depends on core-engine)
 │   ├── mcp/           # MCP server adapter (talks to the API over HTTP)
-│   └── web/           # Next.js 15 dashboard (Supabase auth + API key mgmt)
+│   └── web/           # Next.js 15 web app (Supabase auth, admin + tester demos)
 ├── supabase/
 │   └── migrations/    # Versioned SQL migrations (5 applied)
 ├── scripts/           # smoke_async_api.py, smoke_async_mcp.py
@@ -153,7 +153,7 @@ chore(repo): restructure docs into per-package layout and add root README
 
 - App Router only (no `pages/`). RSC by default; mark `'use client'` only for components that need state/effects.
 - All Supabase I/O goes through `lib/supabase/server.ts` (RSC) or `lib/supabase/client.ts` (browser). Never instantiate `createClient` directly in a component.
-- Auth-gated routes live under `app/dashboard/*` and rely on the `dashboard/layout.tsx` redirect. The layout is the source of truth — don't re-check auth inside individual pages.
+- Admin routes live under `app/admin/*` and rely on `admin/layout.tsx` plus `requireAdminAccount()`. Tester demos live under `app/test/*`; each demo segment uses `requireDemoAccess()` so testers can only open their assigned demo while admins can access all demos. Do not duplicate auth checks inside individual demo pages.
 - UI feedback uses `sonner` toasts. Existing helpers: see `components/nav.tsx` for the `signOut` pattern.
 
 ### MCP
@@ -198,7 +198,7 @@ These are the **only** SKILL.md files justified by repeated patterns (each appea
 | HTTP API | `packages/api/` | FastAPI app, auth, runs, /v1/me/*, sanitization |
 | CLI | `packages/cli/` | Local CLI entry points |
 | MCP server | `packages/mcp/` | Tools, resources, prompts that wrap the API |
-| Web dashboard | `packages/web/` | Next.js 15 app, Supabase auth, API key management |
+| Web app | `packages/web/` | Next.js 15 app, Supabase auth, admin API key/invite management, tester demos |
 | Database | `supabase/` | Versioned SQL migrations |
 
 

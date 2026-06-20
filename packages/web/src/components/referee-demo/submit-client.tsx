@@ -11,11 +11,9 @@ import { computeReconciliation } from "./validation";
 import type { OcrResult } from "./types";
 import { EmptyState, Panel, StatusBanner, TextField } from "./ui";
 
-const LEAGUE_PATH = "/dashboard/demos/referee/league";
-const CAPTURE_PATH = "/dashboard/demos/referee/capture";
-const RECONCILE_PATH = "/dashboard/demos/referee/reconcile";
+const DEFAULT_BASE_PATH = "/test/referee";
 
-export function SubmitClient() {
+export function SubmitClient({ basePath = DEFAULT_BASE_PATH }: { basePath?: string }) {
   const [runId, setRunId] = useState<string | null>(null);
   const [result, setResult] = useState<OcrResult | null>(null);
   const [isBooting, setIsBooting] = useState(true);
@@ -62,7 +60,7 @@ export function SubmitClient() {
         <EmptyState
           title="No hay un acta en curso"
           description="Captura, extrae y cuadra un acta antes de enviarla a la liga."
-          ctaHref={CAPTURE_PATH}
+          ctaHref={`${basePath}/capture`}
           ctaLabel="Ir a Capturar acta"
         />
       </Panel>
@@ -104,7 +102,7 @@ export function SubmitClient() {
         {summary.blockingCount > 0 ? (
           <p className="mt-4 rounded-card bg-warning-soft px-4 py-3 text-xs font-semibold text-warning">
             Aún hay campos por cuadrar. Puedes enviar igual; quedará marcado como <span className="font-mono">con_observaciones</span>.{" "}
-            <Link href={RECONCILE_PATH} className="underline">
+            <Link href={`${basePath}/reconcile`} className="underline">
               Volver a corregir
             </Link>
           </p>
@@ -129,7 +127,7 @@ export function SubmitClient() {
       {sent ? (
         <Panel className="p-5 text-center">
           <p className="font-semibold text-success">Partido enviado correctamente.</p>
-          <Link href={LEAGUE_PATH} className="mt-3 inline-block rounded-field bg-ink px-5 py-3 text-sm font-semibold text-background">
+          <Link href={`${basePath}/league`} className="mt-3 inline-block rounded-field bg-ink px-5 py-3 text-sm font-semibold text-background">
             Ver en la vista de liga →
           </Link>
         </Panel>

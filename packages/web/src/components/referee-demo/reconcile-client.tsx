@@ -13,10 +13,9 @@ import { DEFAULT_REFEREE_PLUGIN_IDS, pluginLabel } from "./plugins";
 import type { OcrResult, Suggestion } from "./types";
 import { EmptyState, Panel, StatusBanner } from "./ui";
 
-const SUBMIT_PATH = "/dashboard/demos/referee/submit";
-const CAPTURE_PATH = "/dashboard/demos/referee/capture";
+const DEFAULT_BASE_PATH = "/test/referee";
 
-export function ReconcileClient() {
+export function ReconcileClient({ basePath = DEFAULT_BASE_PATH }: { basePath?: string }) {
   const [runId, setRunId] = useState<string | null>(null);
   const [result, setResult] = useState<OcrResult | null>(null);
   const [activeSectionId, setActiveSectionId] = useState<SheetSectionId | null>(null);
@@ -60,7 +59,7 @@ export function ReconcileClient() {
         <EmptyState
           title="No hay un acta en curso"
           description="Captura y extrae primero un acta. Luego podrás cuadrar los campos aquí."
-          ctaHref={CAPTURE_PATH}
+          ctaHref={`${basePath}/capture`}
           ctaLabel="Ir a Capturar acta"
         />
       </Panel>
@@ -157,7 +156,7 @@ export function ReconcileClient() {
       <div className="fixed inset-x-0 bottom-0 z-20 border-t border-border bg-surface/95 p-4 shadow-2xl backdrop-blur sm:static sm:border-0 sm:bg-transparent sm:p-0 sm:shadow-none">
         {summary.blockingCount === 0 ? (
           <Link
-            href={SUBMIT_PATH}
+            href={`${basePath}/submit`}
             className="block w-full rounded-field bg-ink px-5 py-3 text-center text-sm font-semibold text-background transition hover:bg-ink/85"
           >
             Enviar a la liga →
@@ -172,7 +171,7 @@ export function ReconcileClient() {
           </button>
         ) : (
           <Link
-            href={SUBMIT_PATH}
+            href={`${basePath}/submit`}
             className="block w-full rounded-field bg-warning px-5 py-3 text-center text-sm font-semibold text-background transition hover:opacity-90"
           >
             Enviar con observaciones →

@@ -15,9 +15,9 @@ import { Panel } from "./ui";
 
 const POLL_INTERVAL_MS = 2200;
 const ACCEPTED_IMAGE_TYPES = ["image/jpeg", "image/png", "image/webp"];
-const RECONCILE_PATH = "/dashboard/demos/referee/reconcile";
+const DEFAULT_BASE_PATH = "/test/referee";
 
-export function CaptureClient() {
+export function CaptureClient({ basePath = DEFAULT_BASE_PATH }: { basePath?: string }) {
   const router = useRouter();
   const supabase = useMemo(() => createClient(), []);
   const fileInputRef = useRef<HTMLInputElement | null>(null);
@@ -42,7 +42,7 @@ export function CaptureClient() {
         const nextResult = await getRunResult<OcrResult>(currentSession, runId);
         writeDraft(runId, nextResult, selectedPlugins);
         toast.success("Acta extraída. Vamos a corregirla.");
-        router.push(RECONCILE_PATH);
+        router.push(`${basePath}/reconcile`);
       } catch (err) {
         const message = err instanceof Error ? err.message : "No se pudo cargar el resultado del OCR.";
         setError(message);
@@ -51,7 +51,7 @@ export function CaptureClient() {
         setIsLoadingResult(false);
       }
     },
-    [router, run?.run_id, selectedPlugins, session],
+    [basePath, router, run?.run_id, selectedPlugins, session],
   );
 
   useEffect(() => {
