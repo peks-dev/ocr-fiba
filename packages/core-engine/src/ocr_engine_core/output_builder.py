@@ -79,10 +79,10 @@ def _reassign_periods_from_footer(
     quarter_scores_b = []
     for qn in quarter_names:
         q = quarters.get(qn, {})
-        qa = q.get("team_a") if isinstance(q, dict) else None
-        qb = q.get("team_b") if isinstance(q, dict) else None
+        qa = _coerce_int(q.get("team_a")) if isinstance(q, dict) else None
+        qb = _coerce_int(q.get("team_b")) if isinstance(q, dict) else None
         if qa is None or qb is None:
-            # Can't reassign without complete quarter data — leave periods as-is
+            # Can't reassign without complete (numeric) quarter data — leave periods as-is
             return progressive_score
         quarter_scores_a.append(qa)
         quarter_scores_b.append(qb)
@@ -106,7 +106,7 @@ def _reassign_periods_from_footer(
         # Reassign periods
         reassigned = []
         for e in events:
-            rs = e.get("running_score")
+            rs = _coerce_int(e.get("running_score"))
             new_event = dict(e)
 
             if rs is not None:
@@ -151,9 +151,9 @@ def _compute_points_from_running_score(
 
         for e in events:
             new_event = dict(e)
-            rs = e.get("running_score")
+            rs = _coerce_int(e.get("running_score"))
 
-            if rs is not None and isinstance(rs, (int, float)):
+            if rs is not None:
                 diff = rs - prev_rs
                 if 1 <= diff <= 3:
                     new_event["points"] = diff
@@ -165,6 +165,26 @@ def _compute_points_from_running_score(
         result[team_key] = computed
 
     return result
+
+
+def _coerce_int(value: Any) -> int | None:
+    """Coerce a score-like value to int, tolerating strings ('21') and floats.
+
+    OCR providers occasionally return numeric fields as strings. Returns None
+    when the value cannot be interpreted as a whole number, so callers can skip
+    arithmetic instead of crashing the whole run.
+    """
+    if isinstance(value, bool):
+        return None
+    if isinstance(value, int):
+        return value
+    if isinstance(value, float):
+        return int(value) if value.is_integer() else None
+    if isinstance(value, str):
+        text = value.strip()
+        if text.lstrip("-").isdigit():
+            return int(text)
+    return None
 
 
 def _normalize_strings_in_obj(obj: Any) -> Any:

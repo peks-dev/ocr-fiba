@@ -23,10 +23,17 @@ class TokenUsage:
     completion_tokens: int = 0
     total_tokens: int = 0
 
+    def __post_init__(self) -> None:
+        # Providers may report usage fields as null; coerce to 0 so token
+        # aggregation never hits `int + None` (TypeError) mid-run.
+        self.prompt_tokens = int(self.prompt_tokens or 0)
+        self.completion_tokens = int(self.completion_tokens or 0)
+        self.total_tokens = int(self.total_tokens or 0)
+
     def add(self, other: TokenUsage) -> None:
-        self.prompt_tokens += other.prompt_tokens
-        self.completion_tokens += other.completion_tokens
-        self.total_tokens += other.total_tokens
+        self.prompt_tokens += int(other.prompt_tokens or 0)
+        self.completion_tokens += int(other.completion_tokens or 0)
+        self.total_tokens += int(other.total_tokens or 0)
 
 
 @dataclass(frozen=True)

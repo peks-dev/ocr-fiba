@@ -60,16 +60,17 @@ class Cropper:
         self,
         image_path: Path,
         output_dir: Path,
-        crop_source_path: Path | None = None,
     ) -> tuple[list[PixelBox], DetectionMeta]:
         """
         Detect main sections, validate bounding boxes, and crop.
 
+        Detection and cropping both run on ``image_path``. Section images are
+        enhanced afterwards (see ``enhancer.enhance_sections``), so the crop is
+        taken from the raw isolated sheet on purpose.
+
         Args:
-            image_path: Image used for detection (typically color).
+            image_path: Image used for detection and cropping.
             output_dir: Directory for cropped section images.
-            crop_source_path: Image to crop from (typically enhanced grayscale).
-                If None, crops from image_path.
 
         Returns:
             Tuple of (pixel_boxes, detection_meta).
@@ -85,9 +86,8 @@ class Cropper:
         # Validate
         validated = self._validate_boxes(boxes)
 
-        # Crop — from the enhanced image if provided, else from detection image
-        source = crop_source_path or image_path
-        pixel_boxes = self._crop_sections(source, validated, output_dir)
+        # Crop from the same isolated sheet used for detection
+        pixel_boxes = self._crop_sections(image_path, validated, output_dir)
 
         elapsed_ms = int((time.monotonic() - started) * 1000)
         meta = DetectionMeta(
