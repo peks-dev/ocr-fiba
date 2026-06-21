@@ -4,11 +4,11 @@ Pipeline configuration for model selection per phase.
 
 from __future__ import annotations
 
-import os
 from dataclasses import dataclass, field
 from typing import Any
 
 from ocr_engine_core.providers import ProviderType
+from ocr_engine_core.utils.image_utils import resolve_provider_api_key
 
 
 @dataclass
@@ -69,26 +69,20 @@ class PipelineConfig:
     openrouter_api_key: str | None = None
 
     def __post_init__(self):
+        # Resolve any unset key from its provider's canonical env vars
+        # (single source of truth in utils.image_utils).
         if self.interfaze_api_key is None:
-            self.interfaze_api_key = (
-                os.getenv("INTERFAZE_API_KEY") or os.getenv("INTERFAZE_KEY")
-            )
+            self.interfaze_api_key = resolve_provider_api_key("interfaze")
         if self.gemini_api_key is None:
-            self.gemini_api_key = (
-                os.getenv("GOOGLE_API_KEY")
-                or os.getenv("GEMINI_API_KEY")
-                or os.getenv("GOOGLE_GENAI_API_KEY")
-            )
+            self.gemini_api_key = resolve_provider_api_key("gemini")
         if self.glm_api_key is None:
-            self.glm_api_key = (
-                os.getenv("GLM_API_KEY") or os.getenv("ZAI_API_KEY")
-            )
+            self.glm_api_key = resolve_provider_api_key("glm")
         if self.docstrange_api_key is None:
-            self.docstrange_api_key = os.getenv("DOCSTRANGE_API_KEY")
+            self.docstrange_api_key = resolve_provider_api_key("docstrange")
         if self.qubrid_api_key is None:
-            self.qubrid_api_key = os.getenv("QUBRID_API_KEY")
+            self.qubrid_api_key = resolve_provider_api_key("qubrid")
         if self.openrouter_api_key is None:
-            self.openrouter_api_key = os.getenv("OPENROUTER_API_KEY")
+            self.openrouter_api_key = resolve_provider_api_key("openrouter")
 
     def get_cropper_api_key(self) -> str:
         """Get the API key for the cropper provider."""

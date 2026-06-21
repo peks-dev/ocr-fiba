@@ -8,10 +8,13 @@ using a ModelProvider. It handles the special case of team sections
 
 from __future__ import annotations
 
+import inspect
 import json
+import logging
 import time
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from dataclasses import dataclass
+from functools import lru_cache
 from pathlib import Path
 from typing import Any
 
@@ -27,6 +30,8 @@ from ocr_engine_core.prompts.extraction import (
     FOOTER_PROMPT,
 )
 from ocr_engine_core.resources.schemas import load_schema
+
+logger = logging.getLogger(__name__)
 
 
 # ---------------------------------------------------------------------------
@@ -120,9 +125,9 @@ class Extractor:
         def _extract_task(target: ExtractionTarget) -> tuple[str, Any, TokenUsage]:
             """Extract a single section — designed for thread pool execution."""
             section_path = sections_dir / target.image_name
-            print(f"Extrayendo {target.name}...", flush=True)
+            logger.info("Extrayendo %s...", target.name)
             result, usage = self._extract_section(section_path, target)
-            print(f"OK {target.name}", flush=True)
+            logger.info("OK %s", target.name)
             return target.name, result, usage
 
         with ThreadPoolExecutor(max_workers=max_workers) as executor:
@@ -182,11 +187,8 @@ class Extractor:
             "prompt": target.prompt,
             "max_tokens": max_tokens,
         }
-        if agentic and hasattr(provider, 'structured_completion'):
-            import inspect
-            sig = inspect.signature(provider.structured_completion)
-            if 'agentic_mode' in sig.parameters:
-                completion_kwargs["agentic_mode"] = True
+        if agentic and _supports_agentic_mode(type(provider)):
+            completion_kwargs["agentic_mode"] = True
 
         # Determine whether to use JSON schema or Markdown for this section
         use_json = (
@@ -239,6 +241,22 @@ class Extractor:
                 return parsed, usage
             except TeamMarkdownParseError:
                 return result, usage
+
+
+@lru_cache(maxsize=None)
+def _supports_agentic_mode(provider_cls: type) -> bool:
+    """Whether a provider's structured_completion accepts agentic_mode.
+
+    Cached per provider class so we don't re-run inspect.signature on every
+    section extraction (the hot path runs 7 times per sheet).
+    """
+    completion = getattr(provider_cls, "structured_completion", None)
+    if completion is None:
+        return False
+    try:
+        return "agentic_mode" in inspect.signature(completion).parameters
+    except (TypeError, ValueError):
+        return False
 
 
 def _convert_interfaze_team_json(data: dict[str, Any]) -> dict[str, Any]:

@@ -11,6 +11,7 @@ from __future__ import annotations
 
 import json
 import time
+from concurrent.futures import ThreadPoolExecutor
 from dataclasses import asdict
 from pathlib import Path
 from typing import Any, Literal, cast
@@ -126,6 +127,7 @@ class Cropper:
             Tuple of (fouls_pixel_boxes, combined_meta).
         """
         started = time.monotonic()
+        teams = ("team_a", "team_b")
         result: list[PixelBox] = []
         fouls_data: dict[str, Any] = {
             "source_sections": {},
@@ -135,7 +137,8 @@ class Cropper:
         }
         total_usage = TokenUsage()
 
-        for team in ("team_a", "team_b"):
+        # Validate inputs up-front (cheap, deterministic) before spending LLM calls.
+        for team in teams:
             team_image_path = sections_dir / f"{team}.png"
             if not team_image_path.exists():
                 raise CroppingError(
@@ -143,11 +146,15 @@ class Cropper:
                     code=ErrorCode.CROP_SECTION_NOT_FOUND,
                 )
 
-            # Detect
-            schema = load_schema("team_fouls_cropping", provider=self.provider.name)
-            boxes, usage = self.provider.detect_bounding_boxes(
-                team_image_path, TEAM_FOULS_CROPPING_PROMPT, schema, max_tokens=2000
+        # Detect both team-fouls boxes in parallel (network-bound LLM calls).
+        with ThreadPoolExecutor(max_workers=len(teams)) as executor:
+            detections = dict(
+                zip(teams, executor.map(lambda t: self._detect_team_fouls(sections_dir, t), teams))
             )
+
+        # Crop, write, and accumulate metadata sequentially (deterministic order).
+        for team in teams:
+            boxes, usage = detections[team]
             total_usage.add(usage)
 
             if not boxes:
@@ -160,7 +167,7 @@ class Cropper:
             fouls_box = self._validate_team_fouls_box(boxes[0])
 
             # Crop
-            team_image = read_image(team_image_path)
+            team_image = read_image(sections_dir / f"{team}.png")
             h, w = team_image.shape[:2]
             fouls_pixel = self._to_pixel_box(fouls_box, w, h)
 
@@ -211,6 +218,18 @@ class Cropper:
         )
 
         return result, meta
+
+    def _detect_team_fouls(
+        self,
+        sections_dir: Path,
+        team: str,
+    ) -> tuple[list[BoundingBox], TokenUsage]:
+        """Detect the team-fouls bounding box for one team (network-bound)."""
+        team_image_path = sections_dir / f"{team}.png"
+        schema = load_schema("team_fouls_cropping", provider=self.provider.name)
+        return self.provider.detect_bounding_boxes(
+            team_image_path, TEAM_FOULS_CROPPING_PROMPT, schema, max_tokens=2000
+        )
 
     # ===================================================================
     # Validation methods (migrated from crop_sections.py)

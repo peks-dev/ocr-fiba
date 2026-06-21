@@ -24,6 +24,22 @@ from ocr_engine_core.types import RunContext
 from ocr_engine_core.providers.base import TokenUsage
 
 
+# Ordered pipeline steps → human progress label. Single source of truth for the
+# CLI progress prefixes ("[i/N] ..."), kept in sync with the step names emitted
+# by OcrToolbox.run_full_pipeline.
+_PIPELINE_STEPS: tuple[tuple[str, str], ...] = (
+    ("preprocess_sheet", "Aislando hoja y corrigiendo perspectiva..."),
+    ("detect_sections", "Detectando y recortando secciones principales..."),
+    ("crop_team_fouls", "Recortando faltas de equipo..."),
+    ("enhance_sections", "Mejorando imágenes"),
+    ("extract_sections", "Extrayendo datos..."),
+    ("build_final_output", "Construyendo resultado final..."),
+    ("validate_result", "Ejecutando validación..."),
+)
+_STEP_INDEX = {name: index for index, (name, _) in enumerate(_PIPELINE_STEPS)}
+_STEP_TOTAL = len(_PIPELINE_STEPS)
+
+
 class FibaOcrPipeline:
     """
     Pipeline completo para procesar hojas de anotación FIBA.
@@ -112,13 +128,12 @@ class FibaOcrPipeline:
         self._print_step_complete(str(step), result)
 
     def _print_step_start(self, step: str) -> None:
-        if step == "preprocess_sheet":
-            print("[0/7] Aislando hoja y corrigiendo perspectiva...", file=sys.stderr)
-        elif step == "detect_sections":
-            print("[1/7] Detectando y recortando secciones principales...", file=sys.stderr)
-        elif step == "crop_team_fouls":
-            print("[2/7] Recortando faltas de equipo...", file=sys.stderr)
-        elif step == "enhance_sections":
+        index = _STEP_INDEX.get(step)
+        if index is None:
+            return
+        label = _PIPELINE_STEPS[index][1]
+
+        if step == "enhance_sections":
             from ocr_engine_core.enhancer import _normalize_grid_mode
 
             grid_mode = _normalize_grid_mode(self.config.grid_removal)
@@ -128,13 +143,11 @@ class FibaOcrPipeline:
                 "handwriting": " (con eliminación de rejilla + protección de escritura)",
             }[grid_mode]
             gamma_label = f" γ={self.config.gamma}" if self.config.gamma and self.config.gamma != 1.0 else ""
-            print(f"[3/7] Mejorando imágenes{grid_label}{gamma_label}...", file=sys.stderr)
-        elif step == "extract_sections":
-            print("[4/7] Extrayendo datos...", file=sys.stderr)
-        elif step == "build_final_output":
-            print("[5/7] Construyendo resultado final...", file=sys.stderr)
-        elif step == "validate_result":
-            print("[6/7] Ejecutando validación...", file=sys.stderr)
+            label = f"{label}{grid_label}{gamma_label}..."
+
+        print(f"[{index}/{_STEP_TOTAL}] {label}", file=sys.stderr)
+
+        if step == "validate_result":
             print(f"  Plugins activos: {self.validation_engine.active_plugins}", file=sys.stderr)
 
     def _print_step_complete(self, step: str, result) -> None:

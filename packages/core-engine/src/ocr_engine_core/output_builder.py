@@ -401,29 +401,48 @@ def _normalize_personal_fouls(value: Any) -> list[str]:
     return normalized
 
 
+# Tokens that mean "no foul recorded" — shared by code and kind normalization.
+_EMPTY_FOUL_TOKENS = frozenset(
+    {"", "-", "empty", "vacia", "vacía", "none", "null", "illegible", "ilegible"}
+)
+
+# Human/provider spellings → canonical FIBA single-letter code. "AD"
+# (antideportiva) is the canonical code in the bundled schema (team.json) and
+# prompts, so both 'antideportiva' and 'anti-deportiva' map to it.
+_FOUL_ALIASES = {
+    "personal": "p",
+    "tecnica": "t",
+    "técnica": "t",
+    "unsportsmanlike": "u",
+    "antideportiva": "ad",
+    "anti-deportiva": "ad",
+    "disqualifying": "d",
+    "descalificante": "d",
+    "coach": "c",
+    "bench": "b",
+}
+
+# Canonical base codes (no free-throw suffix).
+_FOUL_BASE_CODES = frozenset({"p", "t", "u", "d", "c", "b", "ad"})
+
+
+def _foul_token(value: Any) -> str | None:
+    """Lowercase/strip a raw foul token and map aliases; None if it means empty."""
+    token = str(value).strip().lower().replace(" ", "").replace(".", "")
+    if token in _EMPTY_FOUL_TOKENS:
+        return None
+    return _FOUL_ALIASES.get(token, token)
+
+
 def _normalize_foul_code(value: Any) -> str | None:
     """Normalize one foul cell/list token, preserving FIBA code detail."""
     if value is None:
         return None
-
-    token = str(value).strip().lower().replace(" ", "").replace(".", "")
-    if token in {"", "-", "empty", "vacia", "vacía", "none", "null", "illegible", "ilegible"}:
+    token = _foul_token(value)
+    if token is None:
         return None
 
-    aliases = {
-        "personal": "p",
-        "tecnica": "t",
-        "técnica": "t",
-        "unsportsmanlike": "u",
-        "antideportiva": "u",
-        "anti-deportiva": "ad",
-        "disqualifying": "d",
-        "descalificante": "d",
-        "coach": "c",
-        "bench": "b",
-    }
-    token = aliases.get(token, token)
-
+    # Match longest-known prefixes first ("ad" before "a"-less single letters).
     allowed_prefixes = ("ad", "p", "t", "u", "d", "c", "b")
     prefix = next((candidate for candidate in allowed_prefixes if token.startswith(candidate)), None)
     if prefix is None:
@@ -439,23 +458,10 @@ def _normalize_foul_kind(value: Any) -> str | None:
     """Normalize a base foul kind from object-style foul_cells."""
     if value is None:
         return None
-    token = str(value).strip().lower().replace(" ", "").replace(".", "")
-    if token in {"", "-", "empty", "vacia", "vacía", "none", "null", "illegible", "ilegible"}:
+    token = _foul_token(value)
+    if token is None:
         return None
-    aliases = {
-        "personal": "p",
-        "tecnica": "t",
-        "técnica": "t",
-        "unsportsmanlike": "u",
-        "antideportiva": "ad",
-        "anti-deportiva": "ad",
-        "disqualifying": "d",
-        "descalificante": "d",
-        "coach": "c",
-        "bench": "b",
-    }
-    token = aliases.get(token, token)
-    if token in {"p", "t", "u", "d", "c", "b", "ad"}:
+    if token in _FOUL_BASE_CODES:
         return token
     return _normalize_foul_code(token)
 
