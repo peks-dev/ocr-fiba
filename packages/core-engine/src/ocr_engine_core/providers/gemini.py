@@ -5,23 +5,16 @@ Gemini provider implementation via Google Generative AI.
 from __future__ import annotations
 
 import json
-import urllib.error
-import urllib.request
+import re
 from pathlib import Path
 from typing import Any
 
-from ocr_engine_core.exceptions import (
-    ProviderAuthError,
-    ProviderConnectionError,
-    ProviderInvalidResponseError,
-    ProviderRateLimitError,
-    ProviderServerError,
-    ProviderTimeoutError,
-)
-from .base import BoundingBox, ModelProvider, TokenUsage
+from ocr_engine_core.exceptions import ProviderInvalidResponseError
+from .base import TokenUsage
+from .http_base import HttpJsonProvider
 
 
-class GeminiProvider(ModelProvider):
+class GeminiProvider(HttpJsonProvider):
     """
     Provider for Google Gemini models (via Google AI Studio).
     """
@@ -34,14 +27,14 @@ class GeminiProvider(ModelProvider):
             f"https://generativelanguage.googleapis.com/v1beta/models/{model_name}:generateContent"
         )
 
-    def _encode_image(self, image_path: Path) -> str:
-        """Encode image to raw base64 (no data URI prefix for Gemini)."""
-        from ocr_engine_core.utils.image_utils import encode_file
+    # Gemini authenticates via the ?key= query parameter, not a Bearer header.
+    def _auth_headers(self) -> dict[str, str]:
+        return {"Content-Type": "application/json"}
 
-        return encode_file(image_path)
+    def _request_url(self) -> str:
+        return f"{self.endpoint}?key={self.api_key}"
 
     def _extract_usage(self, response_body: dict) -> TokenUsage:
-        """Extract token usage from Gemini response."""
         usage = response_body.get("usageMetadata", {})
         if isinstance(usage, dict):
             return TokenUsage(
@@ -95,8 +88,7 @@ class GeminiProvider(ModelProvider):
         prompt: str,
         schema: dict[str, Any] | None = None,
         max_tokens: int = 4000,
-    ) -> tuple[dict, TokenUsage]:
-        """Make a call to Gemini API."""
+    ) -> tuple[dict[str, Any], TokenUsage]:
         from ocr_engine_core.utils.image_utils import guess_mime_type
 
         payload: dict[str, Any] = {
@@ -107,7 +99,7 @@ class GeminiProvider(ModelProvider):
                         {
                             "inline_data": {
                                 "mime_type": guess_mime_type(image_path),
-                                "data": self._encode_image(image_path),
+                                "data": self._encode_base64(image_path),
                             }
                         },
                     ]
@@ -123,49 +115,7 @@ class GeminiProvider(ModelProvider):
             payload["generationConfig"]["response_mime_type"] = "application/json"
             payload["generationConfig"]["response_schema"] = schema
 
-        url = f"{self.endpoint}?key={self.api_key}"
-        request = urllib.request.Request(
-            url,
-            data=json.dumps(payload).encode("utf-8"),
-            headers={"Content-Type": "application/json"},
-            method="POST",
-        )
-
-        try:
-            with urllib.request.urlopen(request, timeout=180) as response:
-                body = json.loads(response.read().decode("utf-8"))
-        except urllib.error.HTTPError as exc:
-            detail = exc.read().decode("utf-8", errors="replace")
-            if exc.code == 401 or exc.code == 403:
-                raise ProviderAuthError(
-                    f"Gemini API auth error ({exc.code}) para {image_path.name}",
-                    provider="gemini",
-                    details={"http_status": exc.code, "response": detail[:500]},
-                ) from exc
-            elif exc.code == 429:
-                raise ProviderRateLimitError(
-                    f"Gemini API rate limit para {image_path.name}",
-                    provider="gemini",
-                    details={"http_status": exc.code, "response": detail[:500]},
-                ) from exc
-            elif exc.code >= 500:
-                raise ProviderServerError(
-                    f"Gemini API server error ({exc.code}) para {image_path.name}",
-                    provider="gemini",
-                    details={"http_status": exc.code, "response": detail[:500]},
-                ) from exc
-            else:
-                raise ProviderInvalidResponseError(
-                    f"Gemini API error {exc.code} para {image_path.name}: {detail[:300]}",
-                    provider="gemini",
-                    details={"http_status": exc.code},
-                ) from exc
-        except urllib.error.URLError as exc:
-            raise ProviderConnectionError(
-                f"No se pudo conectar con Gemini para {image_path.name}: {exc}",
-                provider="gemini",
-            ) from exc
-
+        body = self._make_request(payload, image_path.name)
         usage = self._extract_usage(body)
         text = self._extract_text(body, image_path.name)
 
@@ -174,17 +124,13 @@ class GeminiProvider(ModelProvider):
         except json.JSONDecodeError:
             # Try to repair truncated JSON by closing open structures
             repaired = self._try_repair_json(text)
-            if repaired is not None:
-                parsed = repaired
-            else:
-                parsed = {"raw_text": text}
+            parsed = repaired if repaired is not None else {"raw_text": text}
 
         return parsed, usage
 
     @staticmethod
     def _try_repair_json(text: str) -> dict | None:
         """Attempt to repair truncated JSON by removing incomplete values and closing structures."""
-        import re
         open_braces = text.count("{") - text.count("}")
         open_brackets = text.count("[") - text.count("]")
         if open_braces <= 0 and open_brackets <= 0:
@@ -206,52 +152,3 @@ class GeminiProvider(ModelProvider):
         except json.JSONDecodeError:
             pass
         return None
-
-    def structured_completion(
-        self,
-        image_path: Path,
-        prompt: str,
-        schema: dict[str, Any] | None = None,
-        max_tokens: int = 4000,
-    ) -> tuple[dict[str, Any], TokenUsage]:
-        """
-        Perform a completion on an image.
-
-        If schema is provided, uses structured JSON output.
-        If schema is None, allows free-form text output (e.g. Markdown).
-        """
-        return self._call_api(image_path, prompt, schema, max_tokens)
-
-    def detect_bounding_boxes(
-        self,
-        image_path: Path,
-        prompt: str,
-        schema: dict[str, Any],
-        max_tokens: int = 2000,
-    ) -> tuple[list[BoundingBox], TokenUsage]:
-        result, usage = self._call_api(image_path, prompt, schema, max_tokens)
-
-        boxes: list[BoundingBox] = []
-
-        # Handle both formats:
-        # 1. Array format: {"sections": [...]}
-        # 2. Single object: {"name": "...", "x_min": ..., ...}
-        sections = result.get("sections", [])
-        if not sections and isinstance(result, dict) and "x_min" in result:
-            sections = [result]
-
-        for section in sections:
-            try:
-                box = BoundingBox(
-                    name=section["name"],
-                    x_min=int(section["x_min"]),
-                    y_min=int(section["y_min"]),
-                    x_max=int(section["x_max"]),
-                    y_max=int(section["y_max"]),
-                    confidence=section.get("confidence"),
-                )
-                boxes.append(box)
-            except (KeyError, ValueError, TypeError):
-                continue
-
-        return boxes, usage
