@@ -1,0 +1,35 @@
+#!/bin/sh
+set -eu
+
+EXPECTED_VERSION="0.9.26"
+REPO_ROOT=$(CDPATH= cd -- "$(dirname -- "$0")/.." && pwd)
+
+if [ -x "$REPO_ROOT/.graphify-venv/bin/graphify" ]; then
+    GRAPHIFY_BIN="$REPO_ROOT/.graphify-venv/bin/graphify"
+elif command -v graphify >/dev/null 2>&1; then
+    GRAPHIFY_BIN=$(command -v graphify)
+else
+    echo "Graphify is not installed. Run ./scripts/setup-graphify." >&2
+    exit 1
+fi
+
+ACTUAL_VERSION=$($GRAPHIFY_BIN --version | awk '{print $2}')
+if [ "$ACTUAL_VERSION" != "$EXPECTED_VERSION" ]; then
+    echo "Expected graphify $EXPECTED_VERSION, found $ACTUAL_VERSION. Run ./scripts/setup-graphify." >&2
+    exit 1
+fi
+
+case "${1:-}" in
+    "") FORCE_FLAG="" ;;
+    --force) FORCE_FLAG="--force" ;;
+    *) echo "Usage: ./scripts/graphify-update [--force]" >&2; exit 2 ;;
+esac
+
+cd "$REPO_ROOT"
+if [ -n "$FORCE_FLAG" ]; then
+    "$GRAPHIFY_BIN" update . --force
+else
+    "$GRAPHIFY_BIN" update .
+fi
+
+echo "Graphify outputs updated. Review the diff, then run ./scripts/graphify-check."
