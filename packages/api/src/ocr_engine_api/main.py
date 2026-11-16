@@ -9,8 +9,9 @@ from fastapi.responses import JSONResponse
 
 from ocr_engine_api.auth import is_auth_exempt, is_authorized, unauthorized_response
 from ocr_engine_api.auth_api_key import is_api_key_request, validate_api_key
-from ocr_engine_api.rate_limit import RunRateLimiter, client_key, is_run_creation, rate_limited_response
-from ocr_engine_api.routes import me, runs
+from ocr_engine_api.auth_supabase import is_jwt_request, validate_supabase_session
+from ocr_engine_api.rate_limit import RunRateLimiter, is_run_creation, rate_limited_response, request_rate_limit_key
+from ocr_engine_api.routes import admin, me, runs
 from ocr_engine_api.settings import get_api_settings
 from ocr_engine_core.utils.image_utils import load_dotenv
 
@@ -42,19 +43,24 @@ def create_app() -> FastAPI:
 
     if settings.has_supabase:
         app.include_router(me.router)
+        app.include_router(admin.router)
 
     @app.middleware("http")
     async def api_key_auth(request: Request, call_next):
         if request.method == "OPTIONS" or is_auth_exempt(request.url.path):
             return await call_next(request)
 
-        # /v1/me/* endpoints handle their own auth via Supabase JWT dependency
-        if request.url.path.startswith("/v1/me/"):
+        # /v1/me/* and /v1/admin/* handle their own auth via Supabase JWT dependencies
+        if request.url.path.startswith("/v1/me/") or request.url.path.startswith("/v1/admin/"):
             return await call_next(request)
 
-        # API key validation: Supabase-backed ocr_* keys, else static bearer fallback.
+        # Supabase-backed ocr_live_ keys, then session JWTs, else static bearer fallback.
         if settings.has_supabase and is_api_key_request(request):
             result = validate_api_key(request)
+            if result is not None:
+                return result
+        elif settings.has_supabase and is_jwt_request(request):
+            result = validate_supabase_session(request)
             if result is not None:
                 return result
         else:
@@ -65,7 +71,10 @@ def create_app() -> FastAPI:
         if is_run_creation(request.method, request.url.path):
             auth_header = request.headers.get("authorization", "")
             client_host = request.client.host if request.client else None
-            allowed, window, retry_after = rate_limiter.check(client_key(auth_header, client_host))
+            account_id = getattr(request.state, "account_id", None)
+            allowed, window, retry_after = rate_limiter.check(
+                request_rate_limit_key(account_id, auth_header, client_host)
+            )
             if not allowed:
                 limit = rate_limiter.per_minute if window == "minute" else rate_limiter.per_day
                 return rate_limited_response(window or "minute", retry_after, limit)

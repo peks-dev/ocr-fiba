@@ -31,3 +31,18 @@ def unauthorized_response() -> JSONResponse:
             },
         },
     )
+
+
+def forbidden_response(message: str = "Forbidden") -> JSONResponse:
+    return JSONResponse(
+        status_code=403,
+        content={
+            "success": False,
+            "error": {
+                "code": "FORBIDDEN",
+                "message": message,
+                "retryable": False,
+            },
+        },
+    )
+

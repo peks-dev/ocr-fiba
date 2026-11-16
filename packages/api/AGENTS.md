@@ -5,7 +5,7 @@
 
 ## Context
 
-FastAPI HTTP adapter for the FIBA OCR engine. Exposes runs (`POST /v1/runs`, `POST /v1/runs/upload`, `GET /v1/runs/{run_id}`, `GET /v1/runs/{run_id}/result`, `GET /v1/runs/{run_id}/artifacts`, `DELETE /v1/runs/{run_id}`) and the Supabase-backed `/v1/me/*` API key management. All OCR work is delegated to `ocr_engine_core`; this package is the HTTP shape of the product.
+FastAPI HTTP adapter for the FIBA OCR engine. Exposes runs (`POST /v1/runs`, `POST /v1/runs/upload`, `GET /v1/runs/{run_id}`, `GET /v1/runs/{run_id}/result`, `GET /v1/runs/{run_id}/artifacts`, `DELETE /v1/runs/{run_id}`) the Supabase-backed `/v1/me/*` API key management, and admin `/v1/admin/*` key management for other accounts. All OCR work is delegated to `ocr_engine_core`; this package is the HTTP shape of the product.
 
 ## Stack
 
@@ -30,12 +30,13 @@ packages/api/
     ├── errors.py              # error_response, engine_error_response
     ├── api_keys.py            # generate/hash/list/find API keys
     ├── auth.py                # Static-bearer auth (local dev)
-    ├── auth_api_key.py        # ocr_*-prefixed API key auth + 60s cache
+    ├── auth_api_key.py        # ocr_live_ API key auth + 60s cache
     ├── auth_supabase.py       # Supabase JWT verification (HS256 + asymmetric)
     ├── supabase_client.py     # Server-side Supabase client factory
     ├── routes/
     │   ├── runs.py            # /v1/runs/*
-    │   └── me.py              # /v1/me/*  (registered only when has_supabase)
+    │   ├── me.py              # /v1/me/*  (registered only when has_supabase)
+    │   └── admin.py           # /v1/admin/* (registered only when has_supabase)
     └── services/
         ├── run_executor.py    # Wraps FibaOcrPipeline.process with sanitization
         └── run_repository.py  # Filesystem-backed RunRepository (lists, reads, deletes runs)
@@ -51,23 +52,26 @@ packages/api/
 - Configures CORS only if `settings.cors_origins` is set.
 - Registers `api_key_auth` middleware (always on, with exempt URLs).
 - Mounts `routes/runs.router` unconditionally.
-- Mounts `routes/me.router` only when `settings.has_supabase` is true.
+- Mounts `routes/me.router` and `routes/admin.router` only when `settings.has_supabase` is true.
 
 When adding a new router, follow the same conditional pattern based on a `settings.*` flag.
 
 ### 2. Auth is layered
 
-Three auth surfaces, in priority order:
+Four auth surfaces, in priority order:
 
-1. **`api_key_auth` middleware** (always on): detects Bearer tokens starting with `ocr_live_` and validates them via `auth_api_key.validate_api_key`. Shared `ocr_pub_` tokens fall through to the static bearer check. Skips `/v1/me/*` and `OPTIONS`.
-2. **Static bearer** (fallback when Supabase is not configured): `auth.is_authorized(settings.api_key)`.
-3. **Supabase JWT** (only for `/v1/me/*`): `auth_supabase.require_supabase_user`.
+1. **`api_key_auth` middleware** (always on): detects Bearer tokens starting with `ocr_live_` and validates them via `auth_api_key.validate_api_key`. When Supabase is configured, three-part JWTs are validated with `auth_supabase.validate_supabase_session` and `request.state.account_id` is set so run quotas are keyed on the account (`acct:{id}`), shared with that account's `ocr_live_` keys. Shared `ocr_pub_` tokens fall through to the static bearer check. Skips `/v1/me/*`, `/v1/admin/*`, and `OPTIONS`.
+2. **Static bearer** (fallback): `auth.is_authorized(settings.api_key)`.
+3. **Supabase JWT on `/v1/me/*`**: `auth_supabase.require_supabase_user`.
+4. **Admin JWT on `/v1/admin/*`**: `routes.admin.require_admin_account` (session JWT + `public.accounts.role == admin`).
 
 When adding a new endpoint:
 
-- If it lives under `/v1/runs/*`, the middleware already gates it (Bearer required).
+- If it lives under `/v1/runs/*`, the middleware already gates it (Bearer required: `ocr_live_`, session JWT, or static token).
 - If it lives under `/v1/me/*`, use `Depends(require_supabase_user)`.
+- If it lives under `/v1/admin/*`, use `Depends(require_admin_account)`.
 - For health/internal endpoints, add to the exempt list in `auth.py`.
+- `OCR_CORS_ORIGINS` is a comma-separated origin list. Leave it empty on Cloud Run until the Vercel production URL is known, then pass it to `scripts/deploy_cloudrun.sh`.
 
 ### 3. Standard error envelope
 
@@ -108,6 +112,15 @@ Error envelopes are: `{ "error": { "code": str, "message": str, "retryable": boo
 - `POST /v1/me/api-keys` → create a named key.
 - `GET /v1/me/api-keys` → list (excludes the secret).
 - `DELETE /v1/me/api-keys/{key_id}` → hard delete (we **do not** use revoked keys).
+
+### 7. `/v1/admin/*` is admin-only
+
+`admin.py` is only registered when `settings.has_supabase` is true. The caller must be an active account with `role == admin` in `public.accounts` (not user-editable metadata).
+
+- `GET /v1/admin/accounts` → list accounts for the admin picker (includes invited testers).
+- `GET /v1/admin/accounts/{account_id}/api-keys` → list keys for that account (no raw secrets).
+- `POST /v1/admin/accounts/{account_id}/api-keys?name=` → issue a key; raw value returned once.
+- `DELETE /v1/admin/accounts/{account_id}/api-keys/{key_id}` → hard delete (UI may label this Revoke).
 
 ## Rules specific to api
 
