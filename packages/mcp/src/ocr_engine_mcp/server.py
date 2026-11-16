@@ -5,14 +5,14 @@ import os
 from typing import Any
 
 from fastmcp import FastMCP
-from fastmcp.server.auth.providers.jwt import StaticTokenVerifier
 
+from ocr_engine_mcp.auth import api_key_for_request, auth_from_env
 from ocr_engine_mcp.client import OcrApiClient, OcrApiError
 from ocr_engine_mcp import tools as mcp_tools
 
 
 def create_mcp() -> FastMCP:
-    mcp = FastMCP(name="FIBA OCR Engine", auth=_auth_from_env())
+    mcp = FastMCP(name="FIBA OCR Engine", auth=auth_from_env())
 
     if path_input_allowed():
         # Reads a file path on the API host. Disabled in production (uploads/base64 only).
@@ -167,20 +167,10 @@ def path_input_allowed() -> bool:
     return os.getenv("OCR_ENV", "development").strip().lower() != "production"
 
 
-def _auth_from_env() -> StaticTokenVerifier | None:
-    """Require `Authorization: Bearer <MCP_AUTH_TOKEN>` on HTTP transport when the env var is set.
-
-    Stdio transport ignores this. Leave MCP_AUTH_TOKEN unset for unauthenticated local use.
-    """
-    token = os.getenv("MCP_AUTH_TOKEN", "").strip()
-    if not token:
-        return None
-    return StaticTokenVerifier(tokens={token: {"client_id": "ocr-mcp-client", "scopes": []}})
-
-
 def _client() -> OcrApiClient:
+    """Build an API client that forwards the caller's ocr_live_ key when present."""
     timeout = int(os.getenv("OCR_API_TIMEOUT_SECONDS", "300"))
-    return OcrApiClient(timeout_seconds=timeout)
+    return OcrApiClient(api_key=api_key_for_request(), timeout_seconds=timeout)
 
 
 def _json_resource(payload: dict[str, Any]) -> str:
