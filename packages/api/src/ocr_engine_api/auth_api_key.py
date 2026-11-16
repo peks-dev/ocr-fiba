@@ -6,7 +6,7 @@ from typing import Any
 from fastapi import Request
 from fastapi.responses import JSONResponse
 
-from ocr_engine_api.api_keys import find_active_key_by_hash, hash_api_key, update_last_used_at
+from ocr_engine_api.api_keys import KEY_PREFIX, find_active_key_by_hash, hash_api_key, update_last_used_at
 
 # In-memory cache: key_hash -> (account_id, status, cached_at)
 _cache: dict[str, tuple[str, str, float]] = {}
@@ -15,10 +15,14 @@ TTL_SECONDS = 60
 
 
 def is_api_key_request(request: Request) -> bool:
-    """Check if the request carries a Bearer token that looks like an OCR API key."""
+    """Return True when the Bearer token is a per-client ``ocr_live_`` API key.
+
+    The shared static token may start with ``ocr_pub_``; those must fall through
+    to the OCR_ENGINE_API_KEY check rather than the Supabase api_keys lookup.
+    """
     auth_header = request.headers.get("authorization", "")
     scheme, _, token = auth_header.partition(" ")
-    return scheme.lower() == "bearer" and token.startswith("ocr_")
+    return scheme.lower() == "bearer" and token.startswith(KEY_PREFIX)
 
 
 def _cache_get(key_hash: str) -> tuple[str, str] | None:

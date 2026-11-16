@@ -158,6 +158,16 @@ class IsApiKeyRequestTest(unittest.TestCase):
         request.headers = {}
         self.assertFalse(is_api_key_request(request))
 
+    def test_ocr_pub_static_token_is_not_detected(self) -> None:
+        request = MagicMock()
+        request.headers = {"authorization": "Bearer ocr_pub_shared-token"}
+        self.assertFalse(is_api_key_request(request))
+
+    def test_other_ocr_prefix_is_not_detected(self) -> None:
+        request = MagicMock()
+        request.headers = {"authorization": "Bearer ocr_test_not-a-live-key"}
+        self.assertFalse(is_api_key_request(request))
+
 
 class UpdateLastUsedAtTest(unittest.TestCase):
     def test_update_sends_timezone_aware_iso_timestamp(self) -> None:
