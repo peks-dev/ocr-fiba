@@ -2,11 +2,12 @@ from __future__ import annotations
 
 import hashlib
 import secrets
+from datetime import datetime, timezone
 
 from ocr_engine_api.supabase_client import get_supabase_client
 
 KEY_PREFIX = "ocr_live_"
-KEY_HEX_LENGTH = 32
+KEY_HEX_LENGTH = 32  # bytes passed to secrets.token_hex; the key suffix is 64 hex chars
 
 
 def generate_api_key() -> tuple[str, str, str]:

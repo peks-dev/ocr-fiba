@@ -9,6 +9,7 @@ import jwt
 from ocr_engine_api.api_keys import (
     generate_api_key,
     hash_api_key,
+    update_last_used_at,
     KEY_PREFIX,
 )
 from ocr_engine_api.auth_api_key import (
@@ -156,6 +157,30 @@ class IsApiKeyRequestTest(unittest.TestCase):
         request = MagicMock()
         request.headers = {}
         self.assertFalse(is_api_key_request(request))
+
+
+class UpdateLastUsedAtTest(unittest.TestCase):
+    def test_update_sends_timezone_aware_iso_timestamp(self) -> None:
+        client = MagicMock()
+        table = client.table.return_value
+        update = table.update.return_value
+        eq = update.eq.return_value
+
+        with patch("ocr_engine_api.api_keys.get_supabase_client", return_value=client):
+            update_last_used_at("key-123")
+
+        client.table.assert_called_once_with("api_keys")
+        payload = table.update.call_args.args[0]
+        self.assertIn("last_used_at", payload)
+        self.assertTrue(payload["last_used_at"].endswith("+00:00") or payload["last_used_at"].endswith("Z"))
+        update.eq.assert_called_once_with("id", "key-123")
+        eq.execute.assert_called_once()
+
+    def test_generated_key_hex_length_is_64(self) -> None:
+        raw, _, _ = generate_api_key()
+        suffix = raw.removeprefix(KEY_PREFIX)
+        self.assertEqual(len(suffix), 64)
+        self.assertRegex(suffix, r"^[0-9a-f]{64}$")
 
 
 if __name__ == "__main__":

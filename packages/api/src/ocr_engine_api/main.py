@@ -52,19 +52,18 @@ def create_app() -> FastAPI:
         if request.url.path.startswith("/v1/me/"):
             return await call_next(request)
 
-        # API key validation: Supabase-backed or legacy static key
+        # API key validation: Supabase-backed ocr_* keys, else static bearer fallback.
         if settings.has_supabase and is_api_key_request(request):
             result = validate_api_key(request)
             if result is not None:
                 return result
-            return await call_next(request)
-
-        # Fallback: static bearer key (development / legacy)
-        auth_header = request.headers.get("authorization", "")
-        if not is_authorized(auth_header, settings.api_key):
-            return unauthorized_response()
+        else:
+            auth_header = request.headers.get("authorization", "")
+            if not is_authorized(auth_header, settings.api_key):
+                return unauthorized_response()
 
         if is_run_creation(request.method, request.url.path):
+            auth_header = request.headers.get("authorization", "")
             client_host = request.client.host if request.client else None
             allowed, window, retry_after = rate_limiter.check(client_key(auth_header, client_host))
             if not allowed:

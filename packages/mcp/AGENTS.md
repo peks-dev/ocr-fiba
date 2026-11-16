@@ -49,9 +49,14 @@ Adding a new tool:
 
 Resources (`@mcp.resource("run://{run_id}")`, `@mcp.resource("artifact://{run_id}/{name}")`) are read-only views of run state. They use the same `OcrApiClient` under the hood; resource handlers are thin and should not contain business logic.
 
-### 4. Auth via `OCR_API_KEY`
+### 4. Auth: static MCP token or per-client `ocr_live_` keys
 
-The MCP client reads `OCR_API_KEY` from the environment and sends it as `Authorization: Bearer <OCR_API_KEY>` on every request. In production, the API must be configured with `OCR_ENGINE_API_KEY=<same-secret>` and `OCR_ENV=production`. See `docs/mcp-server.md` for the full configuration.
+HTTP transport requires a bearer token when `MCP_AUTH_TOKEN` is set. Clients may send:
+
+- The static `MCP_AUTH_TOKEN` (legacy shared token). The MCP server then calls the API with `OCR_API_KEY`.
+- A per-client `ocr_live_<64 hex>` key. The MCP verifier probes `GET /v1/runs?limit=1` on the API (short cache) and, if valid, forwards that same key on every subsequent API call so quota and identity stay per client.
+
+Stdio and local HTTP without `MCP_AUTH_TOKEN` stay unauthenticated and use `OCR_API_KEY`. See `docs/mcp-server.md`.
 
 ### 5. Transport selection
 
