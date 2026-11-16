@@ -5,8 +5,9 @@ Usage:
   SUPABASE_URL=... SUPABASE_SERVICE_KEY=... python scripts/create_admin_user.py admin@example.com --password 'change-me'
 
 If the Auth user already exists, the script updates the matching account row to
-role='admin' and assigned_demo=NULL. A password is required only when creating a
-new user.
+role='admin' and assigned_demo=NULL, and sets Auth app_metadata.role='admin'
+(user_metadata is ignored for privilege). A password is required only when
+creating a new user.
 """
 from __future__ import annotations
 
@@ -66,7 +67,7 @@ def main() -> int:
           "email": email,
           "password": args.password,
           "email_confirm": args.email_confirm,
-          "user_metadata": {"role": "admin"},
+          "app_metadata": {"role": "admin"},
       })
       raw_user = getattr(created, "user", None) or getattr(created, "data", None) or created
       user = raw_user if isinstance(raw_user, dict) else raw_user.model_dump()
@@ -78,6 +79,8 @@ def main() -> int:
     if not user_id:
         print("Could not resolve Auth user id", file=sys.stderr)
         return 1
+
+    supabase.auth.admin.update_user_by_id(user_id, {"app_metadata": {"role": "admin"}})
 
     response = (
         supabase.table("accounts")

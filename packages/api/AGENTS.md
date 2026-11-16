@@ -104,7 +104,7 @@ Error envelopes are: `{ "error": { "code": str, "message": str, "retryable": boo
 
 `me.py` is only registered when `settings.has_supabase` is true. Endpoints here expect a Supabase user (validated via JWT) and operate on the `accounts` and `api_keys` tables. Key lifecycle:
 
-- `POST /v1/me/api-keys/bootstrap` → returns the raw key exactly once. Bootstrap enforces "at most one active key per account" by deleting any existing active key first.
+- `POST /v1/me/api-keys/bootstrap` → returns the raw key exactly once. If an active key already exists, it returns `409 API_KEY_ALREADY_EXISTS` rather than deleting it. Use `POST /v1/me/api-keys` for additional keys.
 - `POST /v1/me/api-keys` → create a named key.
 - `GET /v1/me/api-keys` → list (excludes the secret).
 - `DELETE /v1/me/api-keys/{key_id}` → hard delete (we **do not** use revoked keys).

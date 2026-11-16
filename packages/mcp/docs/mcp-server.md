@@ -48,8 +48,22 @@ The streamable HTTP endpoint is `http://<host>:<port>/mcp`.
 
 ### Bearer auth on HTTP transport
 
-Set `MCP_AUTH_TOKEN` to require `Authorization: Bearer <MCP_AUTH_TOKEN>` on every MCP HTTP request
-(unset = no auth, fine for loopback-only use). Stdio transport ignores it.
+Set `MCP_AUTH_TOKEN` to require a bearer token on every MCP HTTP request (unset = no auth,
+fine for loopback-only use). Stdio transport ignores MCP HTTP auth and uses `OCR_API_KEY`
+when calling the API.
+
+Clients may send either:
+
+- The static `MCP_AUTH_TOKEN` (shared fallback). The MCP server then calls the API with
+  `OCR_API_KEY` (in production these are usually the same Secret Manager value).
+- A per-client API key `ocr_live_<64 hex>`, issued by the OCR API (`POST /v1/me/api-keys`
+  or `scripts/issue_api_key.py`). The MCP server validates it with a lightweight
+  `GET /v1/runs?limit=1` against the API (cached briefly) and forwards that same key
+  on every API call, so rate limits and identity are per client. Invalid keys are
+  rejected with `401` and are not forwarded.
+
+Production deployments should set `MCP_AUTH_TOKEN` so HTTP auth (static token or
+`ocr_live_` keys) is enabled.
 
 ## Run API + MCP as background services
 
@@ -77,9 +91,8 @@ in `.server-token` (generated on first start, chmod 600, gitignored). Logs and P
 
 `scripts/deploy_cloudrun.sh` builds one image (`Dockerfile`) and deploys two services:
 `ocr-api` (REST, runs stored on a GCS bucket mounted at `/mnt/data`) and `ocr-mcp`
-(streamable HTTP at `/mcp`, stateless, calling `ocr-api`). Both require
-`Authorization: Bearer <token>`; the token lives in Secret Manager (`ocr-client-token`) and
-locally in `.cloud-token`. In production `submit_scoresheet_from_path` is not registered
+(streamable HTTP at `/mcp`, stateless, calling `ocr-api`). `ocr-mcp` accepts the shared Secret Manager token (`ocr-client-token`, also stored locally
+in `.cloud-token`) or a per-client `ocr_live_` key. In production `submit_scoresheet_from_path` is not registered
 (`MCP_ALLOW_PATH_INPUT`), so clients must use `submit_scoresheet_base64`.
 
 ### Continuous deployment (push to `main`)
