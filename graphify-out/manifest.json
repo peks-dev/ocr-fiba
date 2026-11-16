@@ -75,8 +75,8 @@
     "semantic_hash": ""
   },
   "packages/api/src/ocr_engine_api/main.py": {
-    "mtime": 1794809733.914804,
-    "ast_hash": "ae5561ba976fc10bdeb2ae6847d7077e",
+    "mtime": 1794852090.5159585,
+    "ast_hash": "c3764887c4baa01fd8a5cf26edcb2a6d",
     "semantic_hash": ""
   },
   "packages/api/src/ocr_engine_api/pipeline_options.py": {
@@ -125,13 +125,13 @@
     "semantic_hash": ""
   },
   "packages/api/src/ocr_engine_api/settings.py": {
-    "mtime": 1794809733.914804,
-    "ast_hash": "50a5fb40edc5e92250b82e9432cadb30",
+    "mtime": 1794852090.5159585,
+    "ast_hash": "d073672678078224f0feb443357436a9",
     "semantic_hash": ""
   },
   "packages/api/src/ocr_engine_api/supabase_client.py": {
-    "mtime": 1794783927.4825814,
-    "ast_hash": "62aee32a7e69fc57bc21f2ba110a6d3b",
+    "mtime": 1794852090.5159585,
+    "ast_hash": "776da7bd7652d4dc585565dd96c79729",
     "semantic_hash": ""
   },
   "packages/cli/src/ocr_engine_cli/__init__.py": {
@@ -995,8 +995,8 @@
     "semantic_hash": ""
   },
   "packages/api/src/ocr_engine_api/rate_limit.py": {
-    "mtime": 1794809733.914804,
-    "ast_hash": "db3bfe35566f388e8f2cbd1db866e481",
+    "mtime": 1794852083.935906,
+    "ast_hash": "3ec0c4fcf64adcd25d41032ed36153db",
     "semantic_hash": ""
   },
   "packages/cli/pyproject.toml": {
@@ -1025,8 +1025,8 @@
     "semantic_hash": ""
   },
   "scripts/deploy_cloudrun.sh": {
-    "mtime": 1794851550.0036469,
-    "ast_hash": "fd08082bec7f0ec9938745305440d3b1",
+    "mtime": 1794852090.5159585,
+    "ast_hash": "9cfd314ae6af7355f8ecb381b753ab41",
     "semantic_hash": ""
   },
   "scripts/graphify-check": {
@@ -1055,8 +1055,8 @@
     "semantic_hash": ""
   },
   "tests/test_hardening.py": {
-    "mtime": 1794809733.918804,
-    "ast_hash": "260019107b106d8852fabf4bb0458108",
+    "mtime": 1794852101.0680425,
+    "ast_hash": "357cbe3a078c166cdabb44ba8d4e8cb7",
     "semantic_hash": ""
   },
   "tests/test_phase1_robustness.py": {
@@ -1122,6 +1122,16 @@
   "tests/test_admin_api.py": {
     "mtime": 1794809733.918804,
     "ast_hash": "d29ba0cd4f54a56bd1e98bc860135e5f",
+    "semantic_hash": ""
+  },
+  "supabase/migrations/20261116180000_add_rate_limit_counters.sql": {
+    "mtime": 1794852235.4331145,
+    "ast_hash": "bca4a1627303acf6d9fc426103242e33",
+    "semantic_hash": ""
+  },
+  "supabase/migrations/20261116181000_fix_consume_rate_limit_greatest.sql": {
+    "mtime": 1794852235.4331145,
+    "ast_hash": "ef95f06b7d8ebec3856c6567a0373d7f",
     "semantic_hash": ""
   }
 }
