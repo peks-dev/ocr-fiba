@@ -140,10 +140,11 @@ deploy_api() {
   else
     echo "skipping Supabase secrets: create supabase-service-key and supabase-jwt-secret first"
   fi
-  # Bucket is mounted at /mnt/data: runs/ holds run folders, quota/ the persisted rate-limit state.
+  # Bucket is mounted at /mnt/data: runs/ holds run folders, quota/ the persisted rate-limit state
+  # (used only as a local fallback if Supabase is not configured).
   # API: max 3 instances so cold-start traffic is not serialized behind a single instance.
-  # Rate-limit counters are in-memory per process with a best-effort JSON file designed for a
-  # single writer, so quotas can be slightly loose across instances. CPU stays allocated
+  # When Supabase is configured, run-creation quotas are enforced by the shared
+  # consume_rate_limit RPC so limits hold across instances. CPU stays allocated
   # (--no-cpu-throttling) because OCR runs execute in a background thread after the HTTP
   # response returns.
   g run deploy ocr-api --image "$(current_image)" --region "$REGION" \

@@ -16,6 +16,6 @@ def get_supabase_client() -> Client:
     server-side — never exposed to the browser or API responses.
     """
     settings = get_api_settings()
-    if not settings.has_supabase:
+    if not settings.has_supabase_service:
         raise RuntimeError("Supabase is not configured. Set SUPABASE_URL and SUPABASE_SERVICE_KEY.")
     return create_client(settings.supabase_url, settings.supabase_service_key)
