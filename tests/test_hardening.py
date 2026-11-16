@@ -150,6 +150,43 @@ class RateLimiterTest(unittest.TestCase):
         self.assertEqual(unauth.status_code, 401, "auth is checked before quota")
         self.assertEqual(listing.status_code, 200, "reads are not rate limited")
 
+    def test_http_rate_limits_ocr_live_keys_independently_of_static_token(self) -> None:
+        supabase_env = {
+            "SUPABASE_URL": "https://example.supabase.co",
+            "SUPABASE_SERVICE_KEY": "service-role-key",
+            "SUPABASE_JWT_SECRET": "jwt-secret-at-least-32-chars!!",
+        }
+
+        def accept_key(request):
+            request.state.account_id = "account-1"
+            return None
+
+        with tempfile.TemporaryDirectory() as tmp:
+            env = {
+                **PROD_ENV,
+                **supabase_env,
+                "OCR_RUNS_DIR": tmp,
+                "OCR_RATE_LIMIT_PER_MINUTE": "2",
+            }
+            with patch.dict("os.environ", env, clear=True):
+                with patch("ocr_engine_api.main.validate_api_key", side_effect=accept_key):
+                    client = TestClient(create_app())
+                    key_a = {"Authorization": "Bearer ocr_live_aaaaaaaa"}
+                    key_b = {"Authorization": "Bearer ocr_live_bbbbbbbb"}
+                    static = {"Authorization": "Bearer secret"}
+                    codes_a = [
+                        client.post("/v1/runs", json={"image_path": "/x.jpg"}, headers=key_a).status_code
+                        for _ in range(3)
+                    ]
+                    first_b = client.post("/v1/runs", json={"image_path": "/x.jpg"}, headers=key_b)
+                    first_static = client.post("/v1/runs", json={"image_path": "/x.jpg"}, headers=static)
+                    listing = client.get("/v1/runs", headers=key_a)
+        self.assertEqual(codes_a[:2], [403, 403], "path input is still blocked after auth")
+        self.assertEqual(codes_a[2], 429, "ocr_live_ keys are rate limited")
+        self.assertEqual(first_b.status_code, 403, "a second ocr_live_ key has its own bucket")
+        self.assertEqual(first_static.status_code, 403, "static fallback token still works")
+        self.assertEqual(listing.status_code, 200, "reads are not rate limited")
+
 
 class ServerDefaultsTest(unittest.TestCase):
     def test_env_default_extractor_applies_when_unset(self) -> None:
