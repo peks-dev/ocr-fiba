@@ -138,7 +138,7 @@ export function ApiKeysPanel() {
             <p className="text-xs font-semibold uppercase tracking-[0.18em] text-primary-deep sm:text-sm">Credentials</p>
             <h2 className="mt-2 text-2xl font-semibold text-ink">API Keys</h2>
             <p className="mt-2 max-w-2xl text-sm leading-6 text-muted">
-              Create keys for service-to-service calls to the local FastAPI OCR engine. Full keys are only shown once. Deleted keys are removed from the system.
+              These keys belong to your admin account and are for service-to-service calls to the OCR API. Full keys are only shown once. Deleted keys are removed from the system.
             </p>
           </div>
           <div className="flex flex-col gap-3 sm:flex-row">
