@@ -1,16 +1,16 @@
 # Graph Report - ocr-fiba  (2026-11-15)
 
 ## Corpus Check
-- 216 files · ~82,697 words
+- 216 files · ~82,860 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 1914 nodes · 3920 edges · 125 communities (114 shown, 11 thin omitted)
+- 1917 nodes · 3926 edges · 126 communities (115 shown, 11 thin omitted)
 - Extraction: 96% EXTRACTED · 4% INFERRED · 0% AMBIGUOUS · INFERRED: 154 edges (avg confidence: 0.51)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `47214267`
+- Built from commit: `7587e48b`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -131,6 +131,7 @@
 - api_key_for_request
 - issue_api_key.py
 - error_response
+- .detect_bounding_boxes
 
 ## God Nodes (most connected - your core abstractions)
 1. `TokenUsage` - 65 edges
@@ -159,7 +160,7 @@
 ## Import Cycles
 - None detected.
 
-## Communities (125 total, 11 thin omitted)
+## Communities (126 total, 11 thin omitted)
 
 ### Community 0 - "club-demo/capture-client.tsx"
 Cohesion: 0.05
@@ -170,44 +171,44 @@ Cohesion: 0.26
 Nodes (5): OcrApiClient, Any, Response, Session, HTTP client used by the remote MCP adapter.
 
 ### Community 2 - "single-player-demo/capture-client.tsx"
-Cohesion: 0.06
-Nodes (42): ACCEPTED_IMAGE_TYPES, CaptureClient(), formatFileSize(), StepState, HistoryClient(), ProgressClient(), createSavedGame(), extractPlayers() (+34 more)
+Cohesion: 0.13
+Nodes (19): ACCEPTED_IMAGE_TYPES, CaptureClient(), formatFileSize(), StepState, createSavedGame(), extractPlayers(), extractTeamPlayers(), formatFinalScore() (+11 more)
 
 ### Community 3 - "Cropper"
-Cohesion: 0.09
-Nodes (26): Cropper, Path, ProviderType, Sub-crop team fouls from already-cropped team sections.          For each team (, Detect the team-fouls bounding box for one team (network-bound)., Validate and normalize a list of detected bounding boxes., Validate a single team fouls bounding box., Normalize section names, handling common aliases. (+18 more)
+Cohesion: 0.15
+Nodes (14): Cropper, ProviderType, Validate and normalize a list of detected bounding boxes., Validate a single team fouls bounding box., Normalize section names, handling common aliases., Normalize team fouls section name., Validate that normalized coordinates are in 0..1000 range and box is valid., Responsible for detecting and cropping sections from a FIBA scoresheet image. (+6 more)
 
 ### Community 4 - "TokenUsage"
-Cohesion: 0.11
-Nodes (14): Any, Path, Detect bounding boxes in an image (used for section cropping).          Args:, Represents token usage from a model call., Perform a completion on an image.          If schema is provided, uses structure, TokenUsage, Extract usage from an OpenAI-compatible ``usage`` object., InterfazeProvider (+6 more)
+Cohesion: 0.13
+Nodes (15): Represents token usage from a model call., TokenUsage, DocstrangeProvider, Any, Path, Extract token usage from DocStrange response., Parse the DocStrange API response into a structured dict., Perform a completion on an image.          If schema is provided, uses JSON outp (+7 more)
 
 ### Community 5 - "devDependencies"
 Cohesion: 0.05
 Nodes (38): eslint, eslint-config-next, next, dependencies, next, react, react-dom, sonner (+30 more)
 
 ### Community 6 - "HttpJsonProvider"
-Cohesion: 0.10
-Nodes (19): BoundingBox, Normalized bounding box (0-1000 scale)., HttpJsonProvider, Any, Path, Sleep ``BACKOFF_BASE * 2**(attempt-1)`` (capped) plus jitter., Encode an image as a base64 ``data:`` URI., Encode an image as raw base64 (no data URI prefix). (+11 more)
+Cohesion: 0.11
+Nodes (16): HttpJsonProvider, Any, Path, Sleep ``BACKOFF_BASE * 2**(attempt-1)`` (capped) plus jitter., Encode an image as a base64 ``data:`` URI., Encode an image as raw base64 (no data URI prefix)., Strip markdown code fences (```json ... ```) wrapped around JSON., Parse content as JSON, tolerating code fences; fall back to raw_text. (+8 more)
 
 ### Community 7 - "exceptions.py"
-Cohesion: 0.07
-Nodes (27): ProviderInvalidResponseError, El provider devolvió una respuesta que no se puede interpretar., Core Extractor — Model-agnostic structured extraction from FIBA sections.  This, Prompts detallados para extracción de secciones de hojas FIBA. Migrados desde ex, ModelProvider, ABC, Base abstraction for AI model providers.  This module defines the common interfa, Abstract base class for all model providers.      Each provider (Interfaze, Gemi (+19 more)
+Cohesion: 0.10
+Nodes (16): ModelProvider, ABC, Base abstraction for AI model providers.  This module defines the common interfa, Abstract base class for all model providers.      Each provider (Interfaze, Gemi, create_provider(), ProviderType, Provider factory — centralized creation of ModelProvider instances., Create a ModelProvider instance from configuration.      Extra kwargs are passed (+8 more)
 
 ### Community 8 - "team_markdown_parser.py"
-Cohesion: 0.13
-Nodes (27): FooterMarkdownParseError, _is_separator(), _is_table_header(), _map_period(), parse_footer_markdown(), _parse_int_or_null(), _parse_text_or_null(), ValueError (+19 more)
+Cohesion: 0.06
+Nodes (49): ExtractionError, Error durante la fase de extracción de datos., _convert_interfaze_team_json(), ExtractionTarget, Extractor, _parse_mark_flag(), Any, Path (+41 more)
 
 ### Community 9 - "output_builder.py"
-Cohesion: 0.05
-Nodes (56): build_final_output(), _coerce_bool(), _coerce_int(), _compute_points_from_running_score(), _derive_entry_flags(), _derive_fouls_from_cells(), _foul_token(), _normalize_foul_cell() (+48 more)
+Cohesion: 0.07
+Nodes (48): build_final_output(), _coerce_bool(), _coerce_int(), _compute_points_from_running_score(), _derive_entry_flags(), _derive_fouls_from_cells(), _foul_token(), _normalize_foul_cell() (+40 more)
 
 ### Community 10 - "runs.py"
-Cohesion: 0.19
-Nodes (16): BaseModel, FastAPI, apply_server_defaults(), build_config(), parse_options_json(), HTTPException, Fill extractor provider/model from server env when the client did not set them., unsupported_upload_type_error() (+8 more)
+Cohesion: 0.15
+Nodes (24): BaseModel, FastAPI, File, Form, engine_error_response(), error_response(), Any, HTTPException (+16 more)
 
 ### Community 11 - "ApiTest"
 Cohesion: 0.10
-Nodes (22): File, FileResponse, Form, ge, le, is_authorized(), delete_run(), get_run() (+14 more)
+Nodes (18): FileResponse, ge, le, is_authorized(), delete_run(), get_run(), get_run_artifact(), get_run_result() (+10 more)
 
 ### Community 12 - "PipelineConfig"
 Cohesion: 0.12
@@ -226,7 +227,7 @@ Cohesion: 0.14
 Nodes (14): Auto-invoke skills, Available first-party skills (located in each package), Commands (verified to work), Domains / packages, Engram — memoria técnica compartida, Environment setup, FIBA OCR Engine — AGENTS.md, Graphify — required repository knowledge (+6 more)
 
 ### Community 16 - "main.py"
-Cohesion: 0.12
+Cohesion: 0.11
 Nodes (13): is_auth_exempt(), JSONResponse, unauthorized_response(), create_app(), _load_project_env(), Run the API app with uvicorn for the ocr-api console script., Load .env from cwd or the repository root without overriding env vars., run() (+5 more)
 
 ### Community 17 - "plugins/__init__.py"
@@ -238,12 +239,12 @@ Cohesion: 0.16
 Nodes (16): AirtableConfig, AirtableRecord, airtableUrl(), GET(), notConfigured(), POST(), readConfig(), SUBMISSION_FIELDS (+8 more)
 
 ### Community 19 - "create_provider"
-Cohesion: 0.13
-Nodes (18): ErrorCode, ExtractionError, Error durante la fase de extracción de datos., Catálogo de códigos de error machine-readable., _convert_interfaze_team_json(), ExtractionTarget, Extractor, _parse_mark_flag() (+10 more)
+Cohesion: 0.25
+Nodes (5): Core Cropper — Model-agnostic section detection, validation, and cropping.  This, ErrorCode, Catálogo de códigos de error machine-readable., Prompts for the Cropping phase (bounding box detection for main sections)., Prompts for the Team Fouls sub-cropping phase (bounding box detection within tea
 
 ### Community 20 - "OpenrouterProvider"
-Cohesion: 0.21
-Nodes (8): Whether a provider's structured_completion accepts agentic_mode.      Cached per, _supports_agentic_mode(), OpenrouterProvider, Any, Path, Provider for OpenRouter-hosted models such as google/gemini-3-flash-preview., AgenticCapabilityTest, P3 — capability detection is cached per provider class.
+Cohesion: 0.39
+Nodes (4): OpenrouterProvider, Any, Path, Provider for OpenRouter-hosted models such as google/gemini-3-flash-preview.
 
 ### Community 21 - "Quickstart (local development)"
 Cohesion: 0.22
@@ -251,7 +252,7 @@ Nodes (9): Environment, Install, Prerequisites, Quickstart (local development), 
 
 ### Community 22 - "ProviderRateLimitError"
 Cohesion: 0.18
-Nodes (4): ParsingHelpersTest, Tests for the shared HttpJsonProvider base: retry/backoff and parsing., Minimal concrete provider that records request attempts., _StubProvider
+Nodes (4): Parse bounding boxes from a detection response.          Accepts both the array, ParsingHelpersTest, Minimal concrete provider that records request attempts., _StubProvider
 
 ### Community 23 - "validation/__init__.py"
 Cohesion: 0.15
@@ -259,27 +260,27 @@ Nodes (18): Validation Engine — orchestrates plugin execution and determines m
 
 ### Community 24 - "get_api_settings"
 Cohesion: 0.12
-Nodes (9): ApiSettings, _env_bool(), get_api_settings(), parse_cors_origins(), Path, Parse comma-separated CORS origins from environment., resolve_runs_dir(), validate_api_settings() (+1 more)
+Nodes (13): Any, Remove local filesystem paths from API responses in production., _sanitize(), sanitize_for_public_response(), ApiSettings, _env_bool(), get_api_settings(), parse_cors_origins() (+5 more)
 
 ### Community 25 - "Artifact"
-Cohesion: 0.19
-Nodes (9): ArtifactStore, _guess_image_mime_type(), Any, Path, Small filesystem-backed artifact registry for one run., Copy the source image into the run input directory., Write the final engine result to the run result path., Artifact (+1 more)
+Cohesion: 0.11
+Nodes (14): ArtifactStore, _guess_image_mime_type(), Any, Path, Small filesystem-backed artifact registry for one run., Copy the source image into the run input directory., Write the final engine result to the run result path., Artifact (+6 more)
 
 ### Community 26 - "OcrEngineError"
-Cohesion: 0.10
-Nodes (17): main(), _output_error(), _output_success(), Entry point for running the FIBA OCR pipeline with model selection., Output a successful pipeline result., Output a pipeline error in standardized format., ConfigurationError, InputError (+9 more)
+Cohesion: 0.09
+Nodes (19): main(), _output_error(), _output_success(), Entry point for running the FIBA OCR pipeline with model selection., Output a successful pipeline result., Output a pipeline error in standardized format., ConfigurationError, InputError (+11 more)
 
 ### Community 27 - "QubridProvider"
 Cohesion: 0.20
 Nodes (4): FakeResponse, FakeSession, OcrApiClientTest, Any
 
 ### Community 28 - "DocstrangeProvider"
-Cohesion: 0.11
-Nodes (27): ProviderAuthError, ProviderConnectionError, ProviderError, ProviderRateLimitError, ProviderServerError, ProviderTimeoutError, Excepción base y jerarquía para el OCR Engine.  Toda excepción del engine hereda, Error originado en un provider de IA externo. (+19 more)
+Cohesion: 0.16
+Nodes (18): ProviderAuthError, ProviderConnectionError, ProviderError, ProviderRateLimitError, ProviderServerError, ProviderTimeoutError, Excepción base y jerarquía para el OCR Engine.  Toda excepción del engine hereda, Error originado en un provider de IA externo. (+10 more)
 
 ### Community 29 - "GeminiProvider"
-Cohesion: 0.19
-Nodes (6): GeminiProvider, Any, Path, Attempt to repair truncated JSON by removing incomplete values and closing struc, Provider for Google Gemini models (via Google AI Studio)., Extract text content from a Gemini response.
+Cohesion: 0.15
+Nodes (9): GeminiProvider, Any, Path, Gemini provider implementation via Google Generative AI., Attempt to repair truncated JSON by removing incomplete values and closing struc, Provider for Google Gemini models (via Google AI Studio)., Extract text content from a Gemini response., guess_mime_type() (+1 more)
 
 ### Community 30 - "determine_match_status"
 Cohesion: 0.18
@@ -294,8 +295,8 @@ Cohesion: 0.13
 Nodes (11): _exception_to_dict(), Any, Exception, _sum_usage(), _timestamp_iso(), _duration_ms(), Any, Convert engine values to plain JSON-compatible structures. (+3 more)
 
 ### Community 33 - "account.ts"
-Cohesion: 0.20
-Nodes (16): AdminPage(), demoLabels, inviteTester(), redirectWithMessage(), Home(), Account, AccountRole, AssignedDemo (+8 more)
+Cohesion: 0.06
+Nodes (48): config, middleware(), AdminLayout(), AdminPage(), demoLabels, inviteTester(), redirectWithMessage(), POST() (+40 more)
 
 ### Community 34 - ".run_full_pipeline"
 Cohesion: 0.18
@@ -330,8 +331,8 @@ Cohesion: 0.23
 Nodes (8): readDraft(), formatFinalScore(), buildPreview(), SubmitClient(), EmptyState(), Panel(), StatusBanner(), TextField()
 
 ### Community 42 - "_cache_get"
-Cohesion: 0.29
-Nodes (5): _cache_get(), _cache_set(), Return (account_id, status) from cache if present and not expired., Store a validated key in the cache., ApiKeyCacheTest
+Cohesion: 0.17
+Nodes (13): find_active_key_by_hash(), Fire-and-forget update of last_used_at for an API key., Find an active API key by its hash. Returns the key row or None., update_last_used_at(), _cache_get(), _cache_set(), JSONResponse, Return (account_id, status) from cache if present and not expired. (+5 more)
 
 ### Community 43 - "auth_supabase.py"
 Cohesion: 0.23
@@ -354,11 +355,11 @@ Cohesion: 0.16
 Nodes (5): Path, Sliding-window limiter for run creation, keyed per token. A limit of 0 disables, Record one attempt for ``key``. Returns (allowed, window, retry_after_seconds)., RunRateLimiter, RateLimiterTest
 
 ### Community 48 - "me.py"
-Cohesion: 0.17
-Nodes (19): delete_api_key(), get_account_by_supabase_user_id(), list_api_keys(), Insert a new API key record in Supabase and return the stored row., Delete an API key row. Returns the deleted row when available., List API keys for an account. Returns prefix, name, status, timestamps only., Look up an account by its Supabase user ID., store_api_key() (+11 more)
+Cohesion: 0.15
+Nodes (21): delete_api_key(), get_account_by_supabase_user_id(), list_api_keys(), Insert a new API key record in Supabase and return the stored row., Delete an API key row. Returns the deleted row when available., List API keys for an account. Returns prefix, name, status, timestamps only., Look up an account by its Supabase user ID., store_api_key() (+13 more)
 
 ### Community 49 - "generate_api_key"
-Cohesion: 0.24
+Cohesion: 0.22
 Nodes (6): generate_api_key(), hash_api_key(), Generate an OCR API key and return (raw_key, key_hash, key_prefix).      The raw, Return the SHA-256 hash of an API key., GenerateApiKeyTest, UpdateLastUsedAtTest
 
 ### Community 50 - "cv_progressive_score.py"
@@ -406,8 +407,8 @@ Cohesion: 0.31
 Nodes (11): build(), deploy_api(), deploy_mcp(), ensure_secret(), g(), grant_secret_access(), infra(), secret_exists() (+3 more)
 
 ### Community 61 - "RunRepository"
-Cohesion: 0.09
-Nodes (15): Future, Any, Path, Execute OCR runs and update filesystem-backed status., Submit a local/preview run without holding the HTTP response open., RunExecutor, _is_relative_to(), _list_input_files() (+7 more)
+Cohesion: 0.13
+Nodes (10): run_links(), _is_relative_to(), _list_input_files(), Exception, Path, Filesystem-backed access to OCR run records., _read_optional_json(), RunRepository (+2 more)
 
 ### Community 62 - "smoke_async_mcp.py"
 Cohesion: 0.33
@@ -426,8 +427,8 @@ Cohesion: 0.20
 Nodes (9): Canonical phases, Canonical run layout, Configuration plumbing, Constraints (do not violate), How callers wire in, OCR Run Lifecycle, References, Tracing rule (+1 more)
 
 ### Community 66 - "auth_api_key.py"
-Cohesion: 0.17
-Nodes (12): find_active_key_by_hash(), Fire-and-forget update of last_used_at for an API key., Find an active API key by its hash. Returns the key row or None., update_last_used_at(), is_api_key_request(), JSONResponse, Request, Check if the request carries a Bearer token that looks like an OCR API key. (+4 more)
+Cohesion: 0.33
+Nodes (4): is_api_key_request(), Request, Return True when the Bearer token is a per-client ``ocr_live_`` API key.      Th, IsApiKeyRequestTest
 
 ### Community 67 - "referee.py"
 Cohesion: 0.25
@@ -446,12 +447,12 @@ Cohesion: 0.14
 Nodes (13): IssueSeverity, OcrFooter, OcrPlayer, OcrResult, OcrTeam, PlayerPoints, ProgressiveEvent, QuarterKey (+5 more)
 
 ### Community 71 - "is_api_key_request"
-Cohesion: 0.17
-Nodes (10): ClubDemoLayout(), metadata, metadata, PlayerDemoLayout(), metadata, RefereeDemoLayout(), DemoTabs(), DemoTabs() (+2 more)
+Cohesion: 0.19
+Nodes (12): ProgressClient(), average(), computeSummary(), computeTrend(), GamesPeriod, PERIOD_OPTIONS, PeriodSummary, roundOneDecimal() (+4 more)
 
 ### Community 72 - "sanitize_for_public_response"
-Cohesion: 0.36
-Nodes (5): Any, Remove local filesystem paths from API responses in production., run_links(), _sanitize(), sanitize_for_public_response()
+Cohesion: 0.17
+Nodes (12): Path, Sub-crop team fouls from already-cropped team sections.          For each team (, Detect the team-fouls bounding box for one team (network-bound)., Crop sections from the source image based on validated bounding boxes., Convert a normalized (0-1000) bounding box to pixel coordinates., Validate that the detected layout makes sense for a FIBA scoresheet., Save boxes.json alongside cropped sections., Detect main sections, validate bounding boxes, and crop.          Detection and (+4 more)
 
 ### Community 73 - "evaluate_header.py"
 Cohesion: 0.53
@@ -486,16 +487,16 @@ Cohesion: 0.50
 Nodes (4): evaluate_sheet(), main(), Any, Evaluate player points extraction against ground truth.  Usage:     python evalu
 
 ### Community 81 - "ValidationEngine"
-Cohesion: 0.26
-Nodes (8): POST(), getSafeNextPath(), LoginPayload, POST(), QuickstartPage(), markCurrentAccountAccepted(), siteConfig, createClient()
+Cohesion: 0.20
+Nodes (11): HistoryClient(), getPlayerInsight(), isSavedGame(), readSavedGames(), writeSavedGames(), SavedSinglePlayerGame, EmptyState(), GameDetailCard() (+3 more)
 
 ### Community 82 - "mcp — AGENTS.md"
 Cohesion: 0.20
 Nodes (8): Auto-invoke skills (per task), Context, mcp — AGENTS.md, References, Rules specific to mcp, Stack, Structure, Tools and resources (current)
 
 ### Community 83 - "supabase/middleware.ts"
-Cohesion: 0.39
-Nodes (6): config, middleware(), destinationForMiddlewareAccount(), getAccountForUser(), MiddlewareAccount, updateSession()
+Cohesion: 0.20
+Nodes (8): env_names_for_provider(), get_api_key(), Candidate env var names for a provider (falls back to the default)., Resolve a provider's API key from its candidate env vars., Resolve an API key from environment variables.      If ``api_key_env`` is given, resolve_provider_api_key(), ApiKeyResolutionTest, M7 — single source of truth for provider → env var names.
 
 ### Community 86 - "main"
 Cohesion: 0.43
@@ -542,28 +543,28 @@ Cohesion: 0.50
 Nodes (3): Deploy on Vercel, Getting Started, Learn More
 
 ### Community 105 - "image_utils.py"
-Cohesion: 0.15
-Nodes (14): Core Cropper — Model-agnostic section detection, validation, and cropping.  This, Prompts for the Cropping phase (bounding box detection for main sections)., Prompts for the Team Fouls sub-cropping phase (bounding box detection within tea, guess_mime_type(), load_dotenv(), ndarray, Path, Shared image and environment utilities. (+6 more)
+Cohesion: 0.17
+Nodes (14): find_image(), main(), Path, Batch runner: process the entire FIBA scoresheet dataset through the pipeline., Find the .jpg image inside a sheet directory., load_dotenv(), ndarray, Path (+6 more)
 
 ### Community 109 - "load_schema"
-Cohesion: 0.19
-Nodes (5): new_run_id(), Path, Create a compact, sortable-enough run identifier for local executions., FakeToolbox, CoreContractsTest
+Cohesion: 0.24
+Nodes (8): ProviderInvalidResponseError, El provider devolvió una respuesta que no se puede interpretar., GlmProvider, Any, Path, GLM (Z.AI) provider implementation via Chat Completion API.  Uses the OpenAI-com, Provider for Z.AI VLM models (GLM-5V-Turbo, GLM-4.6V, etc.)     via the OpenAI-c, Extract ``choices[0].message.content`` from an OpenAI-style response.          R
 
 ### Community 111 - "create_admin_user.py"
 Cohesion: 0.43
 Nodes (6): find_user_by_email(), main(), parse_args(), Any, Namespace, require_env()
 
 ### Community 118 - "FibaOcrPipeline"
-Cohesion: 0.15
-Nodes (12): find_image(), main(), Path, Batch runner: process the entire FIBA scoresheet dataset through the pipeline., Find the .jpg image inside a sheet directory., FibaOcrPipeline, Any, Path (+4 more)
+Cohesion: 0.26
+Nodes (7): FibaOcrPipeline, Any, Path, Save the result JSON to a file., Pipeline completo para procesar hojas de anotación FIBA.     Usa la arquitectura, Run the full pipeline on a FIBA scoresheet image.          Args:             ima, _to_token_usage()
 
 ### Community 119 - "club-demo/capture-client.tsx"
 Cohesion: 0.44
 Nodes (12): OcrApiError, _async_next_actions(), handle_api_error(), inspect_run(), poll_run(), process_submit_response(), Any, _resources() (+4 more)
 
 ### Community 120 - "name-match.ts"
-Cohesion: 0.21
-Nodes (8): AdminLayout(), TestLayout(), AccountRole, adminLinks, AssignedDemo, Nav(), testerLinks, requireCurrentUserAccount()
+Cohesion: 0.33
+Nodes (6): Future, Any, Path, Execute OCR runs and update filesystem-backed status., Submit a local/preview run without holding the HTTP response open., RunExecutor
 
 ### Community 121 - "run_dataset.py"
 Cohesion: 0.33
@@ -579,7 +580,11 @@ Nodes (7): find_user_by_email(), main(), parse_args(), Any, Namespace, require_e
 
 ### Community 124 - "error_response"
 Cohesion: 0.33
-Nodes (6): engine_error_response(), error_response(), Any, HTTPException, delete_api_key(), Delete an API key by its ID.
+Nodes (5): Any, Path, QubridProvider, Provider for Qubrid-hosted multimodal models such as Qwen/Qwen3-VL-Flash., Extract the first choice finish reason, if present.
+
+### Community 125 - ".detect_bounding_boxes"
+Cohesion: 0.40
+Nodes (4): Any, Path, Detect bounding boxes in an image (used for section cropping).          Args:, Perform a completion on an image.          If schema is provided, uses structure
 
 ## Knowledge Gaps
 - **236 isolated node(s):** `ocr-engine-mcp`, `__filename`, `__dirname`, `compat`, `eslintConfig` (+231 more)
@@ -589,11 +594,11 @@ Nodes (6): engine_error_response(), error_response(), Any, HTTPException, delete
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `TokenUsage` connect `TokenUsage` to `Cropper`, `OcrToolbox`, `HttpJsonProvider`, `exceptions.py`, `image_utils.py`, `output_builder.py`, `PipelineConfig`, `create_provider`, `OpenrouterProvider`, `createClient`, `FibaOcrPipeline`, `ProviderRateLimitError`, `DocstrangeProvider`, `GeminiProvider`, `determine_match_status`?**
-  _High betweenness centrality (0.043) - this node is a cross-community bridge._
-- **Why does `RunRepository` connect `RunRepository` to `runs.py`, `ApiTest`?**
+- **Why does `TokenUsage` connect `TokenUsage` to `Cropper`, `HttpJsonProvider`, `exceptions.py`, `team_markdown_parser.py`, `output_builder.py`, `PipelineConfig`, `create_provider`, `OpenrouterProvider`, `ProviderRateLimitError`, `DocstrangeProvider`, `GeminiProvider`, `determine_match_status`, `OcrToolbox`, `createClient`, `sanitize_for_public_response`, `load_schema`, `FibaOcrPipeline`, `error_response`, `.detect_bounding_boxes`?**
+  _High betweenness centrality (0.046) - this node is a cross-community bridge._
+- **Why does `RunRepository` connect `RunRepository` to `name-match.ts`, `runs.py`, `ApiTest`, `createClient`?**
   _High betweenness centrality (0.026) - this node is a cross-community bridge._
-- **Why does `Cropper` connect `Cropper` to `TokenUsage`, `OcrToolbox`, `HttpJsonProvider`, `image_utils.py`, `create_provider`, `createClient`?**
+- **Why does `Cropper` connect `Cropper` to `TokenUsage`, `OcrToolbox`, `sanitize_for_public_response`, `create_provider`, `createClient`?**
   _High betweenness centrality (0.017) - this node is a cross-community bridge._
 - **Are the 19 inferred relationships involving `TokenUsage` (e.g. with `Cropper` and `ExtractionTarget`) actually correct?**
   _`TokenUsage` has 19 INFERRED edges - model-reasoned connections that need verification._

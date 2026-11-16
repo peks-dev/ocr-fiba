@@ -187,6 +187,39 @@ class RateLimiterTest(unittest.TestCase):
         self.assertEqual(first_static.status_code, 403, "static fallback token still works")
         self.assertEqual(listing.status_code, 200, "reads are not rate limited")
 
+    def test_ocr_pub_static_token_works_when_supabase_is_configured(self) -> None:
+        supabase_env = {
+            "SUPABASE_URL": "https://example.supabase.co",
+            "SUPABASE_SERVICE_KEY": "service-role-key",
+            "SUPABASE_JWT_SECRET": "jwt-secret-at-least-32-chars!!",
+        }
+        static_token = "ocr_pub_shared-token"
+        calls: list[str] = []
+
+        def accept_live_key(request):
+            calls.append(request.headers.get("authorization", ""))
+            request.state.account_id = "account-1"
+            return None
+
+        with tempfile.TemporaryDirectory() as tmp:
+            env = {
+                **PROD_ENV,
+                **supabase_env,
+                "OCR_ENGINE_API_KEY": static_token,
+                "OCR_RUNS_DIR": tmp,
+            }
+            with patch.dict("os.environ", env, clear=True):
+                with patch("ocr_engine_api.main.validate_api_key", side_effect=accept_live_key):
+                    client = TestClient(create_app())
+                    static_ok = client.get("/v1/runs", headers={"Authorization": f"Bearer {static_token}"})
+                    live_ok = client.get("/v1/runs", headers={"Authorization": "Bearer ocr_live_aaaaaaaa"})
+                    wrong_static = client.get("/v1/runs", headers={"Authorization": "Bearer ocr_pub_other"})
+        self.assertEqual(static_ok.status_code, 200, "ocr_pub_ uses the static OCR_ENGINE_API_KEY")
+        self.assertEqual(live_ok.status_code, 200, "ocr_live_ still goes through Supabase validation")
+        self.assertEqual(wrong_static.status_code, 401, "unknown ocr_pub_ tokens are not accepted")
+        self.assertEqual(len(calls), 1, "validate_api_key is only called for ocr_live_")
+        self.assertIn("ocr_live_aaaaaaaa", calls[0])
+
 
 class ServerDefaultsTest(unittest.TestCase):
     def test_env_default_extractor_applies_when_unset(self) -> None:

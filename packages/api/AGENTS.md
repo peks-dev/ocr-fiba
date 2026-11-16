@@ -59,7 +59,7 @@ When adding a new router, follow the same conditional pattern based on a `settin
 
 Three auth surfaces, in priority order:
 
-1. **`api_key_auth` middleware** (always on): detects Bearer tokens starting with `ocr_` and validates them via `auth_api_key.validate_api_key`. Skips `/v1/me/*` and `OPTIONS`.
+1. **`api_key_auth` middleware** (always on): detects Bearer tokens starting with `ocr_live_` and validates them via `auth_api_key.validate_api_key`. Shared `ocr_pub_` tokens fall through to the static bearer check. Skips `/v1/me/*` and `OPTIONS`.
 2. **Static bearer** (fallback when Supabase is not configured): `auth.is_authorized(settings.api_key)`.
 3. **Supabase JWT** (only for `/v1/me/*`): `auth_supabase.require_supabase_user`.
 
