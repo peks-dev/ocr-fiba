@@ -6,7 +6,7 @@ version: 1.0.0
 
 # API Key Auth
 
-Bearer API key authentication for the FIBA OCR API. Every request to `/v1/runs/*` must carry a valid key. There are three layers (see `packages/api/AGENTS.md` § Auth is layered); this skill covers the **API key layer** — the one that fires for any Bearer token starting with `ocr_`.
+Bearer API key authentication for the FIBA OCR API. Every request to `/v1/runs/*` must carry a valid key. There are three layers (see `packages/api/AGENTS.md` § Auth is layered); this skill covers the **API key layer** — the one that fires for any Bearer token starting with `ocr_live_`.
 
 ## When to use
 
@@ -34,14 +34,14 @@ The raw key is returned to the user **exactly once** (typically from `POST /v1/m
 The `api_key_auth` middleware in `ocr_engine_api.auth_api_key`:
 
 1. Skips for `OPTIONS` requests and exempt URLs (`/health`, `/v1/me/*`).
-2. If the Bearer token starts with `ocr_`, treats it as an API key request and calls `validate_api_key`.
+2. If the Bearer token starts with `ocr_live_`, treats it as an API key request and calls `validate_api_key`.
 3. `validate_api_key`:
    - SHA-256 hashes the raw key.
    - Looks up the hash in the 60-second in-memory cache. Cache hit → proceed.
    - Cache miss → queries the `api_keys` table via Supabase (or the configured backend) for an active key matching the hash.
    - Cache miss + DB hit → stores the result in the cache for 60s, fires a fire-and-forget `update_last_used_at`, proceeds.
    - Cache miss + DB miss → returns a 401 with the standard error envelope (`error.code = "UNAUTHORIZED"`).
-4. If the Bearer token does not start with `ocr_`, falls back to the static-bearer check (`auth.is_authorized(settings.api_key)`). This is the dev fallback.
+4. If the Bearer token does not start with `ocr_live_` (including the shared `ocr_pub_` static token), falls back to the static-bearer check (`auth.is_authorized(settings.api_key)`).
 
 ## What "active" means
 
