@@ -50,8 +50,8 @@
     "semantic_hash": ""
   },
   "packages/api/src/ocr_engine_api/api_keys.py": {
-    "mtime": 1794783927.4825814,
-    "ast_hash": "dfcdf5367348cfaa3172b194d2ccdda5",
+    "mtime": 1794801019.615885,
+    "ast_hash": "6c48d191d437cad8e350a7c8b99d038e",
     "semantic_hash": ""
   },
   "packages/api/src/ocr_engine_api/auth.py": {
@@ -75,8 +75,8 @@
     "semantic_hash": ""
   },
   "packages/api/src/ocr_engine_api/main.py": {
-    "mtime": 1794790297.477902,
-    "ast_hash": "aa249e3f60e88b6c732e8907a916033d",
+    "mtime": 1794800855.4345753,
+    "ast_hash": "5fa022aa72905f609ce661a9367bb55a",
     "semantic_hash": ""
   },
   "packages/api/src/ocr_engine_api/pipeline_options.py": {
@@ -400,8 +400,8 @@
     "semantic_hash": ""
   },
   "packages/mcp/src/ocr_engine_mcp/server.py": {
-    "mtime": 1794790297.477902,
-    "ast_hash": "9dac53c02327cd95f838a5f009c3bae9",
+    "mtime": 1794800889.5708477,
+    "ast_hash": "b68ea5a2bbdd3dbc05639505d69e58b3",
     "semantic_hash": ""
   },
   "packages/mcp/src/ocr_engine_mcp/tools.py": {
@@ -720,8 +720,8 @@
     "semantic_hash": ""
   },
   "tests/test_auth.py": {
-    "mtime": 1794783927.4905815,
-    "ast_hash": "56d5c355b0202a01ad50ea732f9a1024",
+    "mtime": 1794800958.1633947,
+    "ast_hash": "8fef0a296a7dc5e857ec21380351debe",
     "semantic_hash": ""
   },
   "tests/test_core_contracts.py": {
@@ -765,8 +765,8 @@
     "semantic_hash": ""
   },
   "packages/api/AGENTS.md": {
-    "mtime": 1794783927.4825814,
-    "ast_hash": "40b8be7b7c095c9e37d8dfc36a28f601",
+    "mtime": 1794800982.259587,
+    "ast_hash": "532503635514bd9af8e56238aac97d5e",
     "semantic_hash": ""
   },
   "packages/api/skills/api-error-envelope/SKILL.md": {
@@ -775,8 +775,8 @@
     "semantic_hash": ""
   },
   "packages/api/skills/api-key-auth/SKILL.md": {
-    "mtime": 1794783927.4825814,
-    "ast_hash": "21d59e7deec6903a02057ccedff1c904",
+    "mtime": 1794800982.255587,
+    "ast_hash": "d282817d83961c230512ecaa5a45c972",
     "semantic_hash": ""
   },
   "packages/cli/AGENTS.md": {
@@ -795,13 +795,13 @@
     "semantic_hash": ""
   },
   "packages/mcp/AGENTS.md": {
-    "mtime": 1794783927.4825814,
-    "ast_hash": "d177bee75ff7a86039ace440824dd48f",
+    "mtime": 1794801025.5599325,
+    "ast_hash": "55671b613ee0ff940a65dbfa310a5da5",
     "semantic_hash": ""
   },
   "packages/mcp/docs/mcp-server.md": {
-    "mtime": 1794791360.638383,
-    "ast_hash": "5b179348f050b7dbcfd2bcfe64de5678",
+    "mtime": 1794801015.6638534,
+    "ast_hash": "0ccf0d0c82912e1e38adb0a68a5032af",
     "semantic_hash": ""
   },
   "packages/web/AGENTS.md": {
@@ -950,8 +950,8 @@
     "semantic_hash": ""
   },
   "scripts/create_admin_user.py": {
-    "mtime": 1794783927.4865816,
-    "ast_hash": "e17429357b6570f6461b22c70981976d",
+    "mtime": 1794800899.9509304,
+    "ast_hash": "14e40bae934eb2795c3955712c4234cb",
     "semantic_hash": ""
   },
   "supabase/migrations/20260620090000_add_admin_invite_demo_access.sql": {
@@ -1025,8 +1025,8 @@
     "semantic_hash": ""
   },
   "scripts/deploy_cloudrun.sh": {
-    "mtime": 1794790297.4819021,
-    "ast_hash": "45a7897c5bae1e1de2d0e5b8e8a9383b",
+    "mtime": 1794800930.1831715,
+    "ast_hash": "d36f3635b6496a74911c3d7b7f5d40e8",
     "semantic_hash": ""
   },
   "scripts/graphify-check": {
@@ -1055,8 +1055,8 @@
     "semantic_hash": ""
   },
   "tests/test_hardening.py": {
-    "mtime": 1794790297.4819021,
-    "ast_hash": "35559f166b70d3b47440ff4f4c40daab",
+    "mtime": 1794800958.1593947,
+    "ast_hash": "65d0364ca3eb789c8fa5bc3fcd1b7b9c",
     "semantic_hash": ""
   },
   "tests/test_phase1_robustness.py": {
@@ -1087,6 +1087,26 @@
   "cloudbuild.yaml": {
     "mtime": 1794791142.5726433,
     "ast_hash": "4b7200acc4806e2c8bb804c97922e383",
+    "semantic_hash": ""
+  },
+  "packages/mcp/src/ocr_engine_mcp/auth.py": {
+    "mtime": 1794801015.6638534,
+    "ast_hash": "88c5b051eb57114136adffee0cc223af",
+    "semantic_hash": ""
+  },
+  "scripts/issue_api_key.py": {
+    "mtime": 1794800915.2190523,
+    "ast_hash": "811dd9215b73fb689acca08f1eeba2d6",
+    "semantic_hash": ""
+  },
+  "supabase/migrations/20261116033000_restrict_admin_role_to_app_metadata.sql": {
+    "mtime": 1794800861.5786242,
+    "ast_hash": "1abde3789b0b73b266231a2ddf084f9c",
+    "semantic_hash": ""
+  },
+  "tests/test_mcp_auth.py": {
+    "mtime": 1794801015.6638534,
+    "ast_hash": "1bcc2d265dc1b5e2d31c5ae93a49a727",
     "semantic_hash": ""
   }
 }
