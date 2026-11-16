@@ -10,6 +10,8 @@
 #   OPENROUTER_API_KEY   only read when the openrouter-api-key secret does not exist yet,
 #                        or when ROTATE_OPENROUTER_KEY=1.
 #   ROTATE_CLIENT_TOKEN=1  generate a new public client token (old one stops working).
+#   OCR_CORS_ORIGINS        comma-separated browser origins (e.g. the Vercel URL).
+#                           Empty by default; set after the first web deploy.
 #
 # Secrets (Secret Manager): openrouter-api-key, ocr-client-token, and optionally
 # supabase-service-key + supabase-jwt-secret (injected only if both already exist;
@@ -148,7 +150,7 @@ deploy_api() {
     --cpu 1 --memory 1Gi --concurrency 20 --min-instances 0 --max-instances 1 --timeout 600 \
     --add-volume "name=runs,type=cloud-storage,bucket=$BUCKET" \
     --add-volume-mount "volume=runs,mount-path=/mnt/data" \
-    --set-env-vars "OCR_SERVICE=api,OCR_ENV=production,OCR_RUNS_DIR=/mnt/data/runs,OCR_RATE_LIMIT_STATE_FILE=/mnt/data/quota/rate_limit.json,OCR_MAX_UPLOAD_MB=20,OCR_ALLOW_PATH_INPUT=false,OCR_RATE_LIMIT_PER_MINUTE=$PER_MIN,OCR_RATE_LIMIT_PER_DAY=$PER_DAY,OCR_DEFAULT_EXTRACTOR_PROVIDER=$EXTRACTOR_PROVIDER,OCR_DEFAULT_EXTRACTOR_MODEL=$EXTRACTOR_MODEL,OCR_CORS_ORIGINS=,SUPABASE_URL=$SUPABASE_URL_VALUE,SUPABASE_PUBLISHABLE_KEY=$SUPABASE_PUBLISHABLE_KEY_VALUE" \
+    --set-env-vars "^|^OCR_SERVICE=api|OCR_ENV=production|OCR_RUNS_DIR=/mnt/data/runs|OCR_RATE_LIMIT_STATE_FILE=/mnt/data/quota/rate_limit.json|OCR_MAX_UPLOAD_MB=20|OCR_ALLOW_PATH_INPUT=false|OCR_RATE_LIMIT_PER_MINUTE=$PER_MIN|OCR_RATE_LIMIT_PER_DAY=$PER_DAY|OCR_DEFAULT_EXTRACTOR_PROVIDER=$EXTRACTOR_PROVIDER|OCR_DEFAULT_EXTRACTOR_MODEL=$EXTRACTOR_MODEL|OCR_CORS_ORIGINS=${OCR_CORS_ORIGINS:-}|SUPABASE_URL=$SUPABASE_URL_VALUE|SUPABASE_PUBLISHABLE_KEY=$SUPABASE_PUBLISHABLE_KEY_VALUE" \
     --set-secrets "$api_secrets"
 }
 

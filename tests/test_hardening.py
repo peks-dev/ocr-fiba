@@ -158,7 +158,8 @@ class RateLimiterTest(unittest.TestCase):
         }
 
         def accept_key(request):
-            request.state.account_id = "account-1"
+            token = request.headers.get("authorization", "")
+            request.state.account_id = "account-b" if "bbbbbbbb" in token else "account-a"
             return None
 
         with tempfile.TemporaryDirectory() as tmp:
@@ -183,7 +184,7 @@ class RateLimiterTest(unittest.TestCase):
                     listing = client.get("/v1/runs", headers=key_a)
         self.assertEqual(codes_a[:2], [403, 403], "path input is still blocked after auth")
         self.assertEqual(codes_a[2], 429, "ocr_live_ keys are rate limited")
-        self.assertEqual(first_b.status_code, 403, "a second ocr_live_ key has its own bucket")
+        self.assertEqual(first_b.status_code, 403, "a second account has its own bucket")
         self.assertEqual(first_static.status_code, 403, "static fallback token still works")
         self.assertEqual(listing.status_code, 200, "reads are not rate limited")
 
@@ -219,6 +220,117 @@ class RateLimiterTest(unittest.TestCase):
         self.assertEqual(wrong_static.status_code, 401, "unknown ocr_pub_ tokens are not accepted")
         self.assertEqual(len(calls), 1, "validate_api_key is only called for ocr_live_")
         self.assertIn("ocr_live_aaaaaaaa", calls[0])
+
+    def test_session_jwt_is_accepted_for_run_endpoints(self) -> None:
+        supabase_env = {
+            "SUPABASE_URL": "https://example.supabase.co",
+            "SUPABASE_SERVICE_KEY": "service-role-key",
+            "SUPABASE_JWT_SECRET": "jwt-secret-at-least-32-chars!!",
+        }
+        jwt = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyLTEifQ.sig"
+
+        def verify(token: str):
+            if token != jwt:
+                from fastapi import HTTPException
+                raise HTTPException(status_code=401, detail="Invalid token")
+            return {"sub": "user-1"}
+
+        with tempfile.TemporaryDirectory() as tmp:
+            env = {**PROD_ENV, **supabase_env, "OCR_RUNS_DIR": tmp}
+            with patch.dict("os.environ", env, clear=True):
+                with patch("ocr_engine_api.auth_supabase.verify_supabase_jwt", side_effect=verify):
+                    with patch(
+                        "ocr_engine_api.api_keys.get_account_by_supabase_user_id",
+                        return_value={"id": "account-1", "status": "active", "role": "tester"},
+                    ):
+                        client = TestClient(create_app())
+                        listing = client.get("/v1/runs", headers={"Authorization": f"Bearer {jwt}"})
+                        rejected = client.get("/v1/runs", headers={"Authorization": "Bearer eyJhbGciOiJ.bad.sig"})
+        self.assertEqual(listing.status_code, 200)
+        self.assertEqual(rejected.status_code, 401)
+
+    def test_inactive_session_account_is_forbidden(self) -> None:
+        supabase_env = {
+            "SUPABASE_URL": "https://example.supabase.co",
+            "SUPABASE_SERVICE_KEY": "service-role-key",
+            "SUPABASE_JWT_SECRET": "jwt-secret-at-least-32-chars!!",
+        }
+        jwt = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyLTEifQ.sig"
+        with tempfile.TemporaryDirectory() as tmp:
+            env = {**PROD_ENV, **supabase_env, "OCR_RUNS_DIR": tmp}
+            with patch.dict("os.environ", env, clear=True):
+                with patch(
+                    "ocr_engine_api.auth_supabase.verify_supabase_jwt",
+                    return_value={"sub": "user-1"},
+                ):
+                    with patch(
+                        "ocr_engine_api.api_keys.get_account_by_supabase_user_id",
+                        return_value={"id": "account-1", "status": "invited", "role": "tester"},
+                    ):
+                        client = TestClient(create_app())
+                        response = client.get("/v1/runs", headers={"Authorization": f"Bearer {jwt}"})
+        self.assertEqual(response.status_code, 403)
+
+    def test_session_jwt_and_ocr_live_key_share_account_quota(self) -> None:
+        supabase_env = {
+            "SUPABASE_URL": "https://example.supabase.co",
+            "SUPABASE_SERVICE_KEY": "service-role-key",
+            "SUPABASE_JWT_SECRET": "jwt-secret-at-least-32-chars!!",
+        }
+        jwt = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyLTEifQ.sig"
+
+        def accept_key(request):
+            request.state.account_id = "account-1"
+            return None
+
+        with tempfile.TemporaryDirectory() as tmp:
+            env = {
+                **PROD_ENV,
+                **supabase_env,
+                "OCR_RUNS_DIR": tmp,
+                "OCR_RATE_LIMIT_PER_MINUTE": "2",
+            }
+            with patch.dict("os.environ", env, clear=True):
+                with patch("ocr_engine_api.main.validate_api_key", side_effect=accept_key):
+                    with patch(
+                        "ocr_engine_api.auth_supabase.verify_supabase_jwt",
+                        return_value={"sub": "user-1"},
+                    ):
+                        with patch(
+                            "ocr_engine_api.api_keys.get_account_by_supabase_user_id",
+                            return_value={"id": "account-1", "status": "active", "role": "tester"},
+                        ):
+                            client = TestClient(create_app())
+                            first = client.post(
+                                "/v1/runs",
+                                json={"image_path": "/x.jpg"},
+                                headers={"Authorization": f"Bearer {jwt}"},
+                            )
+                            second = client.post(
+                                "/v1/runs",
+                                json={"image_path": "/x.jpg"},
+                                headers={"Authorization": "Bearer ocr_live_aaaaaaaa"},
+                            )
+                            third = client.post(
+                                "/v1/runs",
+                                json={"image_path": "/x.jpg"},
+                                headers={"Authorization": f"Bearer {jwt}"},
+                            )
+        self.assertEqual(first.status_code, 403)
+        self.assertEqual(second.status_code, 403)
+        self.assertEqual(third.status_code, 429, "JWT and ocr_live_ for the same account share the quota")
+
+
+class CorsOriginsTest(unittest.TestCase):
+    def test_parse_cors_origins_supports_a_list(self) -> None:
+        from ocr_engine_api.settings import parse_cors_origins
+
+        self.assertEqual(
+            parse_cors_origins("https://ocr-fiba.vercel.app,https://ocr-fiba-git-main-peks.vercel.app"),
+            ("https://ocr-fiba.vercel.app", "https://ocr-fiba-git-main-peks.vercel.app"),
+        )
+        self.assertEqual(parse_cors_origins(""), ())
+        self.assertEqual(parse_cors_origins(" https://a.example , https://b.example "), ("https://a.example", "https://b.example"))
 
 
 class ServerDefaultsTest(unittest.TestCase):

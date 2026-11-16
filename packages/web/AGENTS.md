@@ -33,7 +33,7 @@ packages/web/
     │   ├── admin/
     │   │   ├── layout.tsx          # Admin auth gate + Nav
     │   │   ├── page.tsx            # Tester invitations + account overview
-    │   │   └── api-keys/page.tsx   # ApiKeysPanel for admins
+    │   │   └── api-keys/page.tsx   # AccountKeysPanel + ApiKeysPanel for admins
     │   ├── test/
     │   │   ├── layout.tsx          # Signed-in tester/admin Nav
     │   │   ├── player/             # Single-player demo
@@ -45,7 +45,8 @@ packages/web/
     ├── components/
     │   ├── nav.tsx                 # Signed-in navigation (logout via Supabase)
     │   ├── auth-card.tsx           # Email/password signup & login
-    │   ├── api-keys-panel.tsx      # Bootstrap / list / delete API keys
+    │   ├── api-keys-panel.tsx      # Bootstrap / list / delete the signed-in admin's keys
+    │   ├── account-keys-panel.tsx  # Issue / revoke keys for another account
     │   └── …
     └── lib/
         ├── api.ts                  # Fetch helpers for the OCR API (bearer)
@@ -76,7 +77,7 @@ return <Nav email={user.email} role={account.role} assignedDemo={account.assigne
 
 ### 3. API calls go through `lib/api.ts`
 
-Browser-side API calls use the helpers in `lib/api.ts`, which attach the API key as `Authorization: Bearer ocr_...`. API key management lives under `/admin/api-keys`; testers should not see API-key routes or nav links.
+Browser-side API calls use the helpers in `lib/api.ts`, which attach the signed-in Supabase session JWT as `Authorization: Bearer <access_token>`. Do not paste `ocr_live_` keys into the browser. API key management lives under `/admin/api-keys` (own keys plus issuing keys for another account); testers should not see API-key routes or nav links.
 
 ### 4. Toasts via `sonner`
 
@@ -105,7 +106,8 @@ A common bug in this app: an effect depending on `session`/`refresh` triggers a 
 
 - **NEVER** add `pages/`. App Router only.
 - **NEVER** put a Supabase client instance at module scope. Always go through `lib/supabase/*`.
-- **NEVER** store an API key in localStorage or any client-side storage. The key is fetched per session from the server.
+- **NEVER** store an API key in localStorage or any client-side storage. Testers authenticate with the session JWT; issued `ocr_live_` keys are shown once and copied out of band.
+- Vercel Root Directory is `packages/web`. Required env vars are listed in `packages/web/README.md`. Do not add a `vercel.json` unless a build proves it is necessary.
 - **NEVER** redirect on the client when the layout already redirects on the server.
 - New env vars prefixed with `NEXT_PUBLIC_` must be added to `lib/env.ts` with a typed accessor.
 - Components should not block the admin/test render waiting for non-essential data. Use `<Suspense>` with a fallback.

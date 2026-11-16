@@ -34,6 +34,7 @@ Hard rule: `ocr_engine_core` must **never** import `ocr_engine_api`, `ocr_engine
 ## Per-package documentation
 
 - MCP server: [`packages/mcp/docs/mcp-server.md`](./packages/mcp/docs/mcp-server.md)
+- Web app (local + Vercel): [`packages/web/README.md`](./packages/web/README.md)
 - Other packages: each has its own `AGENTS.md` for AI-agent context.
 
 ## Quickstart (local development)
@@ -109,10 +110,13 @@ MCP_TRANSPORT=http MCP_HOST=127.0.0.1 MCP_PORT=8001 \
 
 ```bash
 cd packages/web
+cp .env.local.example .env.local   # then fill in values
 npm install
 npm run dev
 # → http://localhost:3000
 ```
+
+Hosting is on Vercel with the project Root Directory set to `packages/web`. See [`packages/web/README.md`](./packages/web/README.md) for the required env vars and the `OCR_CORS_ORIGINS` follow-up after the first deploy.
 
 ### Run the test suite
 

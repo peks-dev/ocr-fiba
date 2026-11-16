@@ -6,7 +6,9 @@ from urllib.request import Request as UrlRequest, urlopen
 
 import jwt
 from fastapi import HTTPException, Request
+from fastapi.responses import JSONResponse
 
+from ocr_engine_api.auth import forbidden_response, unauthorized_response
 from ocr_engine_api.settings import get_api_settings
 
 
@@ -100,6 +102,58 @@ def extract_bearer_token(request: Request) -> str | None:
     scheme, _, token = auth_header.partition(" ")
     if scheme.lower() == "bearer" and token:
         return token
+    return None
+
+
+def is_jwt_request(request: Request) -> bool:
+    """Return True when the Bearer token looks like a JWT (three dot-separated parts)."""
+    token = extract_bearer_token(request)
+    if not token:
+        return False
+    parts = token.split(".")
+    return len(parts) == 3 and all(parts)
+
+
+def validate_supabase_session(request: Request) -> JSONResponse | None:
+    """Validate a Supabase session JWT and attach the account to the request.
+
+    Returns None on success. Returns a JSONResponse on failure.
+    """
+    token = extract_bearer_token(request)
+    if not token:
+        return unauthorized_response()
+    try:
+        payload = verify_supabase_jwt(token)
+    except HTTPException:
+        return unauthorized_response()
+
+    user_id = payload.get("sub")
+    if not user_id:
+        return unauthorized_response()
+
+    from ocr_engine_api.api_keys import get_account_by_supabase_user_id
+
+    try:
+        account = get_account_by_supabase_user_id(str(user_id))
+    except Exception:
+        return JSONResponse(
+            status_code=502,
+            content={
+                "success": False,
+                "error": {
+                    "code": "AUTH_BACKEND_UNAVAILABLE",
+                    "message": "Account lookup failed",
+                    "retryable": True,
+                },
+            },
+        )
+    if not account:
+        return forbidden_response("Account not found. Signup may not have completed.")
+    if account.get("status") != "active":
+        return forbidden_response("Account is not active")
+
+    request.state.account_id = account["id"]
+    request.state.account_role = account.get("role")
     return None
 
 
