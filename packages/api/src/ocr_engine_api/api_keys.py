@@ -71,16 +71,43 @@ def list_api_keys(account_id: str) -> list[dict]:
     return result.data
 
 
+ACCOUNT_COLUMNS = "id, email, role, status, plan, assigned_demo, created_at, accepted_at, invited_at, supabase_user_id"
+
+
 def get_account_by_supabase_user_id(supabase_user_id: str) -> dict | None:
     """Look up an account by its Supabase user ID."""
     client = get_supabase_client()
     result = (
         client.table("accounts")
-        .select("id, email, status, plan")
+        .select(ACCOUNT_COLUMNS)
         .eq("supabase_user_id", supabase_user_id)
         .execute()
     )
     return result.data[0] if result.data else None
+
+
+def get_account_by_id(account_id: str) -> dict | None:
+    """Look up an account by its internal ID."""
+    client = get_supabase_client()
+    result = (
+        client.table("accounts")
+        .select(ACCOUNT_COLUMNS)
+        .eq("id", account_id)
+        .execute()
+    )
+    return result.data[0] if result.data else None
+
+
+def list_accounts() -> list[dict]:
+    """List all accounts (admin use). Emails are included for the admin picker."""
+    client = get_supabase_client()
+    result = (
+        client.table("accounts")
+        .select(ACCOUNT_COLUMNS)
+        .order("created_at", desc=True)
+        .execute()
+    )
+    return result.data or []
 
 
 def find_active_key_by_hash(key_hash: str) -> dict | None:

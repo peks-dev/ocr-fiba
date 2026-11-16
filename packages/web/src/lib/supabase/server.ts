@@ -7,7 +7,7 @@ export async function createClient() {
   const cookieStore = await cookies();
 
   if (!siteConfig.supabaseUrl || !siteConfig.supabaseAnonKey) {
-    throw new Error("Missing NEXT_PUBLIC_SUPABASE_URL or NEXT_PUBLIC_SUPABASE_ANON_KEY");
+    throw new Error("Missing NEXT_PUBLIC_SUPABASE_URL or NEXT_PUBLIC_SUPABASE_ANON_KEY / NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY");
   }
 
   return createServerClient(siteConfig.supabaseUrl, siteConfig.supabaseAnonKey, {

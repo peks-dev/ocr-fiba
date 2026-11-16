@@ -26,6 +26,13 @@ def client_key(auth_header: str, client_host: str | None) -> str:
     return "ip:" + (client_host or "unknown")
 
 
+def request_rate_limit_key(account_id: str | None, auth_header: str, client_host: str | None) -> str:
+    """Prefer a per-account bucket so a session JWT and that account's ocr_live_ keys share a quota."""
+    if account_id:
+        return "acct:" + str(account_id)
+    return client_key(auth_header, client_host)
+
+
 class RunRateLimiter:
     """Sliding-window limiter for run creation, keyed per token. A limit of 0 disables it.
 
