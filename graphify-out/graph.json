@@ -662,8 +662,8 @@
       "source_location": "L61",
       "_origin": "ast",
       "id": "packages_api_src_ocr_engine_api_api_keys_list_api_keys",
-      "community": 16,
-      "community_name": "main.py",
+      "community": 48,
+      "community_name": "me.py",
       "norm_label": "list_api_keys()"
     },
     {
@@ -684,8 +684,8 @@
       "source_location": "L89",
       "_origin": "ast",
       "id": "packages_api_src_ocr_engine_api_api_keys_get_account_by_id",
-      "community": 16,
-      "community_name": "main.py",
+      "community": 83,
+      "community_name": "admin.py",
       "norm_label": "get_account_by_id()"
     },
     {
@@ -772,8 +772,8 @@
       "source_location": "L62",
       "_origin": "ast",
       "id": "packages_api_src_ocr_engine_api_api_keys_rationale_62",
-      "community": 16,
-      "community_name": "main.py",
+      "community": 48,
+      "community_name": "me.py",
       "norm_label": "list api keys for an account. returns prefix, name, status, timestamps only."
     },
     {
@@ -794,8 +794,8 @@
       "source_location": "L90",
       "_origin": "ast",
       "id": "packages_api_src_ocr_engine_api_api_keys_rationale_90",
-      "community": 16,
-      "community_name": "main.py",
+      "community": 83,
+      "community_name": "admin.py",
       "norm_label": "look up an account by its internal id."
     },
     {
@@ -1674,8 +1674,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "packages_api_src_ocr_engine_api_routes_admin",
-      "community": 16,
-      "community_name": "main.py",
+      "community": 83,
+      "community_name": "admin.py",
       "norm_label": "admin.py"
     },
     {
@@ -1685,8 +1685,8 @@
       "source_location": "L20",
       "_origin": "ast",
       "id": "packages_api_src_ocr_engine_api_routes_admin_require_admin_account",
-      "community": 48,
-      "community_name": "me.py",
+      "community": 83,
+      "community_name": "admin.py",
       "norm_label": "require_admin_account()"
     },
     {
@@ -1696,8 +1696,8 @@
       "source_location": "L36",
       "_origin": "ast",
       "id": "packages_api_src_ocr_engine_api_routes_admin_get_accounts",
-      "community": 16,
-      "community_name": "main.py",
+      "community": 83,
+      "community_name": "admin.py",
       "norm_label": "get_accounts()"
     },
     {
@@ -1707,8 +1707,8 @@
       "source_location": "L42",
       "_origin": "ast",
       "id": "packages_api_src_ocr_engine_api_routes_admin_get_account_api_keys",
-      "community": 16,
-      "community_name": "main.py",
+      "community": 83,
+      "community_name": "admin.py",
       "norm_label": "get_account_api_keys()"
     },
     {
@@ -1718,8 +1718,8 @@
       "source_location": "L50",
       "_origin": "ast",
       "id": "packages_api_src_ocr_engine_api_routes_admin_create_account_api_key",
-      "community": 16,
-      "community_name": "main.py",
+      "community": 83,
+      "community_name": "admin.py",
       "norm_label": "create_account_api_key()"
     },
     {
@@ -1729,8 +1729,8 @@
       "source_location": "L75",
       "_origin": "ast",
       "id": "packages_api_src_ocr_engine_api_routes_admin_delete_account_api_key",
-      "community": 16,
-      "community_name": "main.py",
+      "community": 83,
+      "community_name": "admin.py",
       "norm_label": "delete_account_api_key()"
     },
     {
@@ -1740,8 +1740,8 @@
       "source_location": "L21",
       "_origin": "ast",
       "id": "packages_api_src_ocr_engine_api_routes_admin_rationale_21",
-      "community": 48,
-      "community_name": "me.py",
+      "community": 83,
+      "community_name": "admin.py",
       "norm_label": "resolve the caller's account and require accounts.role == 'admin'."
     },
     {
@@ -1751,8 +1751,8 @@
       "source_location": "L37",
       "_origin": "ast",
       "id": "packages_api_src_ocr_engine_api_routes_admin_rationale_37",
-      "community": 16,
-      "community_name": "main.py",
+      "community": 83,
+      "community_name": "admin.py",
       "norm_label": "list all accounts so an admin can issue keys for testers or service accounts."
     },
     {
@@ -1762,8 +1762,8 @@
       "source_location": "L55",
       "_origin": "ast",
       "id": "packages_api_src_ocr_engine_api_routes_admin_rationale_55",
-      "community": 16,
-      "community_name": "main.py",
+      "community": 83,
+      "community_name": "admin.py",
       "norm_label": "create a named api key for another account. the raw key is returned once."
     },
     {
@@ -1773,8 +1773,8 @@
       "source_location": "L80",
       "_origin": "ast",
       "id": "packages_api_src_ocr_engine_api_routes_admin_rationale_80",
-      "community": 16,
-      "community_name": "main.py",
+      "community": 83,
+      "community_name": "admin.py",
       "norm_label": "permanently delete an api key belonging to the given account."
     },
     {
@@ -2257,8 +2257,8 @@
       "source_location": "L27",
       "_origin": "ast",
       "id": "packages_api_src_ocr_engine_api_services_run_executor_runexecutor_submit_full_pipeline",
-      "community": 120,
-      "community_name": "name-match.ts",
+      "community": 12,
+      "community_name": "PipelineConfig",
       "norm_label": ".submit_full_pipeline()"
     },
     {
@@ -2268,8 +2268,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "packages_api_src_ocr_engine_api_services_run_executor_py_path",
-      "community": 120,
-      "community_name": "name-match.ts",
+      "community": 12,
+      "community_name": "PipelineConfig",
       "norm_label": "path"
     },
     {
@@ -2279,8 +2279,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "future",
-      "community": 120,
-      "community_name": "name-match.ts",
+      "community": 12,
+      "community_name": "PipelineConfig",
       "norm_label": "future"
     },
     {
@@ -2290,8 +2290,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "packages_api_src_ocr_engine_api_services_run_executor_py_any",
-      "community": 120,
-      "community_name": "name-match.ts",
+      "community": 12,
+      "community_name": "PipelineConfig",
       "norm_label": "any"
     },
     {
@@ -2301,8 +2301,8 @@
       "source_location": "L44",
       "_origin": "ast",
       "id": "packages_api_src_ocr_engine_api_services_run_executor_runexecutor_run_full_pipeline",
-      "community": 120,
-      "community_name": "name-match.ts",
+      "community": 12,
+      "community_name": "PipelineConfig",
       "norm_label": ".run_full_pipeline()"
     },
     {
@@ -2312,8 +2312,8 @@
       "source_location": "L100",
       "_origin": "ast",
       "id": "packages_api_src_ocr_engine_api_services_run_executor_runexecutor_handle_progress",
-      "community": 120,
-      "community_name": "name-match.ts",
+      "community": 12,
+      "community_name": "PipelineConfig",
       "norm_label": "._handle_progress()"
     },
     {
@@ -2334,8 +2334,8 @@
       "source_location": "L35",
       "_origin": "ast",
       "id": "packages_api_src_ocr_engine_api_services_run_executor_rationale_35",
-      "community": 120,
-      "community_name": "name-match.ts",
+      "community": 12,
+      "community_name": "PipelineConfig",
       "norm_label": "submit a local/preview run without holding the http response open."
     },
     {
@@ -3085,8 +3085,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "packages_cli_src_ocr_engine_cli_run_dataset",
-      "community": 118,
-      "community_name": "FibaOcrPipeline",
+      "community": 125,
+      "community_name": "run_dataset.py",
       "norm_label": "run_dataset.py"
     },
     {
@@ -3096,8 +3096,8 @@
       "source_location": "L43",
       "_origin": "ast",
       "id": "packages_cli_src_ocr_engine_cli_run_dataset_find_image",
-      "community": 118,
-      "community_name": "FibaOcrPipeline",
+      "community": 125,
+      "community_name": "run_dataset.py",
       "norm_label": "find_image()"
     },
     {
@@ -3107,8 +3107,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "packages_cli_src_ocr_engine_cli_run_dataset_py_path",
-      "community": 118,
-      "community_name": "FibaOcrPipeline",
+      "community": 125,
+      "community_name": "run_dataset.py",
       "norm_label": "path"
     },
     {
@@ -3118,8 +3118,8 @@
       "source_location": "L49",
       "_origin": "ast",
       "id": "packages_cli_src_ocr_engine_cli_run_dataset_main",
-      "community": 118,
-      "community_name": "FibaOcrPipeline",
+      "community": 125,
+      "community_name": "run_dataset.py",
       "norm_label": "main()"
     },
     {
@@ -3129,8 +3129,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "packages_cli_src_ocr_engine_cli_run_dataset_rationale_1",
-      "community": 118,
-      "community_name": "FibaOcrPipeline",
+      "community": 125,
+      "community_name": "run_dataset.py",
       "norm_label": "batch runner: process the entire fiba scoresheet dataset through the pipeline."
     },
     {
@@ -3140,8 +3140,8 @@
       "source_location": "L44",
       "_origin": "ast",
       "id": "packages_cli_src_ocr_engine_cli_run_dataset_rationale_44",
-      "community": 118,
-      "community_name": "FibaOcrPipeline",
+      "community": 125,
+      "community_name": "run_dataset.py",
       "norm_label": "find the .jpg image inside a sheet directory."
     },
     {
@@ -3253,8 +3253,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_artifacts",
-      "community": 32,
-      "community_name": "toolbox.py",
+      "community": 22,
+      "community_name": "ProviderRateLimitError",
       "norm_label": "artifacts.py"
     },
     {
@@ -3275,8 +3275,8 @@
       "source_location": "L18",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_artifacts_artifactstore_init",
-      "community": 37,
-      "community_name": "OcrToolbox",
+      "community": 25,
+      "community_name": "Artifact",
       "norm_label": ".__init__()"
     },
     {
@@ -3385,8 +3385,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_artifacts_rationale_1",
-      "community": 32,
-      "community_name": "toolbox.py",
+      "community": 22,
+      "community_name": "ProviderRateLimitError",
       "norm_label": "helpers for recording ocr run artifacts."
     },
     {
@@ -3440,8 +3440,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_config_pipeline_config",
-      "community": 12,
-      "community_name": "PipelineConfig",
+      "community": 22,
+      "community_name": "ProviderRateLimitError",
       "norm_label": "pipeline_config.py"
     },
     {
@@ -3473,8 +3473,8 @@
       "source_location": "L71",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_config_pipeline_config_pipelineconfig_post_init",
-      "community": 9,
-      "community_name": "output_builder.py",
+      "community": 105,
+      "community_name": "image_utils.py",
       "norm_label": ".__post_init__()"
     },
     {
@@ -3539,8 +3539,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_config_pipeline_config_rationale_1",
-      "community": 12,
-      "community_name": "PipelineConfig",
+      "community": 22,
+      "community_name": "ProviderRateLimitError",
       "norm_label": "pipeline configuration for model selection per phase."
     },
     {
@@ -3627,8 +3627,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_cropper",
-      "community": 105,
-      "community_name": "image_utils.py",
+      "community": 3,
+      "community_name": "Cropper",
       "norm_label": "cropper.py"
     },
     {
@@ -3660,8 +3660,8 @@
       "source_location": "L51",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_cropper_cropper_from_config",
-      "community": 3,
-      "community_name": "Cropper",
+      "community": 20,
+      "community_name": "OpenrouterProvider",
       "norm_label": ".from_config()"
     },
     {
@@ -3671,8 +3671,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_cropper_py_providertype",
-      "community": 3,
-      "community_name": "Cropper",
+      "community": 20,
+      "community_name": "OpenrouterProvider",
       "norm_label": "providertype"
     },
     {
@@ -3836,8 +3836,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_cropper_rationale_1",
-      "community": 105,
-      "community_name": "image_utils.py",
+      "community": 3,
+      "community_name": "Cropper",
       "norm_label": "core cropper \u2014 model-agnostic section detection, validation, and cropping.  this"
     },
     {
@@ -3858,8 +3858,8 @@
       "source_location": "L52",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_cropper_rationale_52",
-      "community": 3,
-      "community_name": "Cropper",
+      "community": 20,
+      "community_name": "OpenrouterProvider",
       "norm_label": "factory method to create a cropper from configuration."
     },
     {
@@ -4353,8 +4353,8 @@
       "source_location": "L177",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_exceptions_pipelineerror",
-      "community": 3,
-      "community_name": "Cropper",
+      "community": 19,
+      "community_name": "create_provider",
       "norm_label": "pipelineerror"
     },
     {
@@ -4650,8 +4650,8 @@
       "source_location": "L178",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_exceptions_rationale_178",
-      "community": 3,
-      "community_name": "Cropper",
+      "community": 19,
+      "community_name": "create_provider",
       "norm_label": "error generico durante una fase del pipeline."
     },
     {
@@ -4771,8 +4771,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_extractor",
-      "community": 7,
-      "community_name": "exceptions.py",
+      "community": 19,
+      "community_name": "create_provider",
       "norm_label": "extractor.py"
     },
     {
@@ -4826,8 +4826,8 @@
       "source_location": "L81",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_extractor_extractor_from_config",
-      "community": 19,
-      "community_name": "create_provider",
+      "community": 20,
+      "community_name": "OpenrouterProvider",
       "norm_label": ".from_config()"
     },
     {
@@ -4837,8 +4837,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_extractor_py_providertype",
-      "community": 19,
-      "community_name": "create_provider",
+      "community": 20,
+      "community_name": "OpenrouterProvider",
       "norm_label": "providertype"
     },
     {
@@ -4881,8 +4881,8 @@
       "source_location": "L247",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_extractor_supports_agentic_mode",
-      "community": 20,
-      "community_name": "OpenrouterProvider",
+      "community": 19,
+      "community_name": "create_provider",
       "norm_label": "_supports_agentic_mode()"
     },
     {
@@ -4914,8 +4914,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_extractor_rationale_1",
-      "community": 7,
-      "community_name": "exceptions.py",
+      "community": 19,
+      "community_name": "create_provider",
       "norm_label": "core extractor \u2014 model-agnostic structured extraction from fiba sections.  this"
     },
     {
@@ -4947,8 +4947,8 @@
       "source_location": "L88",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_extractor_rationale_88",
-      "community": 19,
-      "community_name": "create_provider",
+      "community": 20,
+      "community_name": "OpenrouterProvider",
       "norm_label": "factory method to create an extractor from configuration."
     },
     {
@@ -4980,8 +4980,8 @@
       "source_location": "L248",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_extractor_rationale_248",
-      "community": 20,
-      "community_name": "OpenrouterProvider",
+      "community": 19,
+      "community_name": "create_provider",
       "norm_label": "whether a provider's structured_completion accepts agentic_mode.      cached per"
     },
     {
@@ -5486,8 +5486,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_pipeline",
-      "community": 12,
-      "community_name": "PipelineConfig",
+      "community": 22,
+      "community_name": "ProviderRateLimitError",
       "norm_label": "pipeline.py"
     },
     {
@@ -5508,8 +5508,8 @@
       "source_location": "L49",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_pipeline_fibaocrpipeline_init",
-      "community": 12,
-      "community_name": "PipelineConfig",
+      "community": 118,
+      "community_name": "FibaOcrPipeline",
       "norm_label": ".__init__()"
     },
     {
@@ -5607,8 +5607,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_pipeline_rationale_1",
-      "community": 12,
-      "community_name": "PipelineConfig",
+      "community": 22,
+      "community_name": "ProviderRateLimitError",
       "norm_label": "fibaocrpipeline \u2014 complete pipeline orchestrator (model-agnostic).  this module"
     },
     {
@@ -5871,8 +5871,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_prompts_cropping",
-      "community": 105,
-      "community_name": "image_utils.py",
+      "community": 3,
+      "community_name": "Cropper",
       "norm_label": "cropping.py"
     },
     {
@@ -5882,8 +5882,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_prompts_cropping_rationale_1",
-      "community": 105,
-      "community_name": "image_utils.py",
+      "community": 3,
+      "community_name": "Cropper",
       "norm_label": "prompts for the cropping phase (bounding box detection for main sections)."
     },
     {
@@ -5893,8 +5893,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_prompts_extraction",
-      "community": 7,
-      "community_name": "exceptions.py",
+      "community": 19,
+      "community_name": "create_provider",
       "norm_label": "extraction.py"
     },
     {
@@ -5904,8 +5904,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_prompts_extraction_rationale_1",
-      "community": 7,
-      "community_name": "exceptions.py",
+      "community": 19,
+      "community_name": "create_provider",
       "norm_label": "prompts detallados para extraccion de secciones de hojas fiba. migrados desde ex"
     },
     {
@@ -5915,8 +5915,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_prompts_team_fouls_cropping",
-      "community": 105,
-      "community_name": "image_utils.py",
+      "community": 3,
+      "community_name": "Cropper",
       "norm_label": "team_fouls_cropping.py"
     },
     {
@@ -5926,8 +5926,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_prompts_team_fouls_cropping_rationale_1",
-      "community": 105,
-      "community_name": "image_utils.py",
+      "community": 3,
+      "community_name": "Cropper",
       "norm_label": "prompts for the team fouls sub-cropping phase (bounding box detection within tea"
     },
     {
@@ -5937,8 +5937,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_providers_init",
-      "community": 7,
-      "community_name": "exceptions.py",
+      "community": 3,
+      "community_name": "Cropper",
       "norm_label": "providers/__init__.py"
     },
     {
@@ -5948,8 +5948,8 @@
       "source_location": "L20",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_providers_init_create_provider",
-      "community": 7,
-      "community_name": "exceptions.py",
+      "community": 20,
+      "community_name": "OpenrouterProvider",
       "norm_label": "create_provider()"
     },
     {
@@ -5959,8 +5959,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_providers_init_py_providertype",
-      "community": 7,
-      "community_name": "exceptions.py",
+      "community": 20,
+      "community_name": "OpenrouterProvider",
       "norm_label": "providertype"
     },
     {
@@ -5970,8 +5970,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_providers_init_rationale_1",
-      "community": 7,
-      "community_name": "exceptions.py",
+      "community": 3,
+      "community_name": "Cropper",
       "norm_label": "provider factory \u2014 centralized creation of modelprovider instances."
     },
     {
@@ -5981,8 +5981,8 @@
       "source_location": "L26",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_providers_init_rationale_26",
-      "community": 7,
-      "community_name": "exceptions.py",
+      "community": 20,
+      "community_name": "OpenrouterProvider",
       "norm_label": "create a modelprovider instance from configuration.      extra kwargs are passed"
     },
     {
@@ -5992,8 +5992,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_providers_base",
-      "community": 7,
-      "community_name": "exceptions.py",
+      "community": 3,
+      "community_name": "Cropper",
       "norm_label": "providers/base.py"
     },
     {
@@ -6036,8 +6036,8 @@
       "source_location": "L40",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_providers_base_boundingbox",
-      "community": 6,
-      "community_name": "HttpJsonProvider",
+      "community": 3,
+      "community_name": "Cropper",
       "norm_label": "boundingbox"
     },
     {
@@ -6069,8 +6069,8 @@
       "source_location": "L70",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_providers_base_modelprovider",
-      "community": 7,
-      "community_name": "exceptions.py",
+      "community": 3,
+      "community_name": "Cropper",
       "norm_label": "modelprovider"
     },
     {
@@ -6080,8 +6080,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_providers_base_py_abc",
-      "community": 7,
-      "community_name": "exceptions.py",
+      "community": 3,
+      "community_name": "Cropper",
       "norm_label": "abc"
     },
     {
@@ -6091,8 +6091,8 @@
       "source_location": "L81",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_providers_base_modelprovider_init",
-      "community": 7,
-      "community_name": "exceptions.py",
+      "community": 3,
+      "community_name": "Cropper",
       "norm_label": ".__init__()"
     },
     {
@@ -6102,8 +6102,8 @@
       "source_location": "L86",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_providers_base_modelprovider_structured_completion",
-      "community": 4,
-      "community_name": "TokenUsage",
+      "community": 126,
+      "community_name": ".detect_bounding_boxes",
       "norm_label": ".structured_completion()"
     },
     {
@@ -6113,8 +6113,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_providers_base_py_path",
-      "community": 4,
-      "community_name": "TokenUsage",
+      "community": 126,
+      "community_name": ".detect_bounding_boxes",
       "norm_label": "path"
     },
     {
@@ -6124,8 +6124,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_providers_base_py_any",
-      "community": 4,
-      "community_name": "TokenUsage",
+      "community": 126,
+      "community_name": ".detect_bounding_boxes",
       "norm_label": "any"
     },
     {
@@ -6135,8 +6135,8 @@
       "source_location": "L112",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_providers_base_modelprovider_detect_bounding_boxes",
-      "community": 4,
-      "community_name": "TokenUsage",
+      "community": 126,
+      "community_name": ".detect_bounding_boxes",
       "norm_label": ".detect_bounding_boxes()"
     },
     {
@@ -6146,8 +6146,8 @@
       "source_location": "L133",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_providers_base_modelprovider_repr",
-      "community": 7,
-      "community_name": "exceptions.py",
+      "community": 3,
+      "community_name": "Cropper",
       "norm_label": ".__repr__()"
     },
     {
@@ -6157,8 +6157,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_providers_base_rationale_1",
-      "community": 7,
-      "community_name": "exceptions.py",
+      "community": 3,
+      "community_name": "Cropper",
       "norm_label": "base abstraction for ai model providers.  this module defines the common interfa"
     },
     {
@@ -6179,8 +6179,8 @@
       "source_location": "L41",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_providers_base_rationale_41",
-      "community": 6,
-      "community_name": "HttpJsonProvider",
+      "community": 3,
+      "community_name": "Cropper",
       "norm_label": "normalized bounding box (0-1000 scale)."
     },
     {
@@ -6212,8 +6212,8 @@
       "source_location": "L71",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_providers_base_rationale_71",
-      "community": 7,
-      "community_name": "exceptions.py",
+      "community": 3,
+      "community_name": "Cropper",
       "norm_label": "abstract base class for all model providers.      each provider (interfaze, gemi"
     },
     {
@@ -6223,8 +6223,8 @@
       "source_location": "L93",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_providers_base_rationale_93",
-      "community": 4,
-      "community_name": "TokenUsage",
+      "community": 126,
+      "community_name": ".detect_bounding_boxes",
       "norm_label": "perform a completion on an image.          if schema is provided, uses structure"
     },
     {
@@ -6234,8 +6234,8 @@
       "source_location": "L119",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_providers_base_rationale_119",
-      "community": 4,
-      "community_name": "TokenUsage",
+      "community": 126,
+      "community_name": ".detect_bounding_boxes",
       "norm_label": "detect bounding boxes in an image (used for section cropping).          args:"
     },
     {
@@ -6256,8 +6256,8 @@
       "source_location": "L34",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_providers_docstrange_docstrangeprovider",
-      "community": 28,
-      "community_name": "DocstrangeProvider",
+      "community": 4,
+      "community_name": "TokenUsage",
       "norm_label": "docstrangeprovider"
     },
     {
@@ -6267,8 +6267,8 @@
       "source_location": "L47",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_providers_docstrange_docstrangeprovider_call_api",
-      "community": 28,
-      "community_name": "DocstrangeProvider",
+      "community": 4,
+      "community_name": "TokenUsage",
       "norm_label": "._call_api()"
     },
     {
@@ -6278,8 +6278,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_providers_docstrange_py_path",
-      "community": 28,
-      "community_name": "DocstrangeProvider",
+      "community": 4,
+      "community_name": "TokenUsage",
       "norm_label": "path"
     },
     {
@@ -6289,8 +6289,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_providers_docstrange_py_any",
-      "community": 28,
-      "community_name": "DocstrangeProvider",
+      "community": 4,
+      "community_name": "TokenUsage",
       "norm_label": "any"
     },
     {
@@ -6300,8 +6300,8 @@
       "source_location": "L142",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_providers_docstrange_docstrangeprovider_extract_usage",
-      "community": 28,
-      "community_name": "DocstrangeProvider",
+      "community": 4,
+      "community_name": "TokenUsage",
       "norm_label": "._extract_usage()"
     },
     {
@@ -6311,8 +6311,8 @@
       "source_location": "L162",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_providers_docstrange_docstrangeprovider_parse_response",
-      "community": 28,
-      "community_name": "DocstrangeProvider",
+      "community": 4,
+      "community_name": "TokenUsage",
       "norm_label": "._parse_response()"
     },
     {
@@ -6322,8 +6322,8 @@
       "source_location": "L197",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_providers_docstrange_docstrangeprovider_structured_completion",
-      "community": 28,
-      "community_name": "DocstrangeProvider",
+      "community": 4,
+      "community_name": "TokenUsage",
       "norm_label": ".structured_completion()"
     },
     {
@@ -6333,8 +6333,8 @@
       "source_location": "L214",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_providers_docstrange_docstrangeprovider_detect_bounding_boxes",
-      "community": 28,
-      "community_name": "DocstrangeProvider",
+      "community": 4,
+      "community_name": "TokenUsage",
       "norm_label": ".detect_bounding_boxes()"
     },
     {
@@ -6344,8 +6344,8 @@
       "source_location": "L246",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_providers_docstrange_unwrap_docstrange_content",
-      "community": 28,
-      "community_name": "DocstrangeProvider",
+      "community": 4,
+      "community_name": "TokenUsage",
       "norm_label": "_unwrap_docstrange_content()"
     },
     {
@@ -6366,8 +6366,8 @@
       "source_location": "L35",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_providers_docstrange_rationale_35",
-      "community": 28,
-      "community_name": "DocstrangeProvider",
+      "community": 4,
+      "community_name": "TokenUsage",
       "norm_label": "provider for nanonets docstrange document extraction api.      supports custom_i"
     },
     {
@@ -6377,8 +6377,8 @@
       "source_location": "L55",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_providers_docstrange_rationale_55",
-      "community": 28,
-      "community_name": "DocstrangeProvider",
+      "community": 4,
+      "community_name": "TokenUsage",
       "norm_label": "make a call to docstrange extraction api using requests library."
     },
     {
@@ -6388,8 +6388,8 @@
       "source_location": "L143",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_providers_docstrange_rationale_143",
-      "community": 28,
-      "community_name": "DocstrangeProvider",
+      "community": 4,
+      "community_name": "TokenUsage",
       "norm_label": "extract token usage from docstrange response."
     },
     {
@@ -6399,8 +6399,8 @@
       "source_location": "L163",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_providers_docstrange_rationale_163",
-      "community": 28,
-      "community_name": "DocstrangeProvider",
+      "community": 4,
+      "community_name": "TokenUsage",
       "norm_label": "parse the docstrange api response into a structured dict."
     },
     {
@@ -6410,8 +6410,8 @@
       "source_location": "L205",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_providers_docstrange_rationale_205",
-      "community": 28,
-      "community_name": "DocstrangeProvider",
+      "community": 4,
+      "community_name": "TokenUsage",
       "norm_label": "perform a completion on an image.          if schema is provided, uses json outp"
     },
     {
@@ -6421,8 +6421,8 @@
       "source_location": "L247",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_providers_docstrange_rationale_247",
-      "community": 28,
-      "community_name": "DocstrangeProvider",
+      "community": 4,
+      "community_name": "TokenUsage",
       "norm_label": "unwrap docstrange's descriptive wrapper keys.      when no schema is provided, d"
     },
     {
@@ -6432,8 +6432,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_providers_gemini",
-      "community": 7,
-      "community_name": "exceptions.py",
+      "community": 29,
+      "community_name": "GeminiProvider",
       "norm_label": "gemini.py"
     },
     {
@@ -6553,8 +6553,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_providers_gemini_rationale_1",
-      "community": 7,
-      "community_name": "exceptions.py",
+      "community": 29,
+      "community_name": "GeminiProvider",
       "norm_label": "gemini provider implementation via google generative ai."
     },
     {
@@ -6762,8 +6762,8 @@
       "source_location": "L87",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_providers_http_base_httpjsonprovider_post_once",
-      "community": 6,
-      "community_name": "HttpJsonProvider",
+      "community": 28,
+      "community_name": "DocstrangeProvider",
       "norm_label": "._post_once()"
     },
     {
@@ -7092,8 +7092,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_providers_interfaze",
-      "community": 7,
-      "community_name": "exceptions.py",
+      "community": 3,
+      "community_name": "Cropper",
       "norm_label": "interfaze.py"
     },
     {
@@ -7169,8 +7169,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_providers_interfaze_rationale_1",
-      "community": 7,
-      "community_name": "exceptions.py",
+      "community": 3,
+      "community_name": "Cropper",
       "norm_label": "interfaze provider implementation."
     },
     {
@@ -7202,8 +7202,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_providers_openrouter",
-      "community": 7,
-      "community_name": "exceptions.py",
+      "community": 3,
+      "community_name": "Cropper",
       "norm_label": "openrouter.py"
     },
     {
@@ -7290,8 +7290,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_providers_openrouter_rationale_1",
-      "community": 7,
-      "community_name": "exceptions.py",
+      "community": 3,
+      "community_name": "Cropper",
       "norm_label": "openrouter provider implementation via chat completion api.  uses openrouter's o"
     },
     {
@@ -7312,8 +7312,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_providers_qubrid",
-      "community": 7,
-      "community_name": "exceptions.py",
+      "community": 28,
+      "community_name": "DocstrangeProvider",
       "norm_label": "qubrid.py"
     },
     {
@@ -7400,8 +7400,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_providers_qubrid_rationale_1",
-      "community": 7,
-      "community_name": "exceptions.py",
+      "community": 28,
+      "community_name": "DocstrangeProvider",
       "norm_label": "qubrid provider implementation via chat completion api.  uses qubrid's official"
     },
     {
@@ -7554,8 +7554,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_toolbox",
-      "community": 12,
-      "community_name": "PipelineConfig",
+      "community": 22,
+      "community_name": "ProviderRateLimitError",
       "norm_label": "toolbox.py"
     },
     {
@@ -7565,8 +7565,8 @@
       "source_location": "L33",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_toolbox_ocrtoolbox",
-      "community": 12,
-      "community_name": "PipelineConfig",
+      "community": 37,
+      "community_name": "OcrToolbox",
       "norm_label": "ocrtoolbox"
     },
     {
@@ -7587,8 +7587,8 @@
       "source_location": "L46",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_toolbox_ocrtoolbox_create_context",
-      "community": 54,
-      "community_name": "createClient",
+      "community": 37,
+      "community_name": "OcrToolbox",
       "norm_label": ".create_context()"
     },
     {
@@ -7752,8 +7752,8 @@
       "source_location": "L533",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_toolbox_to_token_usage",
-      "community": 54,
-      "community_name": "createClient",
+      "community": 22,
+      "community_name": "ProviderRateLimitError",
       "norm_label": "_to_token_usage()"
     },
     {
@@ -7774,8 +7774,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_toolbox_rationale_1",
-      "community": 12,
-      "community_name": "PipelineConfig",
+      "community": 22,
+      "community_name": "ProviderRateLimitError",
       "norm_label": "agent-ready tool layer for the fiba ocr engine.  the toolbox exposes atomic oper"
     },
     {
@@ -7785,8 +7785,8 @@
       "source_location": "L34",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_toolbox_rationale_34",
-      "community": 12,
-      "community_name": "PipelineConfig",
+      "community": 37,
+      "community_name": "OcrToolbox",
       "norm_label": "composable ocr operations with structured results and tracing."
     },
     {
@@ -7796,8 +7796,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_tracing",
-      "community": 32,
-      "community_name": "toolbox.py",
+      "community": 22,
+      "community_name": "ProviderRateLimitError",
       "norm_label": "tracing.py"
     },
     {
@@ -7939,8 +7939,8 @@
       "source_location": "L121",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_tracing_sum_usage",
-      "community": 32,
-      "community_name": "toolbox.py",
+      "community": 22,
+      "community_name": "ProviderRateLimitError",
       "norm_label": "_sum_usage()"
     },
     {
@@ -7950,8 +7950,8 @@
       "source_location": "L146",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_tracing_timestamp_iso",
-      "community": 32,
-      "community_name": "toolbox.py",
+      "community": 22,
+      "community_name": "ProviderRateLimitError",
       "norm_label": "_timestamp_iso()"
     },
     {
@@ -7961,8 +7961,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_tracing_rationale_1",
-      "community": 32,
-      "community_name": "toolbox.py",
+      "community": 22,
+      "community_name": "ProviderRateLimitError",
       "norm_label": "trace recording for ocr engine runs."
     },
     {
@@ -7983,8 +7983,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_types",
-      "community": 32,
-      "community_name": "toolbox.py",
+      "community": 22,
+      "community_name": "ProviderRateLimitError",
       "norm_label": "types.py"
     },
     {
@@ -8027,8 +8027,8 @@
       "source_location": "L39",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_types_providerusage",
-      "community": 54,
-      "community_name": "createClient",
+      "community": 22,
+      "community_name": "ProviderRateLimitError",
       "norm_label": "providerusage"
     },
     {
@@ -8247,8 +8247,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_types_rationale_1",
-      "community": 32,
-      "community_name": "toolbox.py",
+      "community": 22,
+      "community_name": "ProviderRateLimitError",
       "norm_label": "shared contracts for the ocr engine tool layer.  these types are intentionally l"
     },
     {
@@ -8280,8 +8280,8 @@
       "source_location": "L40",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_types_rationale_40",
-      "community": 54,
-      "community_name": "createClient",
+      "community": 22,
+      "community_name": "ProviderRateLimitError",
       "norm_label": "usage reported by a model/provider call."
     },
     {
@@ -8544,8 +8544,8 @@
       "source_location": "L14",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_utils_image_utils_encode_file",
-      "community": 6,
-      "community_name": "HttpJsonProvider",
+      "community": 105,
+      "community_name": "image_utils.py",
       "norm_label": "encode_file()"
     },
     {
@@ -8566,8 +8566,8 @@
       "source_location": "L19",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_utils_image_utils_guess_mime_type",
-      "community": 105,
-      "community_name": "image_utils.py",
+      "community": 29,
+      "community_name": "GeminiProvider",
       "norm_label": "guess_mime_type()"
     },
     {
@@ -8577,8 +8577,8 @@
       "source_location": "L25",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_utils_image_utils_read_image",
-      "community": 105,
-      "community_name": "image_utils.py",
+      "community": 3,
+      "community_name": "Cropper",
       "norm_label": "read_image()"
     },
     {
@@ -8588,8 +8588,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_utils_image_utils_py_ndarray",
-      "community": 105,
-      "community_name": "image_utils.py",
+      "community": 3,
+      "community_name": "Cropper",
       "norm_label": "ndarray"
     },
     {
@@ -8599,8 +8599,8 @@
       "source_location": "L34",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_utils_image_utils_write_png",
-      "community": 105,
-      "community_name": "image_utils.py",
+      "community": 3,
+      "community_name": "Cropper",
       "norm_label": "write_png()"
     },
     {
@@ -8621,8 +8621,8 @@
       "source_location": "L76",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_utils_image_utils_env_names_for_provider",
-      "community": 9,
-      "community_name": "output_builder.py",
+      "community": 105,
+      "community_name": "image_utils.py",
       "norm_label": "env_names_for_provider()"
     },
     {
@@ -8632,8 +8632,8 @@
       "source_location": "L83",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_utils_image_utils_resolve_provider_api_key",
-      "community": 9,
-      "community_name": "output_builder.py",
+      "community": 105,
+      "community_name": "image_utils.py",
       "norm_label": "resolve_provider_api_key()"
     },
     {
@@ -8643,8 +8643,8 @@
       "source_location": "L92",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_utils_image_utils_get_api_key",
-      "community": 9,
-      "community_name": "output_builder.py",
+      "community": 105,
+      "community_name": "image_utils.py",
       "norm_label": "get_api_key()"
     },
     {
@@ -8665,8 +8665,8 @@
       "source_location": "L15",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_utils_image_utils_rationale_15",
-      "community": 6,
-      "community_name": "HttpJsonProvider",
+      "community": 105,
+      "community_name": "image_utils.py",
       "norm_label": "encode a file to base64 ascii string."
     },
     {
@@ -8676,8 +8676,8 @@
       "source_location": "L20",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_utils_image_utils_rationale_20",
-      "community": 105,
-      "community_name": "image_utils.py",
+      "community": 29,
+      "community_name": "GeminiProvider",
       "norm_label": "guess mime type from filename, defaulting to image/jpeg."
     },
     {
@@ -8687,8 +8687,8 @@
       "source_location": "L26",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_utils_image_utils_rationale_26",
-      "community": 105,
-      "community_name": "image_utils.py",
+      "community": 3,
+      "community_name": "Cropper",
       "norm_label": "read an image using opencv (color mode)."
     },
     {
@@ -8698,8 +8698,8 @@
       "source_location": "L35",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_utils_image_utils_rationale_35",
-      "community": 105,
-      "community_name": "image_utils.py",
+      "community": 3,
+      "community_name": "Cropper",
       "norm_label": "write an image as png."
     },
     {
@@ -8720,8 +8720,8 @@
       "source_location": "L77",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_utils_image_utils_rationale_77",
-      "community": 9,
-      "community_name": "output_builder.py",
+      "community": 105,
+      "community_name": "image_utils.py",
       "norm_label": "candidate env var names for a provider (falls back to the default)."
     },
     {
@@ -8731,8 +8731,8 @@
       "source_location": "L84",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_utils_image_utils_rationale_84",
-      "community": 9,
-      "community_name": "output_builder.py",
+      "community": 105,
+      "community_name": "image_utils.py",
       "norm_label": "resolve a provider's api key from its candidate env vars."
     },
     {
@@ -8742,8 +8742,8 @@
       "source_location": "L93",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_utils_image_utils_rationale_93",
-      "community": 9,
-      "community_name": "output_builder.py",
+      "community": 105,
+      "community_name": "image_utils.py",
       "norm_label": "resolve an api key from environment variables.      if ``api_key_env`` is given"
     },
     {
@@ -8929,8 +8929,8 @@
       "source_location": "L35",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_validation_base_create_warning",
-      "community": 67,
-      "community_name": "referee.py",
+      "community": 58,
+      "community_name": "create_warning",
       "norm_label": "create_warning()"
     },
     {
@@ -8962,8 +8962,8 @@
       "source_location": "L81",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_validation_base_validationplugin",
-      "community": 58,
-      "community_name": "create_warning",
+      "community": 44,
+      "community_name": "ValidationPlugin",
       "norm_label": "validationplugin"
     },
     {
@@ -9006,8 +9006,8 @@
       "source_location": "L42",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_validation_base_rationale_42",
-      "community": 67,
-      "community_name": "referee.py",
+      "community": 58,
+      "community_name": "create_warning",
       "norm_label": "create a standardized validation warning."
     },
     {
@@ -9028,8 +9028,8 @@
       "source_location": "L82",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_validation_base_rationale_82",
-      "community": 58,
-      "community_name": "create_warning",
+      "community": 44,
+      "community_name": "ValidationPlugin",
       "norm_label": "base class for validation plugins.      every plugin must define:     - name: un"
     },
     {
@@ -9061,8 +9061,8 @@
       "source_location": "L15",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_validation_engine_validationengine",
-      "community": 55,
-      "community_name": "invite-setup-card.tsx",
+      "community": 12,
+      "community_name": "PipelineConfig",
       "norm_label": "validationengine"
     },
     {
@@ -9083,8 +9083,8 @@
       "source_location": "L48",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_validation_engine_validationengine_validate",
-      "community": 55,
-      "community_name": "invite-setup-card.tsx",
+      "community": 30,
+      "community_name": "determine_match_status",
       "norm_label": ".validate()"
     },
     {
@@ -9094,8 +9094,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_validation_engine_py_any",
-      "community": 55,
-      "community_name": "invite-setup-card.tsx",
+      "community": 30,
+      "community_name": "determine_match_status",
       "norm_label": "any"
     },
     {
@@ -9105,8 +9105,8 @@
       "source_location": "L84",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_validation_engine_validationengine_active_plugins",
-      "community": 55,
-      "community_name": "invite-setup-card.tsx",
+      "community": 12,
+      "community_name": "PipelineConfig",
       "norm_label": ".active_plugins()"
     },
     {
@@ -9127,8 +9127,8 @@
       "source_location": "L16",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_validation_engine_rationale_16",
-      "community": 55,
-      "community_name": "invite-setup-card.tsx",
+      "community": 12,
+      "community_name": "PipelineConfig",
       "norm_label": "runs selected validation plugins against extracted data.      usage:         # d"
     },
     {
@@ -9149,8 +9149,8 @@
       "source_location": "L49",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_validation_engine_rationale_49",
-      "community": 55,
-      "community_name": "invite-setup-card.tsx",
+      "community": 30,
+      "community_name": "determine_match_status",
       "norm_label": "run all selected plugins against the data.          adds 'validation_warnings' a"
     },
     {
@@ -9160,8 +9160,8 @@
       "source_location": "L85",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_validation_engine_rationale_85",
-      "community": 55,
-      "community_name": "invite-setup-card.tsx",
+      "community": 12,
+      "community_name": "PipelineConfig",
       "norm_label": "names of currently active plugins."
     },
     {
@@ -9380,8 +9380,8 @@
       "source_location": "L23",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_validation_plugins_fiba_rules_playerfoulsplugin_validate",
-      "community": 67,
-      "community_name": "referee.py",
+      "community": 58,
+      "community_name": "create_warning",
       "norm_label": ".validate()"
     },
     {
@@ -9391,8 +9391,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_validation_plugins_fiba_rules_py_any",
-      "community": 67,
-      "community_name": "referee.py",
+      "community": 58,
+      "community_name": "create_warning",
       "norm_label": "any"
     },
     {
@@ -9413,8 +9413,8 @@
       "source_location": "L56",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_validation_plugins_fiba_rules_teamfoulsplugin_validate",
-      "community": 67,
-      "community_name": "referee.py",
+      "community": 58,
+      "community_name": "create_warning",
       "norm_label": ".validate()"
     },
     {
@@ -10714,8 +10714,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "packages_web_middleware",
-      "community": 33,
-      "community_name": "account.ts",
+      "community": 124,
+      "community_name": "supabase/middleware.ts",
       "norm_label": "web/middleware.ts"
     },
     {
@@ -10725,8 +10725,8 @@
       "source_location": "L5",
       "_origin": "ast",
       "id": "packages_web_middleware_middleware",
-      "community": 33,
-      "community_name": "account.ts",
+      "community": 124,
+      "community_name": "supabase/middleware.ts",
       "norm_label": "middleware()"
     },
     {
@@ -10736,8 +10736,8 @@
       "source_location": "L9",
       "_origin": "ast",
       "id": "packages_web_middleware_config",
-      "community": 33,
-      "community_name": "account.ts",
+      "community": 124,
+      "community_name": "supabase/middleware.ts",
       "norm_label": "config"
     },
     {
@@ -11220,8 +11220,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "packages_web_src_app_admin_api_keys_page",
-      "community": 38,
-      "community_name": "api.ts",
+      "community": 71,
+      "community_name": "createClient",
       "norm_label": "api-keys/page.tsx"
     },
     {
@@ -11231,8 +11231,8 @@
       "source_location": "L4",
       "_origin": "ast",
       "id": "packages_web_src_app_admin_api_keys_page_apikeyspage",
-      "community": 38,
-      "community_name": "api.ts",
+      "community": 71,
+      "community_name": "createClient",
       "norm_label": "apikeyspage()"
     },
     {
@@ -11242,8 +11242,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "packages_web_src_app_admin_layout",
-      "community": 33,
-      "community_name": "account.ts",
+      "community": 109,
+      "community_name": "nav.tsx",
       "norm_label": "admin/layout.tsx"
     },
     {
@@ -11253,8 +11253,8 @@
       "source_location": "L4",
       "_origin": "ast",
       "id": "packages_web_src_app_admin_layout_adminlayout",
-      "community": 33,
-      "community_name": "account.ts",
+      "community": 109,
+      "community_name": "nav.tsx",
       "norm_label": "adminlayout()"
     },
     {
@@ -11319,8 +11319,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "packages_web_src_app_api_league_submissions_route",
-      "community": 18,
-      "community_name": "referee-demo/types.ts",
+      "community": 120,
+      "community_name": "name-match.ts",
       "norm_label": "submissions/route.ts"
     },
     {
@@ -11330,8 +11330,8 @@
       "source_location": "L13",
       "_origin": "ast",
       "id": "packages_web_src_app_api_league_submissions_route_submission_fields",
-      "community": 18,
-      "community_name": "referee-demo/types.ts",
+      "community": 120,
+      "community_name": "name-match.ts",
       "norm_label": "submission_fields"
     },
     {
@@ -11341,8 +11341,8 @@
       "source_location": "L28",
       "_origin": "ast",
       "id": "packages_web_src_app_api_league_submissions_route_airtableconfig",
-      "community": 18,
-      "community_name": "referee-demo/types.ts",
+      "community": 120,
+      "community_name": "name-match.ts",
       "norm_label": "airtableconfig"
     },
     {
@@ -11352,8 +11352,8 @@
       "source_location": "L30",
       "_origin": "ast",
       "id": "packages_web_src_app_api_league_submissions_route_readconfig",
-      "community": 18,
-      "community_name": "referee-demo/types.ts",
+      "community": 120,
+      "community_name": "name-match.ts",
       "norm_label": "readconfig()"
     },
     {
@@ -11363,8 +11363,8 @@
       "source_location": "L38",
       "_origin": "ast",
       "id": "packages_web_src_app_api_league_submissions_route_airtableurl",
-      "community": 18,
-      "community_name": "referee-demo/types.ts",
+      "community": 120,
+      "community_name": "name-match.ts",
       "norm_label": "airtableurl()"
     },
     {
@@ -11374,8 +11374,8 @@
       "source_location": "L42",
       "_origin": "ast",
       "id": "packages_web_src_app_api_league_submissions_route_notconfigured",
-      "community": 18,
-      "community_name": "referee-demo/types.ts",
+      "community": 120,
+      "community_name": "name-match.ts",
       "norm_label": "notconfigured()"
     },
     {
@@ -11385,8 +11385,8 @@
       "source_location": "L49",
       "_origin": "ast",
       "id": "packages_web_src_app_api_league_submissions_route_get",
-      "community": 18,
-      "community_name": "referee-demo/types.ts",
+      "community": 120,
+      "community_name": "name-match.ts",
       "norm_label": "get()"
     },
     {
@@ -11396,8 +11396,8 @@
       "source_location": "L77",
       "_origin": "ast",
       "id": "packages_web_src_app_api_league_submissions_route_post",
-      "community": 18,
-      "community_name": "referee-demo/types.ts",
+      "community": 120,
+      "community_name": "name-match.ts",
       "norm_label": "post()"
     },
     {
@@ -11407,8 +11407,8 @@
       "source_location": "L122",
       "_origin": "ast",
       "id": "packages_web_src_app_api_league_submissions_route_airtablerecord",
-      "community": 18,
-      "community_name": "referee-demo/types.ts",
+      "community": 120,
+      "community_name": "name-match.ts",
       "norm_label": "airtablerecord"
     },
     {
@@ -11418,8 +11418,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "packages_web_src_app_auth_accept_invite_route",
-      "community": 33,
-      "community_name": "account.ts",
+      "community": 72,
+      "community_name": "createClient",
       "norm_label": "accept-invite/route.ts"
     },
     {
@@ -11429,8 +11429,8 @@
       "source_location": "L6",
       "_origin": "ast",
       "id": "packages_web_src_app_auth_accept_invite_route_post",
-      "community": 33,
-      "community_name": "account.ts",
+      "community": 72,
+      "community_name": "createClient",
       "norm_label": "post()"
     },
     {
@@ -11440,8 +11440,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "packages_web_src_app_auth_callback_page",
-      "community": 38,
-      "community_name": "api.ts",
+      "community": 81,
+      "community_name": "invite-setup-card.tsx",
       "norm_label": "callback/page.tsx"
     },
     {
@@ -11451,8 +11451,8 @@
       "source_location": "L5",
       "_origin": "ast",
       "id": "packages_web_src_app_auth_callback_page_authcallbackpage",
-      "community": 38,
-      "community_name": "api.ts",
+      "community": 81,
+      "community_name": "invite-setup-card.tsx",
       "norm_label": "authcallbackpage()"
     },
     {
@@ -11462,8 +11462,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "packages_web_src_app_auth_invite_page",
-      "community": 38,
-      "community_name": "api.ts",
+      "community": 81,
+      "community_name": "invite-setup-card.tsx",
       "norm_label": "invite/page.tsx"
     },
     {
@@ -11473,8 +11473,8 @@
       "source_location": "L5",
       "_origin": "ast",
       "id": "packages_web_src_app_auth_invite_page_invitepage",
-      "community": 38,
-      "community_name": "api.ts",
+      "community": 81,
+      "community_name": "invite-setup-card.tsx",
       "norm_label": "invitepage()"
     },
     {
@@ -11484,8 +11484,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "packages_web_src_app_auth_login_route",
-      "community": 33,
-      "community_name": "account.ts",
+      "community": 72,
+      "community_name": "createClient",
       "norm_label": "login/route.ts"
     },
     {
@@ -11495,8 +11495,8 @@
       "source_location": "L6",
       "_origin": "ast",
       "id": "packages_web_src_app_auth_login_route_loginpayload",
-      "community": 33,
-      "community_name": "account.ts",
+      "community": 72,
+      "community_name": "createClient",
       "norm_label": "loginpayload"
     },
     {
@@ -11506,8 +11506,8 @@
       "source_location": "L12",
       "_origin": "ast",
       "id": "packages_web_src_app_auth_login_route_post",
-      "community": 33,
-      "community_name": "account.ts",
+      "community": 72,
+      "community_name": "createClient",
       "norm_label": "post()"
     },
     {
@@ -11517,8 +11517,8 @@
       "source_location": "L57",
       "_origin": "ast",
       "id": "packages_web_src_app_auth_login_route_getsafenextpath",
-      "community": 33,
-      "community_name": "account.ts",
+      "community": 72,
+      "community_name": "createClient",
       "norm_label": "getsafenextpath()"
     },
     {
@@ -11550,8 +11550,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "packages_web_src_app_docs_quickstart_page",
-      "community": 33,
-      "community_name": "account.ts",
+      "community": 72,
+      "community_name": "createClient",
       "norm_label": "quickstart/page.tsx"
     },
     {
@@ -11561,8 +11561,8 @@
       "source_location": "L25",
       "_origin": "ast",
       "id": "packages_web_src_app_docs_quickstart_page_codeblock",
-      "community": 33,
-      "community_name": "account.ts",
+      "community": 72,
+      "community_name": "createClient",
       "norm_label": "codeblock()"
     },
     {
@@ -11572,8 +11572,8 @@
       "source_location": "L29",
       "_origin": "ast",
       "id": "packages_web_src_app_docs_quickstart_page_quickstartpage",
-      "community": 33,
-      "community_name": "account.ts",
+      "community": 72,
+      "community_name": "createClient",
       "norm_label": "quickstartpage()"
     },
     {
@@ -11715,8 +11715,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "packages_web_src_app_test_club_layout",
-      "community": 33,
-      "community_name": "account.ts",
+      "community": 55,
+      "community_name": "invite-setup-card.tsx",
       "norm_label": "club/layout.tsx"
     },
     {
@@ -11726,8 +11726,8 @@
       "source_location": "L6",
       "_origin": "ast",
       "id": "packages_web_src_app_test_club_layout_metadata",
-      "community": 33,
-      "community_name": "account.ts",
+      "community": 55,
+      "community_name": "invite-setup-card.tsx",
       "norm_label": "metadata"
     },
     {
@@ -11737,8 +11737,8 @@
       "source_location": "L11",
       "_origin": "ast",
       "id": "packages_web_src_app_test_club_layout_clubdemolayout",
-      "community": 33,
-      "community_name": "account.ts",
+      "community": 55,
+      "community_name": "invite-setup-card.tsx",
       "norm_label": "clubdemolayout()"
     },
     {
@@ -11836,8 +11836,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "packages_web_src_app_test_layout",
-      "community": 33,
-      "community_name": "account.ts",
+      "community": 109,
+      "community_name": "nav.tsx",
       "norm_label": "test/layout.tsx"
     },
     {
@@ -11847,8 +11847,8 @@
       "source_location": "L4",
       "_origin": "ast",
       "id": "packages_web_src_app_test_layout_testlayout",
-      "community": 33,
-      "community_name": "account.ts",
+      "community": 109,
+      "community_name": "nav.tsx",
       "norm_label": "testlayout()"
     },
     {
@@ -11902,8 +11902,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "packages_web_src_app_test_player_layout",
-      "community": 33,
-      "community_name": "account.ts",
+      "community": 55,
+      "community_name": "invite-setup-card.tsx",
       "norm_label": "player/layout.tsx"
     },
     {
@@ -11913,8 +11913,8 @@
       "source_location": "L6",
       "_origin": "ast",
       "id": "packages_web_src_app_test_player_layout_metadata",
-      "community": 33,
-      "community_name": "account.ts",
+      "community": 55,
+      "community_name": "invite-setup-card.tsx",
       "norm_label": "metadata"
     },
     {
@@ -11924,8 +11924,8 @@
       "source_location": "L11",
       "_origin": "ast",
       "id": "packages_web_src_app_test_player_layout_playerdemolayout",
-      "community": 33,
-      "community_name": "account.ts",
+      "community": 55,
+      "community_name": "invite-setup-card.tsx",
       "norm_label": "playerdemolayout()"
     },
     {
@@ -11979,8 +11979,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "packages_web_src_app_test_referee_capture_page",
-      "community": 38,
-      "community_name": "api.ts",
+      "community": 70,
+      "community_name": "submissions/route.ts",
       "norm_label": "referee/capture/page.tsx"
     },
     {
@@ -11990,8 +11990,8 @@
       "source_location": "L3",
       "_origin": "ast",
       "id": "packages_web_src_app_test_referee_capture_page_refereecapturepage",
-      "community": 38,
-      "community_name": "api.ts",
+      "community": 70,
+      "community_name": "submissions/route.ts",
       "norm_label": "refereecapturepage()"
     },
     {
@@ -12001,8 +12001,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "packages_web_src_app_test_referee_layout",
-      "community": 33,
-      "community_name": "account.ts",
+      "community": 55,
+      "community_name": "invite-setup-card.tsx",
       "norm_label": "referee/layout.tsx"
     },
     {
@@ -12012,8 +12012,8 @@
       "source_location": "L6",
       "_origin": "ast",
       "id": "packages_web_src_app_test_referee_layout_metadata",
-      "community": 33,
-      "community_name": "account.ts",
+      "community": 55,
+      "community_name": "invite-setup-card.tsx",
       "norm_label": "metadata"
     },
     {
@@ -12023,8 +12023,8 @@
       "source_location": "L11",
       "_origin": "ast",
       "id": "packages_web_src_app_test_referee_layout_refereedemolayout",
-      "community": 33,
-      "community_name": "account.ts",
+      "community": 55,
+      "community_name": "invite-setup-card.tsx",
       "norm_label": "refereedemolayout()"
     },
     {
@@ -12122,8 +12122,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "packages_web_src_components_account_keys_panel",
-      "community": 38,
-      "community_name": "api.ts",
+      "community": 71,
+      "community_name": "createClient",
       "norm_label": "account-keys-panel.tsx"
     },
     {
@@ -12133,8 +12133,8 @@
       "source_location": "L17",
       "_origin": "ast",
       "id": "packages_web_src_components_account_keys_panel_accountkeyspanel",
-      "community": 38,
-      "community_name": "api.ts",
+      "community": 71,
+      "community_name": "createClient",
       "norm_label": "accountkeyspanel()"
     },
     {
@@ -12144,8 +12144,8 @@
       "source_location": "L293",
       "_origin": "ast",
       "id": "packages_web_src_components_account_keys_panel_keystatuschip",
-      "community": 38,
-      "community_name": "api.ts",
+      "community": 71,
+      "community_name": "createClient",
       "norm_label": "keystatuschip()"
     },
     {
@@ -12155,8 +12155,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "packages_web_src_components_api_keys_panel",
-      "community": 38,
-      "community_name": "api.ts",
+      "community": 71,
+      "community_name": "createClient",
       "norm_label": "api-keys-panel.tsx"
     },
     {
@@ -12166,8 +12166,8 @@
       "source_location": "L16",
       "_origin": "ast",
       "id": "packages_web_src_components_api_keys_panel_apikeyspanel",
-      "community": 38,
-      "community_name": "api.ts",
+      "community": 71,
+      "community_name": "createClient",
       "norm_label": "apikeyspanel()"
     },
     {
@@ -12177,8 +12177,8 @@
       "source_location": "L235",
       "_origin": "ast",
       "id": "packages_web_src_components_api_keys_panel_keystatuschip",
-      "community": 38,
-      "community_name": "api.ts",
+      "community": 71,
+      "community_name": "createClient",
       "norm_label": "keystatuschip()"
     },
     {
@@ -12320,8 +12320,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "packages_web_src_components_club_demo_demo_tabs",
-      "community": 33,
-      "community_name": "account.ts",
+      "community": 55,
+      "community_name": "invite-setup-card.tsx",
       "norm_label": "club-demo/demo-tabs.tsx"
     },
     {
@@ -12331,8 +12331,8 @@
       "source_location": "L9",
       "_origin": "ast",
       "id": "packages_web_src_components_club_demo_demo_tabs_demotabs",
-      "community": 33,
-      "community_name": "account.ts",
+      "community": 55,
+      "community_name": "invite-setup-card.tsx",
       "norm_label": "demotabs()"
     },
     {
@@ -13090,8 +13090,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "packages_web_src_components_invite_setup_card",
-      "community": 38,
-      "community_name": "api.ts",
+      "community": 81,
+      "community_name": "invite-setup-card.tsx",
       "norm_label": "invite-setup-card.tsx"
     },
     {
@@ -13101,8 +13101,8 @@
       "source_location": "L9",
       "_origin": "ast",
       "id": "packages_web_src_components_invite_setup_card_assigneddemo",
-      "community": 38,
-      "community_name": "api.ts",
+      "community": 81,
+      "community_name": "invite-setup-card.tsx",
       "norm_label": "assigneddemo"
     },
     {
@@ -13112,8 +13112,8 @@
       "source_location": "L10",
       "_origin": "ast",
       "id": "packages_web_src_components_invite_setup_card_accountrole",
-      "community": 38,
-      "community_name": "api.ts",
+      "community": 81,
+      "community_name": "invite-setup-card.tsx",
       "norm_label": "accountrole"
     },
     {
@@ -13123,8 +13123,8 @@
       "source_location": "L12",
       "_origin": "ast",
       "id": "packages_web_src_components_invite_setup_card_accountpayload",
-      "community": 38,
-      "community_name": "api.ts",
+      "community": 81,
+      "community_name": "invite-setup-card.tsx",
       "norm_label": "accountpayload"
     },
     {
@@ -13134,8 +13134,8 @@
       "source_location": "L19",
       "_origin": "ast",
       "id": "packages_web_src_components_invite_setup_card_invitestatus",
-      "community": 38,
-      "community_name": "api.ts",
+      "community": 81,
+      "community_name": "invite-setup-card.tsx",
       "norm_label": "invitestatus"
     },
     {
@@ -13145,8 +13145,8 @@
       "source_location": "L21",
       "_origin": "ast",
       "id": "packages_web_src_components_invite_setup_card_demolabels",
-      "community": 38,
-      "community_name": "api.ts",
+      "community": 81,
+      "community_name": "invite-setup-card.tsx",
       "norm_label": "demolabels"
     },
     {
@@ -13156,8 +13156,8 @@
       "source_location": "L27",
       "_origin": "ast",
       "id": "packages_web_src_components_invite_setup_card_demohomepaths",
-      "community": 38,
-      "community_name": "api.ts",
+      "community": 81,
+      "community_name": "invite-setup-card.tsx",
       "norm_label": "demohomepaths"
     },
     {
@@ -13167,8 +13167,8 @@
       "source_location": "L33",
       "_origin": "ast",
       "id": "packages_web_src_components_invite_setup_card_invitesetupcard",
-      "community": 38,
-      "community_name": "api.ts",
+      "community": 81,
+      "community_name": "invite-setup-card.tsx",
       "norm_label": "invitesetupcard()"
     },
     {
@@ -13178,8 +13178,8 @@
       "source_location": "L226",
       "_origin": "ast",
       "id": "packages_web_src_components_invite_setup_card_destinationforaccount",
-      "community": 38,
-      "community_name": "api.ts",
+      "community": 81,
+      "community_name": "invite-setup-card.tsx",
       "norm_label": "destinationforaccount()"
     },
     {
@@ -13189,8 +13189,8 @@
       "source_location": "L233",
       "_origin": "ast",
       "id": "packages_web_src_components_invite_setup_card_clearauthparamsfromurl",
-      "community": 38,
-      "community_name": "api.ts",
+      "community": 81,
+      "community_name": "invite-setup-card.tsx",
       "norm_label": "clearauthparamsfromurl()"
     },
     {
@@ -13200,8 +13200,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "packages_web_src_components_nav",
-      "community": 33,
-      "community_name": "account.ts",
+      "community": 109,
+      "community_name": "nav.tsx",
       "norm_label": "nav.tsx"
     },
     {
@@ -13211,8 +13211,8 @@
       "source_location": "L10",
       "_origin": "ast",
       "id": "packages_web_src_components_nav_accountrole",
-      "community": 33,
-      "community_name": "account.ts",
+      "community": 109,
+      "community_name": "nav.tsx",
       "norm_label": "accountrole"
     },
     {
@@ -13222,8 +13222,8 @@
       "source_location": "L11",
       "_origin": "ast",
       "id": "packages_web_src_components_nav_assigneddemo",
-      "community": 33,
-      "community_name": "account.ts",
+      "community": 109,
+      "community_name": "nav.tsx",
       "norm_label": "assigneddemo"
     },
     {
@@ -13233,8 +13233,8 @@
       "source_location": "L13",
       "_origin": "ast",
       "id": "packages_web_src_components_nav_adminlinks",
-      "community": 33,
-      "community_name": "account.ts",
+      "community": 109,
+      "community_name": "nav.tsx",
       "norm_label": "adminlinks"
     },
     {
@@ -13244,8 +13244,8 @@
       "source_location": "L22",
       "_origin": "ast",
       "id": "packages_web_src_components_nav_testerlinks",
-      "community": 33,
-      "community_name": "account.ts",
+      "community": 109,
+      "community_name": "nav.tsx",
       "norm_label": "testerlinks"
     },
     {
@@ -13255,8 +13255,8 @@
       "source_location": "L28",
       "_origin": "ast",
       "id": "packages_web_src_components_nav_nav",
-      "community": 33,
-      "community_name": "account.ts",
+      "community": 109,
+      "community_name": "nav.tsx",
       "norm_label": "nav()"
     },
     {
@@ -13266,8 +13266,8 @@
       "source_location": "L127",
       "_origin": "ast",
       "id": "packages_web_src_components_nav_menuicon",
-      "community": 33,
-      "community_name": "account.ts",
+      "community": 109,
+      "community_name": "nav.tsx",
       "norm_label": "menuicon()"
     },
     {
@@ -13277,8 +13277,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "packages_web_src_components_referee_demo_capture_client",
-      "community": 38,
-      "community_name": "api.ts",
+      "community": 70,
+      "community_name": "submissions/route.ts",
       "norm_label": "referee-demo/capture-client.tsx"
     },
     {
@@ -13288,8 +13288,8 @@
       "source_location": "L17",
       "_origin": "ast",
       "id": "packages_web_src_components_referee_demo_capture_client_accepted_image_types",
-      "community": 38,
-      "community_name": "api.ts",
+      "community": 70,
+      "community_name": "submissions/route.ts",
       "norm_label": "accepted_image_types"
     },
     {
@@ -13299,8 +13299,8 @@
       "source_location": "L20",
       "_origin": "ast",
       "id": "packages_web_src_components_referee_demo_capture_client_captureclient",
-      "community": 38,
-      "community_name": "api.ts",
+      "community": 70,
+      "community_name": "submissions/route.ts",
       "norm_label": "captureclient()"
     },
     {
@@ -13310,8 +13310,8 @@
       "source_location": "L256",
       "_origin": "ast",
       "id": "packages_web_src_components_referee_demo_capture_client_statusbadge",
-      "community": 38,
-      "community_name": "api.ts",
+      "community": 70,
+      "community_name": "submissions/route.ts",
       "norm_label": "statusbadge()"
     },
     {
@@ -13321,8 +13321,8 @@
       "source_location": "L269",
       "_origin": "ast",
       "id": "packages_web_src_components_referee_demo_capture_client_buttonlabel",
-      "community": 38,
-      "community_name": "api.ts",
+      "community": 70,
+      "community_name": "submissions/route.ts",
       "norm_label": "buttonlabel()"
     },
     {
@@ -13332,8 +13332,8 @@
       "source_location": "L276",
       "_origin": "ast",
       "id": "packages_web_src_components_referee_demo_capture_client_uploadicon",
-      "community": 38,
-      "community_name": "api.ts",
+      "community": 70,
+      "community_name": "submissions/route.ts",
       "norm_label": "uploadicon()"
     },
     {
@@ -13343,8 +13343,8 @@
       "source_location": "L286",
       "_origin": "ast",
       "id": "packages_web_src_components_referee_demo_capture_client_formatfilesize",
-      "community": 38,
-      "community_name": "api.ts",
+      "community": 70,
+      "community_name": "submissions/route.ts",
       "norm_label": "formatfilesize()"
     },
     {
@@ -13354,8 +13354,8 @@
       "source_location": "L292",
       "_origin": "ast",
       "id": "packages_web_src_components_referee_demo_capture_client_extractrunerror",
-      "community": 38,
-      "community_name": "api.ts",
+      "community": 70,
+      "community_name": "submissions/route.ts",
       "norm_label": "extractrunerror()"
     },
     {
@@ -13365,8 +13365,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "packages_web_src_components_referee_demo_demo_tabs",
-      "community": 33,
-      "community_name": "account.ts",
+      "community": 55,
+      "community_name": "invite-setup-card.tsx",
       "norm_label": "referee-demo/demo-tabs.tsx"
     },
     {
@@ -13376,8 +13376,8 @@
       "source_location": "L9",
       "_origin": "ast",
       "id": "packages_web_src_components_referee_demo_demo_tabs_demotabs",
-      "community": 33,
-      "community_name": "account.ts",
+      "community": 55,
+      "community_name": "invite-setup-card.tsx",
       "norm_label": "demotabs()"
     },
     {
@@ -13398,8 +13398,8 @@
       "source_location": "L8",
       "_origin": "ast",
       "id": "packages_web_src_components_referee_demo_draft_readdraft",
-      "community": 41,
-      "community_name": "submit-client.tsx",
+      "community": 35,
+      "community_name": "reconcile-client.tsx",
       "norm_label": "readdraft()"
     },
     {
@@ -13409,8 +13409,8 @@
       "source_location": "L26",
       "_origin": "ast",
       "id": "packages_web_src_components_referee_demo_draft_writedraft",
-      "community": 38,
-      "community_name": "api.ts",
+      "community": 70,
+      "community_name": "submissions/route.ts",
       "norm_label": "writedraft()"
     },
     {
@@ -13530,8 +13530,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "packages_web_src_components_referee_demo_plugins",
-      "community": 35,
-      "community_name": "reconcile-client.tsx",
+      "community": 70,
+      "community_name": "submissions/route.ts",
       "norm_label": "plugins.ts"
     },
     {
@@ -13541,8 +13541,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "packages_web_src_components_referee_demo_plugins_refereeplugin",
-      "community": 35,
-      "community_name": "reconcile-client.tsx",
+      "community": 70,
+      "community_name": "submissions/route.ts",
       "norm_label": "refereeplugin"
     },
     {
@@ -13552,8 +13552,8 @@
       "source_location": "L8",
       "_origin": "ast",
       "id": "packages_web_src_components_referee_demo_plugins_referee_plugins",
-      "community": 35,
-      "community_name": "reconcile-client.tsx",
+      "community": 70,
+      "community_name": "submissions/route.ts",
       "norm_label": "referee_plugins"
     },
     {
@@ -13563,8 +13563,8 @@
       "source_location": "L59",
       "_origin": "ast",
       "id": "packages_web_src_components_referee_demo_plugins_default_referee_plugin_ids",
-      "community": 35,
-      "community_name": "reconcile-client.tsx",
+      "community": 70,
+      "community_name": "submissions/route.ts",
       "norm_label": "default_referee_plugin_ids"
     },
     {
@@ -13574,8 +13574,8 @@
       "source_location": "L61",
       "_origin": "ast",
       "id": "packages_web_src_components_referee_demo_plugins_pluginlabel",
-      "community": 35,
-      "community_name": "reconcile-client.tsx",
+      "community": 70,
+      "community_name": "submissions/route.ts",
       "norm_label": "pluginlabel()"
     },
     {
@@ -13915,8 +13915,8 @@
       "source_location": "L139",
       "_origin": "ast",
       "id": "packages_web_src_components_referee_demo_reconcile_utils_gametitle",
-      "community": 13,
-      "community_name": "reconcile-sections.tsx",
+      "community": 41,
+      "community_name": "submit-client.tsx",
       "norm_label": "gametitle()"
     },
     {
@@ -13926,8 +13926,8 @@
       "source_location": "L143",
       "_origin": "ast",
       "id": "packages_web_src_components_referee_demo_reconcile_utils_buildsubmissionpayload",
-      "community": 13,
-      "community_name": "reconcile-sections.tsx",
+      "community": 41,
+      "community_name": "submit-client.tsx",
       "norm_label": "buildsubmissionpayload()"
     },
     {
@@ -13948,8 +13948,8 @@
       "source_location": "L171",
       "_origin": "ast",
       "id": "packages_web_src_components_referee_demo_reconcile_utils_text",
-      "community": 13,
-      "community_name": "reconcile-sections.tsx",
+      "community": 41,
+      "community_name": "submit-client.tsx",
       "norm_label": "text()"
     },
     {
@@ -14135,8 +14135,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "packages_web_src_components_referee_demo_types",
-      "community": 70,
-      "community_name": "submissions/route.ts",
+      "community": 18,
+      "community_name": "referee-demo/types.ts",
       "norm_label": "referee-demo/types.ts"
     },
     {
@@ -14146,8 +14146,8 @@
       "source_location": "L4",
       "_origin": "ast",
       "id": "packages_web_src_components_referee_demo_types_runstatus",
-      "community": 70,
-      "community_name": "submissions/route.ts",
+      "community": 18,
+      "community_name": "referee-demo/types.ts",
       "norm_label": "runstatus"
     },
     {
@@ -14168,8 +14168,8 @@
       "source_location": "L8",
       "_origin": "ast",
       "id": "packages_web_src_components_referee_demo_types_quarterkey",
-      "community": 70,
-      "community_name": "submissions/route.ts",
+      "community": 13,
+      "community_name": "reconcile-sections.tsx",
       "norm_label": "quarterkey"
     },
     {
@@ -14179,8 +14179,8 @@
       "source_location": "L10",
       "_origin": "ast",
       "id": "packages_web_src_components_referee_demo_types_issueseverity",
-      "community": 70,
-      "community_name": "submissions/route.ts",
+      "community": 41,
+      "community_name": "submit-client.tsx",
       "norm_label": "issueseverity"
     },
     {
@@ -14190,8 +14190,8 @@
       "source_location": "L12",
       "_origin": "ast",
       "id": "packages_web_src_components_referee_demo_types_validationwarning",
-      "community": 70,
-      "community_name": "submissions/route.ts",
+      "community": 18,
+      "community_name": "referee-demo/types.ts",
       "norm_label": "validationwarning"
     },
     {
@@ -14201,8 +14201,8 @@
       "source_location": "L21",
       "_origin": "ast",
       "id": "packages_web_src_components_referee_demo_types_playerpoints",
-      "community": 70,
-      "community_name": "submissions/route.ts",
+      "community": 18,
+      "community_name": "referee-demo/types.ts",
       "norm_label": "playerpoints"
     },
     {
@@ -14212,8 +14212,8 @@
       "source_location": "L28",
       "_origin": "ast",
       "id": "packages_web_src_components_referee_demo_types_ocrplayer",
-      "community": 70,
-      "community_name": "submissions/route.ts",
+      "community": 18,
+      "community_name": "referee-demo/types.ts",
       "norm_label": "ocrplayer"
     },
     {
@@ -14223,8 +14223,8 @@
       "source_location": "L37",
       "_origin": "ast",
       "id": "packages_web_src_components_referee_demo_types_ocrteam",
-      "community": 70,
-      "community_name": "submissions/route.ts",
+      "community": 18,
+      "community_name": "referee-demo/types.ts",
       "norm_label": "ocrteam"
     },
     {
@@ -14234,8 +14234,8 @@
       "source_location": "L44",
       "_origin": "ast",
       "id": "packages_web_src_components_referee_demo_types_progressiveevent",
-      "community": 70,
-      "community_name": "submissions/route.ts",
+      "community": 18,
+      "community_name": "referee-demo/types.ts",
       "norm_label": "progressiveevent"
     },
     {
@@ -14245,8 +14245,8 @@
       "source_location": "L51",
       "_origin": "ast",
       "id": "packages_web_src_components_referee_demo_types_quarterscore",
-      "community": 70,
-      "community_name": "submissions/route.ts",
+      "community": 18,
+      "community_name": "referee-demo/types.ts",
       "norm_label": "quarterscore"
     },
     {
@@ -14256,8 +14256,8 @@
       "source_location": "L53",
       "_origin": "ast",
       "id": "packages_web_src_components_referee_demo_types_ocrfooter",
-      "community": 70,
-      "community_name": "submissions/route.ts",
+      "community": 18,
+      "community_name": "referee-demo/types.ts",
       "norm_label": "ocrfooter"
     },
     {
@@ -14278,8 +14278,8 @@
       "source_location": "L78",
       "_origin": "ast",
       "id": "packages_web_src_components_referee_demo_types_suggestion",
-      "community": 35,
-      "community_name": "reconcile-client.tsx",
+      "community": 18,
+      "community_name": "referee-demo/types.ts",
       "norm_label": "suggestion"
     },
     {
@@ -14300,8 +14300,8 @@
       "source_location": "L96",
       "_origin": "ast",
       "id": "packages_web_src_components_referee_demo_types_reconcilesummary",
-      "community": 70,
-      "community_name": "submissions/route.ts",
+      "community": 18,
+      "community_name": "referee-demo/types.ts",
       "norm_label": "reconcilesummary"
     },
     {
@@ -14355,8 +14355,8 @@
       "source_location": "L5",
       "_origin": "ast",
       "id": "packages_web_src_components_referee_demo_ui_panel",
-      "community": 41,
-      "community_name": "submit-client.tsx",
+      "community": 18,
+      "community_name": "referee-demo/types.ts",
       "norm_label": "panel()"
     },
     {
@@ -14377,8 +14377,8 @@
       "source_location": "L36",
       "_origin": "ast",
       "id": "packages_web_src_components_referee_demo_ui_severitychip",
-      "community": 13,
-      "community_name": "reconcile-sections.tsx",
+      "community": 41,
+      "community_name": "submit-client.tsx",
       "norm_label": "severitychip()"
     },
     {
@@ -14399,8 +14399,8 @@
       "source_location": "L69",
       "_origin": "ast",
       "id": "packages_web_src_components_referee_demo_ui_numberfield",
-      "community": 13,
-      "community_name": "reconcile-sections.tsx",
+      "community": 41,
+      "community_name": "submit-client.tsx",
       "norm_label": "numberfield()"
     },
     {
@@ -14718,8 +14718,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "packages_web_src_components_single_player_demo_demo_tabs",
-      "community": 33,
-      "community_name": "account.ts",
+      "community": 55,
+      "community_name": "invite-setup-card.tsx",
       "norm_label": "single-player-demo/demo-tabs.tsx"
     },
     {
@@ -14729,8 +14729,8 @@
       "source_location": "L9",
       "_origin": "ast",
       "id": "packages_web_src_components_single_player_demo_demo_tabs_demotabs",
-      "community": 33,
-      "community_name": "account.ts",
+      "community": 55,
+      "community_name": "invite-setup-card.tsx",
       "norm_label": "demotabs()"
     },
     {
@@ -15312,8 +15312,8 @@
       "source_location": "L5",
       "_origin": "ast",
       "id": "packages_web_src_lib_api_apikeyrecord",
-      "community": 38,
-      "community_name": "api.ts",
+      "community": 71,
+      "community_name": "createClient",
       "norm_label": "apikeyrecord"
     },
     {
@@ -15372,10 +15372,98 @@
       "norm_label": ".constructor()"
     },
     {
-      "label": "apiFetch()",
+      "label": "IDEMPOTENT_METHODS",
       "file_type": "code",
       "source_file": "packages/web/src/lib/api.ts",
       "source_location": "L39",
+      "_origin": "ast",
+      "id": "packages_web_src_lib_api_idempotent_methods",
+      "community": 38,
+      "community_name": "api.ts",
+      "norm_label": "idempotent_methods"
+    },
+    {
+      "label": "RETRYABLE_STATUS",
+      "file_type": "code",
+      "source_file": "packages/web/src/lib/api.ts",
+      "source_location": "L40",
+      "_origin": "ast",
+      "id": "packages_web_src_lib_api_retryable_status",
+      "community": 38,
+      "community_name": "api.ts",
+      "norm_label": "retryable_status"
+    },
+    {
+      "label": "RETRY_BACKOFF_MS",
+      "file_type": "code",
+      "source_file": "packages/web/src/lib/api.ts",
+      "source_location": "L41",
+      "_origin": "ast",
+      "id": "packages_web_src_lib_api_retry_backoff_ms",
+      "community": 38,
+      "community_name": "api.ts",
+      "norm_label": "retry_backoff_ms"
+    },
+    {
+      "label": "requestMethod()",
+      "file_type": "code",
+      "source_file": "packages/web/src/lib/api.ts",
+      "source_location": "L43",
+      "_origin": "ast",
+      "id": "packages_web_src_lib_api_requestmethod",
+      "community": 38,
+      "community_name": "api.ts",
+      "norm_label": "requestmethod()"
+    },
+    {
+      "label": "canRetryRequest()",
+      "file_type": "code",
+      "source_file": "packages/web/src/lib/api.ts",
+      "source_location": "L47",
+      "_origin": "ast",
+      "id": "packages_web_src_lib_api_canretryrequest",
+      "community": 38,
+      "community_name": "api.ts",
+      "norm_label": "canretryrequest()"
+    },
+    {
+      "label": "isRetryableStatus()",
+      "file_type": "code",
+      "source_file": "packages/web/src/lib/api.ts",
+      "source_location": "L51",
+      "_origin": "ast",
+      "id": "packages_web_src_lib_api_isretryablestatus",
+      "community": 38,
+      "community_name": "api.ts",
+      "norm_label": "isretryablestatus()"
+    },
+    {
+      "label": "sleep()",
+      "file_type": "code",
+      "source_file": "packages/web/src/lib/api.ts",
+      "source_location": "L55",
+      "_origin": "ast",
+      "id": "packages_web_src_lib_api_sleep",
+      "community": 38,
+      "community_name": "api.ts",
+      "norm_label": "sleep()"
+    },
+    {
+      "label": "unreachableApiMessage()",
+      "file_type": "code",
+      "source_file": "packages/web/src/lib/api.ts",
+      "source_location": "L59",
+      "_origin": "ast",
+      "id": "packages_web_src_lib_api_unreachableapimessage",
+      "community": 38,
+      "community_name": "api.ts",
+      "norm_label": "unreachableapimessage()"
+    },
+    {
+      "label": "apiFetch()",
+      "file_type": "code",
+      "source_file": "packages/web/src/lib/api.ts",
+      "source_location": "L63",
       "_origin": "ast",
       "id": "packages_web_src_lib_api_apifetch",
       "community": 38,
@@ -15386,7 +15474,7 @@
       "label": "extractApiError()",
       "file_type": "code",
       "source_file": "packages/web/src/lib/api.ts",
-      "source_location": "L71",
+      "source_location": "L115",
       "_origin": "ast",
       "id": "packages_web_src_lib_api_extractapierror",
       "community": 38,
@@ -15397,7 +15485,7 @@
       "label": "buildHeaders()",
       "file_type": "code",
       "source_file": "packages/web/src/lib/api.ts",
-      "source_location": "L86",
+      "source_location": "L130",
       "_origin": "ast",
       "id": "packages_web_src_lib_api_buildheaders",
       "community": 38,
@@ -15408,7 +15496,7 @@
       "label": "listApiKeys()",
       "file_type": "code",
       "source_file": "packages/web/src/lib/api.ts",
-      "source_location": "L97",
+      "source_location": "L141",
       "_origin": "ast",
       "id": "packages_web_src_lib_api_listapikeys",
       "community": 38,
@@ -15419,29 +15507,29 @@
       "label": "bootstrapApiKey()",
       "file_type": "code",
       "source_file": "packages/web/src/lib/api.ts",
-      "source_location": "L101",
+      "source_location": "L145",
       "_origin": "ast",
       "id": "packages_web_src_lib_api_bootstrapapikey",
-      "community": 38,
-      "community_name": "api.ts",
+      "community": 71,
+      "community_name": "createClient",
       "norm_label": "bootstrapapikey()"
     },
     {
       "label": "createApiKey()",
       "file_type": "code",
       "source_file": "packages/web/src/lib/api.ts",
-      "source_location": "L109",
+      "source_location": "L153",
       "_origin": "ast",
       "id": "packages_web_src_lib_api_createapikey",
-      "community": 38,
-      "community_name": "api.ts",
+      "community": 71,
+      "community_name": "createClient",
       "norm_label": "createapikey()"
     },
     {
       "label": "deleteApiKey()",
       "file_type": "code",
       "source_file": "packages/web/src/lib/api.ts",
-      "source_location": "L118",
+      "source_location": "L162",
       "_origin": "ast",
       "id": "packages_web_src_lib_api_deleteapikey",
       "community": 38,
@@ -15452,7 +15540,7 @@
       "label": "uploadRun()",
       "file_type": "code",
       "source_file": "packages/web/src/lib/api.ts",
-      "source_location": "L125",
+      "source_location": "L169",
       "_origin": "ast",
       "id": "packages_web_src_lib_api_uploadrun",
       "community": 38,
@@ -15463,18 +15551,18 @@
       "label": "getRun()",
       "file_type": "code",
       "source_file": "packages/web/src/lib/api.ts",
-      "source_location": "L142",
+      "source_location": "L186",
       "_origin": "ast",
       "id": "packages_web_src_lib_api_getrun",
-      "community": 38,
-      "community_name": "api.ts",
+      "community": 0,
+      "community_name": "club-demo/capture-client.tsx",
       "norm_label": "getrun()"
     },
     {
       "label": "getRunResult()",
       "file_type": "code",
       "source_file": "packages/web/src/lib/api.ts",
-      "source_location": "L146",
+      "source_location": "L190",
       "_origin": "ast",
       "id": "packages_web_src_lib_api_getrunresult",
       "community": 38,
@@ -15485,18 +15573,18 @@
       "label": "AccountRecord",
       "file_type": "code",
       "source_file": "packages/web/src/lib/api.ts",
-      "source_location": "L150",
+      "source_location": "L194",
       "_origin": "ast",
       "id": "packages_web_src_lib_api_accountrecord",
-      "community": 38,
-      "community_name": "api.ts",
+      "community": 71,
+      "community_name": "createClient",
       "norm_label": "accountrecord"
     },
     {
       "label": "listAdminAccounts()",
       "file_type": "code",
       "source_file": "packages/web/src/lib/api.ts",
-      "source_location": "L162",
+      "source_location": "L206",
       "_origin": "ast",
       "id": "packages_web_src_lib_api_listadminaccounts",
       "community": 38,
@@ -15507,7 +15595,7 @@
       "label": "listAccountApiKeys()",
       "file_type": "code",
       "source_file": "packages/web/src/lib/api.ts",
-      "source_location": "L166",
+      "source_location": "L210",
       "_origin": "ast",
       "id": "packages_web_src_lib_api_listaccountapikeys",
       "community": 38,
@@ -15518,7 +15606,7 @@
       "label": "createAccountApiKey()",
       "file_type": "code",
       "source_file": "packages/web/src/lib/api.ts",
-      "source_location": "L173",
+      "source_location": "L217",
       "_origin": "ast",
       "id": "packages_web_src_lib_api_createaccountapikey",
       "community": 38,
@@ -15529,7 +15617,7 @@
       "label": "deleteAccountApiKey()",
       "file_type": "code",
       "source_file": "packages/web/src/lib/api.ts",
-      "source_location": "L182",
+      "source_location": "L226",
       "_origin": "ast",
       "id": "packages_web_src_lib_api_deleteaccountapikey",
       "community": 38,
@@ -15653,8 +15741,8 @@
       "source_location": "L61",
       "_origin": "ast",
       "id": "packages_web_src_lib_auth_account_requirecurrentuseraccount",
-      "community": 33,
-      "community_name": "account.ts",
+      "community": 109,
+      "community_name": "nav.tsx",
       "norm_label": "requirecurrentuseraccount()"
     },
     {
@@ -15675,8 +15763,8 @@
       "source_location": "L73",
       "_origin": "ast",
       "id": "packages_web_src_lib_auth_account_requiredemoaccess",
-      "community": 33,
-      "community_name": "account.ts",
+      "community": 55,
+      "community_name": "invite-setup-card.tsx",
       "norm_label": "requiredemoaccess()"
     },
     {
@@ -15686,8 +15774,8 @@
       "source_location": "L80",
       "_origin": "ast",
       "id": "packages_web_src_lib_auth_account_markcurrentaccountaccepted",
-      "community": 33,
-      "community_name": "account.ts",
+      "community": 72,
+      "community_name": "createClient",
       "norm_label": "markcurrentaccountaccepted()"
     },
     {
@@ -15697,8 +15785,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "packages_web_src_lib_env",
-      "community": 33,
-      "community_name": "account.ts",
+      "community": 72,
+      "community_name": "createClient",
       "norm_label": "env.ts"
     },
     {
@@ -15708,8 +15796,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "packages_web_src_lib_env_siteconfig",
-      "community": 33,
-      "community_name": "account.ts",
+      "community": 72,
+      "community_name": "createClient",
       "norm_label": "siteconfig"
     },
     {
@@ -15719,8 +15807,8 @@
       "source_location": "L8",
       "_origin": "ast",
       "id": "packages_web_src_lib_env_assertbrowserenv",
-      "community": 38,
-      "community_name": "api.ts",
+      "community": 71,
+      "community_name": "createClient",
       "norm_label": "assertbrowserenv()"
     },
     {
@@ -15752,8 +15840,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "packages_web_src_lib_supabase_client",
-      "community": 38,
-      "community_name": "api.ts",
+      "community": 71,
+      "community_name": "createClient",
       "norm_label": "client.ts"
     },
     {
@@ -15763,8 +15851,8 @@
       "source_location": "L5",
       "_origin": "ast",
       "id": "packages_web_src_lib_supabase_client_createclient",
-      "community": 38,
-      "community_name": "api.ts",
+      "community": 71,
+      "community_name": "createClient",
       "norm_label": "createclient()"
     },
     {
@@ -15774,8 +15862,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "packages_web_src_lib_supabase_middleware",
-      "community": 33,
-      "community_name": "account.ts",
+      "community": 124,
+      "community_name": "supabase/middleware.ts",
       "norm_label": "supabase/middleware.ts"
     },
     {
@@ -15785,8 +15873,8 @@
       "source_location": "L6",
       "_origin": "ast",
       "id": "packages_web_src_lib_supabase_middleware_middlewareaccount",
-      "community": 33,
-      "community_name": "account.ts",
+      "community": 124,
+      "community_name": "supabase/middleware.ts",
       "norm_label": "middlewareaccount"
     },
     {
@@ -15796,8 +15884,8 @@
       "source_location": "L11",
       "_origin": "ast",
       "id": "packages_web_src_lib_supabase_middleware_updatesession",
-      "community": 33,
-      "community_name": "account.ts",
+      "community": 124,
+      "community_name": "supabase/middleware.ts",
       "norm_label": "updatesession()"
     },
     {
@@ -15807,8 +15895,8 @@
       "source_location": "L59",
       "_origin": "ast",
       "id": "packages_web_src_lib_supabase_middleware_getaccountforuser",
-      "community": 33,
-      "community_name": "account.ts",
+      "community": 124,
+      "community_name": "supabase/middleware.ts",
       "norm_label": "getaccountforuser()"
     },
     {
@@ -15818,8 +15906,8 @@
       "source_location": "L69",
       "_origin": "ast",
       "id": "packages_web_src_lib_supabase_middleware_destinationformiddlewareaccount",
-      "community": 33,
-      "community_name": "account.ts",
+      "community": 124,
+      "community_name": "supabase/middleware.ts",
       "norm_label": "destinationformiddlewareaccount()"
     },
     {
@@ -15829,8 +15917,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "packages_web_src_lib_supabase_server",
-      "community": 33,
-      "community_name": "account.ts",
+      "community": 72,
+      "community_name": "createClient",
       "norm_label": "server.ts"
     },
     {
@@ -15840,8 +15928,8 @@
       "source_location": "L6",
       "_origin": "ast",
       "id": "packages_web_src_lib_supabase_server_createclient",
-      "community": 33,
-      "community_name": "account.ts",
+      "community": 72,
+      "community_name": "createClient",
       "norm_label": "createclient()"
     },
     {
@@ -16423,7 +16511,7 @@
       "label": "deploy_mcp()",
       "file_type": "code",
       "source_file": "scripts/deploy_cloudrun.sh",
-      "source_location": "L157",
+      "source_location": "L159",
       "metadata": {
         "language": "bash",
         "kind": "bash_function"
@@ -16438,7 +16526,7 @@
       "label": "service_url()",
       "file_type": "code",
       "source_file": "scripts/deploy_cloudrun.sh",
-      "source_location": "L166",
+      "source_location": "L168",
       "metadata": {
         "language": "bash",
         "kind": "bash_function"
@@ -16453,7 +16541,7 @@
       "label": "urls()",
       "file_type": "code",
       "source_file": "scripts/deploy_cloudrun.sh",
-      "source_location": "L171",
+      "source_location": "L173",
       "metadata": {
         "language": "bash",
         "kind": "bash_function"
@@ -18001,8 +18089,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "tests_test_core_contracts",
-      "community": 32,
-      "community_name": "toolbox.py",
+      "community": 22,
+      "community_name": "ProviderRateLimitError",
       "norm_label": "test_core_contracts.py"
     },
     {
@@ -19299,8 +19387,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "tests_test_phase3_cleanup",
-      "community": 9,
-      "community_name": "output_builder.py",
+      "community": 105,
+      "community_name": "image_utils.py",
       "norm_label": "test_phase3_cleanup.py"
     },
     {
@@ -19343,8 +19431,8 @@
       "source_location": "L29",
       "_origin": "ast",
       "id": "tests_test_phase3_cleanup_apikeyresolutiontest",
-      "community": 9,
-      "community_name": "output_builder.py",
+      "community": 105,
+      "community_name": "image_utils.py",
       "norm_label": "apikeyresolutiontest"
     },
     {
@@ -19354,8 +19442,8 @@
       "source_location": "L32",
       "_origin": "ast",
       "id": "tests_test_phase3_cleanup_apikeyresolutiontest_test_gemini_env_precedence",
-      "community": 9,
-      "community_name": "output_builder.py",
+      "community": 105,
+      "community_name": "image_utils.py",
       "norm_label": ".test_gemini_env_precedence()"
     },
     {
@@ -19365,8 +19453,8 @@
       "source_location": "L38",
       "_origin": "ast",
       "id": "tests_test_phase3_cleanup_apikeyresolutiontest_test_resolve_picks_first_available",
-      "community": 9,
-      "community_name": "output_builder.py",
+      "community": 105,
+      "community_name": "image_utils.py",
       "norm_label": ".test_resolve_picks_first_available()"
     },
     {
@@ -19376,8 +19464,8 @@
       "source_location": "L42",
       "_origin": "ast",
       "id": "tests_test_phase3_cleanup_apikeyresolutiontest_test_unknown_provider_falls_back_to_interfaze",
-      "community": 9,
-      "community_name": "output_builder.py",
+      "community": 105,
+      "community_name": "image_utils.py",
       "norm_label": ".test_unknown_provider_falls_back_to_interfaze()"
     },
     {
@@ -19409,8 +19497,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "tests_test_phase3_cleanup_rationale_1",
-      "community": 9,
-      "community_name": "output_builder.py",
+      "community": 105,
+      "community_name": "image_utils.py",
       "norm_label": "tests for phase 3 cleanup (m3 foul aliases, m7 key resolution, p3 capability)."
     },
     {
@@ -19431,8 +19519,8 @@
       "source_location": "L30",
       "_origin": "ast",
       "id": "tests_test_phase3_cleanup_rationale_30",
-      "community": 9,
-      "community_name": "output_builder.py",
+      "community": 105,
+      "community_name": "image_utils.py",
       "norm_label": "m7 \u2014 single source of truth for provider \u2192 env var names."
     },
     {
@@ -19453,8 +19541,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "tests_test_provider_http_base",
-      "community": 22,
-      "community_name": "ProviderRateLimitError",
+      "community": 28,
+      "community_name": "DocstrangeProvider",
       "norm_label": "test_provider_http_base.py"
     },
     {
@@ -19464,8 +19552,8 @@
       "source_location": "L16",
       "_origin": "ast",
       "id": "tests_test_provider_http_base_stubprovider",
-      "community": 22,
-      "community_name": "ProviderRateLimitError",
+      "community": 28,
+      "community_name": "DocstrangeProvider",
       "norm_label": "_stubprovider"
     },
     {
@@ -19475,8 +19563,8 @@
       "source_location": "L22",
       "_origin": "ast",
       "id": "tests_test_provider_http_base_stubprovider_init",
-      "community": 22,
-      "community_name": "ProviderRateLimitError",
+      "community": 28,
+      "community_name": "DocstrangeProvider",
       "norm_label": ".__init__()"
     },
     {
@@ -19486,8 +19574,8 @@
       "source_location": "L27",
       "_origin": "ast",
       "id": "tests_test_provider_http_base_stubprovider_post_once",
-      "community": 22,
-      "community_name": "ProviderRateLimitError",
+      "community": 28,
+      "community_name": "DocstrangeProvider",
       "norm_label": "._post_once()"
     },
     {
@@ -19497,8 +19585,8 @@
       "source_location": "L34",
       "_origin": "ast",
       "id": "tests_test_provider_http_base_stubprovider_sleep_backoff",
-      "community": 22,
-      "community_name": "ProviderRateLimitError",
+      "community": 28,
+      "community_name": "DocstrangeProvider",
       "norm_label": "._sleep_backoff()"
     },
     {
@@ -19508,8 +19596,8 @@
       "source_location": "L37",
       "_origin": "ast",
       "id": "tests_test_provider_http_base_stubprovider_call_api",
-      "community": 22,
-      "community_name": "ProviderRateLimitError",
+      "community": 28,
+      "community_name": "DocstrangeProvider",
       "norm_label": "._call_api()"
     },
     {
@@ -19574,8 +19662,8 @@
       "source_location": "L71",
       "_origin": "ast",
       "id": "tests_test_provider_http_base_parsinghelperstest",
-      "community": 22,
-      "community_name": "ProviderRateLimitError",
+      "community": 6,
+      "community_name": "HttpJsonProvider",
       "norm_label": "parsinghelperstest"
     },
     {
@@ -19596,8 +19684,8 @@
       "source_location": "L76",
       "_origin": "ast",
       "id": "tests_test_provider_http_base_parsinghelperstest_test_parse_json_or_raw_falls_back",
-      "community": 22,
-      "community_name": "ProviderRateLimitError",
+      "community": 28,
+      "community_name": "DocstrangeProvider",
       "norm_label": ".test_parse_json_or_raw_falls_back()"
     },
     {
@@ -19607,8 +19695,8 @@
       "source_location": "L81",
       "_origin": "ast",
       "id": "tests_test_provider_http_base_parsinghelperstest_test_extract_openai_usage_handles_null_fields",
-      "community": 22,
-      "community_name": "ProviderRateLimitError",
+      "community": 28,
+      "community_name": "DocstrangeProvider",
       "norm_label": ".test_extract_openai_usage_handles_null_fields()"
     },
     {
@@ -19618,8 +19706,8 @@
       "source_location": "L90",
       "_origin": "ast",
       "id": "tests_test_provider_http_base_parsinghelperstest_test_parse_boxes_single_object_form",
-      "community": 22,
-      "community_name": "ProviderRateLimitError",
+      "community": 6,
+      "community_name": "HttpJsonProvider",
       "norm_label": ".test_parse_boxes_single_object_form()"
     },
     {
@@ -19629,8 +19717,8 @@
       "source_location": "L97",
       "_origin": "ast",
       "id": "tests_test_provider_http_base_parsinghelperstest_test_parse_boxes_skips_invalid_entries",
-      "community": 22,
-      "community_name": "ProviderRateLimitError",
+      "community": 6,
+      "community_name": "HttpJsonProvider",
       "norm_label": ".test_parse_boxes_skips_invalid_entries()"
     },
     {
@@ -19640,8 +19728,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "tests_test_provider_http_base_rationale_1",
-      "community": 22,
-      "community_name": "ProviderRateLimitError",
+      "community": 28,
+      "community_name": "DocstrangeProvider",
       "norm_label": "tests for the shared httpjsonprovider base: retry/backoff and parsing."
     },
     {
@@ -19651,8 +19739,8 @@
       "source_location": "L17",
       "_origin": "ast",
       "id": "tests_test_provider_http_base_rationale_17",
-      "community": 22,
-      "community_name": "ProviderRateLimitError",
+      "community": 28,
+      "community_name": "DocstrangeProvider",
       "norm_label": "minimal concrete provider that records request attempts."
     },
     {
@@ -19794,8 +19882,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "tests_test_toolbox",
-      "community": 12,
-      "community_name": "PipelineConfig",
+      "community": 22,
+      "community_name": "ProviderRateLimitError",
       "norm_label": "test_toolbox.py"
     },
     {
@@ -19805,8 +19893,8 @@
       "source_location": "L17",
       "_origin": "ast",
       "id": "tests_test_toolbox_toolbox_usage",
-      "community": 12,
-      "community_name": "PipelineConfig",
+      "community": 22,
+      "community_name": "ProviderRateLimitError",
       "norm_label": "toolbox_usage()"
     },
     {
@@ -60364,7 +60452,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "packages/web/src/lib/api.ts",
-      "source_location": "L150",
+      "source_location": "L194",
       "weight": 1.0,
       "_origin": "ast",
       "source": "packages_web_src_lib_api",
@@ -60386,7 +60474,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "packages/web/src/lib/api.ts",
-      "source_location": "L39",
+      "source_location": "L63",
       "weight": 1.0,
       "_origin": "ast",
       "source": "packages_web_src_lib_api",
@@ -60408,7 +60496,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "packages/web/src/lib/api.ts",
-      "source_location": "L101",
+      "source_location": "L145",
       "weight": 1.0,
       "_origin": "ast",
       "source": "packages_web_src_lib_api",
@@ -60419,7 +60507,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "packages/web/src/lib/api.ts",
-      "source_location": "L86",
+      "source_location": "L130",
       "weight": 1.0,
       "_origin": "ast",
       "source": "packages_web_src_lib_api",
@@ -60430,7 +60518,18 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "packages/web/src/lib/api.ts",
-      "source_location": "L173",
+      "source_location": "L47",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "packages_web_src_lib_api",
+      "target": "packages_web_src_lib_api_canretryrequest",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "packages/web/src/lib/api.ts",
+      "source_location": "L217",
       "weight": 1.0,
       "_origin": "ast",
       "source": "packages_web_src_lib_api",
@@ -60441,7 +60540,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "packages/web/src/lib/api.ts",
-      "source_location": "L109",
+      "source_location": "L153",
       "weight": 1.0,
       "_origin": "ast",
       "source": "packages_web_src_lib_api",
@@ -60452,7 +60551,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "packages/web/src/lib/api.ts",
-      "source_location": "L182",
+      "source_location": "L226",
       "weight": 1.0,
       "_origin": "ast",
       "source": "packages_web_src_lib_api",
@@ -60463,7 +60562,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "packages/web/src/lib/api.ts",
-      "source_location": "L118",
+      "source_location": "L162",
       "weight": 1.0,
       "_origin": "ast",
       "source": "packages_web_src_lib_api",
@@ -60474,7 +60573,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "packages/web/src/lib/api.ts",
-      "source_location": "L71",
+      "source_location": "L115",
       "weight": 1.0,
       "_origin": "ast",
       "source": "packages_web_src_lib_api",
@@ -60485,7 +60584,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "packages/web/src/lib/api.ts",
-      "source_location": "L142",
+      "source_location": "L186",
       "weight": 1.0,
       "_origin": "ast",
       "source": "packages_web_src_lib_api",
@@ -60496,7 +60595,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "packages/web/src/lib/api.ts",
-      "source_location": "L146",
+      "source_location": "L190",
       "weight": 1.0,
       "_origin": "ast",
       "source": "packages_web_src_lib_api",
@@ -60507,7 +60606,29 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "packages/web/src/lib/api.ts",
-      "source_location": "L166",
+      "source_location": "L39",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "packages_web_src_lib_api",
+      "target": "packages_web_src_lib_api_idempotent_methods",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "packages/web/src/lib/api.ts",
+      "source_location": "L51",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "packages_web_src_lib_api",
+      "target": "packages_web_src_lib_api_isretryablestatus",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "packages/web/src/lib/api.ts",
+      "source_location": "L210",
       "weight": 1.0,
       "_origin": "ast",
       "source": "packages_web_src_lib_api",
@@ -60518,7 +60639,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "packages/web/src/lib/api.ts",
-      "source_location": "L162",
+      "source_location": "L206",
       "weight": 1.0,
       "_origin": "ast",
       "source": "packages_web_src_lib_api",
@@ -60529,7 +60650,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "packages/web/src/lib/api.ts",
-      "source_location": "L97",
+      "source_location": "L141",
       "weight": 1.0,
       "_origin": "ast",
       "source": "packages_web_src_lib_api",
@@ -60545,6 +60666,39 @@
       "_origin": "ast",
       "source": "packages_web_src_lib_api",
       "target": "packages_web_src_lib_api_ocrapierror",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "packages/web/src/lib/api.ts",
+      "source_location": "L43",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "packages_web_src_lib_api",
+      "target": "packages_web_src_lib_api_requestmethod",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "packages/web/src/lib/api.ts",
+      "source_location": "L41",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "packages_web_src_lib_api",
+      "target": "packages_web_src_lib_api_retry_backoff_ms",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "packages/web/src/lib/api.ts",
+      "source_location": "L40",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "packages_web_src_lib_api",
+      "target": "packages_web_src_lib_api_retryable_status",
       "confidence_score": 1.0
     },
     {
@@ -60573,7 +60727,29 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "packages/web/src/lib/api.ts",
-      "source_location": "L125",
+      "source_location": "L55",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "packages_web_src_lib_api",
+      "target": "packages_web_src_lib_api_sleep",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "packages/web/src/lib/api.ts",
+      "source_location": "L59",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "packages_web_src_lib_api",
+      "target": "packages_web_src_lib_api_unreachableapimessage",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "packages/web/src/lib/api.ts",
+      "source_location": "L169",
       "weight": 1.0,
       "_origin": "ast",
       "source": "packages_web_src_lib_api",
@@ -60616,11 +60792,95 @@
       "confidence_score": 1.0
     },
     {
+      "relation": "references",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "packages/web/src/lib/api.ts",
+      "source_location": "L48",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "packages_web_src_lib_api_canretryrequest",
+      "target": "packages_web_src_lib_api_idempotent_methods"
+    },
+    {
+      "relation": "references",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "packages/web/src/lib/api.ts",
+      "source_location": "L52",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "packages_web_src_lib_api_isretryablestatus",
+      "target": "packages_web_src_lib_api_retryable_status"
+    },
+    {
       "relation": "calls",
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "packages/web/src/lib/api.ts",
-      "source_location": "L48",
+      "source_location": "L68",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "packages_web_src_lib_api_apifetch",
+      "target": "packages_web_src_lib_api_requestmethod",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "packages/web/src/lib/api.ts",
+      "source_location": "L69",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "packages_web_src_lib_api_apifetch",
+      "target": "packages_web_src_lib_api_canretryrequest",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "packages/web/src/lib/api.ts",
+      "source_location": "L93",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "packages_web_src_lib_api_apifetch",
+      "target": "packages_web_src_lib_api_isretryablestatus",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "packages/web/src/lib/api.ts",
+      "source_location": "L75",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "packages_web_src_lib_api_apifetch",
+      "target": "packages_web_src_lib_api_sleep",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "packages/web/src/lib/api.ts",
+      "source_location": "L86",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "packages_web_src_lib_api_apifetch",
+      "target": "packages_web_src_lib_api_unreachableapimessage",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "packages/web/src/lib/api.ts",
+      "source_location": "L82",
       "weight": 1.0,
       "_origin": "ast",
       "source": "packages_web_src_lib_api_apifetch",
@@ -60632,7 +60892,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "packages/web/src/lib/api.ts",
-      "source_location": "L63",
+      "source_location": "L104",
       "weight": 1.0,
       "_origin": "ast",
       "source": "packages_web_src_lib_api_apifetch",
@@ -60644,7 +60904,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "packages/web/src/lib/api.ts",
-      "source_location": "L102",
+      "source_location": "L146",
       "weight": 1.0,
       "_origin": "ast",
       "source": "packages_web_src_lib_api_bootstrapapikey",
@@ -60656,7 +60916,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "packages/web/src/lib/api.ts",
-      "source_location": "L175",
+      "source_location": "L219",
       "weight": 1.0,
       "_origin": "ast",
       "source": "packages_web_src_lib_api_createaccountapikey",
@@ -60668,7 +60928,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "packages/web/src/lib/api.ts",
-      "source_location": "L111",
+      "source_location": "L155",
       "weight": 1.0,
       "_origin": "ast",
       "source": "packages_web_src_lib_api_createapikey",
@@ -60680,7 +60940,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "packages/web/src/lib/api.ts",
-      "source_location": "L183",
+      "source_location": "L227",
       "weight": 1.0,
       "_origin": "ast",
       "source": "packages_web_src_lib_api_deleteaccountapikey",
@@ -60692,7 +60952,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "packages/web/src/lib/api.ts",
-      "source_location": "L119",
+      "source_location": "L163",
       "weight": 1.0,
       "_origin": "ast",
       "source": "packages_web_src_lib_api_deleteapikey",
@@ -60704,7 +60964,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "packages/web/src/lib/api.ts",
-      "source_location": "L143",
+      "source_location": "L187",
       "weight": 1.0,
       "_origin": "ast",
       "source": "packages_web_src_lib_api_getrun",
@@ -60716,7 +60976,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "packages/web/src/lib/api.ts",
-      "source_location": "L147",
+      "source_location": "L191",
       "weight": 1.0,
       "_origin": "ast",
       "source": "packages_web_src_lib_api_getrunresult",
@@ -60728,7 +60988,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "packages/web/src/lib/api.ts",
-      "source_location": "L167",
+      "source_location": "L211",
       "weight": 1.0,
       "_origin": "ast",
       "source": "packages_web_src_lib_api_listaccountapikeys",
@@ -60740,7 +61000,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "packages/web/src/lib/api.ts",
-      "source_location": "L163",
+      "source_location": "L207",
       "weight": 1.0,
       "_origin": "ast",
       "source": "packages_web_src_lib_api_listadminaccounts",
@@ -60752,7 +61012,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "packages/web/src/lib/api.ts",
-      "source_location": "L98",
+      "source_location": "L142",
       "weight": 1.0,
       "_origin": "ast",
       "source": "packages_web_src_lib_api_listapikeys",
@@ -60764,7 +61024,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "packages/web/src/lib/api.ts",
-      "source_location": "L135",
+      "source_location": "L179",
       "weight": 1.0,
       "_origin": "ast",
       "source": "packages_web_src_lib_api_uploadrun",
@@ -61772,7 +62032,7 @@
       "relation": "defines",
       "confidence": "EXTRACTED",
       "source_file": "scripts/deploy_cloudrun.sh",
-      "source_location": "L157",
+      "source_location": "L159",
       "weight": 1.0,
       "_origin": "ast",
       "source": "scripts_deploy_cloudrun",
@@ -61838,7 +62098,7 @@
       "relation": "defines",
       "confidence": "EXTRACTED",
       "source_file": "scripts/deploy_cloudrun.sh",
-      "source_location": "L166",
+      "source_location": "L168",
       "weight": 1.0,
       "_origin": "ast",
       "source": "scripts_deploy_cloudrun",
@@ -61871,7 +62131,7 @@
       "relation": "defines",
       "confidence": "EXTRACTED",
       "source_file": "scripts/deploy_cloudrun.sh",
-      "source_location": "L171",
+      "source_location": "L173",
       "weight": 1.0,
       "_origin": "ast",
       "source": "scripts_deploy_cloudrun",
@@ -61882,7 +62142,7 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "scripts/deploy_cloudrun.sh",
-      "source_location": "L177",
+      "source_location": "L179",
       "weight": 1.0,
       "context": "call",
       "_origin": "ast",
@@ -61894,7 +62154,7 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "scripts/deploy_cloudrun.sh",
-      "source_location": "L177",
+      "source_location": "L179",
       "weight": 1.0,
       "context": "call",
       "_origin": "ast",
@@ -61906,7 +62166,7 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "scripts/deploy_cloudrun.sh",
-      "source_location": "L177",
+      "source_location": "L179",
       "weight": 1.0,
       "context": "call",
       "_origin": "ast",
@@ -61918,7 +62178,7 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "scripts/deploy_cloudrun.sh",
-      "source_location": "L177",
+      "source_location": "L179",
       "weight": 1.0,
       "context": "call",
       "_origin": "ast",
@@ -61930,7 +62190,7 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "scripts/deploy_cloudrun.sh",
-      "source_location": "L177",
+      "source_location": "L179",
       "weight": 1.0,
       "context": "call",
       "_origin": "ast",
@@ -61954,7 +62214,7 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "scripts/deploy_cloudrun.sh",
-      "source_location": "L147",
+      "source_location": "L149",
       "weight": 1.0,
       "context": "call",
       "_origin": "ast",
@@ -61966,7 +62226,7 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "scripts/deploy_cloudrun.sh",
-      "source_location": "L159",
+      "source_location": "L161",
       "weight": 1.0,
       "context": "call",
       "_origin": "ast",
@@ -68464,5 +68724,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "94a82a81582d644fa0700b28f9e5279d507eb3c9"
+  "built_at_commit": "f54972f38e85e7261508f04aa187f01444ef554a"
 }

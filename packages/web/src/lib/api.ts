@@ -36,35 +36,79 @@ export class OcrApiError extends Error {
   }
 }
 
+const IDEMPOTENT_METHODS = new Set(["GET", "HEAD", "OPTIONS", "DELETE"]);
+const RETRYABLE_STATUS = new Set([502, 503, 504]);
+const RETRY_BACKOFF_MS = [1_500, 3_000];
+
+function requestMethod(init: RequestInit): string {
+  return (init.method ?? "GET").toUpperCase();
+}
+
+function canRetryRequest(method: string): boolean {
+  return IDEMPOTENT_METHODS.has(method);
+}
+
+function isRetryableStatus(status: number): boolean {
+  return RETRYABLE_STATUS.has(status);
+}
+
+function sleep(ms: number): Promise<void> {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+function unreachableApiMessage(): string {
+  return `Could not reach the OCR API at ${siteConfig.apiBaseUrl}. The API may be starting up; retry in a few seconds.`;
+}
+
 export async function apiFetch<T>(
   path: string,
   session: Pick<Session, "access_token">,
   init: RequestInit = {},
 ): Promise<T> {
-  let response: Response;
-  try {
-    response = await fetch(`${siteConfig.apiBaseUrl}${path}`, {
-      ...init,
-      headers: buildHeaders(session, init),
-      cache: "no-store",
-    });
-  } catch {
-    throw new OcrApiError(
-      `Could not reach the OCR API at ${siteConfig.apiBaseUrl}. Start the FastAPI server with ocr-api and check NEXT_PUBLIC_OCR_API_URL.`,
-      0,
-      "network_error",
-    );
+  const method = requestMethod(init);
+  const retryable = canRetryRequest(method);
+  const maxAttempts = retryable ? RETRY_BACKOFF_MS.length + 1 : 1;
+  let lastNetworkError: OcrApiError | undefined;
+
+  for (let attempt = 0; attempt < maxAttempts; attempt += 1) {
+    if (attempt > 0) {
+      await sleep(RETRY_BACKOFF_MS[attempt - 1] ?? RETRY_BACKOFF_MS[RETRY_BACKOFF_MS.length - 1]);
+    }
+
+    let response: Response;
+    try {
+      response = await fetch(`${siteConfig.apiBaseUrl}${path}`, {
+        ...init,
+        headers: buildHeaders(session, init),
+        cache: "no-store",
+      });
+    } catch {
+      lastNetworkError = new OcrApiError(unreachableApiMessage(), 0, "network_error");
+      if (!retryable || attempt === maxAttempts - 1) {
+        throw lastNetworkError;
+      }
+      continue;
+    }
+
+    if (retryable && isRetryableStatus(response.status) && attempt < maxAttempts - 1) {
+      if (response.body) {
+        void response.body.cancel();
+      }
+      continue;
+    }
+
+    const contentType = response.headers.get("content-type") || "";
+    const payload = contentType.includes("application/json") ? await response.json() : await response.text();
+
+    if (!response.ok) {
+      const { message, code } = extractApiError(payload, response.status);
+      throw new OcrApiError(message, response.status, code);
+    }
+
+    return payload as T;
   }
 
-  const contentType = response.headers.get("content-type") || "";
-  const payload = contentType.includes("application/json") ? await response.json() : await response.text();
-
-  if (!response.ok) {
-    const { message, code } = extractApiError(payload, response.status);
-    throw new OcrApiError(message, response.status, code);
-  }
-
-  return payload as T;
+  throw lastNetworkError ?? new OcrApiError(unreachableApiMessage(), 0, "network_error");
 }
 
 
