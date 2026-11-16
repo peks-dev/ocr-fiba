@@ -800,8 +800,8 @@
     "semantic_hash": ""
   },
   "packages/mcp/docs/mcp-server.md": {
-    "mtime": 1794790297.477902,
-    "ast_hash": "f68ea28386f4c647c514be162a950d99",
+    "mtime": 1794791360.638383,
+    "ast_hash": "5b179348f050b7dbcfd2bcfe64de5678",
     "semantic_hash": ""
   },
   "packages/web/AGENTS.md": {
@@ -1082,6 +1082,11 @@
   "docs/graphify.md": {
     "mtime": 1794790297.4659019,
     "ast_hash": "124cd4f219cd605dfca7495f62e47883",
+    "semantic_hash": ""
+  },
+  "cloudbuild.yaml": {
+    "mtime": 1794791142.5726433,
+    "ast_hash": "4b7200acc4806e2c8bb804c97922e383",
     "semantic_hash": ""
   }
 }
