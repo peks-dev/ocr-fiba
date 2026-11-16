@@ -35,6 +35,11 @@ class ApiSettings:
     def has_supabase(self) -> bool:
         return bool(self.supabase_url and self.supabase_service_key and self.supabase_jwt_secret)
 
+    @property
+    def has_supabase_service(self) -> bool:
+        """True when the service-role client can be constructed (URL + service key)."""
+        return bool(self.supabase_url and self.supabase_service_key)
+
 
 def get_api_settings() -> ApiSettings:
     env = os.getenv("OCR_ENV", "development").strip().lower() or "development"

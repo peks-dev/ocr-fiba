@@ -10,7 +10,15 @@ from fastapi.responses import JSONResponse
 from ocr_engine_api.auth import is_auth_exempt, is_authorized, unauthorized_response
 from ocr_engine_api.auth_api_key import is_api_key_request, validate_api_key
 from ocr_engine_api.auth_supabase import is_jwt_request, validate_supabase_session
-from ocr_engine_api.rate_limit import RunRateLimiter, is_run_creation, rate_limited_response, request_rate_limit_key
+from ocr_engine_api.rate_limit import (
+    RateLimitBackendError,
+    RunRateLimiter,
+    create_rate_limit_store,
+    is_run_creation,
+    rate_limit_unavailable_response,
+    rate_limited_response,
+    request_rate_limit_key,
+)
 from ocr_engine_api.routes import admin, me, runs
 from ocr_engine_api.settings import get_api_settings
 from ocr_engine_core.utils.image_utils import load_dotenv
@@ -38,6 +46,7 @@ def create_app() -> FastAPI:
         settings.rate_limit_per_minute,
         settings.rate_limit_per_day,
         state_file=settings.rate_limit_state_file,
+        store=create_rate_limit_store(settings),
     )
     app.state.rate_limiter = rate_limiter
 
@@ -72,9 +81,12 @@ def create_app() -> FastAPI:
             auth_header = request.headers.get("authorization", "")
             client_host = request.client.host if request.client else None
             account_id = getattr(request.state, "account_id", None)
-            allowed, window, retry_after = rate_limiter.check(
-                request_rate_limit_key(account_id, auth_header, client_host)
-            )
+            try:
+                allowed, window, retry_after = rate_limiter.check(
+                    request_rate_limit_key(account_id, auth_header, client_host)
+                )
+            except RateLimitBackendError:
+                return rate_limit_unavailable_response()
             if not allowed:
                 limit = rate_limiter.per_minute if window == "minute" else rate_limiter.per_day
                 return rate_limited_response(window or "minute", retry_after, limit)
