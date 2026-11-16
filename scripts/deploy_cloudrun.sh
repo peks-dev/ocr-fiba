@@ -11,8 +11,13 @@
 #                        or when ROTATE_OPENROUTER_KEY=1.
 #   ROTATE_CLIENT_TOKEN=1  generate a new public client token (old one stops working).
 #
-# Secrets (Secret Manager): openrouter-api-key, ocr-client-token. The client token value is
-# also kept locally in .cloud-token (chmod 600, gitignored). Secret values are never printed.
+# Secrets (Secret Manager): openrouter-api-key, ocr-client-token, and optionally
+# supabase-service-key + supabase-jwt-secret (injected only if both already exist;
+# this script never creates those two). The client token value is also kept
+# locally in .cloud-token (chmod 600, gitignored). Secret values are never printed.
+#
+# Supabase (ocr-api): SUPABASE_URL and SUPABASE_PUBLISHABLE_KEY are plain env.
+# Override with SUPABASE_URL / SUPABASE_PUBLISHABLE_KEY if needed.
 set -euo pipefail
 
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
@@ -33,8 +38,25 @@ PER_MIN="${OCR_RATE_LIMIT_PER_MINUTE:-3}"
 PER_DAY="${OCR_RATE_LIMIT_PER_DAY:-50}"
 EXTRACTOR_PROVIDER="${OCR_DEFAULT_EXTRACTOR_PROVIDER:-openrouter}"
 EXTRACTOR_MODEL="${OCR_DEFAULT_EXTRACTOR_MODEL:-google/gemini-3-flash-preview}"
+SUPABASE_URL_VALUE="${SUPABASE_URL:-https://cgcejoqsmouieijkkogw.supabase.co}"
+SUPABASE_PUBLISHABLE_KEY_VALUE="${SUPABASE_PUBLISHABLE_KEY:-sb_publishable_Q-y9BVYWe-wyVj5eLl91lA_zwxAvGKp}"
 
 g() { "$GCLOUD" --project "$PROJECT" --quiet "$@"; }
+
+secret_exists() {
+  g secrets describe "$1" >/dev/null 2>&1
+}
+
+grant_secret_access() {  # grant_secret_access SECRET SA
+  g secrets add-iam-policy-binding "$1" --member "serviceAccount:$2" \
+    --role roles/secretmanager.secretAccessor >/dev/null
+}
+
+supabase_secret_bindings() {
+  if secret_exists supabase-service-key && secret_exists supabase-jwt-secret; then
+    printf 'SUPABASE_SERVICE_KEY=supabase-service-key:latest,SUPABASE_JWT_SECRET=supabase-jwt-secret:latest'
+  fi
+}
 
 ensure_secret() {  # ensure_secret NAME VALUE_FILE (value read from file, never echoed)
   local name="$1" file="$2"
@@ -106,6 +128,16 @@ current_image() {
 }
 
 deploy_api() {
+  local api_secrets="OCR_ENGINE_API_KEY=ocr-client-token:latest,OPENROUTER_API_KEY=openrouter-api-key:latest"
+  local supabase_secrets
+  supabase_secrets="$(supabase_secret_bindings)"
+  if [[ -n "$supabase_secrets" ]]; then
+    api_secrets="$api_secrets,$supabase_secrets"
+    grant_secret_access supabase-service-key "$API_SA"
+    grant_secret_access supabase-jwt-secret "$API_SA"
+  else
+    echo "skipping Supabase secrets: create supabase-service-key and supabase-jwt-secret first"
+  fi
   # Bucket is mounted at /mnt/data: runs/ holds run folders, quota/ the persisted rate-limit state.
   # API: max 1 instance so the quota is exact and run status on the GCS mount is
   # read by the same process that writes it. CPU stays allocated (--no-cpu-throttling) because
@@ -116,8 +148,8 @@ deploy_api() {
     --cpu 1 --memory 1Gi --concurrency 20 --min-instances 0 --max-instances 1 --timeout 600 \
     --add-volume "name=runs,type=cloud-storage,bucket=$BUCKET" \
     --add-volume-mount "volume=runs,mount-path=/mnt/data" \
-    --set-env-vars "OCR_SERVICE=api,OCR_ENV=production,OCR_RUNS_DIR=/mnt/data/runs,OCR_RATE_LIMIT_STATE_FILE=/mnt/data/quota/rate_limit.json,OCR_MAX_UPLOAD_MB=20,OCR_ALLOW_PATH_INPUT=false,OCR_RATE_LIMIT_PER_MINUTE=$PER_MIN,OCR_RATE_LIMIT_PER_DAY=$PER_DAY,OCR_DEFAULT_EXTRACTOR_PROVIDER=$EXTRACTOR_PROVIDER,OCR_DEFAULT_EXTRACTOR_MODEL=$EXTRACTOR_MODEL,OCR_CORS_ORIGINS=" \
-    --set-secrets "OCR_ENGINE_API_KEY=ocr-client-token:latest,OPENROUTER_API_KEY=openrouter-api-key:latest"
+    --set-env-vars "OCR_SERVICE=api,OCR_ENV=production,OCR_RUNS_DIR=/mnt/data/runs,OCR_RATE_LIMIT_STATE_FILE=/mnt/data/quota/rate_limit.json,OCR_MAX_UPLOAD_MB=20,OCR_ALLOW_PATH_INPUT=false,OCR_RATE_LIMIT_PER_MINUTE=$PER_MIN,OCR_RATE_LIMIT_PER_DAY=$PER_DAY,OCR_DEFAULT_EXTRACTOR_PROVIDER=$EXTRACTOR_PROVIDER,OCR_DEFAULT_EXTRACTOR_MODEL=$EXTRACTOR_MODEL,OCR_CORS_ORIGINS=,SUPABASE_URL=$SUPABASE_URL_VALUE,SUPABASE_PUBLISHABLE_KEY=$SUPABASE_PUBLISHABLE_KEY_VALUE" \
+    --set-secrets "$api_secrets"
 }
 
 deploy_mcp() {
