@@ -81,3 +81,33 @@ in `.server-token` (generated on first start, chmod 600, gitignored). Logs and P
 `Authorization: Bearer <token>`; the token lives in Secret Manager (`ocr-client-token`) and
 locally in `.cloud-token`. In production `submit_scoresheet_from_path` is not registered
 (`MCP_ALLOW_PATH_INPUT`), so clients must use `submit_scoresheet_base64`.
+
+### Continuous deployment (push to `main`)
+
+`main` is the production branch: every push to `main` runs the Cloud Build trigger
+`ocr-fiba-main-deploy` (region `us-central1`, GitHub connection `ocr-fiba-github`), which
+executes `cloudbuild.yaml`:
+
+1. builds the image and pushes it to Artifact Registry tagged `$SHORT_SHA` and `latest`;
+2. deploys `ocr-api`, then `ocr-mcp`, with `gcloud run deploy --image` only, so env vars,
+   Secret Manager references, the GCS volume, service accounts and limits stay as last set by
+   `scripts/deploy_cloudrun.sh`;
+3. smoke-tests the public URLs (`/health` → 200, API and MCP without token → 401). A failed
+   check marks the build as failed; the new revision is already serving, so roll back with
+   `gcloud run services update-traffic <service> --to-revisions <previous>=100`.
+
+The build runs as `ocr-deployer@ocr-fiba-8d0920.iam.gserviceaccount.com` with only:
+`roles/run.developer` and `roles/logging.logWriter` (project), `roles/artifactregistry.writer`
+(on the `ocr-fiba` repository), `roles/iam.serviceAccountUser` (on the `ocr-api` and `ocr-mcp`
+runtime service accounts) and `roles/storage.objectViewer` (on the `<project>_cloudbuild`
+staging bucket, for manual `gcloud builds submit`). It reads no secrets.
+
+`scripts/deploy_cloudrun.sh` remains the manual fallback and the place to change service
+configuration (flags, env vars, secrets, limits): run it after editing those, since CD only
+swaps the image. To run the pipeline by hand from a checkout:
+
+```bash
+gcloud builds submit --config cloudbuild.yaml --region us-central1 \
+  --service-account projects/ocr-fiba-8d0920/serviceAccounts/ocr-deployer@ocr-fiba-8d0920.iam.gserviceaccount.com \
+  --substitutions SHORT_SHA=$(git rev-parse --short HEAD) .
+```
