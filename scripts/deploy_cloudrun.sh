@@ -141,13 +141,15 @@ deploy_api() {
     echo "skipping Supabase secrets: create supabase-service-key and supabase-jwt-secret first"
   fi
   # Bucket is mounted at /mnt/data: runs/ holds run folders, quota/ the persisted rate-limit state.
-  # API: max 1 instance so the quota is exact and run status on the GCS mount is
-  # read by the same process that writes it. CPU stays allocated (--no-cpu-throttling) because
-  # OCR runs execute in a background thread after the HTTP response returns.
+  # API: max 3 instances so cold-start traffic is not serialized behind a single instance.
+  # Rate-limit counters are in-memory per process with a best-effort JSON file designed for a
+  # single writer, so quotas can be slightly loose across instances. CPU stays allocated
+  # (--no-cpu-throttling) because OCR runs execute in a background thread after the HTTP
+  # response returns.
   g run deploy ocr-api --image "$(current_image)" --region "$REGION" \
     --service-account "$API_SA" --allow-unauthenticated \
     --execution-environment gen2 --no-cpu-throttling \
-    --cpu 1 --memory 1Gi --concurrency 20 --min-instances 0 --max-instances 1 --timeout 600 \
+    --cpu 1 --memory 1Gi --concurrency 20 --min-instances 0 --max-instances 3 --timeout 600 \
     --add-volume "name=runs,type=cloud-storage,bucket=$BUCKET" \
     --add-volume-mount "volume=runs,mount-path=/mnt/data" \
     --set-env-vars "^|^OCR_SERVICE=api|OCR_ENV=production|OCR_RUNS_DIR=/mnt/data/runs|OCR_RATE_LIMIT_STATE_FILE=/mnt/data/quota/rate_limit.json|OCR_MAX_UPLOAD_MB=20|OCR_ALLOW_PATH_INPUT=false|OCR_RATE_LIMIT_PER_MINUTE=$PER_MIN|OCR_RATE_LIMIT_PER_DAY=$PER_DAY|OCR_DEFAULT_EXTRACTOR_PROVIDER=$EXTRACTOR_PROVIDER|OCR_DEFAULT_EXTRACTOR_MODEL=$EXTRACTOR_MODEL|OCR_CORS_ORIGINS=${OCR_CORS_ORIGINS:-}|SUPABASE_URL=$SUPABASE_URL_VALUE|SUPABASE_PUBLISHABLE_KEY=$SUPABASE_PUBLISHABLE_KEY_VALUE" \
