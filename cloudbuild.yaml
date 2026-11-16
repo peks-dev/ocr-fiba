@@ -1,0 +1,89 @@
+# Continuous deployment for Google Cloud Run (project ocr-fiba-8d0920, us-central1).
+#
+# Triggered on every push to `main` (Cloud Build trigger `ocr-fiba-main-deploy`, running as
+# ocr-deployer@<project>.iam.gserviceaccount.com). Manual equivalent from a local checkout:
+#   gcloud builds submit --config cloudbuild.yaml \
+#     --service-account projects/ocr-fiba-8d0920/serviceAccounts/ocr-deployer@ocr-fiba-8d0920.iam.gserviceaccount.com \
+#     --substitutions SHORT_SHA=$(git rev-parse --short HEAD)
+#
+# Deploy steps only swap the container image: every other setting (env vars, Secret Manager
+# references, GCS volume, service accounts, limits) stays as last set by
+# scripts/deploy_cloudrun.sh, which remains the source of truth for service configuration and
+# the manual fallback. No secret is read at build time.
+substitutions:
+  _REGION: us-central1
+  _REPO: ocr-fiba
+  _IMAGE_NAME: ocr-fiba
+  _API_SERVICE: ocr-api
+  _MCP_SERVICE: ocr-mcp
+
+steps:
+  - id: build
+    name: gcr.io/cloud-builders/docker
+    args:
+      - build
+      - --tag=${_REGION}-docker.pkg.dev/$PROJECT_ID/${_REPO}/${_IMAGE_NAME}:$SHORT_SHA
+      - --tag=${_REGION}-docker.pkg.dev/$PROJECT_ID/${_REPO}/${_IMAGE_NAME}:latest
+      - .
+
+  - id: push
+    name: gcr.io/cloud-builders/docker
+    args:
+      - push
+      - --all-tags
+      - ${_REGION}-docker.pkg.dev/$PROJECT_ID/${_REPO}/${_IMAGE_NAME}
+
+  # The API goes first: the MCP service calls it.
+  - id: deploy-api
+    name: gcr.io/google.com/cloudsdktool/cloud-sdk:slim
+    entrypoint: gcloud
+    args:
+      - run
+      - deploy
+      - ${_API_SERVICE}
+      - --image=${_REGION}-docker.pkg.dev/$PROJECT_ID/${_REPO}/${_IMAGE_NAME}:$SHORT_SHA
+      - --region=${_REGION}
+      - --quiet
+
+  - id: deploy-mcp
+    name: gcr.io/google.com/cloudsdktool/cloud-sdk:slim
+    entrypoint: gcloud
+    args:
+      - run
+      - deploy
+      - ${_MCP_SERVICE}
+      - --image=${_REGION}-docker.pkg.dev/$PROJECT_ID/${_REPO}/${_IMAGE_NAME}:$SHORT_SHA
+      - --region=${_REGION}
+      - --quiet
+
+  # Smoke test the public endpoints: API health is open, everything else requires the token.
+  - id: smoke-test
+    name: gcr.io/google.com/cloudsdktool/cloud-sdk:slim
+    entrypoint: bash
+    args:
+      - -c
+      - |
+        set -euo pipefail
+        api="$$(gcloud run services describe ${_API_SERVICE} --region=${_REGION} --format='value(status.url)')"
+        mcp="$$(gcloud run services describe ${_MCP_SERVICE} --region=${_REGION} --format='value(status.url)')"
+        check() {  # check EXPECTED_STATUS URL [extra curl args...]
+          local want="$$1" url="$$2" got; shift 2
+          got="$$(curl -sS -o /dev/null -w '%{http_code}' --retry 3 --retry-all-errors --max-time 60 "$$@" "$$url")"
+          echo "$$url -> $$got (want $$want)"
+          [[ "$$got" == "$$want" ]]
+        }
+        check 200 "$$api/health"
+        check 401 "$$api/v1/runs/smoke-test"
+        check 401 "$$mcp/mcp" -X POST -H 'Content-Type: application/json' \
+          -H 'Accept: application/json, text/event-stream' \
+          -d '{"jsonrpc":"2.0","id":1,"method":"initialize","params":{"protocolVersion":"2025-06-18","capabilities":{},"clientInfo":{"name":"cd-smoke","version":"0"}}}'
+
+images:
+  - ${_REGION}-docker.pkg.dev/$PROJECT_ID/${_REPO}/${_IMAGE_NAME}:$SHORT_SHA
+  - ${_REGION}-docker.pkg.dev/$PROJECT_ID/${_REPO}/${_IMAGE_NAME}:latest
+
+options:
+  # Required when the build runs as a user-specified service account.
+  logging: CLOUD_LOGGING_ONLY
+
+timeout: 1200s
