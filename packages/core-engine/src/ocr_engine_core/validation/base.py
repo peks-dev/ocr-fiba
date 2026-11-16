@@ -64,8 +64,8 @@ def determine_match_status(warnings: list[dict[str, Any]]) -> str:
     if not warnings:
         return "success"
 
-    has_critical = any(w["severity"] == "critical" for w in warnings)
-    has_high = any(w["severity"] == "high" for w in warnings)
+    has_critical = any(w.get("severity") == "critical" for w in warnings)
+    has_high = any(w.get("severity") == "high" for w in warnings)
 
     if has_critical:
         return "error"

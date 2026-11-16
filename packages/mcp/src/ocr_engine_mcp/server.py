@@ -5,27 +5,30 @@ import os
 from typing import Any
 
 from fastmcp import FastMCP
+from fastmcp.server.auth.providers.jwt import StaticTokenVerifier
 
 from ocr_engine_mcp.client import OcrApiClient, OcrApiError
 from ocr_engine_mcp import tools as mcp_tools
 
 
 def create_mcp() -> FastMCP:
-    mcp = FastMCP(name="FIBA OCR Engine")
+    mcp = FastMCP(name="FIBA OCR Engine", auth=_auth_from_env())
 
-    @mcp.tool
-    def submit_scoresheet_from_path(
-        image_path: str,
-        run_id: str | None = None,
-        options: dict[str, Any] | None = None,
-    ) -> dict[str, Any]:
-        """Submit a scoresheet image path for async OCR processing and return a run id."""
-        return mcp_tools.submit_scoresheet_from_path(
-            _client(),
-            image_path,
-            run_id=run_id,
-            options=options,
-        )
+    if path_input_allowed():
+        # Reads a file path on the API host. Disabled in production (uploads/base64 only).
+        @mcp.tool
+        def submit_scoresheet_from_path(
+            image_path: str,
+            run_id: str | None = None,
+            options: dict[str, Any] | None = None,
+        ) -> dict[str, Any]:
+            """Submit a scoresheet image path for async OCR processing and return a run id."""
+            return mcp_tools.submit_scoresheet_from_path(
+                _client(),
+                image_path,
+                run_id=run_id,
+                options=options,
+            )
 
     @mcp.tool
     def submit_scoresheet_base64(
@@ -153,6 +156,28 @@ def create_mcp() -> FastMCP:
     return mcp
 
 
+def path_input_allowed() -> bool:
+    """Whether to expose `submit_scoresheet_from_path` (server-side file reads).
+
+    MCP_ALLOW_PATH_INPUT overrides; otherwise enabled except when OCR_ENV=production.
+    """
+    value = os.getenv("MCP_ALLOW_PATH_INPUT", "").strip().lower()
+    if value:
+        return value in {"1", "true", "yes", "on"}
+    return os.getenv("OCR_ENV", "development").strip().lower() != "production"
+
+
+def _auth_from_env() -> StaticTokenVerifier | None:
+    """Require `Authorization: Bearer <MCP_AUTH_TOKEN>` on HTTP transport when the env var is set.
+
+    Stdio transport ignores this. Leave MCP_AUTH_TOKEN unset for unauthenticated local use.
+    """
+    token = os.getenv("MCP_AUTH_TOKEN", "").strip()
+    if not token:
+        return None
+    return StaticTokenVerifier(tokens={token: {"client_id": "ocr-mcp-client", "scopes": []}})
+
+
 def _client() -> OcrApiClient:
     timeout = int(os.getenv("OCR_API_TIMEOUT_SECONDS", "300"))
     return OcrApiClient(timeout_seconds=timeout)
@@ -170,7 +195,7 @@ def run() -> None:
     transport = os.getenv("MCP_TRANSPORT", "stdio")
     if transport == "http":
         host = os.getenv("MCP_HOST", "127.0.0.1")
-        port = int(os.getenv("MCP_PORT", "8001"))
+        port = int(os.getenv("MCP_PORT") or os.getenv("PORT") or "8001")
         mcp.run(transport="http", host=host, port=port)
     else:
         mcp.run()

@@ -6,6 +6,7 @@ from ocr_engine_api.settings import get_api_settings
 
 
 RUN_PATH_KEYS = {
+    "runs_dir",
     "run_dir",
     "input_dir",
     "artifacts_dir",

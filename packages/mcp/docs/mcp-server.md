@@ -41,8 +41,22 @@ The repo-root `mcp_server.py` is a thin wrapper that delegates to `ocr_engine_mc
 
 ```bash
 MCP_TRANSPORT=http MCP_HOST=127.0.0.1 MCP_PORT=8001 \
-  python -m adapters.mcp.server
+  uv run ocr-mcp
 ```
+
+The streamable HTTP endpoint is `http://<host>:<port>/mcp`.
+
+### Bearer auth on HTTP transport
+
+Set `MCP_AUTH_TOKEN` to require `Authorization: Bearer <MCP_AUTH_TOKEN>` on every MCP HTTP request
+(unset = no auth, fine for loopback-only use). Stdio transport ignores it.
+
+## Run API + MCP as background services
+
+`scripts/serve.sh {start|stop|restart|status|urls}` runs `ocr-api` (127.0.0.1:8000) and `ocr-mcp`
+(127.0.0.1:8001/mcp) under a restart loop, in production mode, with one shared bearer token stored
+in `.server-token` (generated on first start, chmod 600, gitignored). Logs and PIDs go to `.server/`.
+`OCR_SERVE_TUNNEL=1` also starts Cloudflare quick tunnels (needs outbound port 7844).
 
 ## Tools and resources
 
@@ -58,3 +72,12 @@ MCP_TRANSPORT=http MCP_HOST=127.0.0.1 MCP_PORT=8001 \
 - Set `OCR_ENV=production` in the API so it ignores client `runs_dir` and enforces `OCR_RUNS_DIR`.
 - Use a long-lived `OCR_ENGINE_API_KEY` and share it with the MCP server via `OCR_API_KEY`.
 - Keep `OCR_RUNS_DIR` on a persistent volume so artifacts survive restarts.
+
+## Public deployment (Google Cloud Run)
+
+`scripts/deploy_cloudrun.sh` builds one image (`Dockerfile`) and deploys two services:
+`ocr-api` (REST, runs stored on a GCS bucket mounted at `/mnt/data`) and `ocr-mcp`
+(streamable HTTP at `/mcp`, stateless, calling `ocr-api`). Both require
+`Authorization: Bearer <token>`; the token lives in Secret Manager (`ocr-client-token`) and
+locally in `.cloud-token`. In production `submit_scoresheet_from_path` is not registered
+(`MCP_ALLOW_PATH_INPUT`), so clients must use `submit_scoresheet_base64`.

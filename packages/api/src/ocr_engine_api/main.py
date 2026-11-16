@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import os
 from pathlib import Path
 
 from fastapi import FastAPI, Request
@@ -8,6 +9,7 @@ from fastapi.responses import JSONResponse
 
 from ocr_engine_api.auth import is_auth_exempt, is_authorized, unauthorized_response
 from ocr_engine_api.auth_api_key import is_api_key_request, validate_api_key
+from ocr_engine_api.rate_limit import RunRateLimiter, client_key, is_run_creation, rate_limited_response
 from ocr_engine_api.routes import me, runs
 from ocr_engine_api.settings import get_api_settings
 from ocr_engine_core.utils.image_utils import load_dotenv
@@ -31,6 +33,12 @@ def create_app() -> FastAPI:
         )
 
     app.include_router(runs.router)
+    rate_limiter = RunRateLimiter(
+        settings.rate_limit_per_minute,
+        settings.rate_limit_per_day,
+        state_file=settings.rate_limit_state_file,
+    )
+    app.state.rate_limiter = rate_limiter
 
     if settings.has_supabase:
         app.include_router(me.router)
@@ -52,8 +60,16 @@ def create_app() -> FastAPI:
             return await call_next(request)
 
         # Fallback: static bearer key (development / legacy)
-        if not is_authorized(request.headers.get("authorization", ""), settings.api_key):
+        auth_header = request.headers.get("authorization", "")
+        if not is_authorized(auth_header, settings.api_key):
             return unauthorized_response()
+
+        if is_run_creation(request.method, request.url.path):
+            client_host = request.client.host if request.client else None
+            allowed, window, retry_after = rate_limiter.check(client_key(auth_header, client_host))
+            if not allowed:
+                limit = rate_limiter.per_minute if window == "minute" else rate_limiter.per_day
+                return rate_limited_response(window or "minute", retry_after, limit)
         return await call_next(request)
 
     @app.get("/health", tags=["health"])
@@ -105,4 +121,6 @@ def run() -> None:
     """Run the API app with uvicorn for the ocr-api console script."""
     import uvicorn
 
-    uvicorn.run("ocr_engine_api.main:app", host="0.0.0.0", port=8000, reload=False)
+    host = os.getenv("OCR_API_HOST", "0.0.0.0")
+    port = int(os.getenv("OCR_API_PORT") or os.getenv("PORT") or "8000")
+    uvicorn.run("ocr_engine_api.main:app", host=host, port=port, reload=False)

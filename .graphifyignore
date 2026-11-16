@@ -1,37 +1,65 @@
-# Dependencias Web / JavaScript
+# Generated dependencies, outputs, caches, and local agent state
+graphify-out/
+.git/
+.graphify-venv/
+.venv/
+venv/
 node_modules/
 dist/
 build/
 .next/
-
-# Entornos Python
-.venv/
-venv/
-env/
-__pycache__/
+coverage/
+logs/
 .pytest_cache/
-.env
+.ruff_cache/
+.mypy_cache/
+.engram/
+.claude/
+.codex/
+.agents/
+.devin/
+.pi/
+.vscode/
 
-# Imágenes crudas de FIBA para OCR (solo quieres mapear el código, no las fotos)
+# Local datasets and generated exports
 dataset/
 raw_images/
 test_scans/
 score_sheets_samples/
-
-# Carpetas de estado propias de las herramientas de IA
-graphify-out/
-.engram/
-.claude/
-.agents/
-.codex/
-
-# Archivos compilados o exportados
 *.pdf
 *.csv
-
-# Lockfiles / generated metadata too noisy for graph context
+requirements-graphify.lock
 uv.lock
 package-lock.json
 pnpm-lock.yaml
 yarn.lock
 *.tsbuildinfo
+
+# Secrets and credential stores
+.env*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+*.kdbx
+id_rsa
+id_dsa
+id_ecdsa
+id_ed25519
+credentials.json
+service-account*.json
+.npmrc
+.pypirc
+.netrc
+.aws/
+.ssh/
+.gnupg/
+.kube/
+.docker/
+.config/gcloud/
+.azure/
+.terraform/
+*.sqlite
+*.sqlite3
+*.db

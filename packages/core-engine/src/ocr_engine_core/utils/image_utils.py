@@ -58,32 +58,43 @@ def load_dotenv(path: Path) -> None:
 # API key resolution
 # ---------------------------------------------------------------------------
 
-INTERFAZE_API_KEY_ENV_NAMES = ("INTERFAZE_API_KEY", "INTERFAZE_KEY")
-GEMINI_API_KEY_ENV_NAMES = ("GEMINI_API_KEY", "GOOGLE_API_KEY")
-GLM_API_KEY_ENV_NAMES = ("GLM_API_KEY", "ZAI_API_KEY")
-DOCSTRANGE_API_KEY_ENV_NAMES = ("DOCSTRANGE_API_KEY",)
-QUBRID_API_KEY_ENV_NAMES = ("QUBRID_API_KEY",)
-OPENROUTER_API_KEY_ENV_NAMES = ("OPENROUTER_API_KEY",)
+# Single source of truth: provider name → candidate env var names (in priority
+# order). Both image utilities and PipelineConfig resolve keys through this.
+PROVIDER_API_KEY_ENV_NAMES: dict[str, tuple[str, ...]] = {
+    "interfaze": ("INTERFAZE_API_KEY", "INTERFAZE_KEY"),
+    "gemini": ("GOOGLE_API_KEY", "GEMINI_API_KEY", "GOOGLE_GENAI_API_KEY"),
+    "glm": ("GLM_API_KEY", "ZAI_API_KEY"),
+    "docstrange": ("DOCSTRANGE_API_KEY",),
+    "qubrid": ("QUBRID_API_KEY",),
+    "openrouter": ("OPENROUTER_API_KEY",),
+}
+
+# Provider used when an unknown detector name is given (matches legacy behavior).
+_DEFAULT_PROVIDER = "interfaze"
 
 
-def get_api_key(api_key_env: str | None, detector: str) -> str | None:
-    """Resolve an API key from environment variables."""
-    if api_key_env:
-        return os.environ.get(api_key_env)
-    if detector == "gemini":
-        names = GEMINI_API_KEY_ENV_NAMES
-    elif detector == "glm":
-        names = GLM_API_KEY_ENV_NAMES
-    elif detector == "docstrange":
-        names = DOCSTRANGE_API_KEY_ENV_NAMES
-    elif detector == "qubrid":
-        names = QUBRID_API_KEY_ENV_NAMES
-    elif detector == "openrouter":
-        names = OPENROUTER_API_KEY_ENV_NAMES
-    else:
-        names = INTERFAZE_API_KEY_ENV_NAMES
-    for name in names:
+def env_names_for_provider(provider: str) -> tuple[str, ...]:
+    """Candidate env var names for a provider (falls back to the default)."""
+    return PROVIDER_API_KEY_ENV_NAMES.get(
+        provider, PROVIDER_API_KEY_ENV_NAMES[_DEFAULT_PROVIDER]
+    )
+
+
+def resolve_provider_api_key(provider: str) -> str | None:
+    """Resolve a provider's API key from its candidate env vars."""
+    for name in env_names_for_provider(provider):
         value = os.environ.get(name)
         if value:
             return value
     return None
+
+
+def get_api_key(api_key_env: str | None, detector: str) -> str | None:
+    """Resolve an API key from environment variables.
+
+    If ``api_key_env`` is given it takes precedence; otherwise the provider's
+    canonical env var names are tried in order.
+    """
+    if api_key_env:
+        return os.environ.get(api_key_env)
+    return resolve_provider_api_key(detector)

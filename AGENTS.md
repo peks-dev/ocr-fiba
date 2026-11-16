@@ -202,50 +202,39 @@ These are the **only** SKILL.md files justified by repeated patterns (each appea
 | Database | `supabase/` | Versioned SQL migrations |
 
 
-## Graphify workflow
+## Graphify — required repository knowledge
 
-This repo treats Graphify as a **versioned agent-context artifact**, not just a local cache. The goal is for future agents to answer codebase questions from `graphify-out/` without rebuilding from scratch.
+Graphify `0.9.26` is required. Its project-scoped skill lives in
+`.agents/skills/graphify/`; canonical outputs are versioned in `graphify-out/`.
 
-### What to keep in git
+At the start of architecture, dependency, or impact work, use `graphify query`,
+`graphify path`, or `graphify explain`. Graphify is the initial map, not a
+replacement for checking source files.
 
-Track:
+After a logical unit that changes code, tests, scripts, or architecture docs:
 
-- `.graphifyignore` — corpus exclusions for graph generation.
-- `graphify-out/graph.json` — raw graph used by Graphify queries.
-- `graphify-out/GRAPH_REPORT.md` — human/agent-readable graph report.
-- `graphify-out/manifest.json` — file manifest used for incremental updates.
-- `graphify-out/graph.html` — optional interactive graph for manual inspection.
+1. Run the applicable tests and lint.
+2. Run `./scripts/graphify-update`.
+3. Run `./scripts/graphify-check`.
+4. Review the canonical Graphify diff.
 
-Do **not** track temporary/local Graphify state (`graphify-out/.graphify_*`, `cost.json`, generated Obsidian exports, cypher exports, temp chunks). `.gitignore` contains the exact ignore rules.
+Use `$graphify . --update` for semantic documentation changes. Do not edit
+`graphify-out/` manually or install Graphify Git hooks. Repository scripts never
+stage or commit files, and agents commit only with explicit user authorization.
+If the exact version is unavailable, run `./scripts/setup-graphify`.
 
-### Required process before commits that change code structure
+Version `graph.json`, `graph.html`, `GRAPH_REPORT.md`, and `manifest.json`.
+Ignore caches, local interpreter/root markers, internal labels, costs, locks,
+and backups.
 
-When a change adds/removes/renames modules, routes, components, public functions, or architecture-relevant docs:
+## Engram — memoria técnica compartida
 
-```bash
-graphify update .
-# then inspect and stage code + selected graphify artifacts together
-git add <changed files> .graphifyignore graphify-out/graph.json graphify-out/GRAPH_REPORT.md graphify-out/manifest.json graphify-out/graph.html
-```
-
-Commit the graph update **in the same commit as the code change** when it describes that change. For graph-only refreshes, use a separate commit such as:
-
-```text
-chore(repo): update graphify graph
-```
-
-### Hooks policy
-
-Do not use Graphify post-commit/post-checkout hooks in this repo. They run after the commit and leave generated artifacts dirty, which is the wrong timing for versioned graph outputs. Prefer explicit `graphify update .` before staging.
-
-If a local hook exists, remove it with:
-
-```bash
-graphify hook uninstall
-```
+- Engram solo está disponible al abrir este repositorio mediante su MCP local. Antes del primer guardado, ejecuta `mem_current_project` y confirma `ocr-engine`.
+- Guarda decisiones, bugs, configuraciones y descubrimientos técnicos; no guardes secretos ni memoria personal.
+- `.engram/` es una excepción explícita para Git Sync: versiona únicamente sus artefactos de sincronización y nunca `~/.engram/engram.db`.
 
 ## Out of scope (do not touch)
 
 - `runs/`, `outputs/`, `dataset/results/` — runtime artifacts, gitignored.
 - `.venv/`, `__pycache__/`, `.pytest_cache/`, `node_modules/`, `.next/` — build/cache artifacts.
-- `.engram/`, `.codex/`, `.devin/`, `.agents/` — local agent state, not part of the product.
+- `.codex/`, `.devin/`, `.agents/` — local agent state, not part of the product.

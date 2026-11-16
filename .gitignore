@@ -21,15 +21,34 @@ Thumbs.db
 outputs/
 runs/
 .devin/
-.engram/
+.codex/
+.agents/
+.pi/
+.mcp.json
+opencode.json
 dataset/
 dataset/results/
 
+# Engram: version project identity only
+.engram/*
+!.engram/config.json
+
 # Graphify (version selected graphify-out artifacts, ignore temp/local state)
+.graphify-venv/
 graphify-out/.graphify_*
 graphify-out/.needs_update
+graphify-out/needs_update
 graphify-out/cost.json
 graphify-out/obsidian/
 graphify-out/cache/
 graphify-out/cypher.txt
 graphify-out/*.tmp
+graphify-out/20??-??-??/
+
+# Local server state (scripts/serve.sh)
+.server/
+.server-token
+
+# Cloud Run deployment token (scripts/deploy_cloudrun.sh)
+.cloud-token
+.cloud-image

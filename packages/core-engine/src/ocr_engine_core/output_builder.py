@@ -79,10 +79,10 @@ def _reassign_periods_from_footer(
     quarter_scores_b = []
     for qn in quarter_names:
         q = quarters.get(qn, {})
-        qa = q.get("team_a") if isinstance(q, dict) else None
-        qb = q.get("team_b") if isinstance(q, dict) else None
+        qa = _coerce_int(q.get("team_a")) if isinstance(q, dict) else None
+        qb = _coerce_int(q.get("team_b")) if isinstance(q, dict) else None
         if qa is None or qb is None:
-            # Can't reassign without complete quarter data — leave periods as-is
+            # Can't reassign without complete (numeric) quarter data — leave periods as-is
             return progressive_score
         quarter_scores_a.append(qa)
         quarter_scores_b.append(qb)
@@ -106,7 +106,7 @@ def _reassign_periods_from_footer(
         # Reassign periods
         reassigned = []
         for e in events:
-            rs = e.get("running_score")
+            rs = _coerce_int(e.get("running_score"))
             new_event = dict(e)
 
             if rs is not None:
@@ -151,9 +151,9 @@ def _compute_points_from_running_score(
 
         for e in events:
             new_event = dict(e)
-            rs = e.get("running_score")
+            rs = _coerce_int(e.get("running_score"))
 
-            if rs is not None and isinstance(rs, (int, float)):
+            if rs is not None:
                 diff = rs - prev_rs
                 if 1 <= diff <= 3:
                     new_event["points"] = diff
@@ -165,6 +165,26 @@ def _compute_points_from_running_score(
         result[team_key] = computed
 
     return result
+
+
+def _coerce_int(value: Any) -> int | None:
+    """Coerce a score-like value to int, tolerating strings ('21') and floats.
+
+    OCR providers occasionally return numeric fields as strings. Returns None
+    when the value cannot be interpreted as a whole number, so callers can skip
+    arithmetic instead of crashing the whole run.
+    """
+    if isinstance(value, bool):
+        return None
+    if isinstance(value, int):
+        return value
+    if isinstance(value, float):
+        return int(value) if value.is_integer() else None
+    if isinstance(value, str):
+        text = value.strip()
+        if text.lstrip("-").isdigit():
+            return int(text)
+    return None
 
 
 def _normalize_strings_in_obj(obj: Any) -> Any:
@@ -381,29 +401,48 @@ def _normalize_personal_fouls(value: Any) -> list[str]:
     return normalized
 
 
+# Tokens that mean "no foul recorded" — shared by code and kind normalization.
+_EMPTY_FOUL_TOKENS = frozenset(
+    {"", "-", "empty", "vacia", "vacía", "none", "null", "illegible", "ilegible"}
+)
+
+# Human/provider spellings → canonical FIBA single-letter code. "AD"
+# (antideportiva) is the canonical code in the bundled schema (team.json) and
+# prompts, so both 'antideportiva' and 'anti-deportiva' map to it.
+_FOUL_ALIASES = {
+    "personal": "p",
+    "tecnica": "t",
+    "técnica": "t",
+    "unsportsmanlike": "u",
+    "antideportiva": "ad",
+    "anti-deportiva": "ad",
+    "disqualifying": "d",
+    "descalificante": "d",
+    "coach": "c",
+    "bench": "b",
+}
+
+# Canonical base codes (no free-throw suffix).
+_FOUL_BASE_CODES = frozenset({"p", "t", "u", "d", "c", "b", "ad"})
+
+
+def _foul_token(value: Any) -> str | None:
+    """Lowercase/strip a raw foul token and map aliases; None if it means empty."""
+    token = str(value).strip().lower().replace(" ", "").replace(".", "")
+    if token in _EMPTY_FOUL_TOKENS:
+        return None
+    return _FOUL_ALIASES.get(token, token)
+
+
 def _normalize_foul_code(value: Any) -> str | None:
     """Normalize one foul cell/list token, preserving FIBA code detail."""
     if value is None:
         return None
-
-    token = str(value).strip().lower().replace(" ", "").replace(".", "")
-    if token in {"", "-", "empty", "vacia", "vacía", "none", "null", "illegible", "ilegible"}:
+    token = _foul_token(value)
+    if token is None:
         return None
 
-    aliases = {
-        "personal": "p",
-        "tecnica": "t",
-        "técnica": "t",
-        "unsportsmanlike": "u",
-        "antideportiva": "u",
-        "anti-deportiva": "ad",
-        "disqualifying": "d",
-        "descalificante": "d",
-        "coach": "c",
-        "bench": "b",
-    }
-    token = aliases.get(token, token)
-
+    # Match longest-known prefixes first ("ad" before "a"-less single letters).
     allowed_prefixes = ("ad", "p", "t", "u", "d", "c", "b")
     prefix = next((candidate for candidate in allowed_prefixes if token.startswith(candidate)), None)
     if prefix is None:
@@ -419,23 +458,10 @@ def _normalize_foul_kind(value: Any) -> str | None:
     """Normalize a base foul kind from object-style foul_cells."""
     if value is None:
         return None
-    token = str(value).strip().lower().replace(" ", "").replace(".", "")
-    if token in {"", "-", "empty", "vacia", "vacía", "none", "null", "illegible", "ilegible"}:
+    token = _foul_token(value)
+    if token is None:
         return None
-    aliases = {
-        "personal": "p",
-        "tecnica": "t",
-        "técnica": "t",
-        "unsportsmanlike": "u",
-        "antideportiva": "ad",
-        "anti-deportiva": "ad",
-        "disqualifying": "d",
-        "descalificante": "d",
-        "coach": "c",
-        "bench": "b",
-    }
-    token = aliases.get(token, token)
-    if token in {"p", "t", "u", "d", "c", "b", "ad"}:
+    if token in _FOUL_BASE_CODES:
         return token
     return _normalize_foul_code(token)
 
