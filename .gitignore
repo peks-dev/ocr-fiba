@@ -44,3 +44,11 @@ graphify-out/cache/
 graphify-out/cypher.txt
 graphify-out/*.tmp
 graphify-out/20??-??-??/
+
+# Local server state (scripts/serve.sh)
+.server/
+.server-token
+
+# Cloud Run deployment token (scripts/deploy_cloudrun.sh)
+.cloud-token
+.cloud-image
