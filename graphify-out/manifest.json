@@ -60,8 +60,8 @@
     "semantic_hash": ""
   },
   "packages/api/src/ocr_engine_api/auth_api_key.py": {
-    "mtime": 1794783927.4825814,
-    "ast_hash": "b3b0dd395b847a6f8d528f09579e0f77",
+    "mtime": 1794802511.1837833,
+    "ast_hash": "a36de8bf9470cc1bbb531c8d35a39e8d",
     "semantic_hash": ""
   },
   "packages/api/src/ocr_engine_api/auth_supabase.py": {
@@ -720,8 +720,8 @@
     "semantic_hash": ""
   },
   "tests/test_auth.py": {
-    "mtime": 1794800958.1633947,
-    "ast_hash": "8fef0a296a7dc5e857ec21380351debe",
+    "mtime": 1794802522.1198707,
+    "ast_hash": "8a625d29fd66f224ae3baa02d62af356",
     "semantic_hash": ""
   },
   "tests/test_core_contracts.py": {
@@ -765,8 +765,8 @@
     "semantic_hash": ""
   },
   "packages/api/AGENTS.md": {
-    "mtime": 1794800982.259587,
-    "ast_hash": "532503635514bd9af8e56238aac97d5e",
+    "mtime": 1794802511.1837833,
+    "ast_hash": "1bcfcf7f5262c9d361c35444c97e90b0",
     "semantic_hash": ""
   },
   "packages/api/skills/api-error-envelope/SKILL.md": {
@@ -775,8 +775,8 @@
     "semantic_hash": ""
   },
   "packages/api/skills/api-key-auth/SKILL.md": {
-    "mtime": 1794800982.255587,
-    "ast_hash": "d282817d83961c230512ecaa5a45c972",
+    "mtime": 1794802511.1837833,
+    "ast_hash": "9cf54f4f64ece3e702059c8215099755",
     "semantic_hash": ""
   },
   "packages/cli/AGENTS.md": {
@@ -1055,8 +1055,8 @@
     "semantic_hash": ""
   },
   "tests/test_hardening.py": {
-    "mtime": 1794800958.1593947,
-    "ast_hash": "65d0364ca3eb789c8fa5bc3fcd1b7b9c",
+    "mtime": 1794802522.1198707,
+    "ast_hash": "91bece7892e4df242fe758c9cc13ad33",
     "semantic_hash": ""
   },
   "tests/test_phase1_robustness.py": {
