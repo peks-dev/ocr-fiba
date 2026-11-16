@@ -25,6 +25,14 @@ T = TypeVar("T")
 async def create_run(
     request: CreateRunRequest,
 ) -> dict:
+    from ocr_engine_api.settings import get_api_settings
+
+    if not get_api_settings().allow_path_input:
+        raise error_response(
+            403,
+            "PATH_INPUT_DISABLED",
+            "Server-side image paths are disabled on this deployment; use POST /v1/runs/upload",
+        )
     image_path = _resolve_input_file(request.image_path)
     runs_dir = resolve_runs_dir(request.runs_dir)
     context = RunContext.create_run(image_path, runs_dir, run_id=request.run_id)

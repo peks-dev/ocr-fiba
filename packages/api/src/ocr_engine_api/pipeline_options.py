@@ -13,7 +13,28 @@ from ocr_engine_core.config.pipeline_config import PipelineConfig, SectionOverri
 ALLOWED_UPLOAD_SUFFIXES = {".jpg", ".jpeg", ".png", ".webp"}
 
 
+def apply_server_defaults(options: PipelineOptions) -> PipelineOptions:
+    """Fill extractor provider/model from server env when the client did not set them.
+
+    Lets a deployment (e.g. without DOCSTRANGE_API_KEY) pick a working default extractor
+    via OCR_DEFAULT_EXTRACTOR_PROVIDER / OCR_DEFAULT_EXTRACTOR_MODEL.
+    """
+    from ocr_engine_api.settings import get_api_settings
+
+    settings = get_api_settings()
+    updates: dict[str, str] = {}
+    provider_set = "extractor_provider" in options.model_fields_set
+    if settings.default_extractor_provider and not provider_set:
+        updates["extractor_provider"] = settings.default_extractor_provider
+    if settings.default_extractor_model and not provider_set and "extractor_model" not in options.model_fields_set:
+        updates["extractor_model"] = settings.default_extractor_model
+    if not updates:
+        return options
+    return PipelineOptions.model_validate({**options.model_dump(exclude_unset=True), **updates})
+
+
 def build_config(options: PipelineOptions) -> PipelineConfig:
+    options = apply_server_defaults(options)
     section_overrides = {
         name: SectionOverride(
             provider=override.provider,

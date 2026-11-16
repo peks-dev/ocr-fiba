@@ -16,6 +16,12 @@ class ApiSettings:
     supabase_publishable_key: str
     supabase_jwt_secret: str
     cors_origins: tuple[str, ...]
+    allow_path_input: bool = True
+    rate_limit_per_minute: int = 0
+    rate_limit_per_day: int = 0
+    rate_limit_state_file: Path | None = None
+    default_extractor_provider: str | None = None
+    default_extractor_model: str | None = None
 
     @property
     def is_production(self) -> bool:
@@ -47,6 +53,14 @@ def get_api_settings() -> ApiSettings:
         ),
         supabase_jwt_secret=os.getenv("SUPABASE_JWT_SECRET", ""),
         cors_origins=parse_cors_origins(os.getenv("OCR_CORS_ORIGINS", "http://localhost:3000,http://127.0.0.1:3000")),
+        # Server-path image reads (POST /v1/runs {image_path}) are off by default in production.
+        allow_path_input=_env_bool("OCR_ALLOW_PATH_INPUT", default=env != "production"),
+        # Run-creation quotas per bearer token (0 = unlimited). Defaults only apply in production.
+        rate_limit_per_minute=int(os.getenv("OCR_RATE_LIMIT_PER_MINUTE", "3" if env == "production" else "0")),
+        rate_limit_per_day=int(os.getenv("OCR_RATE_LIMIT_PER_DAY", "50" if env == "production" else "0")),
+        rate_limit_state_file=Path(os.environ["OCR_RATE_LIMIT_STATE_FILE"]) if os.getenv("OCR_RATE_LIMIT_STATE_FILE") else None,
+        default_extractor_provider=os.getenv("OCR_DEFAULT_EXTRACTOR_PROVIDER") or None,
+        default_extractor_model=os.getenv("OCR_DEFAULT_EXTRACTOR_MODEL") or None,
     )
     validate_api_settings(settings)
     return settings
@@ -57,6 +71,8 @@ def validate_api_settings(settings: ApiSettings) -> None:
         raise RuntimeError("OCR_ENGINE_API_KEY is required when OCR_ENV=production")
     if settings.max_upload_mb < 1:
         raise RuntimeError("OCR_MAX_UPLOAD_MB must be at least 1")
+    if settings.rate_limit_per_minute < 0 or settings.rate_limit_per_day < 0:
+        raise RuntimeError("OCR_RATE_LIMIT_PER_MINUTE / OCR_RATE_LIMIT_PER_DAY must be >= 0")
 
 
 def resolve_runs_dir(requested_runs_dir: str | Path | None = None) -> Path:
@@ -69,3 +85,10 @@ def resolve_runs_dir(requested_runs_dir: str | Path | None = None) -> Path:
 def parse_cors_origins(value: str) -> tuple[str, ...]:
     """Parse comma-separated CORS origins from environment."""
     return tuple(origin.strip() for origin in value.split(",") if origin.strip())
+
+
+def _env_bool(name: str, *, default: bool) -> bool:
+    value = os.getenv(name)
+    if value is None or not value.strip():
+        return default
+    return value.strip().lower() in {"1", "true", "yes", "on"}

@@ -1,2477 +1,1087 @@
 {
-  ".devin/config.local.json": {
-    "mtime": 1779653864.7197015,
-    "ast_hash": "cfc94e277c9d144944e808577d1f227b",
-    "semantic_hash": ""
-  },
   "evaluation/__init__.py": {
-    "mtime": 1779786959.4026628,
+    "mtime": 1794783927.4745815,
     "ast_hash": "e902306745f29a3faa66f7d677ec8d1a",
     "semantic_hash": ""
   },
   "evaluation/evaluate_dataset.py": {
-    "mtime": 1779788552.598427,
+    "mtime": 1794783927.4745815,
     "ast_hash": "8d7d3b09ed835321342f43bcf22c15d3",
     "semantic_hash": ""
   },
   "evaluation/evaluate_entry_marks.py": {
-    "mtime": 1779787016.485007,
+    "mtime": 1794783927.4745815,
     "ast_hash": "2a36b6aea376ba1374c2d1521e22c8b9",
     "semantic_hash": ""
   },
   "evaluation/evaluate_header.py": {
-    "mtime": 1779787016.147011,
+    "mtime": 1794783927.4745815,
     "ast_hash": "a1c67a439697ee74c812f2769e1599dd",
     "semantic_hash": ""
   },
   "evaluation/evaluate_player_fouls.py": {
-    "mtime": 1779787016.6070056,
+    "mtime": 1794783927.4745815,
     "ast_hash": "8bc5ef9658932bed65233d7ed110d9a9",
     "semantic_hash": ""
   },
   "evaluation/evaluate_player_points.py": {
-    "mtime": 1779787016.2610097,
+    "mtime": 1794783927.4745815,
     "ast_hash": "58e9bf198ac2ed8978c167e201f6f813",
     "semantic_hash": ""
   },
   "evaluation/evaluate_progressive_score.py": {
-    "mtime": 1779787016.7190044,
+    "mtime": 1794783927.4745815,
     "ast_hash": "05f8e76fb311e62615fc8964cef16c62",
     "semantic_hash": ""
   },
   "evaluation/evaluate_team_identity.py": {
-    "mtime": 1779787016.3740084,
+    "mtime": 1794783927.4745815,
     "ast_hash": "e72708dc60684a255ff37f22a799e5ff",
     "semantic_hash": ""
   },
   "mcp_server.py": {
-    "mtime": 1780272331.2737608,
+    "mtime": 1794783927.4825814,
     "ast_hash": "b9f5bdfb07feff13eccbaa6a623a520e",
     "semantic_hash": ""
   },
-  "outputs/bad-vs-bufalos-recortada-sections-extracted.json": {
-    "mtime": 1779569835.0031455,
-    "ast_hash": "c2247000b7146a58d757aebe0e5dc177",
-    "semantic_hash": ""
-  },
-  "outputs/bad-vs-bufalos-recortada-sections/boxes.json": {
-    "mtime": 1779569801.0955262,
-    "ast_hash": "4382e7cc08c6f05b66db1c5df7c03b5d",
-    "semantic_hash": ""
-  },
-  "outputs/bad-vs-bufalos-recortada-sections/fouls_boxes.json": {
-    "mtime": 1779569812.269383,
-    "ast_hash": "b2297ace6d8bbdbe9f8bbc38e75ea5ec",
-    "semantic_hash": ""
-  },
-  "outputs/bad-vs-bufalos-sections/boxes.json": {
-    "mtime": 1779580241.8885205,
-    "ast_hash": "85fa4690b9b5b470db4dd61b314c0c2b",
-    "semantic_hash": ""
-  },
-  "outputs/bad-vs-bufalos-sections/fouls_boxes.json": {
-    "mtime": 1779580263.3455749,
-    "ast_hash": "bdd7c359b56538c7f7ffc72f35ab4a41",
-    "semantic_hash": ""
-  },
   "packages/api/src/ocr_engine_api/__init__.py": {
-    "mtime": 1780002688.7025669,
+    "mtime": 1794783927.4825814,
     "ast_hash": "9d7a0dbc5237012cfa53d03cae41bd33",
     "semantic_hash": ""
   },
   "packages/api/src/ocr_engine_api/api_keys.py": {
-    "mtime": 1781417601.5236342,
+    "mtime": 1794783927.4825814,
     "ast_hash": "dfcdf5367348cfaa3172b194d2ccdda5",
     "semantic_hash": ""
   },
   "packages/api/src/ocr_engine_api/auth.py": {
-    "mtime": 1780103285.9037187,
+    "mtime": 1794783927.4825814,
     "ast_hash": "bfc16d3f29843b3d61d14ea07bd14102",
     "semantic_hash": ""
   },
   "packages/api/src/ocr_engine_api/auth_api_key.py": {
-    "mtime": 1781417601.5236979,
+    "mtime": 1794783927.4825814,
     "ast_hash": "b3b0dd395b847a6f8d528f09579e0f77",
     "semantic_hash": ""
   },
   "packages/api/src/ocr_engine_api/auth_supabase.py": {
-    "mtime": 1781417601.5237727,
+    "mtime": 1794783927.4825814,
     "ast_hash": "e9e42c331ae2455bb98c3a013217b573",
     "semantic_hash": ""
   },
   "packages/api/src/ocr_engine_api/errors.py": {
-    "mtime": 1780272331.242933,
+    "mtime": 1794783927.4825814,
     "ast_hash": "2fe2690423f0a0259554675442875642",
     "semantic_hash": ""
   },
   "packages/api/src/ocr_engine_api/main.py": {
-    "mtime": 1781417601.5238693,
-    "ast_hash": "c26512116dd2610b560c9813f87abd12",
+    "mtime": 1794790297.477902,
+    "ast_hash": "aa249e3f60e88b6c732e8907a916033d",
     "semantic_hash": ""
   },
   "packages/api/src/ocr_engine_api/pipeline_options.py": {
-    "mtime": 1781417601.5239289,
-    "ast_hash": "f40d2a3660edcb76671f6ffbfc770a74",
+    "mtime": 1794790297.477902,
+    "ast_hash": "6a1e2297f176fdc18eb72e76b311e313",
     "semantic_hash": ""
   },
   "packages/api/src/ocr_engine_api/responses.py": {
-    "mtime": 1781417601.5240145,
-    "ast_hash": "7fd3cce91b9a64e2b95515466aeac82b",
+    "mtime": 1794790297.477902,
+    "ast_hash": "b054075313780386cce940ed8760a9fa",
     "semantic_hash": ""
   },
   "packages/api/src/ocr_engine_api/routes/__init__.py": {
-    "mtime": 1780002691.0555408,
+    "mtime": 1794783927.4825814,
     "ast_hash": "8c2836a538372ae4dc2be1cc7e783b0f",
     "semantic_hash": ""
   },
   "packages/api/src/ocr_engine_api/routes/me.py": {
-    "mtime": 1781417601.524094,
+    "mtime": 1794783927.4825814,
     "ast_hash": "79cb03213d133cb549f745aee45f57b6",
     "semantic_hash": ""
   },
   "packages/api/src/ocr_engine_api/routes/runs.py": {
-    "mtime": 1781417601.524186,
-    "ast_hash": "e3798a8a3893d8781c1d4d1cb0273205",
+    "mtime": 1794790297.477902,
+    "ast_hash": "90a322c4cc22261e493442aecd8aedef",
     "semantic_hash": ""
   },
   "packages/api/src/ocr_engine_api/schemas.py": {
-    "mtime": 1781417601.524269,
+    "mtime": 1794783927.4825814,
     "ast_hash": "c10f8c62999cb2b5817ec365a56ce669",
     "semantic_hash": ""
   },
   "packages/api/src/ocr_engine_api/services/__init__.py": {
-    "mtime": 1780099762.8122365,
+    "mtime": 1794783927.4825814,
     "ast_hash": "a0363c5cb1b9c73390eb8c96219b88ce",
     "semantic_hash": ""
   },
   "packages/api/src/ocr_engine_api/services/run_executor.py": {
-    "mtime": 1781417601.5243444,
+    "mtime": 1794783927.4825814,
     "ast_hash": "32812abc35e37aba442aee10019b7b98",
     "semantic_hash": ""
   },
   "packages/api/src/ocr_engine_api/services/run_repository.py": {
-    "mtime": 1781417601.5244532,
+    "mtime": 1794783927.4825814,
     "ast_hash": "b685c87ab761cd25f3c13e1101661364",
     "semantic_hash": ""
   },
   "packages/api/src/ocr_engine_api/settings.py": {
-    "mtime": 1781417601.5245404,
-    "ast_hash": "0ad3c96511021acd934edac77d32a92a",
+    "mtime": 1794790297.477902,
+    "ast_hash": "50a5fb40edc5e92250b82e9432cadb30",
     "semantic_hash": ""
   },
   "packages/api/src/ocr_engine_api/supabase_client.py": {
-    "mtime": 1781417601.524613,
+    "mtime": 1794783927.4825814,
     "ast_hash": "62aee32a7e69fc57bc21f2ba110a6d3b",
     "semantic_hash": ""
   },
   "packages/cli/src/ocr_engine_cli/__init__.py": {
-    "mtime": 1780272372.5125787,
+    "mtime": 1794783927.4825814,
     "ast_hash": "d41d8cd98f00b204e9800998ecf8427e",
     "semantic_hash": ""
   },
   "packages/cli/src/ocr_engine_cli/binarize_image.py": {
-    "mtime": 1779601330.2114365,
+    "mtime": 1794783927.4825814,
     "ast_hash": "dc19ce21b90fe97b228cfac9ab778228",
     "semantic_hash": ""
   },
   "packages/cli/src/ocr_engine_cli/cv_progressive_score.py": {
-    "mtime": 1779608063.4096365,
+    "mtime": 1794783927.4825814,
     "ast_hash": "01362f3053ef039d2656be4cde875bee",
     "semantic_hash": ""
   },
   "packages/cli/src/ocr_engine_cli/run_dataset.py": {
-    "mtime": 1780272391.9127204,
+    "mtime": 1794783927.4825814,
     "ast_hash": "5b41ba5d492321e4629f094bca573638",
     "semantic_hash": ""
   },
   "packages/cli/src/ocr_engine_cli/run_pipeline.py": {
-    "mtime": 1780272391.9116254,
+    "mtime": 1794783927.4825814,
     "ast_hash": "5a26663089b78fd689938fa6229cc248",
     "semantic_hash": ""
   },
   "packages/core-engine/src/ocr_engine_core/__init__.py": {
-    "mtime": 1779143263.7931817,
+    "mtime": 1794783927.4825814,
     "ast_hash": "d41d8cd98f00b204e9800998ecf8427e",
     "semantic_hash": ""
   },
   "packages/core-engine/src/ocr_engine_core/artifacts.py": {
-    "mtime": 1780272331.2448952,
+    "mtime": 1794783927.4825814,
     "ast_hash": "48799ff7b316eb40b61d7db19f01490b",
     "semantic_hash": ""
   },
   "packages/core-engine/src/ocr_engine_core/config/__init__.py": {
-    "mtime": 1779143263.7921815,
+    "mtime": 1794783927.4825814,
     "ast_hash": "d41d8cd98f00b204e9800998ecf8427e",
     "semantic_hash": ""
   },
   "packages/core-engine/src/ocr_engine_core/config/pipeline_config.py": {
-    "mtime": 1780272331.2596998,
-    "ast_hash": "4de8b7a79c199897bb123baf744228a4",
+    "mtime": 1794790297.4659019,
+    "ast_hash": "5bcb3f7b3bbe78cd2b8128032809310f",
     "semantic_hash": ""
   },
   "packages/core-engine/src/ocr_engine_core/cropper.py": {
-    "mtime": 1780272331.2453122,
-    "ast_hash": "4e35e3ccf9185c1f8fa4238e80d5b481",
+    "mtime": 1794790297.4659019,
+    "ast_hash": "e7f8f7aa4e68f425c3eb77e623405790",
     "semantic_hash": ""
   },
   "packages/core-engine/src/ocr_engine_core/enhancer.py": {
-    "mtime": 1779777260.076868,
+    "mtime": 1794783927.4825814,
     "ast_hash": "3fff04fe791bf9609eaf9eb81a159af2",
     "semantic_hash": ""
   },
   "packages/core-engine/src/ocr_engine_core/exceptions.py": {
-    "mtime": 1779390333.3773246,
+    "mtime": 1794783927.4825814,
     "ast_hash": "cb1a5fca714fcf106777ce4951f00a03",
     "semantic_hash": ""
   },
   "packages/core-engine/src/ocr_engine_core/extractor.py": {
-    "mtime": 1780272331.245994,
-    "ast_hash": "48c6e069d79b01907ea57d62a179ed76",
+    "mtime": 1794790297.4659019,
+    "ast_hash": "cb1526715e287040ddfe9ef32ea72fc7",
     "semantic_hash": ""
   },
   "packages/core-engine/src/ocr_engine_core/output_builder.py": {
-    "mtime": 1779771803.3626645,
-    "ast_hash": "7636e4c45c7d7d832032d55b5f62fb53",
+    "mtime": 1794790297.4659019,
+    "ast_hash": "9eff01b65021feaeba50fb790455e8b0",
     "semantic_hash": ""
   },
   "packages/core-engine/src/ocr_engine_core/pipeline.py": {
-    "mtime": 1780272331.2464962,
-    "ast_hash": "d38d38481473693a3c8243ad24cd4c32",
+    "mtime": 1794790297.4659019,
+    "ast_hash": "180bfc4f3f00026caeeb49fa4e6de918",
     "semantic_hash": ""
   },
   "packages/core-engine/src/ocr_engine_core/preprocessor.py": {
-    "mtime": 1780003416.9104524,
+    "mtime": 1794783927.4825814,
     "ast_hash": "dc45be5dbffdbad1c056c2adfb1efcbe",
     "semantic_hash": ""
   },
   "packages/core-engine/src/ocr_engine_core/prompts/__init__.py": {
-    "mtime": 1779143263.7941816,
+    "mtime": 1794783927.4825814,
     "ast_hash": "d41d8cd98f00b204e9800998ecf8427e",
     "semantic_hash": ""
   },
   "packages/core-engine/src/ocr_engine_core/prompts/cropping.py": {
-    "mtime": 1779166603.9662905,
+    "mtime": 1794783927.4825814,
     "ast_hash": "fbe7a40323d9ec91eaeb4d75f243d54c",
     "semantic_hash": ""
   },
   "packages/core-engine/src/ocr_engine_core/prompts/extraction.py": {
-    "mtime": 1779788371.9674914,
+    "mtime": 1794783927.4825814,
     "ast_hash": "531b9f2c650b2cd0668169f5e8f8fb60",
     "semantic_hash": ""
   },
   "packages/core-engine/src/ocr_engine_core/prompts/team_fouls_cropping.py": {
-    "mtime": 1779143374.0839343,
+    "mtime": 1794783927.4825814,
     "ast_hash": "29274019f8e6181970e2523e1589ac37",
     "semantic_hash": ""
   },
   "packages/core-engine/src/ocr_engine_core/providers/__init__.py": {
-    "mtime": 1779613379.3454208,
+    "mtime": 1794783927.4825814,
     "ast_hash": "4759053d706b5c59c07fe3ab811391a3",
     "semantic_hash": ""
   },
   "packages/core-engine/src/ocr_engine_core/providers/base.py": {
-    "mtime": 1779265377.5898488,
-    "ast_hash": "31171dbae02fe4a71da775ced6f8a152",
+    "mtime": 1794790297.4659019,
+    "ast_hash": "e6b95e2277bc6853f5d36637b795bdc2",
     "semantic_hash": ""
   },
   "packages/core-engine/src/ocr_engine_core/providers/docstrange.py": {
-    "mtime": 1780272331.2546017,
+    "mtime": 1794783927.4825814,
     "ast_hash": "178bea036c61ccea834b97b19820a8bb",
     "semantic_hash": ""
   },
   "packages/core-engine/src/ocr_engine_core/providers/gemini.py": {
-    "mtime": 1780272331.2492943,
-    "ast_hash": "9693acd80258cbe70f9e25d67a09df22",
+    "mtime": 1794790297.4659019,
+    "ast_hash": "2077cc977fb23993c0d7e3efa53fb140",
     "semantic_hash": ""
   },
   "packages/core-engine/src/ocr_engine_core/providers/glm.py": {
-    "mtime": 1780272331.2541268,
-    "ast_hash": "9bd4f449e985182f68735047f59cec02",
+    "mtime": 1794790297.4659019,
+    "ast_hash": "58492c305fe80edaddc2b46b59964117",
     "semantic_hash": ""
   },
   "packages/core-engine/src/ocr_engine_core/providers/interfaze.py": {
-    "mtime": 1780272331.2489772,
-    "ast_hash": "07990a24506a1f0aef1d85703dc78933",
+    "mtime": 1794790297.4659019,
+    "ast_hash": "eaa881ad8f4ae79261a442ae58fa4048",
     "semantic_hash": ""
   },
   "packages/core-engine/src/ocr_engine_core/providers/openrouter.py": {
-    "mtime": 1780272331.2590744,
-    "ast_hash": "83d9d3cecb80d9efdb1d0c365e35503f",
+    "mtime": 1794790297.4659019,
+    "ast_hash": "1bc7fe6e2a395541b2ac897cd0c52e69",
     "semantic_hash": ""
   },
   "packages/core-engine/src/ocr_engine_core/providers/qubrid.py": {
-    "mtime": 1780272331.2550046,
-    "ast_hash": "08417a48380a2d7aed2cbaa036d3713a",
+    "mtime": 1794790297.4659019,
+    "ast_hash": "1e4076c7d3342b99ce49abac29a2dd3e",
     "semantic_hash": ""
   },
   "packages/core-engine/src/ocr_engine_core/resources/schemas/__init__.py": {
-    "mtime": 1779143514.2993484,
+    "mtime": 1794783927.4825814,
     "ast_hash": "c375881222ff536290c1251507e5fd71",
     "semantic_hash": ""
   },
   "packages/core-engine/src/ocr_engine_core/resources/schemas/cropping.json": {
-    "mtime": 1779143320.606539,
+    "mtime": 1794783927.4825814,
     "ast_hash": "77effc2215799b38831258063b5f7e8f",
     "semantic_hash": ""
   },
   "packages/core-engine/src/ocr_engine_core/resources/schemas/footer.json": {
-    "mtime": 1779143337.1273522,
+    "mtime": 1794783927.4825814,
     "ast_hash": "fdafaca320ecfcd9b172f8f1c75a54fa",
     "semantic_hash": ""
   },
   "packages/core-engine/src/ocr_engine_core/resources/schemas/header.json": {
-    "mtime": 1779776179.215856,
+    "mtime": 1794783927.4825814,
     "ast_hash": "641445b54ff3a20facce129b856250d5",
     "semantic_hash": ""
   },
   "packages/core-engine/src/ocr_engine_core/resources/schemas/progressive_score.json": {
-    "mtime": 1779777597.1488934,
+    "mtime": 1794783927.4825814,
     "ast_hash": "afe03f2d9e4e2d27a15a4ddac81a15f9",
     "semantic_hash": ""
   },
   "packages/core-engine/src/ocr_engine_core/resources/schemas/team.json": {
-    "mtime": 1779788190.7005622,
+    "mtime": 1794783927.4825814,
     "ast_hash": "ee63ff05de3b8c04f3a99027e1817f09",
     "semantic_hash": ""
   },
   "packages/core-engine/src/ocr_engine_core/resources/schemas/team_fouls.json": {
-    "mtime": 1779757457.7295775,
+    "mtime": 1794783927.4825814,
     "ast_hash": "b64bb233f22364211aff4f4eb9dab9b6",
     "semantic_hash": ""
   },
   "packages/core-engine/src/ocr_engine_core/resources/schemas/team_fouls_cropping.json": {
-    "mtime": 1779143320.611539,
+    "mtime": 1794783927.4825814,
     "ast_hash": "8e224b66f1ec488e17a3f795e0edf335",
     "semantic_hash": ""
   },
   "packages/core-engine/src/ocr_engine_core/toolbox.py": {
-    "mtime": 1780272331.2482045,
+    "mtime": 1794783927.4825814,
     "ast_hash": "9858d8cf21d065f2aef96cd1c644c022",
     "semantic_hash": ""
   },
   "packages/core-engine/src/ocr_engine_core/tracing.py": {
-    "mtime": 1780272331.248457,
+    "mtime": 1794783927.4825814,
     "ast_hash": "4aee46cd8130d443dd5025807fd61c6f",
     "semantic_hash": ""
   },
   "packages/core-engine/src/ocr_engine_core/types.py": {
-    "mtime": 1780001699.1754777,
+    "mtime": 1794783927.4825814,
     "ast_hash": "8ade5c22652e94c263d4ac9f21cbae79",
     "semantic_hash": ""
   },
   "packages/core-engine/src/ocr_engine_core/utils/__init__.py": {
-    "mtime": 1779168180.0520687,
+    "mtime": 1794783927.4825814,
     "ast_hash": "89f455abd245bd4cefef233f3c5055e9",
     "semantic_hash": ""
   },
   "packages/core-engine/src/ocr_engine_core/utils/footer_markdown_parser.py": {
-    "mtime": 1779168221.1646829,
+    "mtime": 1794783927.4825814,
     "ast_hash": "122382350f2e0b46021fb2260692046c",
     "semantic_hash": ""
   },
   "packages/core-engine/src/ocr_engine_core/utils/image_utils.py": {
-    "mtime": 1779265377.9148448,
-    "ast_hash": "546339e0d91253f3ef08e3d101078536",
+    "mtime": 1794790297.4659019,
+    "ast_hash": "81529770a7ea44b10f93d0f27d55f521",
     "semantic_hash": ""
   },
   "packages/core-engine/src/ocr_engine_core/utils/team_markdown_parser.py": {
-    "mtime": 1779749389.062094,
+    "mtime": 1794783927.4825814,
     "ast_hash": "1d5a337baf17923d1e8cb42cb6afabe8",
     "semantic_hash": ""
   },
   "packages/core-engine/src/ocr_engine_core/validation/__init__.py": {
-    "mtime": 1780272331.2592967,
+    "mtime": 1794783927.4825814,
     "ast_hash": "a8fb2b5392eb3cb5c889051dbebeb6a6",
     "semantic_hash": ""
   },
   "packages/core-engine/src/ocr_engine_core/validation/base.py": {
-    "mtime": 1779179021.9560132,
-    "ast_hash": "2d85bca092a3ca7e3166039b76df72b2",
+    "mtime": 1794790297.4659019,
+    "ast_hash": "82ac0c76aca1f8ef4280a1557fee8d2f",
     "semantic_hash": ""
   },
   "packages/core-engine/src/ocr_engine_core/validation/engine.py": {
-    "mtime": 1779179058.3495822,
+    "mtime": 1794783927.4825814,
     "ast_hash": "f11d8c9fd10995619fb15dc20e4927aa",
     "semantic_hash": ""
   },
   "packages/core-engine/src/ocr_engine_core/validation/plugins/__init__.py": {
-    "mtime": 1779653902.6362944,
+    "mtime": 1794783927.4825814,
     "ast_hash": "d35f88c5d316bb765f7bb30c9ecd3bb1",
     "semantic_hash": ""
   },
   "packages/core-engine/src/ocr_engine_core/validation/plugins/core.py": {
-    "mtime": 1779657243.441418,
+    "mtime": 1794783927.4825814,
     "ast_hash": "0f23006965062b2af7990c1ab4ab3d39",
     "semantic_hash": ""
   },
   "packages/core-engine/src/ocr_engine_core/validation/plugins/fiba_rules.py": {
-    "mtime": 1779179106.2220154,
+    "mtime": 1794783927.4825814,
     "ast_hash": "7b67696a8f8fbd26cf33c76db998f30d",
     "semantic_hash": ""
   },
   "packages/core-engine/src/ocr_engine_core/validation/plugins/referee.py": {
-    "mtime": 1779179121.1578383,
+    "mtime": 1794783927.4825814,
     "ast_hash": "2e59b637ab8565e91835277584046c69",
     "semantic_hash": ""
   },
   "packages/core-engine/src/ocr_engine_core/validation/registry.py": {
-    "mtime": 1779179045.7167318,
+    "mtime": 1794783927.4825814,
     "ast_hash": "115a6c7eede638cd39721bcae89ec7b4",
     "semantic_hash": ""
   },
   "packages/mcp/src/ocr_engine_mcp/__init__.py": {
-    "mtime": 1780100379.5518982,
+    "mtime": 1794783927.4825814,
     "ast_hash": "1ee54df17b09767d168f13acc7e13cf9",
     "semantic_hash": ""
   },
   "packages/mcp/src/ocr_engine_mcp/client.py": {
-    "mtime": 1781417601.5251675,
+    "mtime": 1794783927.4825814,
     "ast_hash": "d33e3399d91f4948fa8921ab636e2739",
     "semantic_hash": ""
   },
   "packages/mcp/src/ocr_engine_mcp/server.py": {
-    "mtime": 1781417601.5252886,
-    "ast_hash": "5ca8f803dc0455a2e9b1f10ea6e4f16a",
+    "mtime": 1794790297.477902,
+    "ast_hash": "9dac53c02327cd95f838a5f009c3bae9",
     "semantic_hash": ""
   },
   "packages/mcp/src/ocr_engine_mcp/tools.py": {
-    "mtime": 1781417601.5252886,
+    "mtime": 1794783927.4865816,
     "ast_hash": "414494a8457e379d926d8f740d823a0f",
     "semantic_hash": ""
   },
   "packages/web/eslint.config.mjs": {
-    "mtime": 1781417601.5259166,
+    "mtime": 1794783927.4865816,
     "ast_hash": "da1bb85063fb340a5a2a4e4fe03310ed",
     "semantic_hash": ""
   },
   "packages/web/middleware.ts": {
-    "mtime": 1781417601.5259848,
+    "mtime": 1794783927.4865816,
     "ast_hash": "e9509922deed0096049c1ed95871792b",
     "semantic_hash": ""
   },
-  "packages/web/next-env.d.ts": {
-    "mtime": 1780359879.608922,
-    "ast_hash": "a64595e6014adce3002d3bf762d2dbeb",
-    "semantic_hash": ""
-  },
   "packages/web/next.config.ts": {
-    "mtime": 1781944802.8840616,
+    "mtime": 1794783927.4865816,
     "ast_hash": "9b77af189a21a7a64e4bd7a426f64176",
     "semantic_hash": ""
   },
   "packages/web/package.json": {
-    "mtime": 1781417601.526635,
+    "mtime": 1794783927.4865816,
     "ast_hash": "e56006a347855f3b7c0ab5f1f1e373a2",
     "semantic_hash": ""
   },
   "packages/web/postcss.config.mjs": {
-    "mtime": 1781417601.526635,
+    "mtime": 1794783927.4865816,
     "ast_hash": "239f3ebf717465dc636818a1a619398d",
     "semantic_hash": ""
   },
   "packages/web/src/app/api/league/submissions/route.ts": {
-    "mtime": 1781417601.5273852,
+    "mtime": 1794783927.4865816,
     "ast_hash": "9513e7ed9507f1b2cf72b084cdc68058",
     "semantic_hash": ""
   },
   "packages/web/src/app/docs/layout.tsx": {
-    "mtime": 1781989443.2363474,
+    "mtime": 1794783927.4865816,
     "ast_hash": "ee94e8ae0efa0a4d579fa67865171890",
     "semantic_hash": ""
   },
   "packages/web/src/app/docs/quickstart/page.tsx": {
-    "mtime": 1781989464.662886,
+    "mtime": 1794783927.4865816,
     "ast_hash": "ddb11ce4578d47cfd1225bd9fee05164",
     "semantic_hash": ""
   },
   "packages/web/src/app/layout.tsx": {
-    "mtime": 1781989464.6627972,
+    "mtime": 1794783927.4865816,
     "ast_hash": "d52d4c20ee14928578effefc39388cf9",
     "semantic_hash": ""
   },
   "packages/web/src/app/login/page.tsx": {
-    "mtime": 1781942892.7170115,
+    "mtime": 1794783927.4865816,
     "ast_hash": "5372a45b10fd8dacb53c511fa72ccb48",
     "semantic_hash": ""
   },
   "packages/web/src/app/page.tsx": {
-    "mtime": 1781942686.6348474,
+    "mtime": 1794783927.4865816,
     "ast_hash": "9a15186d164889ccbd81696c87f8d4dd",
     "semantic_hash": ""
   },
   "packages/web/src/components/api-keys-panel.tsx": {
-    "mtime": 1781417601.5311604,
+    "mtime": 1794783927.4865816,
     "ast_hash": "85c080093d6e86ed7fdd2f05af12873c",
     "semantic_hash": ""
   },
   "packages/web/src/components/app-toaster.tsx": {
-    "mtime": 1781417601.5313232,
+    "mtime": 1794783927.4865816,
     "ast_hash": "dcda89abe69f3e3c979758867a7df331",
     "semantic_hash": ""
   },
   "packages/web/src/components/auth-card.tsx": {
-    "mtime": 1781945109.5254283,
+    "mtime": 1794783927.4865816,
     "ast_hash": "ea91954219674ca972fb714008efcee8",
     "semantic_hash": ""
   },
   "packages/web/src/components/club-demo/capture-client.tsx": {
-    "mtime": 1781989579.7527885,
+    "mtime": 1794783927.4865816,
     "ast_hash": "ef19795315bfc9da7c5c48b4125a5445",
     "semantic_hash": ""
   },
   "packages/web/src/components/club-demo/demo-tabs.tsx": {
-    "mtime": 1781989443.3172414,
+    "mtime": 1794783927.4865816,
     "ast_hash": "97492da646c27da393e3d7eeedaa0150",
     "semantic_hash": ""
   },
   "packages/web/src/components/club-demo/name-match.ts": {
-    "mtime": 1781566822.427901,
+    "mtime": 1794783927.4865816,
     "ast_hash": "dd9a6c700a8be1354b3517596f9ac67d",
     "semantic_hash": ""
   },
   "packages/web/src/components/club-demo/overview-client.tsx": {
-    "mtime": 1781989579.7522008,
+    "mtime": 1794783927.4865816,
     "ast_hash": "5e243d717146a824e1dce919a7a91bdc",
     "semantic_hash": ""
   },
   "packages/web/src/components/club-demo/players-client.tsx": {
-    "mtime": 1781989443.3193078,
+    "mtime": 1794783927.4865816,
     "ast_hash": "debf13c8b115f35a0e1d47a9bd799951",
     "semantic_hash": ""
   },
   "packages/web/src/components/club-demo/result-utils.ts": {
-    "mtime": 1781566822.4280877,
+    "mtime": 1794783927.4865816,
     "ast_hash": "ba35ce5a41fa588dd6a8b893cc2d3497",
     "semantic_hash": ""
   },
   "packages/web/src/components/club-demo/roster-client.tsx": {
-    "mtime": 1781566822.4280877,
+    "mtime": 1794783927.4865816,
     "ast_hash": "4b183ea60b8f4a4cc99023c49a1885dc",
     "semantic_hash": ""
   },
   "packages/web/src/components/club-demo/storage.ts": {
-    "mtime": 1781566822.4280877,
+    "mtime": 1794783927.4865816,
     "ast_hash": "48b28c70ee5154d12f2aff6fdd3196f2",
     "semantic_hash": ""
   },
   "packages/web/src/components/club-demo/types.ts": {
-    "mtime": 1781566822.4281154,
+    "mtime": 1794783927.4865816,
     "ast_hash": "376a2a5ff2dd2c39c3549f582079eaee",
     "semantic_hash": ""
   },
   "packages/web/src/components/club-demo/ui.tsx": {
-    "mtime": 1781566822.4286091,
+    "mtime": 1794783927.4865816,
     "ast_hash": "5d5baf8020ce79063c84f3af7aafda35",
     "semantic_hash": ""
   },
   "packages/web/src/components/nav.tsx": {
-    "mtime": 1781989443.2646632,
+    "mtime": 1794783927.4865816,
     "ast_hash": "74a6f295b832665a4d78731f1b4ab40a",
     "semantic_hash": ""
   },
   "packages/web/src/components/referee-demo/capture-client.tsx": {
-    "mtime": 1781989443.2657175,
+    "mtime": 1794783927.4865816,
     "ast_hash": "f99e56850b60dc150b7b26b4c3004cce",
     "semantic_hash": ""
   },
   "packages/web/src/components/referee-demo/demo-tabs.tsx": {
-    "mtime": 1781989443.266239,
+    "mtime": 1794783927.4865816,
     "ast_hash": "5bd2c9b293db2f7699a50cfe8d9f20fc",
     "semantic_hash": ""
   },
   "packages/web/src/components/referee-demo/draft.ts": {
-    "mtime": 1781417601.5319412,
+    "mtime": 1794783927.4865816,
     "ast_hash": "e7b214efb0c4bc17c8ba79eabd4e7748",
     "semantic_hash": ""
   },
   "packages/web/src/components/referee-demo/league-client.tsx": {
-    "mtime": 1781417601.5319412,
+    "mtime": 1794783927.4865816,
     "ast_hash": "a8da0f8dcef5b90666e51a0e449e7e34",
     "semantic_hash": ""
   },
   "packages/web/src/components/referee-demo/league-store.ts": {
-    "mtime": 1781417601.5319412,
+    "mtime": 1794783927.4865816,
     "ast_hash": "265f760f7e4539328d3f8521c8165ef6",
     "semantic_hash": ""
   },
   "packages/web/src/components/referee-demo/plugins.ts": {
-    "mtime": 1781417601.5319412,
+    "mtime": 1794783927.4865816,
     "ast_hash": "b5a801f9ee033a5f3e2d6c9e0b2f8c8f",
     "semantic_hash": ""
   },
   "packages/web/src/components/referee-demo/reconcile-client.tsx": {
-    "mtime": 1781989443.2663636,
+    "mtime": 1794783927.4865816,
     "ast_hash": "b0467b3c1fb8c9b2555ca5066f6a7414",
     "semantic_hash": ""
   },
   "packages/web/src/components/referee-demo/reconcile-sections.tsx": {
-    "mtime": 1781417601.5323775,
+    "mtime": 1794783927.4865816,
     "ast_hash": "62b35cc74562221176c3af020befd124",
     "semantic_hash": ""
   },
   "packages/web/src/components/referee-demo/reconcile-utils.ts": {
-    "mtime": 1781417601.5323775,
+    "mtime": 1794783927.4865816,
     "ast_hash": "f18766fc2b1e46df93a3cb06b8d99b98",
     "semantic_hash": ""
   },
   "packages/web/src/components/referee-demo/sections.ts": {
-    "mtime": 1781417601.5323775,
+    "mtime": 1794783927.4865816,
     "ast_hash": "730dfe3806be172f96af21ac9bb0a749",
     "semantic_hash": ""
   },
   "packages/web/src/components/referee-demo/submit-client.tsx": {
-    "mtime": 1781989443.2666655,
+    "mtime": 1794783927.4865816,
     "ast_hash": "5f3be4720fabf5a2255bb1e2508ab85b",
     "semantic_hash": ""
   },
   "packages/web/src/components/referee-demo/types.ts": {
-    "mtime": 1781417601.5323775,
+    "mtime": 1794783927.4865816,
     "ast_hash": "cf003a6bd8d4bcf0c4c36a138c041d18",
     "semantic_hash": ""
   },
   "packages/web/src/components/referee-demo/ui.tsx": {
-    "mtime": 1781417601.5326114,
+    "mtime": 1794783927.4865816,
     "ast_hash": "3c80a4df7b0d9553b61d3797d1788db8",
     "semantic_hash": ""
   },
   "packages/web/src/components/referee-demo/validation.ts": {
-    "mtime": 1781417601.5326114,
+    "mtime": 1794783927.4865816,
     "ast_hash": "fffe78303abb930dfd1191e091e7dc68",
     "semantic_hash": ""
   },
   "packages/web/src/components/single-player-demo/capture-client.tsx": {
-    "mtime": 1781931671.6762774,
+    "mtime": 1794783927.4865816,
     "ast_hash": "c4c7da6dcda85e322c303238cf5dabed",
     "semantic_hash": ""
   },
   "packages/web/src/components/single-player-demo/demo-tabs.tsx": {
-    "mtime": 1781989443.3162196,
+    "mtime": 1794783927.4865816,
     "ast_hash": "98a64eb5770515a949f7a1801802f630",
     "semantic_hash": ""
   },
   "packages/web/src/components/single-player-demo/history-client.tsx": {
-    "mtime": 1781989443.3164408,
+    "mtime": 1794783927.4865816,
     "ast_hash": "79a6b8dc49389e839f55c17a26bd4f66",
     "semantic_hash": ""
   },
   "packages/web/src/components/single-player-demo/progress-client.tsx": {
-    "mtime": 1781989443.3166792,
+    "mtime": 1794783927.4865816,
     "ast_hash": "b0c62adbd7e23de2fc301b6ee850bbe8",
     "semantic_hash": ""
   },
   "packages/web/src/components/single-player-demo/result-utils.ts": {
-    "mtime": 1781417601.5333796,
+    "mtime": 1794783927.4865816,
     "ast_hash": "72a8a343b587f6dad992b4434805e11f",
     "semantic_hash": ""
   },
   "packages/web/src/components/single-player-demo/stats-utils.ts": {
-    "mtime": 1781417601.5333796,
+    "mtime": 1794783927.4865816,
     "ast_hash": "34330a45f772f0ffb0f470dd7d8f9b34",
     "semantic_hash": ""
   },
   "packages/web/src/components/single-player-demo/storage.ts": {
-    "mtime": 1781417601.5333796,
+    "mtime": 1794783927.4865816,
     "ast_hash": "d433b40739dd7fafc97acf2d162d8f70",
     "semantic_hash": ""
   },
   "packages/web/src/components/single-player-demo/types.ts": {
-    "mtime": 1781417601.5333796,
+    "mtime": 1794783927.4865816,
     "ast_hash": "9a7b24adc9683f626bc5999b3af993e2",
     "semantic_hash": ""
   },
   "packages/web/src/components/single-player-demo/ui.tsx": {
-    "mtime": 1781417601.5333796,
+    "mtime": 1794783927.4865816,
     "ast_hash": "76ba7919869b6d62e8af7f77e014d129",
     "semantic_hash": ""
   },
   "packages/web/src/lib/api.ts": {
-    "mtime": 1781987155.1187334,
+    "mtime": 1794783927.4865816,
     "ast_hash": "dc3db8384d48dae119fcb1521d40d2df",
     "semantic_hash": ""
   },
   "packages/web/src/lib/env.ts": {
-    "mtime": 1781417601.5336115,
+    "mtime": 1794783927.4865816,
     "ast_hash": "76264ba12d14bee0a9740d7c60eecda9",
     "semantic_hash": ""
   },
   "packages/web/src/lib/supabase/client.ts": {
-    "mtime": 1781417601.5336115,
+    "mtime": 1794783927.4865816,
     "ast_hash": "4ed2ae3e72a5b4f25db04525578e144e",
     "semantic_hash": ""
   },
   "packages/web/src/lib/supabase/middleware.ts": {
-    "mtime": 1781989464.6626122,
+    "mtime": 1794783927.4865816,
     "ast_hash": "fee12f74a0babedb96b12f6ba0717de2",
     "semantic_hash": ""
   },
   "packages/web/src/lib/supabase/server.ts": {
-    "mtime": 1781417601.5341737,
+    "mtime": 1794783927.4865816,
     "ast_hash": "3feba3da2f17ff75f1f21b6bb5f9cae6",
     "semantic_hash": ""
   },
   "packages/web/tsconfig.json": {
-    "mtime": 1781417601.5341737,
+    "mtime": 1794783927.4865816,
     "ast_hash": "4c20b373a3a6e74bd9825bb4e97fe052",
     "semantic_hash": ""
   },
-  "runs/run_20260601_232157_bc4d6de8/artifacts/boxes.json": {
-    "mtime": 1780377725.1121812,
-    "ast_hash": "a7082f3ecbe3cd9856a5674c549f9825",
-    "semantic_hash": ""
-  },
-  "runs/run_20260601_232157_bc4d6de8/artifacts/fouls_boxes.json": {
-    "mtime": 1780377737.057557,
-    "ast_hash": "55996a6c8c31fa3f30abe53dba21ef73",
-    "semantic_hash": ""
-  },
-  "runs/run_20260601_232157_bc4d6de8/result.json": {
-    "mtime": 1780377760.7075565,
-    "ast_hash": "aa8afaea614229254aa86d1fc8babc76",
-    "semantic_hash": ""
-  },
-  "runs/run_20260601_232157_bc4d6de8/status.json": {
-    "mtime": 1780377760.7085621,
-    "ast_hash": "6421b6563551e320de1167036b1390b5",
-    "semantic_hash": ""
-  },
-  "runs/run_20260601_232157_bc4d6de8/trace.json": {
-    "mtime": 1780377760.7082307,
-    "ast_hash": "93e8c2ebc522b8b9f99de545d5bf05ee",
-    "semantic_hash": ""
-  },
-  "runs/run_20260608_144615_ed8e88b8/artifacts/boxes.json": {
-    "mtime": 1780951585.8845994,
-    "ast_hash": "fbe4dbfadc47a39edf487b5201e87c36",
-    "semantic_hash": ""
-  },
-  "runs/run_20260608_144615_ed8e88b8/artifacts/fouls_boxes.json": {
-    "mtime": 1780951604.0149179,
-    "ast_hash": "33e867ccb162a24ff76450ffd6ced941",
-    "semantic_hash": ""
-  },
-  "runs/run_20260608_144615_ed8e88b8/result.json": {
-    "mtime": 1780951629.6480045,
-    "ast_hash": "2457f0948931cb779904994304f7ccca",
-    "semantic_hash": ""
-  },
-  "runs/run_20260608_144615_ed8e88b8/status.json": {
-    "mtime": 1780951629.648836,
-    "ast_hash": "df4c948bb6aa85d1b57eed1c3a2632f9",
-    "semantic_hash": ""
-  },
-  "runs/run_20260608_144615_ed8e88b8/trace.json": {
-    "mtime": 1780951629.6486335,
-    "ast_hash": "a6dabfc51d846fe67680f66e8c6aa1bd",
-    "semantic_hash": ""
-  },
-  "runs/run_20260610_020346_9338c04e/artifacts/boxes.json": {
-    "mtime": 1781078636.6325924,
-    "ast_hash": "418ae4029155ecbe3b1b87980d718630",
-    "semantic_hash": ""
-  },
-  "runs/run_20260610_020346_9338c04e/artifacts/fouls_boxes.json": {
-    "mtime": 1781078651.276862,
-    "ast_hash": "7a3448bb2d544743f93e9af580d4645f",
-    "semantic_hash": ""
-  },
-  "runs/run_20260610_020346_9338c04e/result.json": {
-    "mtime": 1781078677.0195045,
-    "ast_hash": "1e417d308eb4de5ca3b6c069f50ef71d",
-    "semantic_hash": ""
-  },
-  "runs/run_20260610_020346_9338c04e/status.json": {
-    "mtime": 1781078677.0205548,
-    "ast_hash": "1d9f28814898d8dcb95d78d348b08146",
-    "semantic_hash": ""
-  },
-  "runs/run_20260610_020346_9338c04e/trace.json": {
-    "mtime": 1781078677.0201764,
-    "ast_hash": "c647145d19c622df2cd60084c65a51c5",
-    "semantic_hash": ""
-  },
-  "runs/run_20260610_022812_92c0d9f9/artifacts/boxes.json": {
-    "mtime": 1781080112.787296,
-    "ast_hash": "b0a6ad57ed59b100007e979f2dda0a73",
-    "semantic_hash": ""
-  },
-  "runs/run_20260610_022812_92c0d9f9/artifacts/fouls_boxes.json": {
-    "mtime": 1781080124.51993,
-    "ast_hash": "8f030a3bceb6cbd95b6dc859796e4e24",
-    "semantic_hash": ""
-  },
-  "runs/run_20260610_022812_92c0d9f9/result.json": {
-    "mtime": 1781080149.5361464,
-    "ast_hash": "c3a18835e1f362862458f2bea82b191c",
-    "semantic_hash": ""
-  },
-  "runs/run_20260610_022812_92c0d9f9/status.json": {
-    "mtime": 1781080149.5379505,
-    "ast_hash": "7965c0f025f5c893274576bae5d850b1",
-    "semantic_hash": ""
-  },
-  "runs/run_20260610_022812_92c0d9f9/trace.json": {
-    "mtime": 1781080149.5372882,
-    "ast_hash": "841ff5fc131ec43f60beda13485fa741",
-    "semantic_hash": ""
-  },
-  "runs/run_20260612_131333_a88c0edf/artifacts/boxes.json": {
-    "mtime": 1781291623.1317408,
-    "ast_hash": "8d2638c9defcee8709adb2a508dd8f73",
-    "semantic_hash": ""
-  },
-  "runs/run_20260612_131333_a88c0edf/artifacts/fouls_boxes.json": {
-    "mtime": 1781291633.6802068,
-    "ast_hash": "ad2212ff128ba76a6cfd50e5062b592e",
-    "semantic_hash": ""
-  },
-  "runs/run_20260612_131333_a88c0edf/result.json": {
-    "mtime": 1781291656.1682398,
-    "ast_hash": "f0935f13c8ee25220e282e135b89d6b4",
-    "semantic_hash": ""
-  },
-  "runs/run_20260612_131333_a88c0edf/status.json": {
-    "mtime": 1781291656.1719496,
-    "ast_hash": "7c3b90efd2fc1bc5f62c4751dc645093",
-    "semantic_hash": ""
-  },
-  "runs/run_20260612_131333_a88c0edf/trace.json": {
-    "mtime": 1781291656.1707184,
-    "ast_hash": "a6b50c2f6e407ad16c1b3c2e64196ddc",
-    "semantic_hash": ""
-  },
-  "runs/run_20260612_144130_161b2471/artifacts/boxes.json": {
-    "mtime": 1781296902.7547348,
-    "ast_hash": "235c05507eee08a9218aee94eb941bb6",
-    "semantic_hash": ""
-  },
-  "runs/run_20260612_144130_161b2471/artifacts/fouls_boxes.json": {
-    "mtime": 1781296913.097914,
-    "ast_hash": "db32ed60f7db3bdd3724a7c5d77ebef6",
-    "semantic_hash": ""
-  },
-  "runs/run_20260612_144130_161b2471/result.json": {
-    "mtime": 1781296937.6077707,
-    "ast_hash": "e0c355f2b38c3389c423d59e1159ea1a",
-    "semantic_hash": ""
-  },
-  "runs/run_20260612_144130_161b2471/status.json": {
-    "mtime": 1781296937.611064,
-    "ast_hash": "1e81637495f084fef371e35f3341f2a8",
-    "semantic_hash": ""
-  },
-  "runs/run_20260612_144130_161b2471/trace.json": {
-    "mtime": 1781296937.609963,
-    "ast_hash": "03786be3a5fc811367349e90c5dcf2a2",
-    "semantic_hash": ""
-  },
-  "runs/run_20260613_035604_53c9f351/artifacts/boxes.json": {
-    "mtime": 1781344571.8372586,
-    "ast_hash": "38230c5fd51a331c3d80360b03f1d755",
-    "semantic_hash": ""
-  },
-  "runs/run_20260613_035604_53c9f351/artifacts/fouls_boxes.json": {
-    "mtime": 1781344582.636733,
-    "ast_hash": "671298a1f931e6aa665a9ca8c2c824d8",
-    "semantic_hash": ""
-  },
-  "runs/run_20260613_035604_53c9f351/result.json": {
-    "mtime": 1781344603.619057,
-    "ast_hash": "85b84c37c4f31119f61b73e9c6a4693a",
-    "semantic_hash": ""
-  },
-  "runs/run_20260613_035604_53c9f351/status.json": {
-    "mtime": 1781344603.6199708,
-    "ast_hash": "db6e6361d4c58f9b2ec2071a35f676f6",
-    "semantic_hash": ""
-  },
-  "runs/run_20260613_035604_53c9f351/trace.json": {
-    "mtime": 1781344603.6196833,
-    "ast_hash": "3c01776b499155928d5a830b780f173b",
-    "semantic_hash": ""
-  },
-  "runs/run_20260613_152748_afe449de/artifacts/boxes.json": {
-    "mtime": 1781386075.8581576,
-    "ast_hash": "90e0af128ee78a945bee45cfc57450e6",
-    "semantic_hash": ""
-  },
-  "runs/run_20260613_152748_afe449de/artifacts/fouls_boxes.json": {
-    "mtime": 1781386086.3005571,
-    "ast_hash": "bf94250e279da7534e77a2e4a1b2112c",
-    "semantic_hash": ""
-  },
-  "runs/run_20260613_152748_afe449de/result.json": {
-    "mtime": 1781386107.4614758,
-    "ast_hash": "f3e12ea4447f34ecf192040f4824855a",
-    "semantic_hash": ""
-  },
-  "runs/run_20260613_152748_afe449de/status.json": {
-    "mtime": 1781386107.462426,
-    "ast_hash": "a362c6e75cb4fe7a36f90ca67eef92a1",
-    "semantic_hash": ""
-  },
-  "runs/run_20260613_152748_afe449de/trace.json": {
-    "mtime": 1781386107.4621027,
-    "ast_hash": "77b40b2f8382b3ad64f1a8648065be15",
-    "semantic_hash": ""
-  },
-  "runs/run_20260613_170256_d767c331/artifacts/boxes.json": {
-    "mtime": 1781391783.5600975,
-    "ast_hash": "aec030bb8fa6f86cc954337e3acd5631",
-    "semantic_hash": ""
-  },
-  "runs/run_20260613_170256_d767c331/artifacts/fouls_boxes.json": {
-    "mtime": 1781391793.2962232,
-    "ast_hash": "fb46b636c13edebc45b7196c9351763c",
-    "semantic_hash": ""
-  },
-  "runs/run_20260613_170256_d767c331/result.json": {
-    "mtime": 1781391817.7013948,
-    "ast_hash": "da5974820841af65e399c7d2afbd9ffd",
-    "semantic_hash": ""
-  },
-  "runs/run_20260613_170256_d767c331/status.json": {
-    "mtime": 1781391817.7024252,
-    "ast_hash": "f045559e7dbf20c3b4b3f3e6bf868851",
-    "semantic_hash": ""
-  },
-  "runs/run_20260613_170256_d767c331/trace.json": {
-    "mtime": 1781391817.702022,
-    "ast_hash": "66d37ac54e18749b429cc5700c232890",
-    "semantic_hash": ""
-  },
-  "runs/run_20260614_185113_634bf349/artifacts/boxes.json": {
-    "mtime": 1781484681.066706,
-    "ast_hash": "96ee67e833e9616aedda67bcd3625aab",
-    "semantic_hash": ""
-  },
-  "runs/run_20260614_185113_634bf349/artifacts/fouls_boxes.json": {
-    "mtime": 1781484688.7056096,
-    "ast_hash": "0c00a732f92d88991f0cb18c9f11b5dc",
-    "semantic_hash": ""
-  },
-  "runs/run_20260614_185113_634bf349/result.json": {
-    "mtime": 1781484705.7903924,
-    "ast_hash": "d7ef98845983881d6d0e88263d5726ee",
-    "semantic_hash": ""
-  },
-  "runs/run_20260614_185113_634bf349/status.json": {
-    "mtime": 1781484705.791427,
-    "ast_hash": "be551cb36c5c5e174ef4c3ec0a65ded8",
-    "semantic_hash": ""
-  },
-  "runs/run_20260614_185113_634bf349/trace.json": {
-    "mtime": 1781484705.7910695,
-    "ast_hash": "f649d1fdd96746378b93b06a2925d3e9",
-    "semantic_hash": ""
-  },
-  "runs/run_20260615_125644_ada6372e/artifacts/boxes.json": {
-    "mtime": 1781549811.949693,
-    "ast_hash": "9287a3a7dd5f97339e13030681ef9771",
-    "semantic_hash": ""
-  },
-  "runs/run_20260615_125644_ada6372e/artifacts/fouls_boxes.json": {
-    "mtime": 1781549822.139725,
-    "ast_hash": "a916567135ab4ca41507c9fbedd5696a",
-    "semantic_hash": ""
-  },
-  "runs/run_20260615_125644_ada6372e/result.json": {
-    "mtime": 1781549846.5956457,
-    "ast_hash": "dcfa42e2a4f31c80d44015cab76acf10",
-    "semantic_hash": ""
-  },
-  "runs/run_20260615_125644_ada6372e/status.json": {
-    "mtime": 1781549846.59659,
-    "ast_hash": "0cfec6d8ff088e1bbee98d727c0ea6b1",
-    "semantic_hash": ""
-  },
-  "runs/run_20260615_125644_ada6372e/trace.json": {
-    "mtime": 1781549846.5962489,
-    "ast_hash": "043be08af0556cbb44c3b18cf265df85",
-    "semantic_hash": ""
-  },
-  "runs/smoke_20260529_060437/trace.json": {
-    "mtime": 1780034685.3417702,
-    "ast_hash": "e4ccd533dee07156d48ba4e17bda5a81",
-    "semantic_hash": ""
-  },
-  "runs/smoke_20260529_060616/artifacts/boxes.json": {
-    "mtime": 1780034784.197208,
-    "ast_hash": "94fb74a1f16959e635b59a39a5d56e63",
-    "semantic_hash": ""
-  },
-  "runs/smoke_20260529_060616/artifacts/fouls_boxes.json": {
-    "mtime": 1780034794.264549,
-    "ast_hash": "b9a05d5b76a8c67a73fdfe31bdfbfa78",
-    "semantic_hash": ""
-  },
-  "runs/smoke_20260529_060616/result.json": {
-    "mtime": 1780034817.8159559,
-    "ast_hash": "0f24cfbf56dcd7920ad41d7931b9bee0",
-    "semantic_hash": ""
-  },
-  "runs/smoke_20260529_060616/trace.json": {
-    "mtime": 1780034817.8165298,
-    "ast_hash": "5eac53345bb7b0976b69cdad783a07cc",
-    "semantic_hash": ""
-  },
-  "runs/smoke_20260529_065610/artifacts/boxes.json": {
-    "mtime": 1780037778.3824863,
-    "ast_hash": "47dd3dc504e3e317d02f3a57bf2bd01f",
-    "semantic_hash": ""
-  },
-  "runs/smoke_20260529_065610/artifacts/fouls_boxes.json": {
-    "mtime": 1780037789.0367887,
-    "ast_hash": "93887d17d4756c3d9c0484a47003abc2",
-    "semantic_hash": ""
-  },
-  "runs/smoke_20260529_065610/result.json": {
-    "mtime": 1780037811.3800597,
-    "ast_hash": "68d3cb63e725e51a83b7aba0f56f8668",
-    "semantic_hash": ""
-  },
-  "runs/smoke_20260529_065610/trace.json": {
-    "mtime": 1780037811.3810582,
-    "ast_hash": "3fc59f5f92c1a5ef737579d2a854ff36",
-    "semantic_hash": ""
-  },
-  "runs/smoke_api_upload_sheet002_20260601/artifacts/boxes.json": {
-    "mtime": 1780277142.6826448,
-    "ast_hash": "ec0e48e731477442ab6159982da308fc",
-    "semantic_hash": ""
-  },
-  "runs/smoke_api_upload_sheet002_20260601/artifacts/fouls_boxes.json": {
-    "mtime": 1780277154.9381695,
-    "ast_hash": "35c328fc0cba451ece378d5dfeca318c",
-    "semantic_hash": ""
-  },
-  "runs/smoke_api_upload_sheet002_20260601/result.json": {
-    "mtime": 1780277182.3916867,
-    "ast_hash": "30f72d2ef87354158c2e02b14358f899",
-    "semantic_hash": ""
-  },
-  "runs/smoke_api_upload_sheet002_20260601/trace.json": {
-    "mtime": 1780277182.3927064,
-    "ast_hash": "6402a3924e8e8ef57de507b3f0b8673f",
-    "semantic_hash": ""
-  },
-  "runs/smoke_async_mcp_real_20260601/artifacts/boxes.json": {
-    "mtime": 1780308438.266167,
-    "ast_hash": "f6e5c64f8e4dd0173f3dcbf0fa23c774",
-    "semantic_hash": ""
-  },
-  "runs/smoke_async_mcp_real_20260601/artifacts/fouls_boxes.json": {
-    "mtime": 1780308500.537429,
-    "ast_hash": "96954909dcb93355137c0b382290b0f7",
-    "semantic_hash": ""
-  },
-  "runs/smoke_async_mcp_real_20260601/result.json": {
-    "mtime": 1780308559.1752045,
-    "ast_hash": "2e3fe1831eb13626f3105dd3c78540ea",
-    "semantic_hash": ""
-  },
-  "runs/smoke_async_mcp_real_20260601/status.json": {
-    "mtime": 1780308559.1763916,
-    "ast_hash": "e2e614c588887e8a918bdbed9afe7fd3",
-    "semantic_hash": ""
-  },
-  "runs/smoke_async_mcp_real_20260601/trace.json": {
-    "mtime": 1780308559.1759155,
-    "ast_hash": "674c9f1c3b59ca1539a41c991f24d63b",
-    "semantic_hash": ""
-  },
-  "runs/smoke_async_real_20260601/status.json": {
-    "mtime": 1780305393.5259974,
-    "ast_hash": "5ff6e20a29aa6dbbdff9b8791c0ec8a6",
-    "semantic_hash": ""
-  },
-  "runs/smoke_async_real_20260601_v2/artifacts/boxes.json": {
-    "mtime": 1780305494.3427544,
-    "ast_hash": "4463efd9046ec77ff565ad9af45d8383",
-    "semantic_hash": ""
-  },
-  "runs/smoke_async_real_20260601_v2/artifacts/fouls_boxes.json": {
-    "mtime": 1780305517.4469314,
-    "ast_hash": "da5c4f678b7e79fe5bbd5f2f1ad41603",
-    "semantic_hash": ""
-  },
-  "runs/smoke_async_real_20260601_v2/result.json": {
-    "mtime": 1780305539.6416779,
-    "ast_hash": "4bb50ef1f741c51a60f79eaf77c0eefa",
-    "semantic_hash": ""
-  },
-  "runs/smoke_async_real_20260601_v2/status.json": {
-    "mtime": 1780305539.642646,
-    "ast_hash": "3b7a31e1916c623cee470fb4a032489f",
-    "semantic_hash": ""
-  },
-  "runs/smoke_async_real_20260601_v2/trace.json": {
-    "mtime": 1780305539.6422749,
-    "ast_hash": "822e584a45f5157fbd746abf6236768c",
-    "semantic_hash": ""
-  },
-  "runs/smoke_async_real_20260601_v3/artifacts/boxes.json": {
-    "mtime": 1780305893.0769012,
-    "ast_hash": "51a1b7990c2a685bb1e678923ed35e66",
-    "semantic_hash": ""
-  },
-  "runs/smoke_async_real_20260601_v3/artifacts/fouls_boxes.json": {
-    "mtime": 1780305903.2352848,
-    "ast_hash": "52c5963c74e50bd80295ba452aaac76f",
-    "semantic_hash": ""
-  },
-  "runs/smoke_async_real_20260601_v3/result.json": {
-    "mtime": 1780305925.9564717,
-    "ast_hash": "cff6f9bf8b3735109db1658b91c78c4b",
-    "semantic_hash": ""
-  },
-  "runs/smoke_async_real_20260601_v3/status.json": {
-    "mtime": 1780305925.9577966,
-    "ast_hash": "5638f28e74e88f93513ee8e80963addd",
-    "semantic_hash": ""
-  },
-  "runs/smoke_async_real_20260601_v3/trace.json": {
-    "mtime": 1780305925.9573562,
-    "ast_hash": "ba808be118680cb2b3f3a07ceb047aba",
-    "semantic_hash": ""
-  },
-  "runs/smoke_real_reorg_20260601/artifacts/boxes.json": {
-    "mtime": 1780276331.8493805,
-    "ast_hash": "eb43c0362acc6a74cdc0298cbe62b420",
-    "semantic_hash": ""
-  },
-  "runs/smoke_real_reorg_20260601/artifacts/fouls_boxes.json": {
-    "mtime": 1780276343.302688,
-    "ast_hash": "1e3055ef65542952a2f17b45db6e7349",
-    "semantic_hash": ""
-  },
-  "runs/smoke_real_reorg_20260601/result.json": {
-    "mtime": 1780276369.4976947,
-    "ast_hash": "68f5919e9063f2e5dd59bbd6d5e410b1",
-    "semantic_hash": ""
-  },
-  "runs/smoke_real_reorg_20260601/trace.json": {
-    "mtime": 1780276369.4992175,
-    "ast_hash": "6bbf1f7814d584485aec65b0549a45da",
-    "semantic_hash": ""
-  },
-  "runs/web_key_smoke_api/artifacts/boxes.json": {
-    "mtime": 1780376851.8610437,
-    "ast_hash": "69364a83a226a01a306f75091262cc30",
-    "semantic_hash": ""
-  },
-  "runs/web_key_smoke_api/artifacts/fouls_boxes.json": {
-    "mtime": 1780376862.452281,
-    "ast_hash": "bd209f8e42a99574c44a2619576d5817",
-    "semantic_hash": ""
-  },
-  "runs/web_key_smoke_api/result.json": {
-    "mtime": 1780376981.2751853,
-    "ast_hash": "38d89b919b10d60bce47675877af5c71",
-    "semantic_hash": ""
-  },
-  "runs/web_key_smoke_api/status.json": {
-    "mtime": 1780376981.2762485,
-    "ast_hash": "dcff6d2ad8b3b296a8247b0b98caad19",
-    "semantic_hash": ""
-  },
-  "runs/web_key_smoke_api/trace.json": {
-    "mtime": 1780376981.2758124,
-    "ast_hash": "64a6170c7f45306b7b2812280e12f436",
-    "semantic_hash": ""
-  },
   "scripts/smoke_async_api.py": {
-    "mtime": 1781417601.5341737,
+    "mtime": 1794783927.4865816,
     "ast_hash": "8e4dca5bc9f3725f7add7815ec880aac",
     "semantic_hash": ""
   },
   "scripts/smoke_async_mcp.py": {
-    "mtime": 1781417601.5341737,
+    "mtime": 1794783927.4865816,
     "ast_hash": "24c0b0ae3d6f1efacae6ebd9f7d0ba81",
     "semantic_hash": ""
   },
   "supabase/migrations/20260601193535_create_accounts.sql": {
-    "mtime": 1781417601.5346653,
+    "mtime": 1794783927.4865816,
     "ast_hash": "ca747512030c67e9cfc6920c73c8f9d5",
     "semantic_hash": ""
   },
   "supabase/migrations/20260601193543_create_api_keys.sql": {
-    "mtime": 1781417601.5347528,
+    "mtime": 1794783927.4865816,
     "ast_hash": "7096c6203f4c42c7bd4820affe18d244",
     "semantic_hash": ""
   },
   "supabase/migrations/20260601193547_create_auth_user_trigger.sql": {
-    "mtime": 1781417601.5347528,
+    "mtime": 1794783927.4865816,
     "ast_hash": "5fe68f9a592d11da2836445aec5a8213",
     "semantic_hash": ""
   },
   "supabase/migrations/20260601195502_secure_handle_new_user.sql": {
-    "mtime": 1781417601.5347528,
+    "mtime": 1794783927.4865816,
     "ast_hash": "26441e3b1bc18e110560cbdacdba130c",
     "semantic_hash": ""
   },
   "supabase/migrations/20260601195515_revoke_public_execute_handle_new_user.sql": {
-    "mtime": 1781417601.5347528,
+    "mtime": 1794783927.4905815,
     "ast_hash": "3493d89410c344e9e834f40cc21c8512",
     "semantic_hash": ""
   },
   "tests/test_api.py": {
-    "mtime": 1781417601.5347528,
+    "mtime": 1794783927.4905815,
     "ast_hash": "8969f5a0d664878ae495cf8532b38c6a",
     "semantic_hash": ""
   },
   "tests/test_auth.py": {
-    "mtime": 1781417601.5347528,
+    "mtime": 1794783927.4905815,
     "ast_hash": "56d5c355b0202a01ad50ea732f9a1024",
     "semantic_hash": ""
   },
   "tests/test_core_contracts.py": {
-    "mtime": 1780272331.261605,
+    "mtime": 1794783927.4905815,
     "ast_hash": "5e787badedd869542cc8e097416fc1d8",
     "semantic_hash": ""
   },
   "tests/test_grid_removal.py": {
-    "mtime": 1780272546.599,
+    "mtime": 1794783927.4905815,
     "ast_hash": "b168a3691332669cc441d4950120ebb5",
     "semantic_hash": ""
   },
   "tests/test_mcp_client.py": {
-    "mtime": 1781417601.5347528,
+    "mtime": 1794783927.4905815,
     "ast_hash": "e3a81740d0006a710e96783bfffb7f03",
     "semantic_hash": ""
   },
   "tests/test_run_repository.py": {
-    "mtime": 1781417601.5347528,
+    "mtime": 1794783927.4905815,
     "ast_hash": "bd041795286603cc40b4ac490fa96c55",
     "semantic_hash": ""
   },
   "tests/test_toolbox.py": {
-    "mtime": 1780272331.2724555,
+    "mtime": 1794783927.4905815,
     "ast_hash": "fc2f515243ce9ca61f282de433042e53",
     "semantic_hash": ""
   },
   "AGENTS.md": {
-    "mtime": 1781989579.7517853,
-    "ast_hash": "1f091aa0eb90e4f8251328b9bd515ee8",
+    "mtime": 1794790297.4659019,
+    "ast_hash": "d0b2e89d88c25dbdc9389b5dae254954",
     "semantic_hash": ""
   },
   "README.md": {
-    "mtime": 1781989589.963448,
+    "mtime": 1794783927.4745815,
     "ast_hash": "f45302a65221a4ed1bc7c4d57ae71b17",
     "semantic_hash": ""
   },
   "evaluation/README.md": {
-    "mtime": 1779788559.2913504,
+    "mtime": 1794783927.4745815,
     "ast_hash": "1b6f401fcd3e2e1f97bdfa2499fa1b34",
     "semantic_hash": ""
   },
   "packages/api/AGENTS.md": {
-    "mtime": 1781417601.523253,
+    "mtime": 1794783927.4825814,
     "ast_hash": "40b8be7b7c095c9e37d8dfc36a28f601",
     "semantic_hash": ""
   },
   "packages/api/skills/api-error-envelope/SKILL.md": {
-    "mtime": 1781417601.5234156,
+    "mtime": 1794783927.4825814,
     "ast_hash": "f04518a26687d07ec97003af65c86268",
     "semantic_hash": ""
   },
   "packages/api/skills/api-key-auth/SKILL.md": {
-    "mtime": 1781417601.5235019,
+    "mtime": 1794783927.4825814,
     "ast_hash": "21d59e7deec6903a02057ccedff1c904",
     "semantic_hash": ""
   },
   "packages/cli/AGENTS.md": {
-    "mtime": 1781417601.524679,
+    "mtime": 1794783927.4825814,
     "ast_hash": "6976edf1e7b389d38b1a47ad463257f3",
     "semantic_hash": ""
   },
   "packages/core-engine/AGENTS.md": {
-    "mtime": 1781417601.524749,
+    "mtime": 1794783927.4825814,
     "ast_hash": "80e8ae6e99029f1aab9f541df4e498d5",
     "semantic_hash": ""
   },
   "packages/core-engine/skills/ocr-run-lifecycle/SKILL.md": {
-    "mtime": 1781417601.524802,
+    "mtime": 1794783927.4825814,
     "ast_hash": "021d9c17513ad925ce6540acaadc2a38",
     "semantic_hash": ""
   },
   "packages/mcp/AGENTS.md": {
-    "mtime": 1781417601.5249264,
+    "mtime": 1794783927.4825814,
     "ast_hash": "d177bee75ff7a86039ace440824dd48f",
     "semantic_hash": ""
   },
   "packages/mcp/docs/mcp-server.md": {
-    "mtime": 1781417601.5249782,
-    "ast_hash": "24a9dee08ec3823bf73d6972d7715e21",
+    "mtime": 1794790297.477902,
+    "ast_hash": "f68ea28386f4c647c514be162a950d99",
     "semantic_hash": ""
   },
   "packages/web/AGENTS.md": {
-    "mtime": 1781989579.7514756,
+    "mtime": 1794783927.4865816,
     "ast_hash": "7c60833bcfdf53d075711adb512e425d",
     "semantic_hash": ""
   },
   "packages/web/README.md": {
-    "mtime": 1781417601.5258446,
+    "mtime": 1794783927.4865816,
     "ast_hash": "f15aaa42d5d299d091b1171097ea56ad",
     "semantic_hash": ""
   },
-  "outputs/Panteras-vs-mambas-recortada.jpg": {
-    "mtime": 1779578872.7963176,
-    "ast_hash": "98846063815b26560126c81c81aa2cb3",
-    "semantic_hash": ""
-  },
-  "outputs/bad-vs-bufalos-recortada-sections/footer.png": {
-    "mtime": 1779569801.093815,
-    "ast_hash": "42654274bfea86e8c684a92822d71573",
-    "semantic_hash": ""
-  },
-  "outputs/bad-vs-bufalos-recortada-sections/header.png": {
-    "mtime": 1779569800.933606,
-    "ast_hash": "4b05fdeeee64c7d12d25fec55e358a67",
-    "semantic_hash": ""
-  },
-  "outputs/bad-vs-bufalos-recortada-sections/progressive_score.png": {
-    "mtime": 1779569801.076543,
-    "ast_hash": "c891aa3d3dee956ed0a1d8b107c58010",
-    "semantic_hash": ""
-  },
-  "outputs/bad-vs-bufalos-recortada-sections/team_a.png": {
-    "mtime": 1779569800.974335,
-    "ast_hash": "5459937146dc223d79f8c642fbf28724",
-    "semantic_hash": ""
-  },
-  "outputs/bad-vs-bufalos-recortada-sections/team_a_fouls.png": {
-    "mtime": 1779569806.571437,
-    "ast_hash": "993aa9953d4c7ef9b4765685929803ec",
-    "semantic_hash": ""
-  },
-  "outputs/bad-vs-bufalos-recortada-sections/team_b.png": {
-    "mtime": 1779569801.0131142,
-    "ast_hash": "5593fc63fd4fd02a8085664b6aeca1b4",
-    "semantic_hash": ""
-  },
-  "outputs/bad-vs-bufalos-recortada-sections/team_b_fouls.png": {
-    "mtime": 1779569812.2691271,
-    "ast_hash": "ec7bb2f20add91d28284652305b1fb6e",
-    "semantic_hash": ""
-  },
-  "outputs/bad-vs-bufalos-recortada.jpg": {
-    "mtime": 1779580235.3615165,
-    "ast_hash": "9fa6d1f63cc3a63b9d68203f1f68724b",
-    "semantic_hash": ""
-  },
-  "outputs/bad-vs-bufalos-sections/footer.png": {
-    "mtime": 1779580241.8879786,
-    "ast_hash": "42654274bfea86e8c684a92822d71573",
-    "semantic_hash": ""
-  },
-  "outputs/bad-vs-bufalos-sections/header.png": {
-    "mtime": 1779580241.753447,
-    "ast_hash": "4b05fdeeee64c7d12d25fec55e358a67",
-    "semantic_hash": ""
-  },
-  "outputs/bad-vs-bufalos-sections/progressive_score.png": {
-    "mtime": 1779580241.872918,
-    "ast_hash": "c891aa3d3dee956ed0a1d8b107c58010",
-    "semantic_hash": ""
-  },
-  "outputs/bad-vs-bufalos-sections/team_a.png": {
-    "mtime": 1779580241.7877595,
-    "ast_hash": "5459937146dc223d79f8c642fbf28724",
-    "semantic_hash": ""
-  },
-  "outputs/bad-vs-bufalos-sections/team_a_fouls.png": {
-    "mtime": 1779580247.000704,
-    "ast_hash": "993aa9953d4c7ef9b4765685929803ec",
-    "semantic_hash": ""
-  },
-  "outputs/bad-vs-bufalos-sections/team_b.png": {
-    "mtime": 1779580241.8210814,
-    "ast_hash": "5593fc63fd4fd02a8085664b6aeca1b4",
-    "semantic_hash": ""
-  },
-  "outputs/bad-vs-bufalos-sections/team_b_fouls.png": {
-    "mtime": 1779580263.3452806,
-    "ast_hash": "3b97f6aec01a58325e5f620116f0bc90",
-    "semantic_hash": ""
-  },
-  "outputs/crossers-vs-city-recortada.jpg": {
-    "mtime": 1779578872.1243248,
-    "ast_hash": "a8634bd2ad77196a1eafa50a01219432",
-    "semantic_hash": ""
-  },
-  "outputs/heroes-vs-chill-recortada.jpg": {
-    "mtime": 1779578874.5612984,
-    "ast_hash": "d94afa095b1fd48d7afe147d6d9667ec",
-    "semantic_hash": ""
-  },
-  "outputs/jurasicos-vs-capitanes-recortada.jpg": {
-    "mtime": 1779578876.0412824,
-    "ast_hash": "6b5b0b9e6b988765ad8aa2d8e6565c59",
-    "semantic_hash": ""
-  },
-  "outputs/jurasicos-vs-torzones-recortada.jpg": {
-    "mtime": 1779578873.875306,
-    "ast_hash": "988166e3727a4452b0269af262bcfc95",
-    "semantic_hash": ""
-  },
-  "outputs/limoneritos-vs-lobos-recortada.jpg": {
-    "mtime": 1779578877.6122653,
-    "ast_hash": "b3fb605db719ca5b1dbbfcef385e53f2",
-    "semantic_hash": ""
-  },
-  "outputs/papas-vs-godfellas-recortada.jpg": {
-    "mtime": 1779578875.3772895,
-    "ast_hash": "0f0e84f993a527f580f7276de638cc8c",
-    "semantic_hash": ""
-  },
-  "outputs/simios-vs-oriones-recortada.jpg": {
-    "mtime": 1779578876.826274,
-    "ast_hash": "763e0fdf11c154383e09f0de917bf9d5",
-    "semantic_hash": ""
-  },
   "packages/web/public/file.svg": {
-    "mtime": 1781417601.526635,
+    "mtime": 1794783927.4865816,
     "ast_hash": "d09f95206c3fa0bb9bd9fefabfd0ea71",
     "semantic_hash": ""
   },
   "packages/web/public/globe.svg": {
-    "mtime": 1781417601.5270433,
+    "mtime": 1794783927.4865816,
     "ast_hash": "2aaafa6a49b6563925fe440891e32717",
     "semantic_hash": ""
   },
   "packages/web/public/next.svg": {
-    "mtime": 1781417601.5270433,
+    "mtime": 1794783927.4865816,
     "ast_hash": "8e061864f388b47f33a1c3780831193e",
     "semantic_hash": ""
   },
   "packages/web/public/vercel.svg": {
-    "mtime": 1781417601.5270433,
+    "mtime": 1794783927.4865816,
     "ast_hash": "c0af2f507b369b085b35ef4bbe3bcf1e",
     "semantic_hash": ""
   },
   "packages/web/public/window.svg": {
-    "mtime": 1781417601.5272522,
+    "mtime": 1794783927.4865816,
     "ast_hash": "a2760511c65806022ad20adf74370ff3",
     "semantic_hash": ""
   },
-  "runs/run_20260601_232157_bc4d6de8/artifacts/crossers-vs-city-recortada.jpg": {
-    "mtime": 1780377718.0572782,
-    "ast_hash": "2ff229a90855c27a4109c86eae029b9d",
-    "semantic_hash": ""
-  },
-  "runs/run_20260601_232157_bc4d6de8/artifacts/footer.png": {
-    "mtime": 1780377737.5690317,
-    "ast_hash": "644d1611bdccf13f5a09f5e0173df41f",
-    "semantic_hash": ""
-  },
-  "runs/run_20260601_232157_bc4d6de8/artifacts/header.png": {
-    "mtime": 1780377737.0880377,
-    "ast_hash": "3089646fe099c323cf2d72478427e452",
-    "semantic_hash": ""
-  },
-  "runs/run_20260601_232157_bc4d6de8/artifacts/progressive_score.png": {
-    "mtime": 1780377737.5070324,
-    "ast_hash": "2067200f93a976c7f40f10b298542f16",
-    "semantic_hash": ""
-  },
-  "runs/run_20260601_232157_bc4d6de8/artifacts/team_a.png": {
-    "mtime": 1780377737.1660368,
-    "ast_hash": "9ceea6ce4fc1d77a612f21e375e1993f",
-    "semantic_hash": ""
-  },
-  "runs/run_20260601_232157_bc4d6de8/artifacts/team_a_fouls.png": {
-    "mtime": 1780377737.2610354,
-    "ast_hash": "c9185a3edad30be2eb0c518508cc9bd1",
-    "semantic_hash": ""
-  },
-  "runs/run_20260601_232157_bc4d6de8/artifacts/team_b.png": {
-    "mtime": 1780377737.2480357,
-    "ast_hash": "9dbb45dc83905d8856791dac6aa3a9ab",
-    "semantic_hash": ""
-  },
-  "runs/run_20260601_232157_bc4d6de8/artifacts/team_b_fouls.png": {
-    "mtime": 1780377737.2670355,
-    "ast_hash": "d2326d5b43abbd1ab380baefa084b521",
-    "semantic_hash": ""
-  },
-  "runs/run_20260601_232157_bc4d6de8/input/crossers-vs-city.jpg": {
-    "mtime": 1779566845.0,
-    "ast_hash": "86bba88945cbd69c9bbb6447c52ae099",
-    "semantic_hash": ""
-  },
-  "runs/run_20260608_144615_ed8e88b8/artifacts/crossers-vs-city-recortada.jpg": {
-    "mtime": 1780951576.661296,
-    "ast_hash": "2ff229a90855c27a4109c86eae029b9d",
-    "semantic_hash": ""
-  },
-  "runs/run_20260608_144615_ed8e88b8/artifacts/footer.png": {
-    "mtime": 1780951604.627053,
-    "ast_hash": "ad2d7166f7f17498199a08fcb33d3106",
-    "semantic_hash": ""
-  },
-  "runs/run_20260608_144615_ed8e88b8/artifacts/header.png": {
-    "mtime": 1780951604.1260574,
-    "ast_hash": "fbbe576337341977904d68fbae92bed8",
-    "semantic_hash": ""
-  },
-  "runs/run_20260608_144615_ed8e88b8/artifacts/progressive_score.png": {
-    "mtime": 1780951604.5650537,
-    "ast_hash": "afa546602e989fad8a750f5e24dae6f9",
-    "semantic_hash": ""
-  },
-  "runs/run_20260608_144615_ed8e88b8/artifacts/team_a.png": {
-    "mtime": 1780951604.2040567,
-    "ast_hash": "81ef03db2b167df35eede8986068edb0",
-    "semantic_hash": ""
-  },
-  "runs/run_20260608_144615_ed8e88b8/artifacts/team_a_fouls.png": {
-    "mtime": 1780951604.310056,
-    "ast_hash": "c6fbdf5df757c69eb3090fc4f07e4709",
-    "semantic_hash": ""
-  },
-  "runs/run_20260608_144615_ed8e88b8/artifacts/team_b.png": {
-    "mtime": 1780951604.294056,
-    "ast_hash": "ea3dd930cdeed107f301dc3b4b7548a6",
-    "semantic_hash": ""
-  },
-  "runs/run_20260608_144615_ed8e88b8/artifacts/team_b_fouls.png": {
-    "mtime": 1780951604.3160558,
-    "ast_hash": "e5afe406082df817e32908ca56e69de2",
-    "semantic_hash": ""
-  },
-  "runs/run_20260608_144615_ed8e88b8/input/crossers-vs-city.jpg": {
-    "mtime": 1779566845.0,
-    "ast_hash": "86bba88945cbd69c9bbb6447c52ae099",
-    "semantic_hash": ""
-  },
-  "runs/run_20260610_020346_9338c04e/artifacts/crossers-vs-city-recortada.jpg": {
-    "mtime": 1781078627.7089555,
-    "ast_hash": "2ff229a90855c27a4109c86eae029b9d",
-    "semantic_hash": ""
-  },
-  "runs/run_20260610_020346_9338c04e/artifacts/footer.png": {
-    "mtime": 1781078651.984541,
-    "ast_hash": "ad2d7166f7f17498199a08fcb33d3106",
-    "semantic_hash": ""
-  },
-  "runs/run_20260610_020346_9338c04e/artifacts/header.png": {
-    "mtime": 1781078651.44955,
-    "ast_hash": "fbbe576337341977904d68fbae92bed8",
-    "semantic_hash": ""
-  },
-  "runs/run_20260610_020346_9338c04e/artifacts/progressive_score.png": {
-    "mtime": 1781078651.9265418,
-    "ast_hash": "afa546602e989fad8a750f5e24dae6f9",
-    "semantic_hash": ""
-  },
-  "runs/run_20260610_020346_9338c04e/artifacts/team_a.png": {
-    "mtime": 1781078651.5355484,
-    "ast_hash": "81ef03db2b167df35eede8986068edb0",
-    "semantic_hash": ""
-  },
-  "runs/run_20260610_020346_9338c04e/artifacts/team_a_fouls.png": {
-    "mtime": 1781078651.6425467,
-    "ast_hash": "c6fbdf5df757c69eb3090fc4f07e4709",
-    "semantic_hash": ""
-  },
-  "runs/run_20260610_020346_9338c04e/artifacts/team_b.png": {
-    "mtime": 1781078651.627547,
-    "ast_hash": "ea3dd930cdeed107f301dc3b4b7548a6",
-    "semantic_hash": ""
-  },
-  "runs/run_20260610_020346_9338c04e/artifacts/team_b_fouls.png": {
-    "mtime": 1781078651.6485467,
-    "ast_hash": "e5afe406082df817e32908ca56e69de2",
-    "semantic_hash": ""
-  },
-  "runs/run_20260610_020346_9338c04e/input/crossers-vs-city.jpg": {
-    "mtime": 1781078626.614261,
-    "ast_hash": "86bba88945cbd69c9bbb6447c52ae099",
-    "semantic_hash": ""
-  },
-  "runs/run_20260610_022812_92c0d9f9/artifacts/crossers-vs-city-recortada.jpg": {
-    "mtime": 1781080094.6909273,
-    "ast_hash": "2ff229a90855c27a4109c86eae029b9d",
-    "semantic_hash": ""
-  },
-  "runs/run_20260610_022812_92c0d9f9/artifacts/footer.png": {
-    "mtime": 1781080125.521297,
-    "ast_hash": "03985e06d3c981bdd76893a3e2ea0d05",
-    "semantic_hash": ""
-  },
-  "runs/run_20260610_022812_92c0d9f9/artifacts/header.png": {
-    "mtime": 1781080124.5713181,
-    "ast_hash": "3089646fe099c323cf2d72478427e452",
-    "semantic_hash": ""
-  },
-  "runs/run_20260610_022812_92c0d9f9/artifacts/progressive_score.png": {
-    "mtime": 1781080125.4052994,
-    "ast_hash": "2067200f93a976c7f40f10b298542f16",
-    "semantic_hash": ""
-  },
-  "runs/run_20260610_022812_92c0d9f9/artifacts/team_a.png": {
-    "mtime": 1781080124.7503142,
-    "ast_hash": "9ceea6ce4fc1d77a612f21e375e1993f",
-    "semantic_hash": ""
-  },
-  "runs/run_20260610_022812_92c0d9f9/artifacts/team_a_fouls.png": {
-    "mtime": 1781080124.9703093,
-    "ast_hash": "c9185a3edad30be2eb0c518508cc9bd1",
-    "semantic_hash": ""
-  },
-  "runs/run_20260610_022812_92c0d9f9/artifacts/team_b.png": {
-    "mtime": 1781080124.9223104,
-    "ast_hash": "9dbb45dc83905d8856791dac6aa3a9ab",
-    "semantic_hash": ""
-  },
-  "runs/run_20260610_022812_92c0d9f9/artifacts/team_b_fouls.png": {
-    "mtime": 1781080124.9823089,
-    "ast_hash": "d2326d5b43abbd1ab380baefa084b521",
-    "semantic_hash": ""
-  },
-  "runs/run_20260610_022812_92c0d9f9/input/crossers-vs-city.jpg": {
-    "mtime": 1781080092.9211648,
-    "ast_hash": "86bba88945cbd69c9bbb6447c52ae099",
-    "semantic_hash": ""
-  },
-  "runs/run_20260612_131333_a88c0edf/artifacts/crossers-vs-city-recortada.jpg": {
-    "mtime": 1781291615.864104,
-    "ast_hash": "2ff229a90855c27a4109c86eae029b9d",
-    "semantic_hash": ""
-  },
-  "runs/run_20260612_131333_a88c0edf/artifacts/footer.png": {
-    "mtime": 1781291635.1690016,
-    "ast_hash": "ad2d7166f7f17498199a08fcb33d3106",
-    "semantic_hash": ""
-  },
-  "runs/run_20260612_131333_a88c0edf/artifacts/header.png": {
-    "mtime": 1781291633.948008,
-    "ast_hash": "fbbe576337341977904d68fbae92bed8",
-    "semantic_hash": ""
-  },
-  "runs/run_20260612_131333_a88c0edf/artifacts/progressive_score.png": {
-    "mtime": 1781291635.0430024,
-    "ast_hash": "afa546602e989fad8a750f5e24dae6f9",
-    "semantic_hash": ""
-  },
-  "runs/run_20260612_131333_a88c0edf/artifacts/team_a.png": {
-    "mtime": 1781291634.154007,
-    "ast_hash": "81ef03db2b167df35eede8986068edb0",
-    "semantic_hash": ""
-  },
-  "runs/run_20260612_131333_a88c0edf/artifacts/team_a_fouls.png": {
-    "mtime": 1781291634.372006,
-    "ast_hash": "c6fbdf5df757c69eb3090fc4f07e4709",
-    "semantic_hash": ""
-  },
-  "runs/run_20260612_131333_a88c0edf/artifacts/team_b.png": {
-    "mtime": 1781291634.3470058,
-    "ast_hash": "ea3dd930cdeed107f301dc3b4b7548a6",
-    "semantic_hash": ""
-  },
-  "runs/run_20260612_131333_a88c0edf/artifacts/team_b_fouls.png": {
-    "mtime": 1781291634.3880057,
-    "ast_hash": "e5afe406082df817e32908ca56e69de2",
-    "semantic_hash": ""
-  },
-  "runs/run_20260612_131333_a88c0edf/input/crossers-vs-city.jpg": {
-    "mtime": 1781291613.9066951,
-    "ast_hash": "86bba88945cbd69c9bbb6447c52ae099",
-    "semantic_hash": ""
-  },
-  "runs/run_20260612_144130_161b2471/artifacts/crossers-vs-city-recortada.jpg": {
-    "mtime": 1781296893.1067953,
-    "ast_hash": "2ff229a90855c27a4109c86eae029b9d",
-    "semantic_hash": ""
-  },
-  "runs/run_20260612_144130_161b2471/artifacts/footer.png": {
-    "mtime": 1781296914.241596,
-    "ast_hash": "ad2d7166f7f17498199a08fcb33d3106",
-    "semantic_hash": ""
-  },
-  "runs/run_20260612_144130_161b2471/artifacts/header.png": {
-    "mtime": 1781296913.164606,
-    "ast_hash": "fbbe576337341977904d68fbae92bed8",
-    "semantic_hash": ""
-  },
-  "runs/run_20260612_144130_161b2471/artifacts/progressive_score.png": {
-    "mtime": 1781296914.1235971,
-    "ast_hash": "afa546602e989fad8a750f5e24dae6f9",
-    "semantic_hash": ""
-  },
-  "runs/run_20260612_144130_161b2471/artifacts/team_a.png": {
-    "mtime": 1781296913.3546045,
-    "ast_hash": "81ef03db2b167df35eede8986068edb0",
-    "semantic_hash": ""
-  },
-  "runs/run_20260612_144130_161b2471/artifacts/team_a_fouls.png": {
-    "mtime": 1781296913.5676024,
-    "ast_hash": "c6fbdf5df757c69eb3090fc4f07e4709",
-    "semantic_hash": ""
-  },
-  "runs/run_20260612_144130_161b2471/artifacts/team_b.png": {
-    "mtime": 1781296913.5426025,
-    "ast_hash": "ea3dd930cdeed107f301dc3b4b7548a6",
-    "semantic_hash": ""
-  },
-  "runs/run_20260612_144130_161b2471/artifacts/team_b_fouls.png": {
-    "mtime": 1781296913.5826023,
-    "ast_hash": "e5afe406082df817e32908ca56e69de2",
-    "semantic_hash": ""
-  },
-  "runs/run_20260612_144130_161b2471/input/crossers-vs-city.jpg": {
-    "mtime": 1781296890.9012442,
-    "ast_hash": "86bba88945cbd69c9bbb6447c52ae099",
-    "semantic_hash": ""
-  },
-  "runs/run_20260613_035604_53c9f351/artifacts/crossers-vs-city-recortada.jpg": {
-    "mtime": 1781344564.9356053,
-    "ast_hash": "2ff229a90855c27a4109c86eae029b9d",
-    "semantic_hash": ""
-  },
-  "runs/run_20260613_035604_53c9f351/artifacts/footer.png": {
-    "mtime": 1781344583.2243948,
-    "ast_hash": "ad2d7166f7f17498199a08fcb33d3106",
-    "semantic_hash": ""
-  },
-  "runs/run_20260613_035604_53c9f351/artifacts/header.png": {
-    "mtime": 1781344582.7434003,
-    "ast_hash": "fbbe576337341977904d68fbae92bed8",
-    "semantic_hash": ""
-  },
-  "runs/run_20260613_035604_53c9f351/artifacts/progressive_score.png": {
-    "mtime": 1781344583.1543956,
-    "ast_hash": "afa546602e989fad8a750f5e24dae6f9",
-    "semantic_hash": ""
-  },
-  "runs/run_20260613_035604_53c9f351/artifacts/team_a.png": {
-    "mtime": 1781344582.8173995,
-    "ast_hash": "81ef03db2b167df35eede8986068edb0",
-    "semantic_hash": ""
-  },
-  "runs/run_20260613_035604_53c9f351/artifacts/team_a_fouls.png": {
-    "mtime": 1781344582.9213984,
-    "ast_hash": "c6fbdf5df757c69eb3090fc4f07e4709",
-    "semantic_hash": ""
-  },
-  "runs/run_20260613_035604_53c9f351/artifacts/team_b.png": {
-    "mtime": 1781344582.9023986,
-    "ast_hash": "ea3dd930cdeed107f301dc3b4b7548a6",
-    "semantic_hash": ""
-  },
-  "runs/run_20260613_035604_53c9f351/artifacts/team_b_fouls.png": {
-    "mtime": 1781344582.9273982,
-    "ast_hash": "e5afe406082df817e32908ca56e69de2",
-    "semantic_hash": ""
-  },
-  "runs/run_20260613_035604_53c9f351/input/crossers-vs-city.jpg": {
-    "mtime": 1781344564.090207,
-    "ast_hash": "86bba88945cbd69c9bbb6447c52ae099",
-    "semantic_hash": ""
-  },
-  "runs/run_20260613_152748_afe449de/artifacts/crossers-vs-city-recortada.jpg": {
-    "mtime": 1781386069.3763828,
-    "ast_hash": "2ff229a90855c27a4109c86eae029b9d",
-    "semantic_hash": ""
-  },
-  "runs/run_20260613_152748_afe449de/artifacts/footer.png": {
-    "mtime": 1781386087.0382493,
-    "ast_hash": "ad2d7166f7f17498199a08fcb33d3106",
-    "semantic_hash": ""
-  },
-  "runs/run_20260613_152748_afe449de/artifacts/header.png": {
-    "mtime": 1781386086.4232538,
-    "ast_hash": "fbbe576337341977904d68fbae92bed8",
-    "semantic_hash": ""
-  },
-  "runs/run_20260613_152748_afe449de/artifacts/progressive_score.png": {
-    "mtime": 1781386086.93225,
-    "ast_hash": "afa546602e989fad8a750f5e24dae6f9",
-    "semantic_hash": ""
-  },
-  "runs/run_20260613_152748_afe449de/artifacts/team_a.png": {
-    "mtime": 1781386086.4992533,
-    "ast_hash": "81ef03db2b167df35eede8986068edb0",
-    "semantic_hash": ""
-  },
-  "runs/run_20260613_152748_afe449de/artifacts/team_a_fouls.png": {
-    "mtime": 1781386086.655252,
-    "ast_hash": "c6fbdf5df757c69eb3090fc4f07e4709",
-    "semantic_hash": ""
-  },
-  "runs/run_20260613_152748_afe449de/artifacts/team_b.png": {
-    "mtime": 1781386086.6222522,
-    "ast_hash": "ea3dd930cdeed107f301dc3b4b7548a6",
-    "semantic_hash": ""
-  },
-  "runs/run_20260613_152748_afe449de/artifacts/team_b_fouls.png": {
-    "mtime": 1781386086.661252,
-    "ast_hash": "e5afe406082df817e32908ca56e69de2",
-    "semantic_hash": ""
-  },
-  "runs/run_20260613_152748_afe449de/input/crossers-vs-city.jpg": {
-    "mtime": 1781386068.4114778,
-    "ast_hash": "86bba88945cbd69c9bbb6447c52ae099",
-    "semantic_hash": ""
-  },
-  "runs/run_20260613_170256_d767c331/artifacts/Panteras-vs-mambas-recortada.jpg": {
-    "mtime": 1781391776.9432306,
-    "ast_hash": "ad565b1ab2b42bc1e6b343105d4f1095",
-    "semantic_hash": ""
-  },
-  "runs/run_20260613_170256_d767c331/artifacts/footer.png": {
-    "mtime": 1781391793.828064,
-    "ast_hash": "c707ef1adb4396d46791b5d34f96d564",
-    "semantic_hash": ""
-  },
-  "runs/run_20260613_170256_d767c331/artifacts/header.png": {
-    "mtime": 1781391793.3230689,
-    "ast_hash": "9c610818bebd397c856e6f0e5c89ab7a",
-    "semantic_hash": ""
-  },
-  "runs/run_20260613_170256_d767c331/artifacts/progressive_score.png": {
-    "mtime": 1781391793.7740645,
-    "ast_hash": "5007b54f1405ec60ec26928952f56f38",
-    "semantic_hash": ""
-  },
-  "runs/run_20260613_170256_d767c331/artifacts/team_a.png": {
-    "mtime": 1781391793.3930683,
-    "ast_hash": "165c5548c173333470ff234ba2755ece",
-    "semantic_hash": ""
-  },
-  "runs/run_20260613_170256_d767c331/artifacts/team_a_fouls.png": {
-    "mtime": 1781391793.4810674,
-    "ast_hash": "552757e3ded2db250d9a391fc4e46349",
-    "semantic_hash": ""
-  },
-  "runs/run_20260613_170256_d767c331/artifacts/team_b.png": {
-    "mtime": 1781391793.4660676,
-    "ast_hash": "89a7fafda9b2533700e0a0f68b2215e6",
-    "semantic_hash": ""
-  },
-  "runs/run_20260613_170256_d767c331/artifacts/team_b_fouls.png": {
-    "mtime": 1781391793.4870672,
-    "ast_hash": "f31237d38d4b26a7cefe38b39551ed33",
-    "semantic_hash": ""
-  },
-  "runs/run_20260613_170256_d767c331/input/Panteras-vs-mambas.jpg": {
-    "mtime": 1781391776.0209258,
-    "ast_hash": "3d5845c8308a381b7e088eb34dc709f5",
-    "semantic_hash": ""
-  },
-  "runs/run_20260614_185113_634bf349/artifacts/Panteras-vs-mambas-recortada.jpg": {
-    "mtime": 1781484675.055282,
-    "ast_hash": "ad565b1ab2b42bc1e6b343105d4f1095",
-    "semantic_hash": ""
-  },
-  "runs/run_20260614_185113_634bf349/artifacts/footer.png": {
-    "mtime": 1781484689.3091369,
-    "ast_hash": "c707ef1adb4396d46791b5d34f96d564",
-    "semantic_hash": ""
-  },
-  "runs/run_20260614_185113_634bf349/artifacts/header.png": {
-    "mtime": 1781484688.8351417,
-    "ast_hash": "9c610818bebd397c856e6f0e5c89ab7a",
-    "semantic_hash": ""
-  },
-  "runs/run_20260614_185113_634bf349/artifacts/progressive_score.png": {
-    "mtime": 1781484689.2481375,
-    "ast_hash": "5007b54f1405ec60ec26928952f56f38",
-    "semantic_hash": ""
-  },
-  "runs/run_20260614_185113_634bf349/artifacts/team_a.png": {
-    "mtime": 1781484688.9131408,
-    "ast_hash": "165c5548c173333470ff234ba2755ece",
-    "semantic_hash": ""
-  },
-  "runs/run_20260614_185113_634bf349/artifacts/team_a_fouls.png": {
-    "mtime": 1781484689.0091398,
-    "ast_hash": "552757e3ded2db250d9a391fc4e46349",
-    "semantic_hash": ""
-  },
-  "runs/run_20260614_185113_634bf349/artifacts/team_b.png": {
-    "mtime": 1781484688.99614,
-    "ast_hash": "89a7fafda9b2533700e0a0f68b2215e6",
-    "semantic_hash": ""
-  },
-  "runs/run_20260614_185113_634bf349/artifacts/team_b_fouls.png": {
-    "mtime": 1781484689.0161397,
-    "ast_hash": "f31237d38d4b26a7cefe38b39551ed33",
-    "semantic_hash": ""
-  },
-  "runs/run_20260614_185113_634bf349/input/Panteras-vs-mambas.jpg": {
-    "mtime": 1781484673.9680412,
-    "ast_hash": "3d5845c8308a381b7e088eb34dc709f5",
-    "semantic_hash": ""
-  },
-  "runs/run_20260615_125644_ada6372e/artifacts/crossers-vs-city-recortada.jpg": {
-    "mtime": 1781549805.005356,
-    "ast_hash": "2ff229a90855c27a4109c86eae029b9d",
-    "semantic_hash": ""
-  },
-  "runs/run_20260615_125644_ada6372e/artifacts/footer.png": {
-    "mtime": 1781549822.7141645,
-    "ast_hash": "ad2d7166f7f17498199a08fcb33d3106",
-    "semantic_hash": ""
-  },
-  "runs/run_20260615_125644_ada6372e/artifacts/header.png": {
-    "mtime": 1781549822.2461693,
-    "ast_hash": "fbbe576337341977904d68fbae92bed8",
-    "semantic_hash": ""
-  },
-  "runs/run_20260615_125644_ada6372e/artifacts/progressive_score.png": {
-    "mtime": 1781549822.648165,
-    "ast_hash": "afa546602e989fad8a750f5e24dae6f9",
-    "semantic_hash": ""
-  },
-  "runs/run_20260615_125644_ada6372e/artifacts/team_a.png": {
-    "mtime": 1781549822.3201687,
-    "ast_hash": "81ef03db2b167df35eede8986068edb0",
-    "semantic_hash": ""
-  },
-  "runs/run_20260615_125644_ada6372e/artifacts/team_a_fouls.png": {
-    "mtime": 1781549822.4341674,
-    "ast_hash": "c6fbdf5df757c69eb3090fc4f07e4709",
-    "semantic_hash": ""
-  },
-  "runs/run_20260615_125644_ada6372e/artifacts/team_b.png": {
-    "mtime": 1781549822.4081676,
-    "ast_hash": "ea3dd930cdeed107f301dc3b4b7548a6",
-    "semantic_hash": ""
-  },
-  "runs/run_20260615_125644_ada6372e/artifacts/team_b_fouls.png": {
-    "mtime": 1781549822.4401674,
-    "ast_hash": "e5afe406082df817e32908ca56e69de2",
-    "semantic_hash": ""
-  },
-  "runs/run_20260615_125644_ada6372e/input/crossers-vs-city.jpg": {
-    "mtime": 1781549804.216992,
-    "ast_hash": "86bba88945cbd69c9bbb6447c52ae099",
-    "semantic_hash": ""
-  },
-  "runs/smoke_20260529_060437/artifacts/crossers-vs-city-recortada.jpg": {
-    "mtime": 1780034677.9770772,
-    "ast_hash": "2ff229a90855c27a4109c86eae029b9d",
-    "semantic_hash": ""
-  },
-  "runs/smoke_20260529_060437/input/crossers-vs-city.jpg": {
-    "mtime": 1780034677.0555885,
-    "ast_hash": "86bba88945cbd69c9bbb6447c52ae099",
-    "semantic_hash": ""
-  },
-  "runs/smoke_20260529_060616/artifacts/crossers-vs-city-recortada.jpg": {
-    "mtime": 1780034777.3610077,
-    "ast_hash": "2ff229a90855c27a4109c86eae029b9d",
-    "semantic_hash": ""
-  },
-  "runs/smoke_20260529_060616/artifacts/footer.png": {
-    "mtime": 1780034794.9038188,
-    "ast_hash": "644d1611bdccf13f5a09f5e0173df41f",
-    "semantic_hash": ""
-  },
-  "runs/smoke_20260529_060616/artifacts/header.png": {
-    "mtime": 1780034794.3988245,
-    "ast_hash": "3089646fe099c323cf2d72478427e452",
-    "semantic_hash": ""
-  },
-  "runs/smoke_20260529_060616/artifacts/progressive_score.png": {
-    "mtime": 1780034794.8448195,
-    "ast_hash": "2067200f93a976c7f40f10b298542f16",
-    "semantic_hash": ""
-  },
-  "runs/smoke_20260529_060616/artifacts/team_a.png": {
-    "mtime": 1780034794.4838235,
-    "ast_hash": "9ceea6ce4fc1d77a612f21e375e1993f",
-    "semantic_hash": ""
-  },
-  "runs/smoke_20260529_060616/artifacts/team_a_fouls.png": {
-    "mtime": 1780034794.5838223,
-    "ast_hash": "c9185a3edad30be2eb0c518508cc9bd1",
-    "semantic_hash": ""
-  },
-  "runs/smoke_20260529_060616/artifacts/team_b.png": {
-    "mtime": 1780034794.5708225,
-    "ast_hash": "9dbb45dc83905d8856791dac6aa3a9ab",
-    "semantic_hash": ""
-  },
-  "runs/smoke_20260529_060616/artifacts/team_b_fouls.png": {
-    "mtime": 1780034794.5898223,
-    "ast_hash": "d2326d5b43abbd1ab380baefa084b521",
-    "semantic_hash": ""
-  },
-  "runs/smoke_20260529_060616/input/crossers-vs-city.jpg": {
-    "mtime": 1780034776.661664,
-    "ast_hash": "86bba88945cbd69c9bbb6447c52ae099",
-    "semantic_hash": ""
-  },
-  "runs/smoke_20260529_065610/artifacts/crossers-vs-city-recortada.jpg": {
-    "mtime": 1780037771.7029169,
-    "ast_hash": "2ff229a90855c27a4109c86eae029b9d",
-    "semantic_hash": ""
-  },
-  "runs/smoke_20260529_065610/artifacts/footer.png": {
-    "mtime": 1780037789.6507187,
-    "ast_hash": "ad2d7166f7f17498199a08fcb33d3106",
-    "semantic_hash": ""
-  },
-  "runs/smoke_20260529_065610/artifacts/header.png": {
-    "mtime": 1780037789.151724,
-    "ast_hash": "fbbe576337341977904d68fbae92bed8",
-    "semantic_hash": ""
-  },
-  "runs/smoke_20260529_065610/artifacts/progressive_score.png": {
-    "mtime": 1780037789.5907192,
-    "ast_hash": "afa546602e989fad8a750f5e24dae6f9",
-    "semantic_hash": ""
-  },
-  "runs/smoke_20260529_065610/artifacts/team_a.png": {
-    "mtime": 1780037789.2327232,
-    "ast_hash": "81ef03db2b167df35eede8986068edb0",
-    "semantic_hash": ""
-  },
-  "runs/smoke_20260529_065610/artifacts/team_a_fouls.png": {
-    "mtime": 1780037789.3367221,
-    "ast_hash": "6d43aa4a4adfaee0080e9e14dde85a2f",
-    "semantic_hash": ""
-  },
-  "runs/smoke_20260529_065610/artifacts/team_b.png": {
-    "mtime": 1780037789.3217223,
-    "ast_hash": "ea3dd930cdeed107f301dc3b4b7548a6",
-    "semantic_hash": ""
-  },
-  "runs/smoke_20260529_065610/artifacts/team_b_fouls.png": {
-    "mtime": 1780037789.342722,
-    "ast_hash": "60ba9290da4d2a9bb5de03c6acd28e4d",
-    "semantic_hash": ""
-  },
-  "runs/smoke_20260529_065610/input/crossers-vs-city.jpg": {
-    "mtime": 1780037770.5435908,
-    "ast_hash": "86bba88945cbd69c9bbb6447c52ae099",
-    "semantic_hash": ""
-  },
-  "runs/smoke_api_upload_sheet002_20260601/artifacts/Panteras-vs-mambas-recortada.jpg": {
-    "mtime": 1780277135.156089,
-    "ast_hash": "ad565b1ab2b42bc1e6b343105d4f1095",
-    "semantic_hash": ""
-  },
-  "runs/smoke_api_upload_sheet002_20260601/artifacts/footer.png": {
-    "mtime": 1780277155.6788588,
-    "ast_hash": "c707ef1adb4396d46791b5d34f96d564",
-    "semantic_hash": ""
-  },
-  "runs/smoke_api_upload_sheet002_20260601/artifacts/header.png": {
-    "mtime": 1780277155.0538657,
-    "ast_hash": "9c610818bebd397c856e6f0e5c89ab7a",
-    "semantic_hash": ""
-  },
-  "runs/smoke_api_upload_sheet002_20260601/artifacts/progressive_score.png": {
-    "mtime": 1780277155.6118596,
-    "ast_hash": "5007b54f1405ec60ec26928952f56f38",
-    "semantic_hash": ""
-  },
-  "runs/smoke_api_upload_sheet002_20260601/artifacts/team_a.png": {
-    "mtime": 1780277155.1468647,
-    "ast_hash": "165c5548c173333470ff234ba2755ece",
-    "semantic_hash": ""
-  },
-  "runs/smoke_api_upload_sheet002_20260601/artifacts/team_a_fouls.png": {
-    "mtime": 1780277155.2478635,
-    "ast_hash": "552757e3ded2db250d9a391fc4e46349",
-    "semantic_hash": ""
-  },
-  "runs/smoke_api_upload_sheet002_20260601/artifacts/team_b.png": {
-    "mtime": 1780277155.2328637,
-    "ast_hash": "89a7fafda9b2533700e0a0f68b2215e6",
-    "semantic_hash": ""
-  },
-  "runs/smoke_api_upload_sheet002_20260601/artifacts/team_b_fouls.png": {
-    "mtime": 1780277155.2538636,
-    "ast_hash": "f31237d38d4b26a7cefe38b39551ed33",
-    "semantic_hash": ""
-  },
-  "runs/smoke_api_upload_sheet002_20260601/input/Panteras-vs-mambas.jpg": {
-    "mtime": 1780277133.12151,
-    "ast_hash": "3d5845c8308a381b7e088eb34dc709f5",
-    "semantic_hash": ""
-  },
-  "runs/smoke_async_mcp_real_20260601/artifacts/Panteras-vs-mambas-recortada.jpg": {
-    "mtime": 1780308413.004473,
-    "ast_hash": "ad565b1ab2b42bc1e6b343105d4f1095",
-    "semantic_hash": ""
-  },
-  "runs/smoke_async_mcp_real_20260601/artifacts/footer.png": {
-    "mtime": 1780308501.083541,
-    "ast_hash": "c707ef1adb4396d46791b5d34f96d564",
-    "semantic_hash": ""
-  },
-  "runs/smoke_async_mcp_real_20260601/artifacts/header.png": {
-    "mtime": 1780308500.6505454,
-    "ast_hash": "9c610818bebd397c856e6f0e5c89ab7a",
-    "semantic_hash": ""
-  },
-  "runs/smoke_async_mcp_real_20260601/artifacts/progressive_score.png": {
-    "mtime": 1780308501.0235415,
-    "ast_hash": "5007b54f1405ec60ec26928952f56f38",
-    "semantic_hash": ""
-  },
-  "runs/smoke_async_mcp_real_20260601/artifacts/team_a.png": {
-    "mtime": 1780308500.7265446,
-    "ast_hash": "165c5548c173333470ff234ba2755ece",
-    "semantic_hash": ""
-  },
-  "runs/smoke_async_mcp_real_20260601/artifacts/team_a_fouls.png": {
-    "mtime": 1780308500.8125436,
-    "ast_hash": "552757e3ded2db250d9a391fc4e46349",
-    "semantic_hash": ""
-  },
-  "runs/smoke_async_mcp_real_20260601/artifacts/team_b.png": {
-    "mtime": 1780308500.798544,
-    "ast_hash": "89a7fafda9b2533700e0a0f68b2215e6",
-    "semantic_hash": ""
-  },
-  "runs/smoke_async_mcp_real_20260601/artifacts/team_b_fouls.png": {
-    "mtime": 1780308500.8185437,
-    "ast_hash": "ab34b6dc2c3655d2eaabf98d32eef970",
-    "semantic_hash": ""
-  },
-  "runs/smoke_async_mcp_real_20260601/input/Panteras-vs-mambas.jpg": {
-    "mtime": 1780308412.323051,
-    "ast_hash": "3d5845c8308a381b7e088eb34dc709f5",
-    "semantic_hash": ""
-  },
-  "runs/smoke_async_real_20260601/input/Panteras-vs-mambas.jpg": {
-    "mtime": 1780305393.523057,
-    "ast_hash": "3d5845c8308a381b7e088eb34dc709f5",
-    "semantic_hash": ""
-  },
-  "runs/smoke_async_real_20260601_v2/artifacts/Panteras-vs-mambas-recortada.jpg": {
-    "mtime": 1780305488.1918395,
-    "ast_hash": "ad565b1ab2b42bc1e6b343105d4f1095",
-    "semantic_hash": ""
-  },
-  "runs/smoke_async_real_20260601_v2/artifacts/footer.png": {
-    "mtime": 1780305518.0405118,
-    "ast_hash": "a56030e361b6a7f4ade3fb35aee2905f",
-    "semantic_hash": ""
-  },
-  "runs/smoke_async_real_20260601_v2/artifacts/header.png": {
-    "mtime": 1780305517.5555172,
-    "ast_hash": "c93d7b35b521972f5259a61903a9d652",
-    "semantic_hash": ""
-  },
-  "runs/smoke_async_real_20260601_v2/artifacts/progressive_score.png": {
-    "mtime": 1780305517.9825125,
-    "ast_hash": "790eccac384bd77a900edf4360d0b405",
-    "semantic_hash": ""
-  },
-  "runs/smoke_async_real_20260601_v2/artifacts/team_a.png": {
-    "mtime": 1780305517.6265166,
-    "ast_hash": "165c5548c173333470ff234ba2755ece",
-    "semantic_hash": ""
-  },
-  "runs/smoke_async_real_20260601_v2/artifacts/team_a_fouls.png": {
-    "mtime": 1780305517.7155156,
-    "ast_hash": "392abf247697a98ff55ee5a87ecbf15c",
-    "semantic_hash": ""
-  },
-  "runs/smoke_async_real_20260601_v2/artifacts/team_b.png": {
-    "mtime": 1780305517.7015157,
-    "ast_hash": "3ec0a511a2ae0db6120355c0f773e818",
-    "semantic_hash": ""
-  },
-  "runs/smoke_async_real_20260601_v2/artifacts/team_b_fouls.png": {
-    "mtime": 1780305517.7225153,
-    "ast_hash": "fe4b94feba8f8e5cbcb4d59934705783",
-    "semantic_hash": ""
-  },
-  "runs/smoke_async_real_20260601_v2/input/Panteras-vs-mambas.jpg": {
-    "mtime": 1780305486.8089886,
-    "ast_hash": "3d5845c8308a381b7e088eb34dc709f5",
-    "semantic_hash": ""
-  },
-  "runs/smoke_async_real_20260601_v3/artifacts/Panteras-vs-mambas-recortada.jpg": {
-    "mtime": 1780305886.8224647,
-    "ast_hash": "ad565b1ab2b42bc1e6b343105d4f1095",
-    "semantic_hash": ""
-  },
-  "runs/smoke_async_real_20260601_v3/artifacts/footer.png": {
-    "mtime": 1780305903.8732777,
-    "ast_hash": "c707ef1adb4396d46791b5d34f96d564",
-    "semantic_hash": ""
-  },
-  "runs/smoke_async_real_20260601_v3/artifacts/header.png": {
-    "mtime": 1780305903.3502834,
-    "ast_hash": "9c610818bebd397c856e6f0e5c89ab7a",
-    "semantic_hash": ""
-  },
-  "runs/smoke_async_real_20260601_v3/artifacts/progressive_score.png": {
-    "mtime": 1780305903.7962785,
-    "ast_hash": "5007b54f1405ec60ec26928952f56f38",
-    "semantic_hash": ""
-  },
-  "runs/smoke_async_real_20260601_v3/artifacts/team_a.png": {
-    "mtime": 1780305903.4172826,
-    "ast_hash": "165c5548c173333470ff234ba2755ece",
-    "semantic_hash": ""
-  },
-  "runs/smoke_async_real_20260601_v3/artifacts/team_a_fouls.png": {
-    "mtime": 1780305903.5282815,
-    "ast_hash": "552757e3ded2db250d9a391fc4e46349",
-    "semantic_hash": ""
-  },
-  "runs/smoke_async_real_20260601_v3/artifacts/team_b.png": {
-    "mtime": 1780305903.5142815,
-    "ast_hash": "89a7fafda9b2533700e0a0f68b2215e6",
-    "semantic_hash": ""
-  },
-  "runs/smoke_async_real_20260601_v3/artifacts/team_b_fouls.png": {
-    "mtime": 1780305903.5362813,
-    "ast_hash": "ab34b6dc2c3655d2eaabf98d32eef970",
-    "semantic_hash": ""
-  },
-  "runs/smoke_async_real_20260601_v3/input/Panteras-vs-mambas.jpg": {
-    "mtime": 1780305885.999486,
-    "ast_hash": "3d5845c8308a381b7e088eb34dc709f5",
-    "semantic_hash": ""
-  },
-  "runs/smoke_real_reorg_20260601/artifacts/crossers-vs-city-recortada.jpg": {
-    "mtime": 1780276324.4132032,
-    "ast_hash": "2ff229a90855c27a4109c86eae029b9d",
-    "semantic_hash": ""
-  },
-  "runs/smoke_real_reorg_20260601/artifacts/footer.png": {
-    "mtime": 1780276343.9919825,
-    "ast_hash": "ad2d7166f7f17498199a08fcb33d3106",
-    "semantic_hash": ""
-  },
-  "runs/smoke_real_reorg_20260601/artifacts/header.png": {
-    "mtime": 1780276343.4169888,
-    "ast_hash": "fbbe576337341977904d68fbae92bed8",
-    "semantic_hash": ""
-  },
-  "runs/smoke_real_reorg_20260601/artifacts/progressive_score.png": {
-    "mtime": 1780276343.9089832,
-    "ast_hash": "afa546602e989fad8a750f5e24dae6f9",
-    "semantic_hash": ""
-  },
-  "runs/smoke_real_reorg_20260601/artifacts/team_a.png": {
-    "mtime": 1780276343.5069878,
-    "ast_hash": "81ef03db2b167df35eede8986068edb0",
-    "semantic_hash": ""
-  },
-  "runs/smoke_real_reorg_20260601/artifacts/team_a_fouls.png": {
-    "mtime": 1780276343.6129866,
-    "ast_hash": "c6fbdf5df757c69eb3090fc4f07e4709",
-    "semantic_hash": ""
-  },
-  "runs/smoke_real_reorg_20260601/artifacts/team_b.png": {
-    "mtime": 1780276343.5959868,
-    "ast_hash": "ea3dd930cdeed107f301dc3b4b7548a6",
-    "semantic_hash": ""
-  },
-  "runs/smoke_real_reorg_20260601/artifacts/team_b_fouls.png": {
-    "mtime": 1780276343.6199865,
-    "ast_hash": "60ba9290da4d2a9bb5de03c6acd28e4d",
-    "semantic_hash": ""
-  },
-  "runs/smoke_real_reorg_20260601/input/crossers-vs-city.jpg": {
-    "mtime": 1779566845.0,
-    "ast_hash": "86bba88945cbd69c9bbb6447c52ae099",
-    "semantic_hash": ""
-  },
-  "runs/web_key_smoke_api/artifacts/Panteras-vs-mambas-recortada.jpg": {
-    "mtime": 1780376845.7091775,
-    "ast_hash": "ad565b1ab2b42bc1e6b343105d4f1095",
-    "semantic_hash": ""
-  },
-  "runs/web_key_smoke_api/artifacts/footer.png": {
-    "mtime": 1780376863.0689683,
-    "ast_hash": "c707ef1adb4396d46791b5d34f96d564",
-    "semantic_hash": ""
-  },
-  "runs/web_key_smoke_api/artifacts/header.png": {
-    "mtime": 1780376862.5629745,
-    "ast_hash": "9c610818bebd397c856e6f0e5c89ab7a",
-    "semantic_hash": ""
-  },
-  "runs/web_key_smoke_api/artifacts/progressive_score.png": {
-    "mtime": 1780376863.008969,
-    "ast_hash": "5007b54f1405ec60ec26928952f56f38",
-    "semantic_hash": ""
-  },
-  "runs/web_key_smoke_api/artifacts/team_a.png": {
-    "mtime": 1780376862.682973,
-    "ast_hash": "165c5548c173333470ff234ba2755ece",
-    "semantic_hash": ""
-  },
-  "runs/web_key_smoke_api/artifacts/team_a_fouls.png": {
-    "mtime": 1780376862.766972,
-    "ast_hash": "552757e3ded2db250d9a391fc4e46349",
-    "semantic_hash": ""
-  },
-  "runs/web_key_smoke_api/artifacts/team_b.png": {
-    "mtime": 1780376862.7549722,
-    "ast_hash": "89a7fafda9b2533700e0a0f68b2215e6",
-    "semantic_hash": ""
-  },
-  "runs/web_key_smoke_api/artifacts/team_b_fouls.png": {
-    "mtime": 1780376862.773972,
-    "ast_hash": "f31237d38d4b26a7cefe38b39551ed33",
-    "semantic_hash": ""
-  },
-  "runs/web_key_smoke_api/input/Panteras-vs-mambas.jpg": {
-    "mtime": 1779566845.0,
-    "ast_hash": "3d5845c8308a381b7e088eb34dc709f5",
-    "semantic_hash": ""
-  },
   "packages/web/src/app/admin/layout.tsx": {
-    "mtime": 1781942878.9457436,
+    "mtime": 1794783927.4865816,
     "ast_hash": "e9aec2697991a39dca3b3ba796ed77bf",
     "semantic_hash": ""
   },
   "packages/web/src/app/admin/page.tsx": {
-    "mtime": 1781993809.3472219,
+    "mtime": 1794783927.4865816,
     "ast_hash": "af26a5822dd9b48b9171db9ddf51ef9a",
     "semantic_hash": ""
   },
   "packages/web/src/app/test/club/capture/page.tsx": {
-    "mtime": 1781942798.6794355,
+    "mtime": 1794783927.4865816,
     "ast_hash": "fda01803eb8ef9554004aa948cb03a2b",
     "semantic_hash": ""
   },
   "packages/web/src/app/test/club/layout.tsx": {
-    "mtime": 1781989594.7912974,
+    "mtime": 1794783927.4865816,
     "ast_hash": "ebe34b601d62e5404a20a99a48e66ab1",
     "semantic_hash": ""
   },
   "packages/web/src/app/test/club/overview/page.tsx": {
-    "mtime": 1781942798.6807683,
+    "mtime": 1794783927.4865816,
     "ast_hash": "7657c2d6c4ffd1bfdc97f5ed2d80008c",
     "semantic_hash": ""
   },
   "packages/web/src/app/test/club/page.tsx": {
-    "mtime": 1781942798.6793888,
+    "mtime": 1794783927.4865816,
     "ast_hash": "9daf232b008e14edde27c7bb7d77f859",
     "semantic_hash": ""
   },
   "packages/web/src/app/test/club/players/page.tsx": {
-    "mtime": 1781942798.681463,
+    "mtime": 1794783927.4865816,
     "ast_hash": "6c99dc616345220b4fe00f6a84e6bf58",
     "semantic_hash": ""
   },
   "packages/web/src/app/test/club/roster/page.tsx": {
-    "mtime": 1781942798.682087,
+    "mtime": 1794783927.4865816,
     "ast_hash": "b03a62faf1dd5594f71d6294665226ec",
     "semantic_hash": ""
   },
   "packages/web/src/app/test/layout.tsx": {
-    "mtime": 1781942779.3146794,
+    "mtime": 1794783927.4865816,
     "ast_hash": "9705295bb95f1e9767c7a55ead51d3c1",
     "semantic_hash": ""
   },
   "packages/web/src/app/test/player/capture/page.tsx": {
-    "mtime": 1781942798.6765077,
+    "mtime": 1794783927.4865816,
     "ast_hash": "19d9fdcd7de62c54738d563dfa6dbbdd",
     "semantic_hash": ""
   },
   "packages/web/src/app/test/player/history/page.tsx": {
-    "mtime": 1781942798.6777086,
+    "mtime": 1794783927.4865816,
     "ast_hash": "558b7723cf2b93353ef1ca108ab3b6bd",
     "semantic_hash": ""
   },
   "packages/web/src/app/test/player/layout.tsx": {
-    "mtime": 1781942779.3176906,
+    "mtime": 1794783927.4865816,
     "ast_hash": "21e23ff9a8c7d245afa8b49b85718b98",
     "semantic_hash": ""
   },
   "packages/web/src/app/test/player/page.tsx": {
-    "mtime": 1781942798.6756265,
+    "mtime": 1794783927.4865816,
     "ast_hash": "75a0cd0578d6d7f457aa9bb855f0afa8",
     "semantic_hash": ""
   },
   "packages/web/src/app/test/player/progress/page.tsx": {
-    "mtime": 1781942798.6786582,
+    "mtime": 1794783927.4865816,
     "ast_hash": "d0fe9a4699d38acf496494d8eb783a29",
     "semantic_hash": ""
   },
   "packages/web/src/app/test/referee/capture/page.tsx": {
-    "mtime": 1781942798.6727786,
+    "mtime": 1794783927.4865816,
     "ast_hash": "05e9efcfa5b039be5d94b55f3533128e",
     "semantic_hash": ""
   },
   "packages/web/src/app/test/referee/layout.tsx": {
-    "mtime": 1781942779.3167272,
+    "mtime": 1794783927.4865816,
     "ast_hash": "7ef12efe962f6e3b721f77136b82825c",
     "semantic_hash": ""
   },
   "packages/web/src/app/test/referee/league/page.tsx": {
-    "mtime": 1781942798.6744356,
+    "mtime": 1794783927.4865816,
     "ast_hash": "ae462b568dc95dc13cc0524884ed3935",
     "semantic_hash": ""
   },
   "packages/web/src/app/test/referee/page.tsx": {
-    "mtime": 1781942798.6714356,
+    "mtime": 1794783927.4865816,
     "ast_hash": "ab95f8e8112f4e4188abb7631dcffdc1",
     "semantic_hash": ""
   },
   "packages/web/src/app/test/referee/reconcile/page.tsx": {
-    "mtime": 1781942798.6734886,
+    "mtime": 1794783927.4865816,
     "ast_hash": "17af26201615f359c42d90471cfd5603",
     "semantic_hash": ""
   },
   "packages/web/src/app/test/referee/submit/page.tsx": {
-    "mtime": 1781942798.6742015,
+    "mtime": 1794783927.4865816,
     "ast_hash": "fc4b5a9be9a46bb685fb8a5a83fd01eb",
     "semantic_hash": ""
   },
   "packages/web/src/lib/auth/account.ts": {
-    "mtime": 1781989464.662472,
+    "mtime": 1794783927.4865816,
     "ast_hash": "c6a831315abf11eb38a66a551a3a0250",
     "semantic_hash": ""
   },
   "packages/web/src/lib/supabase/admin.ts": {
-    "mtime": 1781945587.8248703,
+    "mtime": 1794783927.4865816,
     "ast_hash": "bbe5897a7b9e0c70cef1339935aa9d99",
     "semantic_hash": ""
   },
   "scripts/create_admin_user.py": {
-    "mtime": 1781942571.3842998,
+    "mtime": 1794783927.4865816,
     "ast_hash": "e17429357b6570f6461b22c70981976d",
     "semantic_hash": ""
   },
   "supabase/migrations/20260620090000_add_admin_invite_demo_access.sql": {
-    "mtime": 1781942903.6947322,
+    "mtime": 1794783927.4905815,
     "ast_hash": "c45e0faff5e17e63570d8a421944eceb",
     "semantic_hash": ""
   },
   "packages/web/src/app/auth/login/route.ts": {
-    "mtime": 1781945109.5244284,
+    "mtime": 1794783927.4865816,
     "ast_hash": "2dd8efdb66bcbc01030f2e2e19f35cd7",
     "semantic_hash": ""
   },
   "packages/web/src/app/admin/api-keys/page.tsx": {
-    "mtime": 1781989464.6627114,
+    "mtime": 1794783927.4865816,
     "ast_hash": "337b5987b5aeaecf14732220a42c8685",
     "semantic_hash": ""
   },
   "packages/web/src/app/auth/accept-invite/route.ts": {
-    "mtime": 1781993809.1926389,
+    "mtime": 1794783927.4865816,
     "ast_hash": "0b1316d8cb6768bd8e405b8078b6fd99",
     "semantic_hash": ""
   },
   "packages/web/src/app/auth/callback/page.tsx": {
-    "mtime": 1781993825.7600594,
+    "mtime": 1794783927.4865816,
     "ast_hash": "900b4e68d96bd6afc2a9a278f89a0e4e",
     "semantic_hash": ""
   },
   "packages/web/src/app/auth/invite/page.tsx": {
-    "mtime": 1781993809.1892235,
+    "mtime": 1794783927.4865816,
     "ast_hash": "4eb2ebfe4278b6855e58a9bdd406f431",
     "semantic_hash": ""
   },
   "packages/web/src/components/invite-setup-card.tsx": {
-    "mtime": 1781993958.7562273,
+    "mtime": 1794783927.4865816,
     "ast_hash": "14e918049bd7bc9f1655c707ca6182d5",
+    "semantic_hash": ""
+  },
+  "packages/api/pyproject.toml": {
+    "mtime": 1794783927.4825814,
+    "ast_hash": "609f09143a721c414f83043d86421d06",
+    "semantic_hash": ""
+  },
+  "packages/api/src/ocr_engine_api/rate_limit.py": {
+    "mtime": 1794790297.4819021,
+    "ast_hash": "d888e4e7375d22bf6f3308025eab829d",
+    "semantic_hash": ""
+  },
+  "packages/cli/pyproject.toml": {
+    "mtime": 1794783927.4825814,
+    "ast_hash": "f44eb6cd53e4e8468c65c608afe8ecf2",
+    "semantic_hash": ""
+  },
+  "packages/core-engine/pyproject.toml": {
+    "mtime": 1794783927.4825814,
+    "ast_hash": "f0a4d134039696b666509f28f5d1df14",
+    "semantic_hash": ""
+  },
+  "packages/core-engine/src/ocr_engine_core/providers/http_base.py": {
+    "mtime": 1794790297.4659019,
+    "ast_hash": "19c4c617cd8cf850577ad62f38af6394",
+    "semantic_hash": ""
+  },
+  "packages/mcp/pyproject.toml": {
+    "mtime": 1794783927.4825814,
+    "ast_hash": "12628aa8315c5a6a06b854db1f1b310b",
+    "semantic_hash": ""
+  },
+  "pyproject.toml": {
+    "mtime": 1794783927.4865816,
+    "ast_hash": "54f209b4e4feec229a351bf12c99b589",
+    "semantic_hash": ""
+  },
+  "scripts/deploy_cloudrun.sh": {
+    "mtime": 1794790297.4819021,
+    "ast_hash": "45a7897c5bae1e1de2d0e5b8e8a9383b",
+    "semantic_hash": ""
+  },
+  "scripts/graphify-check": {
+    "mtime": 1794790297.4659019,
+    "ast_hash": "9ab13470a1ddc6aa7c136fa8636432e1",
+    "semantic_hash": ""
+  },
+  "scripts/graphify-update": {
+    "mtime": 1794790297.4659019,
+    "ast_hash": "7a7597aae134233f984b38db0739aed2",
+    "semantic_hash": ""
+  },
+  "scripts/graphify_check.py": {
+    "mtime": 1794790297.4659019,
+    "ast_hash": "cc6b2e241feeb1e12c478faa92d5aad4",
+    "semantic_hash": ""
+  },
+  "scripts/serve.sh": {
+    "mtime": 1794790297.4819021,
+    "ast_hash": "43852fbe77c69e58cb8d7d9abdc7ca8c",
+    "semantic_hash": ""
+  },
+  "scripts/setup-graphify": {
+    "mtime": 1794790297.4659019,
+    "ast_hash": "1c06bcb922d3350c6e3a66b9b3e08be0",
+    "semantic_hash": ""
+  },
+  "tests/test_hardening.py": {
+    "mtime": 1794790297.4819021,
+    "ast_hash": "35559f166b70d3b47440ff4f4c40daab",
+    "semantic_hash": ""
+  },
+  "tests/test_phase1_robustness.py": {
+    "mtime": 1794790297.4659019,
+    "ast_hash": "694f6fc1aa6f8e61008a41ce32ebe8f6",
+    "semantic_hash": ""
+  },
+  "tests/test_phase3_cleanup.py": {
+    "mtime": 1794790297.4659019,
+    "ast_hash": "57ef62b9c700fd785571336444a0a5e6",
+    "semantic_hash": ""
+  },
+  "tests/test_provider_http_base.py": {
+    "mtime": 1794790297.4659019,
+    "ast_hash": "a5aa03501a3d23c1fff09fc9a054091f",
+    "semantic_hash": ""
+  },
+  "CLAUDE.md": {
+    "mtime": 1794790297.4659019,
+    "ast_hash": "5c27369b226fcf2be8a6cfe52224e767",
+    "semantic_hash": ""
+  },
+  "docs/graphify.md": {
+    "mtime": 1794790297.4659019,
+    "ast_hash": "124cd4f219cd605dfca7495f62e47883",
     "semantic_hash": ""
   }
 }
