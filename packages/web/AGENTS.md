@@ -41,7 +41,7 @@ packages/web/
     │   │   └── club/               # Club analysis demo
     │   └── docs/
     │       ├── layout.tsx
-    │       └── quickstart/         # Public quickstart (does not require login)
+    │       └── quickstart/         # Signed-in API/MCP quickstart
     ├── components/
     │   ├── nav.tsx                 # Signed-in navigation (logout via Supabase)
     │   ├── auth-card.tsx           # Email/password signup & login
@@ -91,9 +91,9 @@ toast.error(error.message);
 
 Follow the same pattern in `components/nav.tsx` (logout).
 
-### 5. Public docs live under `app/docs/*`
+### 5. Docs under `app/docs/*`
 
-The quickstart (`/docs/quickstart`) is intentionally public — no auth. To add a new public doc, create `app/docs/<slug>/page.tsx` and reuse `app/docs/layout.tsx`.
+`/docs/quickstart` uses `requireCurrentUserAccount()` (and middleware protection under `/docs/*`) so only active signed-in accounts see local API/MCP quickstart examples with their session identity. To add a new authenticated doc, create `app/docs/<slug>/page.tsx` and guard it with `requireCurrentUserAccount()`.
 
 ### 6. Avoid infinite re-fetch loops in client effects
 
