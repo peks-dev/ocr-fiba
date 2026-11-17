@@ -745,13 +745,13 @@
     "semantic_hash": ""
   },
   "AGENTS.md": {
-    "mtime": 1794814254.2583246,
-    "ast_hash": "d0b2e89d88c25dbdc9389b5dae254954",
+    "mtime": 1794908530.744421,
+    "ast_hash": "ba1f8d5ceb2b1e7181910bcf049dbc49",
     "semantic_hash": ""
   },
   "README.md": {
-    "mtime": 1794814254.2583246,
-    "ast_hash": "ddf86211127a18da19360e50e24a2b0b",
+    "mtime": 1794908533.9093435,
+    "ast_hash": "40b531117f3e7de074b0636d2282ba7d",
     "semantic_hash": ""
   },
   "evaluation/README.md": {
@@ -760,8 +760,8 @@
     "semantic_hash": ""
   },
   "packages/api/AGENTS.md": {
-    "mtime": 1794814254.2723246,
-    "ast_hash": "77c4d4e1645ffa67776d10e81d3bf16f",
+    "mtime": 1794908565.0235808,
+    "ast_hash": "a2df4d693c238e575bdad0526fe3f7ed",
     "semantic_hash": ""
   },
   "packages/api/skills/api-error-envelope/SKILL.md": {
@@ -780,8 +780,8 @@
     "semantic_hash": ""
   },
   "packages/core-engine/AGENTS.md": {
-    "mtime": 1790667022.069505,
-    "ast_hash": "80e8ae6e99029f1aab9f541df4e498d5",
+    "mtime": 1794908560.5926893,
+    "ast_hash": "27f38506ad9172686f8c5427bbe6704e",
     "semantic_hash": ""
   },
   "packages/core-engine/skills/ocr-run-lifecycle/SKILL.md": {
@@ -790,13 +790,13 @@
     "semantic_hash": ""
   },
   "packages/mcp/AGENTS.md": {
-    "mtime": 1794814254.2733245,
-    "ast_hash": "55671b613ee0ff940a65dbfa310a5da5",
+    "mtime": 1794908557.1267743,
+    "ast_hash": "609c9904e9f74d4e59c080f1a9416c86",
     "semantic_hash": ""
   },
   "packages/mcp/docs/mcp-server.md": {
-    "mtime": 1794814254.2733245,
-    "ast_hash": "0ccf0d0c82912e1e38adb0a68a5032af",
+    "mtime": 1794908555.0068262,
+    "ast_hash": "e09726e5d0f2e3d75358054b2ed3f6c4",
     "semantic_hash": ""
   },
   "packages/web/AGENTS.md": {
@@ -1020,8 +1020,8 @@
     "semantic_hash": ""
   },
   "scripts/deploy_cloudrun.sh": {
-    "mtime": 1794896308.8371737,
-    "ast_hash": "9cfd314ae6af7355f8ecb381b753ab41",
+    "mtime": 1794908527.5095005,
+    "ast_hash": "c28b2a87a36647e22d6a6d51c9cdb813",
     "semantic_hash": ""
   },
   "scripts/graphify-check": {

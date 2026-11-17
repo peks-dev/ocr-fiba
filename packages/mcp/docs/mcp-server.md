@@ -72,18 +72,38 @@ Production deployments should set `MCP_AUTH_TOKEN` so HTTP auth (static token or
 in `.server-token` (generated on first start, chmod 600, gitignored). Logs and PIDs go to `.server/`.
 `OCR_SERVE_TUNNEL=1` also starts Cloudflare quick tunnels (needs outbound port 7844).
 
-## Tools and resources
+## Tools, resources, and prompts
 
-- `run`: kick off a new OCR run against the API
-- `result`: fetch a run result
-- `artifacts`: list artifacts for a run
-- Resources:
-  - `run://{run_id}` — current state of a run
-  - `artifact://{run_id}/{artifact_name}` — a specific artifact's URL
+### Tools
+
+- `submit_scoresheet_from_path`: submit a server-local image path for async processing (disabled when `MCP_ALLOW_PATH_INPUT=false` / `OCR_ENV=production`)
+- `submit_scoresheet_base64`: upload a base64-encoded scoresheet image for async processing
+- `poll_run`: inspect current status of an async OCR run
+- `wait_for_run`: poll an async run until completion, failure, or timeout
+- `list_runs`: list recent OCR runs
+- `inspect_run`: summarize a run and list its MCP resource URIs
+- `get_run_result`: fetch the structured JSON result for a completed run
+- `get_run_trace`: fetch the execution audit trace (`trace.json`) for a run
+- `list_run_artifacts`: list visual and JSON artifacts produced by a run
+- `get_artifact`: fetch one artifact encoded as base64
+
+### Resources
+
+- `run://{run_id}` — current run state and metadata (`application/json`)
+- `result://{run_id}` — structured OCR output (`application/json`)
+- `trace://{run_id}` — step-by-step execution trace (`application/json`)
+- `artifact://{run_id}/{artifact_name}` — individual artifact payload (`application/json`)
+
+### Prompts
+
+- `review_extraction(run_id)` — guide an agent through reviewing result and trace resources
+- `suggest_retry_strategy(run_id)` — recommend retry/override options using trace and errors
+- `explain_validation_warnings(run_id)` — translate engine warnings for human reviewers
 
 ## Production notes
 
 - Set `OCR_ENV=production` in the API so it ignores client `runs_dir` and enforces `OCR_RUNS_DIR`.
+- Tune `OCR_STALE_RUN_SECONDS` (default `900`) on the API to reconcile stalled runs that crashed before writing `result.json`.
 - Use a long-lived `OCR_ENGINE_API_KEY` and share it with the MCP server via `OCR_API_KEY`.
 - Keep `OCR_RUNS_DIR` on a persistent volume so artifacts survive restarts.
 

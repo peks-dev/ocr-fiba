@@ -607,8 +607,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "packages_api_src_ocr_engine_api_api_keys",
-      "community": 71,
-      "community_name": "Cropper",
+      "community": 125,
+      "community_name": "auth_api_key.py",
       "norm_label": "api_keys.py"
     },
     {
@@ -838,8 +838,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "packages_api_src_ocr_engine_api_auth",
-      "community": 43,
-      "community_name": "main.py",
+      "community": 47,
+      "community_name": "create_app",
       "norm_label": "ocr_engine_api/auth.py"
     },
     {
@@ -860,8 +860,8 @@
       "source_location": "L15",
       "_origin": "ast",
       "id": "packages_api_src_ocr_engine_api_auth_is_authorized",
-      "community": 11,
-      "community_name": "ApiTest",
+      "community": 47,
+      "community_name": "create_app",
       "norm_label": "is_authorized()"
     },
     {
@@ -871,8 +871,8 @@
       "source_location": "L22",
       "_origin": "ast",
       "id": "packages_api_src_ocr_engine_api_auth_unauthorized_response",
-      "community": 43,
-      "community_name": "main.py",
+      "community": 47,
+      "community_name": "create_app",
       "norm_label": "unauthorized_response()"
     },
     {
@@ -882,8 +882,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "packages_api_src_ocr_engine_api_auth_py_jsonresponse",
-      "community": 43,
-      "community_name": "main.py",
+      "community": 47,
+      "community_name": "create_app",
       "norm_label": "jsonresponse"
     },
     {
@@ -893,8 +893,8 @@
       "source_location": "L36",
       "_origin": "ast",
       "id": "packages_api_src_ocr_engine_api_auth_forbidden_response",
-      "community": 43,
-      "community_name": "main.py",
+      "community": 47,
+      "community_name": "create_app",
       "norm_label": "forbidden_response()"
     },
     {
@@ -1432,8 +1432,8 @@
       "source_location": "L61",
       "_origin": "ast",
       "id": "packages_api_src_ocr_engine_api_pipeline_options_parse_options_json",
-      "community": 43,
-      "community_name": "main.py",
+      "community": 10,
+      "community_name": "runs.py",
       "norm_label": "parse_options_json()"
     },
     {
@@ -1553,8 +1553,8 @@
       "source_location": "L58",
       "_origin": "ast",
       "id": "packages_api_src_ocr_engine_api_rate_limit_ratelimitstore",
-      "community": 95,
-      "community_name": "McpPathToolTest",
+      "community": 47,
+      "community_name": "create_app",
       "norm_label": "ratelimitstore"
     },
     {
@@ -1564,8 +1564,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "protocol",
-      "community": 95,
-      "community_name": "McpPathToolTest",
+      "community": 47,
+      "community_name": "create_app",
       "norm_label": "protocol"
     },
     {
@@ -1586,8 +1586,8 @@
       "source_location": "L63",
       "_origin": "ast",
       "id": "packages_api_src_ocr_engine_api_rate_limit_memoryratelimitstore",
-      "community": 95,
-      "community_name": "McpPathToolTest",
+      "community": 7,
+      "community_name": "ProviderInvalidResponseError",
       "norm_label": "memoryratelimitstore"
     },
     {
@@ -1597,8 +1597,8 @@
       "source_location": "L71",
       "_origin": "ast",
       "id": "packages_api_src_ocr_engine_api_rate_limit_memoryratelimitstore_init",
-      "community": 95,
-      "community_name": "McpPathToolTest",
+      "community": 7,
+      "community_name": "ProviderInvalidResponseError",
       "norm_label": ".__init__()"
     },
     {
@@ -1608,8 +1608,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "packages_api_src_ocr_engine_api_rate_limit_py_path",
-      "community": 95,
-      "community_name": "McpPathToolTest",
+      "community": 7,
+      "community_name": "ProviderInvalidResponseError",
       "norm_label": "path"
     },
     {
@@ -1619,8 +1619,8 @@
       "source_location": "L78",
       "_origin": "ast",
       "id": "packages_api_src_ocr_engine_api_rate_limit_memoryratelimitstore_consume",
-      "community": 95,
-      "community_name": "McpPathToolTest",
+      "community": 7,
+      "community_name": "ProviderInvalidResponseError",
       "norm_label": ".consume()"
     },
     {
@@ -1630,8 +1630,8 @@
       "source_location": "L112",
       "_origin": "ast",
       "id": "packages_api_src_ocr_engine_api_rate_limit_memoryratelimitstore_load",
-      "community": 95,
-      "community_name": "McpPathToolTest",
+      "community": 7,
+      "community_name": "ProviderInvalidResponseError",
       "norm_label": "._load()"
     },
     {
@@ -1641,8 +1641,8 @@
       "source_location": "L125",
       "_origin": "ast",
       "id": "packages_api_src_ocr_engine_api_rate_limit_memoryratelimitstore_save",
-      "community": 95,
-      "community_name": "McpPathToolTest",
+      "community": 7,
+      "community_name": "ProviderInvalidResponseError",
       "norm_label": "._save()"
     },
     {
@@ -1685,8 +1685,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "packages_api_src_ocr_engine_api_rate_limit_py_any",
-      "community": 95,
-      "community_name": "McpPathToolTest",
+      "community": 47,
+      "community_name": "create_app",
       "norm_label": "any"
     },
     {
@@ -1696,8 +1696,8 @@
       "source_location": "L185",
       "_origin": "ast",
       "id": "packages_api_src_ocr_engine_api_rate_limit_create_rate_limit_store",
-      "community": 95,
-      "community_name": "McpPathToolTest",
+      "community": 47,
+      "community_name": "create_app",
       "norm_label": "create_rate_limit_store()"
     },
     {
@@ -1707,8 +1707,8 @@
       "source_location": "L192",
       "_origin": "ast",
       "id": "packages_api_src_ocr_engine_api_rate_limit_runratelimiter",
-      "community": 47,
-      "community_name": "create_app",
+      "community": 7,
+      "community_name": "ProviderInvalidResponseError",
       "norm_label": "runratelimiter"
     },
     {
@@ -1718,8 +1718,8 @@
       "source_location": "L201",
       "_origin": "ast",
       "id": "packages_api_src_ocr_engine_api_rate_limit_runratelimiter_init",
-      "community": 95,
-      "community_name": "McpPathToolTest",
+      "community": 7,
+      "community_name": "ProviderInvalidResponseError",
       "norm_label": ".__init__()"
     },
     {
@@ -1729,8 +1729,8 @@
       "source_location": "L217",
       "_origin": "ast",
       "id": "packages_api_src_ocr_engine_api_rate_limit_runratelimiter_enabled",
-      "community": 47,
-      "community_name": "create_app",
+      "community": 7,
+      "community_name": "ProviderInvalidResponseError",
       "norm_label": ".enabled()"
     },
     {
@@ -1828,8 +1828,8 @@
       "source_location": "L64",
       "_origin": "ast",
       "id": "packages_api_src_ocr_engine_api_rate_limit_rationale_64",
-      "community": 95,
-      "community_name": "McpPathToolTest",
+      "community": 7,
+      "community_name": "ProviderInvalidResponseError",
       "norm_label": "in-memory sliding-window store, optionally persisted to a json file.      used a"
     },
     {
@@ -1861,8 +1861,8 @@
       "source_location": "L186",
       "_origin": "ast",
       "id": "packages_api_src_ocr_engine_api_rate_limit_rationale_186",
-      "community": 95,
-      "community_name": "McpPathToolTest",
+      "community": 47,
+      "community_name": "create_app",
       "norm_label": "use the shared supabase rpc when the service-role client is configured."
     },
     {
@@ -1872,8 +1872,8 @@
       "source_location": "L193",
       "_origin": "ast",
       "id": "packages_api_src_ocr_engine_api_rate_limit_rationale_193",
-      "community": 47,
-      "community_name": "create_app",
+      "community": 7,
+      "community_name": "ProviderInvalidResponseError",
       "norm_label": "sliding-window limiter for run creation, keyed per token. a limit of 0 disables"
     },
     {
@@ -1905,8 +1905,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "packages_api_src_ocr_engine_api_responses",
-      "community": 7,
-      "community_name": "ProviderInvalidResponseError",
+      "community": 11,
+      "community_name": "ApiTest",
       "norm_label": "responses.py"
     },
     {
@@ -1916,8 +1916,8 @@
       "source_location": "L20",
       "_origin": "ast",
       "id": "packages_api_src_ocr_engine_api_responses_sanitize_for_public_response",
-      "community": 7,
-      "community_name": "ProviderInvalidResponseError",
+      "community": 11,
+      "community_name": "ApiTest",
       "norm_label": "sanitize_for_public_response()"
     },
     {
@@ -1927,8 +1927,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "packages_api_src_ocr_engine_api_responses_py_any",
-      "community": 7,
-      "community_name": "ProviderInvalidResponseError",
+      "community": 11,
+      "community_name": "ApiTest",
       "norm_label": "any"
     },
     {
@@ -1938,8 +1938,8 @@
       "source_location": "L27",
       "_origin": "ast",
       "id": "packages_api_src_ocr_engine_api_responses_sanitize",
-      "community": 7,
-      "community_name": "ProviderInvalidResponseError",
+      "community": 11,
+      "community_name": "ApiTest",
       "norm_label": "_sanitize()"
     },
     {
@@ -1960,8 +1960,8 @@
       "source_location": "L21",
       "_origin": "ast",
       "id": "packages_api_src_ocr_engine_api_responses_rationale_21",
-      "community": 7,
-      "community_name": "ProviderInvalidResponseError",
+      "community": 11,
+      "community_name": "ApiTest",
       "norm_label": "remove local filesystem paths from api responses in production."
     },
     {
@@ -1993,8 +1993,8 @@
       "source_location": "L21",
       "_origin": "ast",
       "id": "packages_api_src_ocr_engine_api_routes_admin_require_admin_account",
-      "community": 83,
-      "community_name": "resolve_provider_api_key",
+      "community": 71,
+      "community_name": "Cropper",
       "norm_label": "require_admin_account()"
     },
     {
@@ -2048,8 +2048,8 @@
       "source_location": "L22",
       "_origin": "ast",
       "id": "packages_api_src_ocr_engine_api_routes_admin_rationale_22",
-      "community": 83,
-      "community_name": "resolve_provider_api_key",
+      "community": 71,
+      "community_name": "Cropper",
       "norm_label": "resolve the caller's account and require accounts.role == 'admin'."
     },
     {
@@ -2213,8 +2213,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "packages_api_src_ocr_engine_api_routes_runs",
-      "community": 7,
-      "community_name": "ProviderInvalidResponseError",
+      "community": 11,
+      "community_name": "ApiTest",
       "norm_label": "runs.py"
     },
     {
@@ -2224,8 +2224,8 @@
       "source_location": "L25",
       "_origin": "ast",
       "id": "packages_api_src_ocr_engine_api_routes_runs_create_run",
-      "community": 24,
-      "community_name": "get_api_settings",
+      "community": 10,
+      "community_name": "runs.py",
       "norm_label": "create_run()"
     },
     {
@@ -2323,8 +2323,8 @@
       "source_location": "L109",
       "_origin": "ast",
       "id": "packages_api_src_ocr_engine_api_routes_runs_get_run",
-      "community": 7,
-      "community_name": "ProviderInvalidResponseError",
+      "community": 11,
+      "community_name": "ApiTest",
       "norm_label": "get_run()"
     },
     {
@@ -2345,8 +2345,8 @@
       "source_location": "L131",
       "_origin": "ast",
       "id": "packages_api_src_ocr_engine_api_routes_runs_get_run_trace",
-      "community": 7,
-      "community_name": "ProviderInvalidResponseError",
+      "community": 11,
+      "community_name": "ApiTest",
       "norm_label": "get_run_trace()"
     },
     {
@@ -2356,8 +2356,8 @@
       "source_location": "L142",
       "_origin": "ast",
       "id": "packages_api_src_ocr_engine_api_routes_runs_get_run_result",
-      "community": 7,
-      "community_name": "ProviderInvalidResponseError",
+      "community": 11,
+      "community_name": "ApiTest",
       "norm_label": "get_run_result()"
     },
     {
@@ -2378,8 +2378,8 @@
       "source_location": "L165",
       "_origin": "ast",
       "id": "packages_api_src_ocr_engine_api_routes_runs_get_run_artifact",
-      "community": 7,
-      "community_name": "ProviderInvalidResponseError",
+      "community": 11,
+      "community_name": "ApiTest",
       "norm_label": "get_run_artifact()"
     },
     {
@@ -2389,8 +2389,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "fileresponse",
-      "community": 7,
-      "community_name": "ProviderInvalidResponseError",
+      "community": 11,
+      "community_name": "ApiTest",
       "norm_label": "fileresponse"
     },
     {
@@ -2400,8 +2400,8 @@
       "source_location": "L177",
       "_origin": "ast",
       "id": "packages_api_src_ocr_engine_api_routes_runs_run_repository_call",
-      "community": 7,
-      "community_name": "ProviderInvalidResponseError",
+      "community": 11,
+      "community_name": "ApiTest",
       "norm_label": "_run_repository_call()"
     },
     {
@@ -2411,8 +2411,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "t",
-      "community": 7,
-      "community_name": "ProviderInvalidResponseError",
+      "community": 11,
+      "community_name": "ApiTest",
       "norm_label": "t"
     },
     {
@@ -2422,8 +2422,8 @@
       "source_location": "L186",
       "_origin": "ast",
       "id": "packages_api_src_ocr_engine_api_routes_runs_resolve_input_file",
-      "community": 7,
-      "community_name": "ProviderInvalidResponseError",
+      "community": 11,
+      "community_name": "ApiTest",
       "norm_label": "_resolve_input_file()"
     },
     {
@@ -2433,8 +2433,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "packages_api_src_ocr_engine_api_routes_runs_py_path",
-      "community": 7,
-      "community_name": "ProviderInvalidResponseError",
+      "community": 11,
+      "community_name": "ApiTest",
       "norm_label": "path"
     },
     {
@@ -2444,8 +2444,8 @@
       "source_location": "L195",
       "_origin": "ast",
       "id": "packages_api_src_ocr_engine_api_routes_runs_safe_upload_filename",
-      "community": 7,
-      "community_name": "ProviderInvalidResponseError",
+      "community": 11,
+      "community_name": "ApiTest",
       "norm_label": "_safe_upload_filename()"
     },
     {
@@ -2466,8 +2466,8 @@
       "source_location": "L253",
       "_origin": "ast",
       "id": "packages_api_src_ocr_engine_api_routes_runs_validate_image_magic_bytes",
-      "community": 7,
-      "community_name": "ProviderInvalidResponseError",
+      "community": 11,
+      "community_name": "ApiTest",
       "norm_label": "_validate_image_magic_bytes()"
     },
     {
@@ -2488,8 +2488,8 @@
       "source_location": "L254",
       "_origin": "ast",
       "id": "packages_api_src_ocr_engine_api_routes_runs_rationale_254",
-      "community": 7,
-      "community_name": "ProviderInvalidResponseError",
+      "community": 11,
+      "community_name": "ApiTest",
       "norm_label": "ensure uploaded bytes match a supported image file signature (jpeg, png, webp)."
     },
     {
@@ -2543,8 +2543,8 @@
       "source_location": "L31",
       "_origin": "ast",
       "id": "packages_api_src_ocr_engine_api_schemas_createrunrequest",
-      "community": 24,
-      "community_name": "get_api_settings",
+      "community": 10,
+      "community_name": "runs.py",
       "norm_label": "createrunrequest"
     },
     {
@@ -2576,8 +2576,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "packages_api_src_ocr_engine_api_services_run_executor",
-      "community": 7,
-      "community_name": "ProviderInvalidResponseError",
+      "community": 12,
+      "community_name": "PipelineConfig",
       "norm_label": "run_executor.py"
     },
     {
@@ -2587,8 +2587,8 @@
       "source_location": "L22",
       "_origin": "ast",
       "id": "packages_api_src_ocr_engine_api_services_run_executor_runexecutor",
-      "community": 7,
-      "community_name": "ProviderInvalidResponseError",
+      "community": 11,
+      "community_name": "ApiTest",
       "norm_label": "runexecutor"
     },
     {
@@ -2675,8 +2675,8 @@
       "source_location": "L23",
       "_origin": "ast",
       "id": "packages_api_src_ocr_engine_api_services_run_executor_rationale_23",
-      "community": 7,
-      "community_name": "ProviderInvalidResponseError",
+      "community": 11,
+      "community_name": "ApiTest",
       "norm_label": "execute ocr runs and update filesystem-backed status."
     },
     {
@@ -2697,8 +2697,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "packages_api_src_ocr_engine_api_services_run_repository",
-      "community": 7,
-      "community_name": "ProviderInvalidResponseError",
+      "community": 61,
+      "community_name": "RunRepository",
       "norm_label": "run_repository.py"
     },
     {
@@ -2752,8 +2752,8 @@
       "source_location": "L47",
       "_origin": "ast",
       "id": "packages_api_src_ocr_engine_api_services_run_repository_runrepository_init",
-      "community": 61,
-      "community_name": "RunRepository",
+      "community": 24,
+      "community_name": "get_api_settings",
       "norm_label": ".__init__()"
     },
     {
@@ -3104,8 +3104,8 @@
       "source_location": "L40",
       "_origin": "ast",
       "id": "packages_api_src_ocr_engine_api_settings_apisettings_has_supabase_service",
-      "community": 95,
-      "community_name": "McpPathToolTest",
+      "community": 24,
+      "community_name": "get_api_settings",
       "norm_label": ".has_supabase_service()"
     },
     {
@@ -3181,8 +3181,8 @@
       "source_location": "L41",
       "_origin": "ast",
       "id": "packages_api_src_ocr_engine_api_settings_rationale_41",
-      "community": 95,
-      "community_name": "McpPathToolTest",
+      "community": 24,
+      "community_name": "get_api_settings",
       "norm_label": "true when the service-role client can be constructed (url + service key)."
     },
     {
@@ -3203,8 +3203,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "packages_api_src_ocr_engine_api_supabase_client",
-      "community": 71,
-      "community_name": "Cropper",
+      "community": 24,
+      "community_name": "get_api_settings",
       "norm_label": "supabase_client.py"
     },
     {
@@ -4133,8 +4133,8 @@
       "source_location": "L54",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_cropper_cropper_from_config",
-      "community": 31,
-      "community_name": "enhance_sections",
+      "community": 4,
+      "community_name": "create_provider",
       "norm_label": ".from_config()"
     },
     {
@@ -4144,8 +4144,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_cropper_py_providertype",
-      "community": 31,
-      "community_name": "enhance_sections",
+      "community": 4,
+      "community_name": "create_provider",
       "norm_label": "providertype"
     },
     {
@@ -4155,8 +4155,8 @@
       "source_location": "L63",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_cropper_cropper_detect_and_crop_sections",
-      "community": 31,
-      "community_name": "enhance_sections",
+      "community": 3,
+      "community_name": ".detect_and_crop_team_fouls",
       "norm_label": ".detect_and_crop_sections()"
     },
     {
@@ -4265,8 +4265,8 @@
       "source_location": "L319",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_cropper_cropper_crop_sections",
-      "community": 31,
-      "community_name": "enhance_sections",
+      "community": 3,
+      "community_name": ".detect_and_crop_team_fouls",
       "norm_label": "._crop_sections()"
     },
     {
@@ -4320,8 +4320,8 @@
       "source_location": "L419",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_cropper_cropper_save_boxes_json",
-      "community": 31,
-      "community_name": "enhance_sections",
+      "community": 3,
+      "community_name": ".detect_and_crop_team_fouls",
       "norm_label": "._save_boxes_json()"
     },
     {
@@ -4353,8 +4353,8 @@
       "source_location": "L55",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_cropper_rationale_55",
-      "community": 31,
-      "community_name": "enhance_sections",
+      "community": 4,
+      "community_name": "create_provider",
       "norm_label": "factory method to create a cropper from configuration."
     },
     {
@@ -4364,8 +4364,8 @@
       "source_location": "L68",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_cropper_rationale_68",
-      "community": 31,
-      "community_name": "enhance_sections",
+      "community": 3,
+      "community_name": ".detect_and_crop_team_fouls",
       "norm_label": "detect main sections, validate bounding boxes, and crop.          detection and"
     },
     {
@@ -4452,8 +4452,8 @@
       "source_location": "L325",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_cropper_rationale_325",
-      "community": 31,
-      "community_name": "enhance_sections",
+      "community": 3,
+      "community_name": ".detect_and_crop_team_fouls",
       "norm_label": "crop sections from the source image based on validated bounding boxes."
     },
     {
@@ -4496,8 +4496,8 @@
       "source_location": "L426",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_cropper_rationale_426",
-      "community": 31,
-      "community_name": "enhance_sections",
+      "community": 3,
+      "community_name": ".detect_and_crop_team_fouls",
       "norm_label": "save boxes.json alongside cropped sections."
     },
     {
@@ -4727,8 +4727,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_exceptions",
-      "community": 19,
-      "community_name": "extractor.py",
+      "community": 3,
+      "community_name": ".detect_and_crop_team_fouls",
       "norm_label": "exceptions.py"
     },
     {
@@ -4738,8 +4738,8 @@
       "source_location": "L21",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_exceptions_errorcode",
-      "community": 3,
-      "community_name": ".detect_and_crop_team_fouls",
+      "community": 68,
+      "community_name": "Extractor",
       "norm_label": "errorcode"
     },
     {
@@ -4859,8 +4859,8 @@
       "source_location": "L177",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_exceptions_pipelineerror",
-      "community": 26,
-      "community_name": "OcrEngineError",
+      "community": 68,
+      "community_name": "Extractor",
       "norm_label": "pipelineerror"
     },
     {
@@ -5046,8 +5046,8 @@
       "source_location": "L346",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_exceptions_providerinvalidresponseerror",
-      "community": 4,
-      "community_name": "create_provider",
+      "community": 3,
+      "community_name": ".detect_and_crop_team_fouls",
       "norm_label": "providerinvalidresponseerror"
     },
     {
@@ -5090,8 +5090,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_exceptions_rationale_1",
-      "community": 19,
-      "community_name": "extractor.py",
+      "community": 3,
+      "community_name": ".detect_and_crop_team_fouls",
       "norm_label": "excepcion base y jerarquia para el ocr engine.  toda excepcion del engine hereda"
     },
     {
@@ -5101,8 +5101,8 @@
       "source_location": "L22",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_exceptions_rationale_22",
-      "community": 3,
-      "community_name": ".detect_and_crop_team_fouls",
+      "community": 68,
+      "community_name": "Extractor",
       "norm_label": "catalogo de codigos de error machine-readable."
     },
     {
@@ -5156,8 +5156,8 @@
       "source_location": "L178",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_exceptions_rationale_178",
-      "community": 26,
-      "community_name": "OcrEngineError",
+      "community": 68,
+      "community_name": "Extractor",
       "norm_label": "error generico durante una fase del pipeline."
     },
     {
@@ -5255,8 +5255,8 @@
       "source_location": "L347",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_exceptions_rationale_347",
-      "community": 4,
-      "community_name": "create_provider",
+      "community": 3,
+      "community_name": ".detect_and_crop_team_fouls",
       "norm_label": "el provider devolvio una respuesta que no se puede interpretar."
     },
     {
@@ -5277,8 +5277,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_extractor",
-      "community": 67,
-      "community_name": "referee.py",
+      "community": 68,
+      "community_name": "Extractor",
       "norm_label": "extractor.py"
     },
     {
@@ -5299,8 +5299,8 @@
       "source_location": "L66",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_extractor_extractor",
-      "community": 68,
-      "community_name": "Extractor",
+      "community": 20,
+      "community_name": "OpenrouterProvider",
       "norm_label": "extractor"
     },
     {
@@ -5310,8 +5310,8 @@
       "source_location": "L72",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_extractor_extractor_init",
-      "community": 68,
-      "community_name": "Extractor",
+      "community": 20,
+      "community_name": "OpenrouterProvider",
       "norm_label": ".__init__()"
     },
     {
@@ -5332,8 +5332,8 @@
       "source_location": "L81",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_extractor_extractor_from_config",
-      "community": 68,
-      "community_name": "Extractor",
+      "community": 20,
+      "community_name": "OpenrouterProvider",
       "norm_label": ".from_config()"
     },
     {
@@ -5343,8 +5343,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_extractor_py_providertype",
-      "community": 68,
-      "community_name": "Extractor",
+      "community": 20,
+      "community_name": "OpenrouterProvider",
       "norm_label": "providertype"
     },
     {
@@ -5387,8 +5387,8 @@
       "source_location": "L247",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_extractor_supports_agentic_mode",
-      "community": 20,
-      "community_name": "OpenrouterProvider",
+      "community": 55,
+      "community_name": "ValidationEngine",
       "norm_label": "_supports_agentic_mode()"
     },
     {
@@ -5398,8 +5398,8 @@
       "source_location": "L262",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_extractor_convert_interfaze_team_json",
-      "community": 67,
-      "community_name": "referee.py",
+      "community": 68,
+      "community_name": "Extractor",
       "norm_label": "_convert_interfaze_team_json()"
     },
     {
@@ -5409,8 +5409,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_extractor_rationale_1",
-      "community": 67,
-      "community_name": "referee.py",
+      "community": 68,
+      "community_name": "Extractor",
       "norm_label": "core extractor \u2014 model-agnostic structured extraction from fiba sections.  this"
     },
     {
@@ -5431,8 +5431,8 @@
       "source_location": "L67",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_extractor_rationale_67",
-      "community": 68,
-      "community_name": "Extractor",
+      "community": 20,
+      "community_name": "OpenrouterProvider",
       "norm_label": "responsible for extracting structured data from section images.     uses a model"
     },
     {
@@ -5442,8 +5442,8 @@
       "source_location": "L88",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_extractor_rationale_88",
-      "community": 68,
-      "community_name": "Extractor",
+      "community": 20,
+      "community_name": "OpenrouterProvider",
       "norm_label": "factory method to create an extractor from configuration."
     },
     {
@@ -5475,8 +5475,8 @@
       "source_location": "L248",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_extractor_rationale_248",
-      "community": 20,
-      "community_name": "OpenrouterProvider",
+      "community": 55,
+      "community_name": "ValidationEngine",
       "norm_label": "whether a provider's structured_completion accepts agentic_mode.      cached per"
     },
     {
@@ -5486,8 +5486,8 @@
       "source_location": "L263",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_extractor_rationale_263",
-      "community": 67,
-      "community_name": "referee.py",
+      "community": 68,
+      "community_name": "Extractor",
       "norm_label": "convert interfaze's spanish-keyed team json to the expected format.      interfa"
     },
     {
@@ -6025,8 +6025,8 @@
       "source_location": "L43",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_pipeline_fibaocrpipeline",
-      "community": 118,
-      "community_name": "FibaOcrPipeline",
+      "community": 12,
+      "community_name": "PipelineConfig",
       "norm_label": "fibaocrpipeline"
     },
     {
@@ -6047,8 +6047,8 @@
       "source_location": "L58",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_pipeline_fibaocrpipeline_process",
-      "community": 118,
-      "community_name": "FibaOcrPipeline",
+      "community": 12,
+      "community_name": "PipelineConfig",
       "norm_label": ".process()"
     },
     {
@@ -6058,8 +6058,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_pipeline_py_path",
-      "community": 118,
-      "community_name": "FibaOcrPipeline",
+      "community": 12,
+      "community_name": "PipelineConfig",
       "norm_label": "path"
     },
     {
@@ -6069,8 +6069,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_pipeline_py_any",
-      "community": 118,
-      "community_name": "FibaOcrPipeline",
+      "community": 12,
+      "community_name": "PipelineConfig",
       "norm_label": "any"
     },
     {
@@ -6080,8 +6080,8 @@
       "source_location": "L107",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_pipeline_fibaocrpipeline_save_result",
-      "community": 118,
-      "community_name": "FibaOcrPipeline",
+      "community": 12,
+      "community_name": "PipelineConfig",
       "norm_label": ".save_result()"
     },
     {
@@ -6091,8 +6091,8 @@
       "source_location": "L116",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_pipeline_fibaocrpipeline_print_progress",
-      "community": 118,
-      "community_name": "FibaOcrPipeline",
+      "community": 12,
+      "community_name": "PipelineConfig",
       "norm_label": "._print_progress()"
     },
     {
@@ -6102,8 +6102,8 @@
       "source_location": "L130",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_pipeline_fibaocrpipeline_print_step_start",
-      "community": 118,
-      "community_name": "FibaOcrPipeline",
+      "community": 12,
+      "community_name": "PipelineConfig",
       "norm_label": "._print_step_start()"
     },
     {
@@ -6113,8 +6113,8 @@
       "source_location": "L153",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_pipeline_fibaocrpipeline_print_step_complete",
-      "community": 118,
-      "community_name": "FibaOcrPipeline",
+      "community": 12,
+      "community_name": "PipelineConfig",
       "norm_label": "._print_step_complete()"
     },
     {
@@ -6135,8 +6135,8 @@
       "source_location": "L44",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_pipeline_rationale_44",
-      "community": 118,
-      "community_name": "FibaOcrPipeline",
+      "community": 12,
+      "community_name": "PipelineConfig",
       "norm_label": "pipeline completo para procesar hojas de anotacion fiba.     usa la arquitectura"
     },
     {
@@ -6146,8 +6146,8 @@
       "source_location": "L67",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_pipeline_rationale_67",
-      "community": 118,
-      "community_name": "FibaOcrPipeline",
+      "community": 12,
+      "community_name": "PipelineConfig",
       "norm_label": "run the full pipeline on a fiba scoresheet image.          args:             ima"
     },
     {
@@ -6157,8 +6157,8 @@
       "source_location": "L108",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_pipeline_rationale_108",
-      "community": 118,
-      "community_name": "FibaOcrPipeline",
+      "community": 12,
+      "community_name": "PipelineConfig",
       "norm_label": "save the result json to a file."
     },
     {
@@ -6410,8 +6410,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_prompts_extraction",
-      "community": 67,
-      "community_name": "referee.py",
+      "community": 68,
+      "community_name": "Extractor",
       "norm_label": "extraction.py"
     },
     {
@@ -6421,8 +6421,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_prompts_extraction_rationale_1",
-      "community": 67,
-      "community_name": "referee.py",
+      "community": 68,
+      "community_name": "Extractor",
       "norm_label": "prompts detallados para extraccion de secciones de hojas fiba. migrados desde ex"
     },
     {
@@ -6454,8 +6454,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_providers_init",
-      "community": 4,
-      "community_name": "create_provider",
+      "community": 3,
+      "community_name": ".detect_and_crop_team_fouls",
       "norm_label": "providers/__init__.py"
     },
     {
@@ -6487,8 +6487,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_providers_init_rationale_1",
-      "community": 4,
-      "community_name": "create_provider",
+      "community": 3,
+      "community_name": ".detect_and_crop_team_fouls",
       "norm_label": "provider factory \u2014 centralized creation of modelprovider instances."
     },
     {
@@ -6509,8 +6509,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_providers_base",
-      "community": 4,
-      "community_name": "create_provider",
+      "community": 3,
+      "community_name": ".detect_and_crop_team_fouls",
       "norm_label": "providers/base.py"
     },
     {
@@ -6520,8 +6520,8 @@
       "source_location": "L20",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_providers_base_tokenusage",
-      "community": 4,
-      "community_name": "create_provider",
+      "community": 28,
+      "community_name": "exceptions.py",
       "norm_label": "tokenusage"
     },
     {
@@ -6531,8 +6531,8 @@
       "source_location": "L26",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_providers_base_tokenusage_post_init",
-      "community": 4,
-      "community_name": "create_provider",
+      "community": 28,
+      "community_name": "exceptions.py",
       "norm_label": ".__post_init__()"
     },
     {
@@ -6542,8 +6542,8 @@
       "source_location": "L33",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_providers_base_tokenusage_add",
-      "community": 4,
-      "community_name": "create_provider",
+      "community": 28,
+      "community_name": "exceptions.py",
       "norm_label": ".add()"
     },
     {
@@ -6553,8 +6553,8 @@
       "source_location": "L39",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_providers_base_tokenusage_from_usage",
-      "community": 118,
-      "community_name": "FibaOcrPipeline",
+      "community": 55,
+      "community_name": "ValidationEngine",
       "norm_label": ".from_usage()"
     },
     {
@@ -6575,8 +6575,8 @@
       "source_location": "L57",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_providers_base_boundingbox",
-      "community": 31,
-      "community_name": "enhance_sections",
+      "community": 3,
+      "community_name": ".detect_and_crop_team_fouls",
       "norm_label": "boundingbox"
     },
     {
@@ -6586,8 +6586,8 @@
       "source_location": "L68",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_providers_base_pixelbox",
-      "community": 31,
-      "community_name": "enhance_sections",
+      "community": 3,
+      "community_name": ".detect_and_crop_team_fouls",
       "norm_label": "pixelbox"
     },
     {
@@ -6597,8 +6597,8 @@
       "source_location": "L79",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_providers_base_detectionmeta",
-      "community": 31,
-      "community_name": "enhance_sections",
+      "community": 3,
+      "community_name": ".detect_and_crop_team_fouls",
       "norm_label": "detectionmeta"
     },
     {
@@ -6608,8 +6608,8 @@
       "source_location": "L87",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_providers_base_modelprovider",
-      "community": 55,
-      "community_name": "ValidationEngine",
+      "community": 3,
+      "community_name": ".detect_and_crop_team_fouls",
       "norm_label": "modelprovider"
     },
     {
@@ -6619,8 +6619,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_providers_base_py_abc",
-      "community": 55,
-      "community_name": "ValidationEngine",
+      "community": 3,
+      "community_name": ".detect_and_crop_team_fouls",
       "norm_label": "abc"
     },
     {
@@ -6630,8 +6630,8 @@
       "source_location": "L98",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_providers_base_modelprovider_init",
-      "community": 55,
-      "community_name": "ValidationEngine",
+      "community": 3,
+      "community_name": ".detect_and_crop_team_fouls",
       "norm_label": ".__init__()"
     },
     {
@@ -6674,8 +6674,8 @@
       "source_location": "L150",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_providers_base_modelprovider_repr",
-      "community": 55,
-      "community_name": "ValidationEngine",
+      "community": 3,
+      "community_name": ".detect_and_crop_team_fouls",
       "norm_label": ".__repr__()"
     },
     {
@@ -6685,8 +6685,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_providers_base_rationale_1",
-      "community": 4,
-      "community_name": "create_provider",
+      "community": 3,
+      "community_name": ".detect_and_crop_team_fouls",
       "norm_label": "base abstraction for ai model providers.  this module defines the common interfa"
     },
     {
@@ -6696,8 +6696,8 @@
       "source_location": "L21",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_providers_base_rationale_21",
-      "community": 4,
-      "community_name": "create_provider",
+      "community": 28,
+      "community_name": "exceptions.py",
       "norm_label": "represents token usage from a model call."
     },
     {
@@ -6707,8 +6707,8 @@
       "source_location": "L40",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_providers_base_rationale_40",
-      "community": 118,
-      "community_name": "FibaOcrPipeline",
+      "community": 55,
+      "community_name": "ValidationEngine",
       "norm_label": "build tokenusage from another tokenusage, providerusage, dict, or none."
     },
     {
@@ -6718,8 +6718,8 @@
       "source_location": "L58",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_providers_base_rationale_58",
-      "community": 31,
-      "community_name": "enhance_sections",
+      "community": 3,
+      "community_name": ".detect_and_crop_team_fouls",
       "norm_label": "normalized bounding box (0-1000 scale)."
     },
     {
@@ -6729,8 +6729,8 @@
       "source_location": "L69",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_providers_base_rationale_69",
-      "community": 31,
-      "community_name": "enhance_sections",
+      "community": 3,
+      "community_name": ".detect_and_crop_team_fouls",
       "norm_label": "pixel-level bounding box."
     },
     {
@@ -6740,8 +6740,8 @@
       "source_location": "L80",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_providers_base_rationale_80",
-      "community": 31,
-      "community_name": "enhance_sections",
+      "community": 3,
+      "community_name": ".detect_and_crop_team_fouls",
       "norm_label": "metadata from a detection call."
     },
     {
@@ -6751,8 +6751,8 @@
       "source_location": "L88",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_providers_base_rationale_88",
-      "community": 55,
-      "community_name": "ValidationEngine",
+      "community": 3,
+      "community_name": ".detect_and_crop_team_fouls",
       "norm_label": "abstract base class for all model providers.      each provider (interfaze, gemi"
     },
     {
@@ -6784,8 +6784,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_providers_docstrange",
-      "community": 28,
-      "community_name": "exceptions.py",
+      "community": 3,
+      "community_name": ".detect_and_crop_team_fouls",
       "norm_label": "docstrange.py"
     },
     {
@@ -6894,8 +6894,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_providers_docstrange_rationale_1",
-      "community": 28,
-      "community_name": "exceptions.py",
+      "community": 3,
+      "community_name": ".detect_and_crop_team_fouls",
       "norm_label": "docstrange (nanonets) provider implementation via document extraction api.  uses"
     },
     {
@@ -6971,8 +6971,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_providers_gemini",
-      "community": 4,
-      "community_name": "create_provider",
+      "community": 3,
+      "community_name": ".detect_and_crop_team_fouls",
       "norm_label": "gemini.py"
     },
     {
@@ -7092,8 +7092,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_providers_gemini_rationale_1",
-      "community": 4,
-      "community_name": "create_provider",
+      "community": 3,
+      "community_name": ".detect_and_crop_team_fouls",
       "norm_label": "gemini provider implementation via google generative ai."
     },
     {
@@ -7136,8 +7136,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_providers_glm",
-      "community": 4,
-      "community_name": "create_provider",
+      "community": 3,
+      "community_name": ".detect_and_crop_team_fouls",
       "norm_label": "glm.py"
     },
     {
@@ -7202,8 +7202,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_providers_glm_rationale_1",
-      "community": 4,
-      "community_name": "create_provider",
+      "community": 3,
+      "community_name": ".detect_and_crop_team_fouls",
       "norm_label": "glm (z.ai) provider implementation via chat completion api.  uses the openai-com"
     },
     {
@@ -7224,8 +7224,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_providers_http_base",
-      "community": 19,
-      "community_name": "extractor.py",
+      "community": 3,
+      "community_name": ".detect_and_crop_team_fouls",
       "norm_label": "http_base.py"
     },
     {
@@ -7334,8 +7334,8 @@
       "source_location": "L158",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_providers_http_base_httpjsonprovider_encode_data_uri",
-      "community": 105,
-      "community_name": "cropper.py",
+      "community": 6,
+      "community_name": "HttpJsonProvider",
       "norm_label": "._encode_data_uri()"
     },
     {
@@ -7389,8 +7389,8 @@
       "source_location": "L195",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_providers_http_base_httpjsonprovider_extract_openai_usage",
-      "community": 4,
-      "community_name": "create_provider",
+      "community": 6,
+      "community_name": "HttpJsonProvider",
       "norm_label": "._extract_openai_usage()"
     },
     {
@@ -7455,8 +7455,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_providers_http_base_rationale_1",
-      "community": 19,
-      "community_name": "extractor.py",
+      "community": 3,
+      "community_name": ".detect_and_crop_team_fouls",
       "norm_label": "shared http/json provider base.  centralizes everything the chat-completion-styl"
     },
     {
@@ -7543,8 +7543,8 @@
       "source_location": "L159",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_providers_http_base_rationale_159",
-      "community": 105,
-      "community_name": "cropper.py",
+      "community": 6,
+      "community_name": "HttpJsonProvider",
       "norm_label": "encode an image as a base64 ``data:`` uri."
     },
     {
@@ -7587,8 +7587,8 @@
       "source_location": "L196",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_providers_http_base_rationale_196",
-      "community": 4,
-      "community_name": "create_provider",
+      "community": 6,
+      "community_name": "HttpJsonProvider",
       "norm_label": "extract usage from an openai-compatible ``usage`` object."
     },
     {
@@ -7631,8 +7631,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_providers_interfaze",
-      "community": 4,
-      "community_name": "create_provider",
+      "community": 3,
+      "community_name": ".detect_and_crop_team_fouls",
       "norm_label": "interfaze.py"
     },
     {
@@ -7708,8 +7708,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_providers_interfaze_rationale_1",
-      "community": 4,
-      "community_name": "create_provider",
+      "community": 3,
+      "community_name": ".detect_and_crop_team_fouls",
       "norm_label": "interfaze provider implementation."
     },
     {
@@ -7741,8 +7741,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_providers_openrouter",
-      "community": 4,
-      "community_name": "create_provider",
+      "community": 3,
+      "community_name": ".detect_and_crop_team_fouls",
       "norm_label": "openrouter.py"
     },
     {
@@ -7752,8 +7752,8 @@
       "source_location": "L18",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_providers_openrouter_openrouterprovider",
-      "community": 20,
-      "community_name": "OpenrouterProvider",
+      "community": 29,
+      "community_name": "TokenUsage",
       "norm_label": "openrouterprovider"
     },
     {
@@ -7763,8 +7763,8 @@
       "source_location": "L24",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_providers_openrouter_openrouterprovider_init",
-      "community": 20,
-      "community_name": "OpenrouterProvider",
+      "community": 29,
+      "community_name": "TokenUsage",
       "norm_label": ".__init__()"
     },
     {
@@ -7774,8 +7774,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_providers_openrouter_py_any",
-      "community": 20,
-      "community_name": "OpenrouterProvider",
+      "community": 29,
+      "community_name": "TokenUsage",
       "norm_label": "any"
     },
     {
@@ -7785,8 +7785,8 @@
       "source_location": "L28",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_providers_openrouter_openrouterprovider_auth_headers",
-      "community": 20,
-      "community_name": "OpenrouterProvider",
+      "community": 29,
+      "community_name": "TokenUsage",
       "norm_label": "._auth_headers()"
     },
     {
@@ -7796,8 +7796,8 @@
       "source_location": "L35",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_providers_openrouter_openrouterprovider_build_payload",
-      "community": 20,
-      "community_name": "OpenrouterProvider",
+      "community": 29,
+      "community_name": "TokenUsage",
       "norm_label": "._build_payload()"
     },
     {
@@ -7807,8 +7807,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_providers_openrouter_py_path",
-      "community": 20,
-      "community_name": "OpenrouterProvider",
+      "community": 29,
+      "community_name": "TokenUsage",
       "norm_label": "path"
     },
     {
@@ -7818,8 +7818,8 @@
       "source_location": "L73",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_providers_openrouter_openrouterprovider_call_api",
-      "community": 20,
-      "community_name": "OpenrouterProvider",
+      "community": 29,
+      "community_name": "TokenUsage",
       "norm_label": "._call_api()"
     },
     {
@@ -7829,8 +7829,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_providers_openrouter_rationale_1",
-      "community": 4,
-      "community_name": "create_provider",
+      "community": 3,
+      "community_name": ".detect_and_crop_team_fouls",
       "norm_label": "openrouter provider implementation via chat completion api.  uses openrouter's o"
     },
     {
@@ -7840,8 +7840,8 @@
       "source_location": "L19",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_providers_openrouter_rationale_19",
-      "community": 20,
-      "community_name": "OpenrouterProvider",
+      "community": 29,
+      "community_name": "TokenUsage",
       "norm_label": "provider for openrouter-hosted models such as google/gemini-3-flash-preview."
     },
     {
@@ -7851,8 +7851,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_providers_qubrid",
-      "community": 4,
-      "community_name": "create_provider",
+      "community": 3,
+      "community_name": ".detect_and_crop_team_fouls",
       "norm_label": "qubrid.py"
     },
     {
@@ -7939,8 +7939,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_providers_qubrid_rationale_1",
-      "community": 4,
-      "community_name": "create_provider",
+      "community": 3,
+      "community_name": ".detect_and_crop_team_fouls",
       "norm_label": "qubrid provider implementation via chat completion api.  uses qubrid's official"
     },
     {
@@ -8104,8 +8104,8 @@
       "source_location": "L33",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_toolbox_ocrtoolbox",
-      "community": 12,
-      "community_name": "PipelineConfig",
+      "community": 37,
+      "community_name": "OcrToolbox",
       "norm_label": "ocrtoolbox"
     },
     {
@@ -8115,8 +8115,8 @@
       "source_location": "L36",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_toolbox_ocrtoolbox_init",
-      "community": 12,
-      "community_name": "PipelineConfig",
+      "community": 20,
+      "community_name": "OpenrouterProvider",
       "norm_label": ".__init__()"
     },
     {
@@ -8258,8 +8258,8 @@
       "source_location": "L468",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_toolbox_ocrtoolbox_build_extractor",
-      "community": 12,
-      "community_name": "PipelineConfig",
+      "community": 20,
+      "community_name": "OpenrouterProvider",
       "norm_label": "._build_extractor()"
     },
     {
@@ -8313,8 +8313,8 @@
       "source_location": "L34",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_toolbox_rationale_34",
-      "community": 12,
-      "community_name": "PipelineConfig",
+      "community": 37,
+      "community_name": "OcrToolbox",
       "norm_label": "composable ocr operations with structured results and tracing."
     },
     {
@@ -8379,8 +8379,8 @@
       "source_location": "L32",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_tracing_runtracer_set_result_summary",
-      "community": 129,
-      "community_name": ".from_config",
+      "community": 25,
+      "community_name": "Artifact",
       "norm_label": ".set_result_summary()"
     },
     {
@@ -8390,8 +8390,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_tracing_py_any",
-      "community": 129,
-      "community_name": ".from_config",
+      "community": 25,
+      "community_name": "Artifact",
       "norm_label": "any"
     },
     {
@@ -8401,8 +8401,8 @@
       "source_location": "L36",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_tracing_runtracer_step",
-      "community": 129,
-      "community_name": ".from_config",
+      "community": 25,
+      "community_name": "Artifact",
       "norm_label": ".step()"
     },
     {
@@ -8412,8 +8412,8 @@
       "source_location": "L52",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_tracing_runtracer_write",
-      "community": 129,
-      "community_name": ".from_config",
+      "community": 25,
+      "community_name": "Artifact",
       "norm_label": ".write()"
     },
     {
@@ -8423,8 +8423,8 @@
       "source_location": "L59",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_tracing_runtracer_to_dict",
-      "community": 129,
-      "community_name": ".from_config",
+      "community": 25,
+      "community_name": "Artifact",
       "norm_label": ".to_dict()"
     },
     {
@@ -8434,8 +8434,8 @@
       "source_location": "L87",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_tracing_runtracer_summary",
-      "community": 129,
-      "community_name": ".from_config",
+      "community": 25,
+      "community_name": "Artifact",
       "norm_label": "._summary()"
     },
     {
@@ -8445,8 +8445,8 @@
       "source_location": "L112",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_tracing_exception_to_dict",
-      "community": 129,
-      "community_name": ".from_config",
+      "community": 25,
+      "community_name": "Artifact",
       "norm_label": "_exception_to_dict()"
     },
     {
@@ -8467,8 +8467,8 @@
       "source_location": "L121",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_tracing_sum_usage",
-      "community": 129,
-      "community_name": ".from_config",
+      "community": 25,
+      "community_name": "Artifact",
       "norm_label": "_sum_usage()"
     },
     {
@@ -8478,8 +8478,8 @@
       "source_location": "L146",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_tracing_timestamp_iso",
-      "community": 129,
-      "community_name": ".from_config",
+      "community": 25,
+      "community_name": "Artifact",
       "norm_label": "_timestamp_iso()"
     },
     {
@@ -8874,8 +8874,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_utils_init",
-      "community": 67,
-      "community_name": "referee.py",
+      "community": 8,
+      "community_name": "team_markdown_parser.py",
       "norm_label": "utils/__init__.py"
     },
     {
@@ -9072,8 +9072,8 @@
       "source_location": "L14",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_utils_image_utils_encode_file",
-      "community": 105,
-      "community_name": "cropper.py",
+      "community": 6,
+      "community_name": "HttpJsonProvider",
       "norm_label": "encode_file()"
     },
     {
@@ -9083,8 +9083,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_utils_image_utils_py_path",
-      "community": 105,
-      "community_name": "cropper.py",
+      "community": 6,
+      "community_name": "HttpJsonProvider",
       "norm_label": "path"
     },
     {
@@ -9094,8 +9094,8 @@
       "source_location": "L19",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_utils_image_utils_guess_mime_type",
-      "community": 105,
-      "community_name": "cropper.py",
+      "community": 3,
+      "community_name": ".detect_and_crop_team_fouls",
       "norm_label": "guess_mime_type()"
     },
     {
@@ -9193,8 +9193,8 @@
       "source_location": "L15",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_utils_image_utils_rationale_15",
-      "community": 105,
-      "community_name": "cropper.py",
+      "community": 6,
+      "community_name": "HttpJsonProvider",
       "norm_label": "encode a file to base64 ascii string."
     },
     {
@@ -9204,8 +9204,8 @@
       "source_location": "L20",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_utils_image_utils_rationale_20",
-      "community": 105,
-      "community_name": "cropper.py",
+      "community": 3,
+      "community_name": ".detect_and_crop_team_fouls",
       "norm_label": "guess mime type from filename, defaulting to image/jpeg."
     },
     {
@@ -9281,8 +9281,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_utils_team_markdown_parser",
-      "community": 67,
-      "community_name": "referee.py",
+      "community": 8,
+      "community_name": "team_markdown_parser.py",
       "norm_label": "team_markdown_parser.py"
     },
     {
@@ -9292,8 +9292,8 @@
       "source_location": "L6",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_utils_team_markdown_parser_teammarkdownparseerror",
-      "community": 67,
-      "community_name": "referee.py",
+      "community": 8,
+      "community_name": "team_markdown_parser.py",
       "norm_label": "teammarkdownparseerror"
     },
     {
@@ -9303,8 +9303,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_utils_team_markdown_parser_py_valueerror",
-      "community": 67,
-      "community_name": "referee.py",
+      "community": 8,
+      "community_name": "team_markdown_parser.py",
       "norm_label": "valueerror"
     },
     {
@@ -9314,8 +9314,8 @@
       "source_location": "L28",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_utils_team_markdown_parser_parse_team_markdown",
-      "community": 67,
-      "community_name": "referee.py",
+      "community": 8,
+      "community_name": "team_markdown_parser.py",
       "norm_label": "parse_team_markdown()"
     },
     {
@@ -9325,8 +9325,8 @@
       "source_location": "L98",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_utils_team_markdown_parser_parse_player_row",
-      "community": 67,
-      "community_name": "referee.py",
+      "community": 8,
+      "community_name": "team_markdown_parser.py",
       "norm_label": "parse_player_row()"
     },
     {
@@ -9336,8 +9336,8 @@
       "source_location": "L124",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_utils_team_markdown_parser_parse_fouls",
-      "community": 67,
-      "community_name": "referee.py",
+      "community": 8,
+      "community_name": "team_markdown_parser.py",
       "norm_label": "parse_fouls()"
     },
     {
@@ -9347,8 +9347,8 @@
       "source_location": "L135",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_utils_team_markdown_parser_parse_mark_flag",
-      "community": 67,
-      "community_name": "referee.py",
+      "community": 8,
+      "community_name": "team_markdown_parser.py",
       "norm_label": "parse_mark_flag()"
     },
     {
@@ -9358,8 +9358,8 @@
       "source_location": "L151",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_utils_team_markdown_parser_parse_required_int",
-      "community": 67,
-      "community_name": "referee.py",
+      "community": 8,
+      "community_name": "team_markdown_parser.py",
       "norm_label": "parse_required_int()"
     },
     {
@@ -9369,8 +9369,8 @@
       "source_location": "L159",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_utils_team_markdown_parser_parse_nullable_int",
-      "community": 67,
-      "community_name": "referee.py",
+      "community": 8,
+      "community_name": "team_markdown_parser.py",
       "norm_label": "parse_nullable_int()"
     },
     {
@@ -9380,8 +9380,8 @@
       "source_location": "L170",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_utils_team_markdown_parser_parse_nullable_text",
-      "community": 67,
-      "community_name": "referee.py",
+      "community": 8,
+      "community_name": "team_markdown_parser.py",
       "norm_label": "parse_nullable_text()"
     },
     {
@@ -9391,8 +9391,8 @@
       "source_location": "L177",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_utils_team_markdown_parser_is_separator_row",
-      "community": 67,
-      "community_name": "referee.py",
+      "community": 8,
+      "community_name": "team_markdown_parser.py",
       "norm_label": "is_separator_row()"
     },
     {
@@ -9402,8 +9402,8 @@
       "source_location": "L181",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_utils_team_markdown_parser_is_placeholder_row",
-      "community": 67,
-      "community_name": "referee.py",
+      "community": 8,
+      "community_name": "team_markdown_parser.py",
       "norm_label": "is_placeholder_row()"
     },
     {
@@ -9413,8 +9413,8 @@
       "source_location": "L185",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_utils_team_markdown_parser_normalize_token",
-      "community": 67,
-      "community_name": "referee.py",
+      "community": 8,
+      "community_name": "team_markdown_parser.py",
       "norm_label": "normalize_token()"
     },
     {
@@ -9424,8 +9424,8 @@
       "source_location": "L136",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_utils_team_markdown_parser_rationale_136",
-      "community": 67,
-      "community_name": "referee.py",
+      "community": 8,
+      "community_name": "team_markdown_parser.py",
       "norm_label": "parse a boolean mark flag from markdown cells or json mark values."
     },
     {
@@ -9479,8 +9479,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_validation_base_py_any",
-      "community": 23,
-      "community_name": "validation/__init__.py",
+      "community": 67,
+      "community_name": "referee.py",
       "norm_label": "any"
     },
     {
@@ -9545,8 +9545,8 @@
       "source_location": "L182",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_validation_base_validationplugin_validate",
-      "community": 44,
-      "community_name": "ValidationPlugin",
+      "community": 67,
+      "community_name": "referee.py",
       "norm_label": ".validate()"
     },
     {
@@ -9611,8 +9611,8 @@
       "source_location": "L183",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_validation_base_rationale_183",
-      "community": 44,
-      "community_name": "ValidationPlugin",
+      "community": 67,
+      "community_name": "referee.py",
       "norm_label": "run validations on extracted data. returns a list of warnings."
     },
     {
@@ -9655,8 +9655,8 @@
       "source_location": "L48",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_validation_engine_validationengine_validate",
-      "community": 49,
-      "community_name": "generate_api_key",
+      "community": 58,
+      "community_name": "create_warning",
       "norm_label": ".validate()"
     },
     {
@@ -9666,8 +9666,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_validation_engine_py_any",
-      "community": 49,
-      "community_name": "generate_api_key",
+      "community": 58,
+      "community_name": "create_warning",
       "norm_label": "any"
     },
     {
@@ -9721,8 +9721,8 @@
       "source_location": "L49",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_validation_engine_rationale_49",
-      "community": 49,
-      "community_name": "generate_api_key",
+      "community": 58,
+      "community_name": "create_warning",
       "norm_label": "run all selected plugins against the data.          adds 'validation_warnings' a"
     },
     {
@@ -10216,8 +10216,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_validation_plugins_referee",
-      "community": 58,
-      "community_name": "create_warning",
+      "community": 16,
+      "community_name": "api_keys.py",
       "norm_label": "referee.py"
     },
     {
@@ -10227,8 +10227,8 @@
       "source_location": "L17",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_validation_plugins_referee_playerpointssumplugin",
-      "community": 58,
-      "community_name": "create_warning",
+      "community": 16,
+      "community_name": "api_keys.py",
       "norm_label": "playerpointssumplugin"
     },
     {
@@ -10238,8 +10238,8 @@
       "source_location": "L24",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_validation_plugins_referee_playerpointssumplugin_validate",
-      "community": 58,
-      "community_name": "create_warning",
+      "community": 16,
+      "community_name": "api_keys.py",
       "norm_label": ".validate()"
     },
     {
@@ -10249,8 +10249,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_validation_plugins_referee_py_any",
-      "community": 58,
-      "community_name": "create_warning",
+      "community": 16,
+      "community_name": "api_keys.py",
       "norm_label": "any"
     },
     {
@@ -10260,8 +10260,8 @@
       "source_location": "L56",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_validation_plugins_referee_winnerconsistencyplugin",
-      "community": 58,
-      "community_name": "create_warning",
+      "community": 16,
+      "community_name": "api_keys.py",
       "norm_label": "winnerconsistencyplugin"
     },
     {
@@ -10271,8 +10271,8 @@
       "source_location": "L63",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_validation_plugins_referee_winnerconsistencyplugin_validate",
-      "community": 58,
-      "community_name": "create_warning",
+      "community": 16,
+      "community_name": "api_keys.py",
       "norm_label": ".validate()"
     },
     {
@@ -10282,8 +10282,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_validation_plugins_referee_rationale_1",
-      "community": 58,
-      "community_name": "create_warning",
+      "community": 16,
+      "community_name": "api_keys.py",
       "norm_label": "referee use-case validation plugins \u2014 checks useful for officials verifying the"
     },
     {
@@ -10293,8 +10293,8 @@
       "source_location": "L18",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_validation_plugins_referee_rationale_18",
-      "community": 58,
-      "community_name": "create_warning",
+      "community": 16,
+      "community_name": "api_keys.py",
       "norm_label": "validate that sum of individual player points equals team final score."
     },
     {
@@ -10304,8 +10304,8 @@
       "source_location": "L57",
       "_origin": "ast",
       "id": "packages_core_engine_src_ocr_engine_core_validation_plugins_referee_rationale_57",
-      "community": 58,
-      "community_name": "create_warning",
+      "community": 16,
+      "community_name": "api_keys.py",
       "norm_label": "validate that the declared winner has the higher final score."
     },
     {
@@ -12122,8 +12122,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "packages_web_src_app_admin_page",
-      "community": 109,
-      "community_name": "resolve_provider_api_key",
+      "community": 32,
+      "community_name": "StepTrace",
       "norm_label": "admin/page.tsx"
     },
     {
@@ -12133,8 +12133,8 @@
       "source_location": "L9",
       "_origin": "ast",
       "id": "packages_web_src_app_admin_page_demolabels",
-      "community": 109,
-      "community_name": "resolve_provider_api_key",
+      "community": 32,
+      "community_name": "StepTrace",
       "norm_label": "demolabels"
     },
     {
@@ -12144,8 +12144,8 @@
       "source_location": "L15",
       "_origin": "ast",
       "id": "packages_web_src_app_admin_page_adminpage",
-      "community": 109,
-      "community_name": "resolve_provider_api_key",
+      "community": 32,
+      "community_name": "StepTrace",
       "norm_label": "adminpage()"
     },
     {
@@ -12155,8 +12155,8 @@
       "source_location": "L116",
       "_origin": "ast",
       "id": "packages_web_src_app_admin_page_invitetester",
-      "community": 109,
-      "community_name": "resolve_provider_api_key",
+      "community": 32,
+      "community_name": "StepTrace",
       "norm_label": "invitetester()"
     },
     {
@@ -12166,8 +12166,8 @@
       "source_location": "L159",
       "_origin": "ast",
       "id": "packages_web_src_app_admin_page_redirectwithmessage",
-      "community": 109,
-      "community_name": "resolve_provider_api_key",
+      "community": 32,
+      "community_name": "StepTrace",
       "norm_label": "redirectwithmessage()"
     },
     {
@@ -12397,8 +12397,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "packages_web_src_app_docs_quickstart_page",
-      "community": 81,
-      "community_name": "invite-setup-card.tsx",
+      "community": 48,
+      "community_name": "me.py",
       "norm_label": "quickstart/page.tsx"
     },
     {
@@ -12408,8 +12408,8 @@
       "source_location": "L25",
       "_origin": "ast",
       "id": "packages_web_src_app_docs_quickstart_page_codeblock",
-      "community": 81,
-      "community_name": "invite-setup-card.tsx",
+      "community": 48,
+      "community_name": "me.py",
       "norm_label": "codeblock()"
     },
     {
@@ -12419,8 +12419,8 @@
       "source_location": "L29",
       "_origin": "ast",
       "id": "packages_web_src_app_docs_quickstart_page_quickstartpage",
-      "community": 81,
-      "community_name": "invite-setup-card.tsx",
+      "community": 48,
+      "community_name": "me.py",
       "norm_label": "quickstartpage()"
     },
     {
@@ -12540,8 +12540,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "packages_web_src_app_test_club_capture_page",
-      "community": 16,
-      "community_name": "api_keys.py",
+      "community": 0,
+      "community_name": "club-demo/capture-client.tsx",
       "norm_label": "club/capture/page.tsx"
     },
     {
@@ -12551,8 +12551,8 @@
       "source_location": "L3",
       "_origin": "ast",
       "id": "packages_web_src_app_test_club_capture_page_clubcapturepage",
-      "community": 16,
-      "community_name": "api_keys.py",
+      "community": 0,
+      "community_name": "club-demo/capture-client.tsx",
       "norm_label": "clubcapturepage()"
     },
     {
@@ -12705,8 +12705,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "packages_web_src_app_test_player_capture_page",
-      "community": 32,
-      "community_name": "StepTrace",
+      "community": 2,
+      "community_name": "single-player-demo/capture-client.tsx",
       "norm_label": "player/capture/page.tsx"
     },
     {
@@ -12716,8 +12716,8 @@
       "source_location": "L3",
       "_origin": "ast",
       "id": "packages_web_src_app_test_player_capture_page_capturegamepage",
-      "community": 32,
-      "community_name": "StepTrace",
+      "community": 2,
+      "community_name": "single-player-demo/capture-client.tsx",
       "norm_label": "capturegamepage()"
     },
     {
@@ -12826,8 +12826,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "packages_web_src_app_test_referee_capture_page",
-      "community": 16,
-      "community_name": "api_keys.py",
+      "community": 2,
+      "community_name": "single-player-demo/capture-client.tsx",
       "norm_label": "referee/capture/page.tsx"
     },
     {
@@ -12837,8 +12837,8 @@
       "source_location": "L3",
       "_origin": "ast",
       "id": "packages_web_src_app_test_referee_capture_page_refereecapturepage",
-      "community": 16,
-      "community_name": "api_keys.py",
+      "community": 2,
+      "community_name": "single-player-demo/capture-client.tsx",
       "norm_label": "refereecapturepage()"
     },
     {
@@ -12925,8 +12925,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "packages_web_src_app_test_referee_reconcile_page",
-      "community": 35,
-      "community_name": "reconcile-client.tsx",
+      "community": 41,
+      "community_name": "submit-client.tsx",
       "norm_label": "reconcile/page.tsx"
     },
     {
@@ -12936,8 +12936,8 @@
       "source_location": "L3",
       "_origin": "ast",
       "id": "packages_web_src_app_test_referee_reconcile_page_refereereconcilepage",
-      "community": 35,
-      "community_name": "reconcile-client.tsx",
+      "community": 41,
+      "community_name": "submit-client.tsx",
       "norm_label": "refereereconcilepage()"
     },
     {
@@ -13123,8 +13123,8 @@
       "source_location": "L16",
       "_origin": "ast",
       "id": "packages_web_src_components_club_demo_capture_client_captureclient",
-      "community": 16,
-      "community_name": "api_keys.py",
+      "community": 0,
+      "community_name": "club-demo/capture-client.tsx",
       "norm_label": "captureclient()"
     },
     {
@@ -13156,8 +13156,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "packages_web_src_components_club_demo_name_match",
-      "community": 124,
-      "community_name": "name-match.ts",
+      "community": 0,
+      "community_name": "club-demo/capture-client.tsx",
       "norm_label": "name-match.ts"
     },
     {
@@ -13167,8 +13167,8 @@
       "source_location": "L5",
       "_origin": "ast",
       "id": "packages_web_src_components_club_demo_name_match_namematch",
-      "community": 124,
-      "community_name": "name-match.ts",
+      "community": 0,
+      "community_name": "club-demo/capture-client.tsx",
       "norm_label": "namematch"
     },
     {
@@ -13189,8 +13189,8 @@
       "source_location": "L23",
       "_origin": "ast",
       "id": "packages_web_src_components_club_demo_name_match_hasrosternamematch",
-      "community": 124,
-      "community_name": "name-match.ts",
+      "community": 0,
+      "community_name": "club-demo/capture-client.tsx",
       "norm_label": "hasrosternamematch()"
     },
     {
@@ -13211,8 +13211,8 @@
       "source_location": "L38",
       "_origin": "ast",
       "id": "packages_web_src_components_club_demo_name_match_namesimilarity",
-      "community": 124,
-      "community_name": "name-match.ts",
+      "community": 0,
+      "community_name": "club-demo/capture-client.tsx",
       "norm_label": "namesimilarity()"
     },
     {
@@ -13222,8 +13222,8 @@
       "source_location": "L49",
       "_origin": "ast",
       "id": "packages_web_src_components_club_demo_name_match_tokencontainmentscore",
-      "community": 124,
-      "community_name": "name-match.ts",
+      "community": 0,
+      "community_name": "club-demo/capture-client.tsx",
       "norm_label": "tokencontainmentscore()"
     },
     {
@@ -13233,8 +13233,8 @@
       "source_location": "L67",
       "_origin": "ast",
       "id": "packages_web_src_components_club_demo_name_match_partialtokenscore",
-      "community": 124,
-      "community_name": "name-match.ts",
+      "community": 0,
+      "community_name": "club-demo/capture-client.tsx",
       "norm_label": "partialtokenscore()"
     },
     {
@@ -13244,8 +13244,8 @@
       "source_location": "L72",
       "_origin": "ast",
       "id": "packages_web_src_components_club_demo_name_match_significanttokens",
-      "community": 124,
-      "community_name": "name-match.ts",
+      "community": 0,
+      "community_name": "club-demo/capture-client.tsx",
       "norm_label": "significanttokens()"
     },
     {
@@ -13255,8 +13255,8 @@
       "source_location": "L76",
       "_origin": "ast",
       "id": "packages_web_src_components_club_demo_name_match_initials",
-      "community": 124,
-      "community_name": "name-match.ts",
+      "community": 0,
+      "community_name": "club-demo/capture-client.tsx",
       "norm_label": "initials()"
     },
     {
@@ -13266,8 +13266,8 @@
       "source_location": "L80",
       "_origin": "ast",
       "id": "packages_web_src_components_club_demo_name_match_levenshtein",
-      "community": 124,
-      "community_name": "name-match.ts",
+      "community": 0,
+      "community_name": "club-demo/capture-client.tsx",
       "norm_label": "levenshtein()"
     },
     {
@@ -13387,8 +13387,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "packages_web_src_components_club_demo_result_utils",
-      "community": 48,
-      "community_name": "me.py",
+      "community": 0,
+      "community_name": "club-demo/capture-client.tsx",
       "norm_label": "club-demo/result-utils.ts"
     },
     {
@@ -13398,8 +13398,8 @@
       "source_location": "L5",
       "_origin": "ast",
       "id": "packages_web_src_components_club_demo_result_utils_teamname",
-      "community": 48,
-      "community_name": "me.py",
+      "community": 0,
+      "community_name": "club-demo/capture-client.tsx",
       "norm_label": "teamname()"
     },
     {
@@ -13409,8 +13409,8 @@
       "source_location": "L9",
       "_origin": "ast",
       "id": "packages_web_src_components_club_demo_result_utils_creategamefromresult",
-      "community": 48,
-      "community_name": "me.py",
+      "community": 0,
+      "community_name": "club-demo/capture-client.tsx",
       "norm_label": "creategamefromresult()"
     },
     {
@@ -13420,8 +13420,8 @@
       "source_location": "L32",
       "_origin": "ast",
       "id": "packages_web_src_components_club_demo_result_utils_extractteamstats",
-      "community": 48,
-      "community_name": "me.py",
+      "community": 0,
+      "community_name": "club-demo/capture-client.tsx",
       "norm_label": "extractteamstats()"
     },
     {
@@ -13431,8 +13431,8 @@
       "source_location": "L38",
       "_origin": "ast",
       "id": "packages_web_src_components_club_demo_result_utils_clubsummary",
-      "community": 48,
-      "community_name": "me.py",
+      "community": 0,
+      "community_name": "club-demo/capture-client.tsx",
       "norm_label": "clubsummary()"
     },
     {
@@ -13464,8 +13464,8 @@
       "source_location": "L76",
       "_origin": "ast",
       "id": "packages_web_src_components_club_demo_result_utils_toclubstat",
-      "community": 48,
-      "community_name": "me.py",
+      "community": 0,
+      "community_name": "club-demo/capture-client.tsx",
       "norm_label": "toclubstat()"
     },
     {
@@ -13475,8 +13475,8 @@
       "source_location": "L100",
       "_origin": "ast",
       "id": "packages_web_src_components_club_demo_result_utils_computetrend",
-      "community": 48,
-      "community_name": "me.py",
+      "community": 0,
+      "community_name": "club-demo/capture-client.tsx",
       "norm_label": "computetrend()"
     },
     {
@@ -13486,8 +13486,8 @@
       "source_location": "L108",
       "_origin": "ast",
       "id": "packages_web_src_components_club_demo_result_utils_computeregularity",
-      "community": 48,
-      "community_name": "me.py",
+      "community": 0,
+      "community_name": "club-demo/capture-client.tsx",
       "norm_label": "computeregularity()"
     },
     {
@@ -13497,8 +13497,8 @@
       "source_location": "L116",
       "_origin": "ast",
       "id": "packages_web_src_components_club_demo_result_utils_average",
-      "community": 48,
-      "community_name": "me.py",
+      "community": 0,
+      "community_name": "club-demo/capture-client.tsx",
       "norm_label": "average()"
     },
     {
@@ -13508,8 +13508,8 @@
       "source_location": "L120",
       "_origin": "ast",
       "id": "packages_web_src_components_club_demo_result_utils_round",
-      "community": 48,
-      "community_name": "me.py",
+      "community": 0,
+      "community_name": "club-demo/capture-client.tsx",
       "norm_label": "round()"
     },
     {
@@ -13519,8 +13519,8 @@
       "source_location": "L124",
       "_origin": "ast",
       "id": "packages_web_src_components_club_demo_result_utils_tonumber",
-      "community": 48,
-      "community_name": "me.py",
+      "community": 0,
+      "community_name": "club-demo/capture-client.tsx",
       "norm_label": "tonumber()"
     },
     {
@@ -13530,8 +13530,8 @@
       "source_location": "L128",
       "_origin": "ast",
       "id": "packages_web_src_components_club_demo_result_utils_normalizetext",
-      "community": 48,
-      "community_name": "me.py",
+      "community": 0,
+      "community_name": "club-demo/capture-client.tsx",
       "norm_label": "normalizetext()"
     },
     {
@@ -13541,8 +13541,8 @@
       "source_location": "L132",
       "_origin": "ast",
       "id": "packages_web_src_components_club_demo_result_utils_normalizenumber",
-      "community": 48,
-      "community_name": "me.py",
+      "community": 0,
+      "community_name": "club-demo/capture-client.tsx",
       "norm_label": "normalizenumber()"
     },
     {
@@ -13717,8 +13717,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "packages_web_src_components_club_demo_types",
-      "community": 48,
-      "community_name": "me.py",
+      "community": 0,
+      "community_name": "club-demo/capture-client.tsx",
       "norm_label": "club-demo/types.ts"
     },
     {
@@ -13728,8 +13728,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "packages_web_src_components_club_demo_types_teamkey",
-      "community": 48,
-      "community_name": "me.py",
+      "community": 0,
+      "community_name": "club-demo/capture-client.tsx",
       "norm_label": "teamkey"
     },
     {
@@ -13739,8 +13739,8 @@
       "source_location": "L2",
       "_origin": "ast",
       "id": "packages_web_src_components_club_demo_types_runstatus",
-      "community": 48,
-      "community_name": "me.py",
+      "community": 0,
+      "community_name": "club-demo/capture-client.tsx",
       "norm_label": "runstatus"
     },
     {
@@ -13750,8 +13750,8 @@
       "source_location": "L4",
       "_origin": "ast",
       "id": "packages_web_src_components_club_demo_types_playerpoints",
-      "community": 48,
-      "community_name": "me.py",
+      "community": 0,
+      "community_name": "club-demo/capture-client.tsx",
       "norm_label": "playerpoints"
     },
     {
@@ -13761,8 +13761,8 @@
       "source_location": "L11",
       "_origin": "ast",
       "id": "packages_web_src_components_club_demo_types_ocrplayer",
-      "community": 48,
-      "community_name": "me.py",
+      "community": 0,
+      "community_name": "club-demo/capture-client.tsx",
       "norm_label": "ocrplayer"
     },
     {
@@ -13772,8 +13772,8 @@
       "source_location": "L20",
       "_origin": "ast",
       "id": "packages_web_src_components_club_demo_types_ocrteam",
-      "community": 48,
-      "community_name": "me.py",
+      "community": 0,
+      "community_name": "club-demo/capture-client.tsx",
       "norm_label": "ocrteam"
     },
     {
@@ -13783,8 +13783,8 @@
       "source_location": "L26",
       "_origin": "ast",
       "id": "packages_web_src_components_club_demo_types_ocrresult",
-      "community": 48,
-      "community_name": "me.py",
+      "community": 0,
+      "community_name": "club-demo/capture-client.tsx",
       "norm_label": "ocrresult"
     },
     {
@@ -13805,8 +13805,8 @@
       "source_location": "L50",
       "_origin": "ast",
       "id": "packages_web_src_components_club_demo_types_clubgameplayerstat",
-      "community": 48,
-      "community_name": "me.py",
+      "community": 0,
+      "community_name": "club-demo/capture-client.tsx",
       "norm_label": "clubgameplayerstat"
     },
     {
@@ -13816,8 +13816,8 @@
       "source_location": "L64",
       "_origin": "ast",
       "id": "packages_web_src_components_club_demo_types_clubgame",
-      "community": 48,
-      "community_name": "me.py",
+      "community": 0,
+      "community_name": "club-demo/capture-client.tsx",
       "norm_label": "clubgame"
     },
     {
@@ -14091,8 +14091,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "packages_web_src_components_ocr_capture_ui",
-      "community": 32,
-      "community_name": "StepTrace",
+      "community": 2,
+      "community_name": "single-player-demo/capture-client.tsx",
       "norm_label": "ocr-capture-ui.tsx"
     },
     {
@@ -14102,8 +14102,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "packages_web_src_components_ocr_capture_ui_accepted_image_types",
-      "community": 38,
-      "community_name": "api.ts",
+      "community": 2,
+      "community_name": "single-player-demo/capture-client.tsx",
       "norm_label": "accepted_image_types"
     },
     {
@@ -14113,8 +14113,8 @@
       "source_location": "L3",
       "_origin": "ast",
       "id": "packages_web_src_components_ocr_capture_ui_runstatusbadge",
-      "community": 32,
-      "community_name": "StepTrace",
+      "community": 2,
+      "community_name": "single-player-demo/capture-client.tsx",
       "norm_label": "runstatusbadge()"
     },
     {
@@ -14124,8 +14124,8 @@
       "source_location": "L29",
       "_origin": "ast",
       "id": "packages_web_src_components_ocr_capture_ui_uploadicon",
-      "community": 32,
-      "community_name": "StepTrace",
+      "community": 2,
+      "community_name": "single-player-demo/capture-client.tsx",
       "norm_label": "uploadicon()"
     },
     {
@@ -14135,8 +14135,8 @@
       "source_location": "L39",
       "_origin": "ast",
       "id": "packages_web_src_components_ocr_capture_ui_checkicon",
-      "community": 32,
-      "community_name": "StepTrace",
+      "community": 2,
+      "community_name": "single-player-demo/capture-client.tsx",
       "norm_label": "checkicon()"
     },
     {
@@ -14146,8 +14146,8 @@
       "source_location": "L47",
       "_origin": "ast",
       "id": "packages_web_src_components_ocr_capture_ui_formatfilesize",
-      "community": 16,
-      "community_name": "api_keys.py",
+      "community": 2,
+      "community_name": "single-player-demo/capture-client.tsx",
       "norm_label": "formatfilesize()"
     },
     {
@@ -14168,8 +14168,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "packages_web_src_components_referee_demo_capture_client",
-      "community": 16,
-      "community_name": "api_keys.py",
+      "community": 2,
+      "community_name": "single-player-demo/capture-client.tsx",
       "norm_label": "referee-demo/capture-client.tsx"
     },
     {
@@ -14179,8 +14179,8 @@
       "source_location": "L17",
       "_origin": "ast",
       "id": "packages_web_src_components_referee_demo_capture_client_captureclient",
-      "community": 16,
-      "community_name": "api_keys.py",
+      "community": 2,
+      "community_name": "single-player-demo/capture-client.tsx",
       "norm_label": "captureclient()"
     },
     {
@@ -14190,8 +14190,8 @@
       "source_location": "L194",
       "_origin": "ast",
       "id": "packages_web_src_components_referee_demo_capture_client_buttonlabel",
-      "community": 16,
-      "community_name": "api_keys.py",
+      "community": 2,
+      "community_name": "single-player-demo/capture-client.tsx",
       "norm_label": "buttonlabel()"
     },
     {
@@ -14223,8 +14223,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "packages_web_src_components_referee_demo_draft",
-      "community": 35,
-      "community_name": "reconcile-client.tsx",
+      "community": 70,
+      "community_name": "referee-demo/types.ts",
       "norm_label": "draft.ts"
     },
     {
@@ -14234,8 +14234,8 @@
       "source_location": "L8",
       "_origin": "ast",
       "id": "packages_web_src_components_referee_demo_draft_readdraft",
-      "community": 35,
-      "community_name": "reconcile-client.tsx",
+      "community": 41,
+      "community_name": "submit-client.tsx",
       "norm_label": "readdraft()"
     },
     {
@@ -14245,8 +14245,8 @@
       "source_location": "L26",
       "_origin": "ast",
       "id": "packages_web_src_components_referee_demo_draft_writedraft",
-      "community": 16,
-      "community_name": "api_keys.py",
+      "community": 2,
+      "community_name": "single-player-demo/capture-client.tsx",
       "norm_label": "writedraft()"
     },
     {
@@ -14256,8 +14256,8 @@
       "source_location": "L32",
       "_origin": "ast",
       "id": "packages_web_src_components_referee_demo_draft_cleardraft",
-      "community": 35,
-      "community_name": "reconcile-client.tsx",
+      "community": 70,
+      "community_name": "referee-demo/types.ts",
       "norm_label": "cleardraft()"
     },
     {
@@ -14366,8 +14366,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "packages_web_src_components_referee_demo_league_validation",
-      "community": 70,
-      "community_name": "referee-demo/types.ts",
+      "community": 128,
+      "community_name": "cropper.py",
       "norm_label": "league-validation.ts"
     },
     {
@@ -14377,8 +14377,8 @@
       "source_location": "L17",
       "_origin": "ast",
       "id": "packages_web_src_components_referee_demo_league_validation_leaguevalidationresult",
-      "community": 70,
-      "community_name": "referee-demo/types.ts",
+      "community": 128,
+      "community_name": "cropper.py",
       "norm_label": "leaguevalidationresult"
     },
     {
@@ -14399,8 +14399,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "packages_web_src_components_referee_demo_plugins",
-      "community": 35,
-      "community_name": "reconcile-client.tsx",
+      "community": 124,
+      "community_name": "name-match.ts",
       "norm_label": "plugins.ts"
     },
     {
@@ -14410,8 +14410,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "packages_web_src_components_referee_demo_plugins_refereeplugin",
-      "community": 35,
-      "community_name": "reconcile-client.tsx",
+      "community": 124,
+      "community_name": "name-match.ts",
       "norm_label": "refereeplugin"
     },
     {
@@ -14421,8 +14421,8 @@
       "source_location": "L8",
       "_origin": "ast",
       "id": "packages_web_src_components_referee_demo_plugins_referee_plugins",
-      "community": 35,
-      "community_name": "reconcile-client.tsx",
+      "community": 124,
+      "community_name": "name-match.ts",
       "norm_label": "referee_plugins"
     },
     {
@@ -14432,8 +14432,8 @@
       "source_location": "L89",
       "_origin": "ast",
       "id": "packages_web_src_components_referee_demo_plugins_default_referee_plugin_ids",
-      "community": 35,
-      "community_name": "reconcile-client.tsx",
+      "community": 124,
+      "community_name": "name-match.ts",
       "norm_label": "default_referee_plugin_ids"
     },
     {
@@ -14443,8 +14443,8 @@
       "source_location": "L91",
       "_origin": "ast",
       "id": "packages_web_src_components_referee_demo_plugins_pluginlabel",
-      "community": 35,
-      "community_name": "reconcile-client.tsx",
+      "community": 124,
+      "community_name": "name-match.ts",
       "norm_label": "pluginlabel()"
     },
     {
@@ -14454,8 +14454,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "packages_web_src_components_referee_demo_reconcile_client",
-      "community": 35,
-      "community_name": "reconcile-client.tsx",
+      "community": 41,
+      "community_name": "submit-client.tsx",
       "norm_label": "reconcile-client.tsx"
     },
     {
@@ -14465,8 +14465,8 @@
       "source_location": "L18",
       "_origin": "ast",
       "id": "packages_web_src_components_referee_demo_reconcile_client_reconcileclient",
-      "community": 35,
-      "community_name": "reconcile-client.tsx",
+      "community": 41,
+      "community_name": "submit-client.tsx",
       "norm_label": "reconcileclient()"
     },
     {
@@ -14476,8 +14476,8 @@
       "source_location": "L187",
       "_origin": "ast",
       "id": "packages_web_src_components_referee_demo_reconcile_client_confidencesummarybar",
-      "community": 35,
-      "community_name": "reconcile-client.tsx",
+      "community": 41,
+      "community_name": "submit-client.tsx",
       "norm_label": "confidencesummarybar()"
     },
     {
@@ -14487,8 +14487,8 @@
       "source_location": "L232",
       "_origin": "ast",
       "id": "packages_web_src_components_referee_demo_reconcile_client_pluginsfromwarnings",
-      "community": 35,
-      "community_name": "reconcile-client.tsx",
+      "community": 41,
+      "community_name": "submit-client.tsx",
       "norm_label": "pluginsfromwarnings()"
     },
     {
@@ -14927,8 +14927,8 @@
       "source_location": "L51",
       "_origin": "ast",
       "id": "packages_web_src_components_referee_demo_sections_nextsectionid",
-      "community": 35,
-      "community_name": "reconcile-client.tsx",
+      "community": 41,
+      "community_name": "submit-client.tsx",
       "norm_label": "nextsectionid()"
     },
     {
@@ -15070,8 +15070,8 @@
       "source_location": "L8",
       "_origin": "ast",
       "id": "packages_web_src_components_referee_demo_types_quarterkey",
-      "community": 70,
-      "community_name": "referee-demo/types.ts",
+      "community": 13,
+      "community_name": "reconcile-sections.tsx",
       "norm_label": "quarterkey"
     },
     {
@@ -15081,8 +15081,8 @@
       "source_location": "L10",
       "_origin": "ast",
       "id": "packages_web_src_components_referee_demo_types_issueseverity",
-      "community": 41,
-      "community_name": "submit-client.tsx",
+      "community": 70,
+      "community_name": "referee-demo/types.ts",
       "norm_label": "issueseverity"
     },
     {
@@ -15202,8 +15202,8 @@
       "source_location": "L70",
       "_origin": "ast",
       "id": "packages_web_src_components_referee_demo_types_ocrresult",
-      "community": 35,
-      "community_name": "reconcile-client.tsx",
+      "community": 70,
+      "community_name": "referee-demo/types.ts",
       "norm_label": "ocrresult"
     },
     {
@@ -15246,8 +15246,8 @@
       "source_location": "L117",
       "_origin": "ast",
       "id": "packages_web_src_components_referee_demo_types_refereedraft",
-      "community": 35,
-      "community_name": "reconcile-client.tsx",
+      "community": 70,
+      "community_name": "referee-demo/types.ts",
       "norm_label": "refereedraft"
     },
     {
@@ -15257,8 +15257,8 @@
       "source_location": "L125",
       "_origin": "ast",
       "id": "packages_web_src_components_referee_demo_types_leaguesubmissionpayload",
-      "community": 70,
-      "community_name": "referee-demo/types.ts",
+      "community": 128,
+      "community_name": "cropper.py",
       "norm_label": "leaguesubmissionpayload"
     },
     {
@@ -15290,8 +15290,8 @@
       "source_location": "L5",
       "_origin": "ast",
       "id": "packages_web_src_components_referee_demo_ui_panel",
-      "community": 18,
-      "community_name": "league-store.ts",
+      "community": 41,
+      "community_name": "submit-client.tsx",
       "norm_label": "panel()"
     },
     {
@@ -15312,8 +15312,8 @@
       "source_location": "L36",
       "_origin": "ast",
       "id": "packages_web_src_components_referee_demo_ui_severitychip",
-      "community": 41,
-      "community_name": "submit-client.tsx",
+      "community": 13,
+      "community_name": "reconcile-sections.tsx",
       "norm_label": "severitychip()"
     },
     {
@@ -15334,8 +15334,8 @@
       "source_location": "L69",
       "_origin": "ast",
       "id": "packages_web_src_components_referee_demo_ui_numberfield",
-      "community": 41,
-      "community_name": "submit-client.tsx",
+      "community": 13,
+      "community_name": "reconcile-sections.tsx",
       "norm_label": "numberfield()"
     },
     {
@@ -15345,8 +15345,8 @@
       "source_location": "L99",
       "_origin": "ast",
       "id": "packages_web_src_components_referee_demo_ui_textfield",
-      "community": 41,
-      "community_name": "submit-client.tsx",
+      "community": 13,
+      "community_name": "reconcile-sections.tsx",
       "norm_label": "textfield()"
     },
     {
@@ -15554,8 +15554,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "packages_web_src_components_single_player_demo_capture_client",
-      "community": 32,
-      "community_name": "StepTrace",
+      "community": 2,
+      "community_name": "single-player-demo/capture-client.tsx",
       "norm_label": "single-player-demo/capture-client.tsx"
     },
     {
@@ -15565,8 +15565,8 @@
       "source_location": "L14",
       "_origin": "ast",
       "id": "packages_web_src_components_single_player_demo_capture_client_captureclient",
-      "community": 32,
-      "community_name": "StepTrace",
+      "community": 2,
+      "community_name": "single-player-demo/capture-client.tsx",
       "norm_label": "captureclient()"
     },
     {
@@ -15576,8 +15576,8 @@
       "source_location": "L220",
       "_origin": "ast",
       "id": "packages_web_src_components_single_player_demo_capture_client_stepstate",
-      "community": 32,
-      "community_name": "StepTrace",
+      "community": 2,
+      "community_name": "single-player-demo/capture-client.tsx",
       "norm_label": "stepstate"
     },
     {
@@ -15587,8 +15587,8 @@
       "source_location": "L226",
       "_origin": "ast",
       "id": "packages_web_src_components_single_player_demo_capture_client_stepper",
-      "community": 32,
-      "community_name": "StepTrace",
+      "community": 2,
+      "community_name": "single-player-demo/capture-client.tsx",
       "norm_label": "stepper()"
     },
     {
@@ -15708,8 +15708,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "packages_web_src_components_single_player_demo_result_utils",
-      "community": 32,
-      "community_name": "StepTrace",
+      "community": 2,
+      "community_name": "single-player-demo/capture-client.tsx",
       "norm_label": "single-player-demo/result-utils.ts"
     },
     {
@@ -15719,8 +15719,8 @@
       "source_location": "L3",
       "_origin": "ast",
       "id": "packages_web_src_components_single_player_demo_result_utils_extractplayers",
-      "community": 32,
-      "community_name": "StepTrace",
+      "community": 2,
+      "community_name": "single-player-demo/capture-client.tsx",
       "norm_label": "extractplayers()"
     },
     {
@@ -15730,8 +15730,8 @@
       "source_location": "L11",
       "_origin": "ast",
       "id": "packages_web_src_components_single_player_demo_result_utils_createsavedgame",
-      "community": 32,
-      "community_name": "StepTrace",
+      "community": 2,
+      "community_name": "single-player-demo/capture-client.tsx",
       "norm_label": "createsavedgame()"
     },
     {
@@ -15741,8 +15741,8 @@
       "source_location": "L34",
       "_origin": "ast",
       "id": "packages_web_src_components_single_player_demo_result_utils_formatgametitle",
-      "community": 32,
-      "community_name": "StepTrace",
+      "community": 2,
+      "community_name": "single-player-demo/capture-client.tsx",
       "norm_label": "formatgametitle()"
     },
     {
@@ -15752,8 +15752,8 @@
       "source_location": "L41",
       "_origin": "ast",
       "id": "packages_web_src_components_single_player_demo_result_utils_formatfinalscore",
-      "community": 32,
-      "community_name": "StepTrace",
+      "community": 2,
+      "community_name": "single-player-demo/capture-client.tsx",
       "norm_label": "formatfinalscore()"
     },
     {
@@ -15774,8 +15774,8 @@
       "source_location": "L55",
       "_origin": "ast",
       "id": "packages_web_src_components_single_player_demo_result_utils_extractteamplayers",
-      "community": 32,
-      "community_name": "StepTrace",
+      "community": 2,
+      "community_name": "single-player-demo/capture-client.tsx",
       "norm_label": "extractteamplayers()"
     },
     {
@@ -15785,8 +15785,8 @@
       "source_location": "L60",
       "_origin": "ast",
       "id": "packages_web_src_components_single_player_demo_result_utils_todemoplayer",
-      "community": 32,
-      "community_name": "StepTrace",
+      "community": 2,
+      "community_name": "single-player-demo/capture-client.tsx",
       "norm_label": "todemoplayer()"
     },
     {
@@ -15796,8 +15796,8 @@
       "source_location": "L84",
       "_origin": "ast",
       "id": "packages_web_src_components_single_player_demo_result_utils_tonumber",
-      "community": 32,
-      "community_name": "StepTrace",
+      "community": 2,
+      "community_name": "single-player-demo/capture-client.tsx",
       "norm_label": "tonumber()"
     },
     {
@@ -15807,8 +15807,8 @@
       "source_location": "L88",
       "_origin": "ast",
       "id": "packages_web_src_components_single_player_demo_result_utils_normalizetext",
-      "community": 32,
-      "community_name": "StepTrace",
+      "community": 2,
+      "community_name": "single-player-demo/capture-client.tsx",
       "norm_label": "normalizetext()"
     },
     {
@@ -15994,8 +15994,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "packages_web_src_components_single_player_demo_types",
-      "community": 32,
-      "community_name": "StepTrace",
+      "community": 2,
+      "community_name": "single-player-demo/capture-client.tsx",
       "norm_label": "single-player-demo/types.ts"
     },
     {
@@ -16005,8 +16005,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "packages_web_src_components_single_player_demo_types_runstatus",
-      "community": 32,
-      "community_name": "StepTrace",
+      "community": 2,
+      "community_name": "single-player-demo/capture-client.tsx",
       "norm_label": "runstatus"
     },
     {
@@ -16016,8 +16016,8 @@
       "source_location": "L3",
       "_origin": "ast",
       "id": "packages_web_src_components_single_player_demo_types_ocrrun",
-      "community": 32,
-      "community_name": "StepTrace",
+      "community": 2,
+      "community_name": "single-player-demo/capture-client.tsx",
       "norm_label": "ocrrun"
     },
     {
@@ -16027,8 +16027,8 @@
       "source_location": "L12",
       "_origin": "ast",
       "id": "packages_web_src_components_single_player_demo_types_playerpoints",
-      "community": 32,
-      "community_name": "StepTrace",
+      "community": 2,
+      "community_name": "single-player-demo/capture-client.tsx",
       "norm_label": "playerpoints"
     },
     {
@@ -16038,8 +16038,8 @@
       "source_location": "L19",
       "_origin": "ast",
       "id": "packages_web_src_components_single_player_demo_types_ocrplayer",
-      "community": 32,
-      "community_name": "StepTrace",
+      "community": 2,
+      "community_name": "single-player-demo/capture-client.tsx",
       "norm_label": "ocrplayer"
     },
     {
@@ -16049,8 +16049,8 @@
       "source_location": "L28",
       "_origin": "ast",
       "id": "packages_web_src_components_single_player_demo_types_ocrteam",
-      "community": 32,
-      "community_name": "StepTrace",
+      "community": 2,
+      "community_name": "single-player-demo/capture-client.tsx",
       "norm_label": "ocrteam"
     },
     {
@@ -16060,8 +16060,8 @@
       "source_location": "L34",
       "_origin": "ast",
       "id": "packages_web_src_components_single_player_demo_types_ocrresult",
-      "community": 32,
-      "community_name": "StepTrace",
+      "community": 2,
+      "community_name": "single-player-demo/capture-client.tsx",
       "norm_label": "ocrresult"
     },
     {
@@ -16071,8 +16071,8 @@
       "source_location": "L53",
       "_origin": "ast",
       "id": "packages_web_src_components_single_player_demo_types_demoplayer",
-      "community": 32,
-      "community_name": "StepTrace",
+      "community": 2,
+      "community_name": "single-player-demo/capture-client.tsx",
       "norm_label": "demoplayer"
     },
     {
@@ -16522,8 +16522,8 @@
       "source_location": "L6",
       "_origin": "ast",
       "id": "packages_web_src_lib_auth_account_demos",
-      "community": 33,
-      "community_name": "account.ts",
+      "community": 32,
+      "community_name": "StepTrace",
       "norm_label": "demos"
     },
     {
@@ -16533,8 +16533,8 @@
       "source_location": "L7",
       "_origin": "ast",
       "id": "packages_web_src_lib_auth_account_assigneddemo",
-      "community": 109,
-      "community_name": "resolve_provider_api_key",
+      "community": 33,
+      "community_name": "account.ts",
       "norm_label": "assigneddemo"
     },
     {
@@ -16676,8 +16676,8 @@
       "source_location": "L108",
       "_origin": "ast",
       "id": "packages_web_src_lib_auth_account_requireadminaccount",
-      "community": 81,
-      "community_name": "invite-setup-card.tsx",
+      "community": 32,
+      "community_name": "StepTrace",
       "norm_label": "requireadminaccount()"
     },
     {
@@ -16808,8 +16808,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "packages_web_src_lib_env",
-      "community": 127,
-      "community_name": "supabase/middleware.ts",
+      "community": 48,
+      "community_name": "me.py",
       "norm_label": "env.ts"
     },
     {
@@ -16819,8 +16819,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "packages_web_src_lib_env_siteconfig",
-      "community": 127,
-      "community_name": "supabase/middleware.ts",
+      "community": 48,
+      "community_name": "me.py",
       "norm_label": "siteconfig"
     },
     {
@@ -16841,8 +16841,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "packages_web_src_lib_supabase_admin",
-      "community": 127,
-      "community_name": "supabase/middleware.ts",
+      "community": 48,
+      "community_name": "me.py",
       "norm_label": "admin.ts"
     },
     {
@@ -16852,8 +16852,8 @@
       "source_location": "L5",
       "_origin": "ast",
       "id": "packages_web_src_lib_supabase_admin_createadminclient",
-      "community": 109,
-      "community_name": "resolve_provider_api_key",
+      "community": 32,
+      "community_name": "StepTrace",
       "norm_label": "createadminclient()"
     },
     {
@@ -16951,8 +16951,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "packages_web_src_lib_supabase_server",
-      "community": 127,
-      "community_name": "supabase/middleware.ts",
+      "community": 48,
+      "community_name": "me.py",
       "norm_label": "server.ts"
     },
     {
@@ -17028,8 +17028,8 @@
       "source_location": "L36",
       "_origin": "ast",
       "id": "packages_web_src_lib_use_ocr_run_capture_useocrruncapture",
-      "community": 16,
-      "community_name": "api_keys.py",
+      "community": 2,
+      "community_name": "single-player-demo/capture-client.tsx",
       "norm_label": "useocrruncapture()"
     },
     {
@@ -17072,8 +17072,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "packages_web_tests_web_logic_test",
-      "community": 35,
-      "community_name": "reconcile-client.tsx",
+      "community": 124,
+      "community_name": "name-match.ts",
       "norm_label": "web-logic.test.ts"
     },
     {
@@ -17083,8 +17083,8 @@
       "source_location": "L14",
       "_origin": "ast",
       "id": "packages_web_tests_web_logic_test_headersfrom",
-      "community": 35,
-      "community_name": "reconcile-client.tsx",
+      "community": 124,
+      "community_name": "name-match.ts",
       "norm_label": "headersfrom()"
     },
     {
@@ -17773,7 +17773,7 @@
       "label": "g()",
       "file_type": "code",
       "source_file": "scripts/deploy_cloudrun.sh",
-      "source_location": "L46",
+      "source_location": "L48",
       "metadata": {
         "language": "bash",
         "kind": "bash_function"
@@ -17788,7 +17788,7 @@
       "label": "secret_exists()",
       "file_type": "code",
       "source_file": "scripts/deploy_cloudrun.sh",
-      "source_location": "L48",
+      "source_location": "L50",
       "metadata": {
         "language": "bash",
         "kind": "bash_function"
@@ -17803,7 +17803,7 @@
       "label": "grant_secret_access()",
       "file_type": "code",
       "source_file": "scripts/deploy_cloudrun.sh",
-      "source_location": "L52",
+      "source_location": "L54",
       "metadata": {
         "language": "bash",
         "kind": "bash_function"
@@ -17818,7 +17818,7 @@
       "label": "supabase_secret_bindings()",
       "file_type": "code",
       "source_file": "scripts/deploy_cloudrun.sh",
-      "source_location": "L57",
+      "source_location": "L59",
       "metadata": {
         "language": "bash",
         "kind": "bash_function"
@@ -17833,7 +17833,7 @@
       "label": "ensure_secret()",
       "file_type": "code",
       "source_file": "scripts/deploy_cloudrun.sh",
-      "source_location": "L63",
+      "source_location": "L65",
       "metadata": {
         "language": "bash",
         "kind": "bash_function"
@@ -17848,7 +17848,7 @@
       "label": "infra()",
       "file_type": "code",
       "source_file": "scripts/deploy_cloudrun.sh",
-      "source_location": "L74",
+      "source_location": "L76",
       "metadata": {
         "language": "bash",
         "kind": "bash_function"
@@ -17863,7 +17863,7 @@
       "label": "build()",
       "file_type": "code",
       "source_file": "scripts/deploy_cloudrun.sh",
-      "source_location": "L123",
+      "source_location": "L125",
       "metadata": {
         "language": "bash",
         "kind": "bash_function"
@@ -17878,7 +17878,7 @@
       "label": "current_image()",
       "file_type": "code",
       "source_file": "scripts/deploy_cloudrun.sh",
-      "source_location": "L128",
+      "source_location": "L130",
       "metadata": {
         "language": "bash",
         "kind": "bash_function"
@@ -17893,7 +17893,7 @@
       "label": "deploy_api()",
       "file_type": "code",
       "source_file": "scripts/deploy_cloudrun.sh",
-      "source_location": "L132",
+      "source_location": "L134",
       "metadata": {
         "language": "bash",
         "kind": "bash_function"
@@ -17908,7 +17908,7 @@
       "label": "deploy_mcp()",
       "file_type": "code",
       "source_file": "scripts/deploy_cloudrun.sh",
-      "source_location": "L160",
+      "source_location": "L162",
       "metadata": {
         "language": "bash",
         "kind": "bash_function"
@@ -17923,7 +17923,7 @@
       "label": "service_url()",
       "file_type": "code",
       "source_file": "scripts/deploy_cloudrun.sh",
-      "source_location": "L169",
+      "source_location": "L171",
       "metadata": {
         "language": "bash",
         "kind": "bash_function"
@@ -17938,7 +17938,7 @@
       "label": "urls()",
       "file_type": "code",
       "source_file": "scripts/deploy_cloudrun.sh",
-      "source_location": "L174",
+      "source_location": "L176",
       "metadata": {
         "language": "bash",
         "kind": "bash_function"
@@ -18771,8 +18771,8 @@
       "source_location": "L34",
       "_origin": "ast",
       "id": "tests_test_api_apitest_test_create_app_registers_health",
-      "community": 47,
-      "community_name": "create_app",
+      "community": 11,
+      "community_name": "ApiTest",
       "norm_label": ".test_create_app_registers_health()"
     },
     {
@@ -18793,8 +18793,8 @@
       "source_location": "L44",
       "_origin": "ast",
       "id": "tests_test_api_apitest_test_api_key_auth_allows_local_mode_without_expected_key",
-      "community": 11,
-      "community_name": "ApiTest",
+      "community": 47,
+      "community_name": "create_app",
       "norm_label": ".test_api_key_auth_allows_local_mode_without_expected_key()"
     },
     {
@@ -18804,8 +18804,8 @@
       "source_location": "L47",
       "_origin": "ast",
       "id": "tests_test_api_apitest_test_api_key_auth_rejects_missing_or_invalid_bearer_token",
-      "community": 11,
-      "community_name": "ApiTest",
+      "community": 47,
+      "community_name": "create_app",
       "norm_label": ".test_api_key_auth_rejects_missing_or_invalid_bearer_token()"
     },
     {
@@ -18815,8 +18815,8 @@
       "source_location": "L52",
       "_origin": "ast",
       "id": "tests_test_api_apitest_test_api_key_auth_accepts_valid_bearer_token",
-      "community": 11,
-      "community_name": "ApiTest",
+      "community": 47,
+      "community_name": "create_app",
       "norm_label": ".test_api_key_auth_accepts_valid_bearer_token()"
     },
     {
@@ -18826,8 +18826,8 @@
       "source_location": "L55",
       "_origin": "ast",
       "id": "tests_test_api_apitest_test_unauthorized_response_uses_standard_error_shape",
-      "community": 43,
-      "community_name": "main.py",
+      "community": 47,
+      "community_name": "create_app",
       "norm_label": ".test_unauthorized_response_uses_standard_error_shape()"
     },
     {
@@ -18837,8 +18837,8 @@
       "source_location": "L63",
       "_origin": "ast",
       "id": "tests_test_api_apitest_test_production_requires_api_key",
-      "community": 11,
-      "community_name": "ApiTest",
+      "community": 24,
+      "community_name": "get_api_settings",
       "norm_label": ".test_production_requires_api_key()"
     },
     {
@@ -18859,8 +18859,8 @@
       "source_location": "L74",
       "_origin": "ast",
       "id": "tests_test_api_apitest_test_default_max_upload_mb_is_20",
-      "community": 11,
-      "community_name": "ApiTest",
+      "community": 24,
+      "community_name": "get_api_settings",
       "norm_label": ".test_default_max_upload_mb_is_20()"
     },
     {
@@ -18870,8 +18870,8 @@
       "source_location": "L81",
       "_origin": "ast",
       "id": "tests_test_api_apitest_test_max_upload_mb_can_be_overridden",
-      "community": 11,
-      "community_name": "ApiTest",
+      "community": 24,
+      "community_name": "get_api_settings",
       "norm_label": ".test_max_upload_mb_can_be_overridden()"
     },
     {
@@ -18903,8 +18903,8 @@
       "source_location": "L107",
       "_origin": "ast",
       "id": "tests_test_api_apitest_test_public_response_sanitizer_keeps_paths_in_development",
-      "community": 7,
-      "community_name": "ProviderInvalidResponseError",
+      "community": 11,
+      "community_name": "ApiTest",
       "norm_label": ".test_public_response_sanitizer_keeps_paths_in_development()"
     },
     {
@@ -18914,8 +18914,8 @@
       "source_location": "L120",
       "_origin": "ast",
       "id": "tests_test_api_apitest_test_public_response_sanitizer_removes_paths_in_production",
-      "community": 7,
-      "community_name": "ProviderInvalidResponseError",
+      "community": 11,
+      "community_name": "ApiTest",
       "norm_label": ".test_public_response_sanitizer_removes_paths_in_production()"
     },
     {
@@ -18925,8 +18925,8 @@
       "source_location": "L152",
       "_origin": "ast",
       "id": "tests_test_api_apitest_test_unexpected_errors_return_standard_json",
-      "community": 47,
-      "community_name": "create_app",
+      "community": 11,
+      "community_name": "ApiTest",
       "norm_label": ".test_unexpected_errors_return_standard_json()"
     },
     {
@@ -18936,8 +18936,8 @@
       "source_location": "L165",
       "_origin": "ast",
       "id": "tests_test_api_apitest_test_get_run_files",
-      "community": 7,
-      "community_name": "ProviderInvalidResponseError",
+      "community": 11,
+      "community_name": "ApiTest",
       "norm_label": ".test_get_run_files()"
     },
     {
@@ -19013,8 +19013,8 @@
       "source_location": "L275",
       "_origin": "ast",
       "id": "tests_test_api_apitest_test_artifact_path_rejects_traversal",
-      "community": 7,
-      "community_name": "ProviderInvalidResponseError",
+      "community": 11,
+      "community_name": "ApiTest",
       "norm_label": ".test_artifact_path_rejects_traversal()"
     },
     {
@@ -19024,8 +19024,8 @@
       "source_location": "L285",
       "_origin": "ast",
       "id": "tests_test_api_apitest_test_parse_options_json_rejects_invalid_json",
-      "community": 11,
-      "community_name": "ApiTest",
+      "community": 10,
+      "community_name": "runs.py",
       "norm_label": ".test_parse_options_json_rejects_invalid_json()"
     },
     {
@@ -19189,8 +19189,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "tests_test_auth",
-      "community": 120,
-      "community_name": "ModelProvider",
+      "community": 125,
+      "community_name": "auth_api_key.py",
       "norm_label": "test_auth.py"
     },
     {
@@ -19453,8 +19453,8 @@
       "source_location": "L172",
       "_origin": "ast",
       "id": "tests_test_auth_updatelastusedattest",
-      "community": 120,
-      "community_name": "ModelProvider",
+      "community": 125,
+      "community_name": "auth_api_key.py",
       "norm_label": "updatelastusedattest"
     },
     {
@@ -19464,8 +19464,8 @@
       "source_location": "L173",
       "_origin": "ast",
       "id": "tests_test_auth_updatelastusedattest_test_update_sends_timezone_aware_iso_timestamp",
-      "community": 120,
-      "community_name": "ModelProvider",
+      "community": 125,
+      "community_name": "auth_api_key.py",
       "norm_label": ".test_update_sends_timezone_aware_iso_timestamp()"
     },
     {
@@ -19475,8 +19475,8 @@
       "source_location": "L189",
       "_origin": "ast",
       "id": "tests_test_auth_updatelastusedattest_test_generated_key_hex_length_is_64",
-      "community": 120,
-      "community_name": "ModelProvider",
+      "community": 125,
+      "community_name": "auth_api_key.py",
       "norm_label": ".test_generated_key_hex_length_is_64()"
     },
     {
@@ -19552,8 +19552,8 @@
       "source_location": "L106",
       "_origin": "ast",
       "id": "tests_test_core_contracts_corecontractstest_test_artifact_store_copies_input_and_writes_result",
-      "community": 72,
-      "community_name": "CoreContractsTest",
+      "community": 40,
+      "community_name": "sanitize_for_public_response",
       "norm_label": ".test_artifact_store_copies_input_and_writes_result()"
     },
     {
@@ -19750,8 +19750,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "tests_test_hardening",
-      "community": 47,
-      "community_name": "create_app",
+      "community": 7,
+      "community_name": "ProviderInvalidResponseError",
       "norm_label": "test_hardening.py"
     },
     {
@@ -19761,8 +19761,8 @@
       "source_location": "L37",
       "_origin": "ast",
       "id": "tests_test_hardening_patch_memory_rate_limit_store",
-      "community": 47,
-      "community_name": "create_app",
+      "community": 7,
+      "community_name": "ProviderInvalidResponseError",
       "norm_label": "_patch_memory_rate_limit_store()"
     },
     {
@@ -19816,8 +19816,8 @@
       "source_location": "L55",
       "_origin": "ast",
       "id": "tests_test_hardening_pathinputtest_test_create_run_from_path_rejected_in_production",
-      "community": 24,
-      "community_name": "get_api_settings",
+      "community": 10,
+      "community_name": "runs.py",
       "norm_label": ".test_create_run_from_path_rejected_in_production()"
     },
     {
@@ -19838,8 +19838,8 @@
       "source_location": "L79",
       "_origin": "ast",
       "id": "tests_test_hardening_ratelimitertest",
-      "community": 47,
-      "community_name": "create_app",
+      "community": 7,
+      "community_name": "ProviderInvalidResponseError",
       "norm_label": "ratelimitertest"
     },
     {
@@ -19849,8 +19849,8 @@
       "source_location": "L80",
       "_origin": "ast",
       "id": "tests_test_hardening_ratelimitertest_test_per_minute_window",
-      "community": 47,
-      "community_name": "create_app",
+      "community": 7,
+      "community_name": "ProviderInvalidResponseError",
       "norm_label": ".test_per_minute_window()"
     },
     {
@@ -19860,8 +19860,8 @@
       "source_location": "L93",
       "_origin": "ast",
       "id": "tests_test_hardening_ratelimitertest_test_per_day_window",
-      "community": 47,
-      "community_name": "create_app",
+      "community": 7,
+      "community_name": "ProviderInvalidResponseError",
       "norm_label": ".test_per_day_window()"
     },
     {
@@ -19871,8 +19871,8 @@
       "source_location": "L105",
       "_origin": "ast",
       "id": "tests_test_hardening_ratelimitertest_test_state_file_persists_daily_count_across_restarts",
-      "community": 47,
-      "community_name": "create_app",
+      "community": 7,
+      "community_name": "ProviderInvalidResponseError",
       "norm_label": ".test_state_file_persists_daily_count_across_restarts()"
     },
     {
@@ -19882,8 +19882,8 @@
       "source_location": "L119",
       "_origin": "ast",
       "id": "tests_test_hardening_ratelimitertest_test_corrupt_state_file_is_ignored",
-      "community": 47,
-      "community_name": "create_app",
+      "community": 7,
+      "community_name": "ProviderInvalidResponseError",
       "norm_label": ".test_corrupt_state_file_is_ignored()"
     },
     {
@@ -19893,8 +19893,8 @@
       "source_location": "L126",
       "_origin": "ast",
       "id": "tests_test_hardening_ratelimitertest_test_zero_limits_disable",
-      "community": 47,
-      "community_name": "create_app",
+      "community": 7,
+      "community_name": "ProviderInvalidResponseError",
       "norm_label": ".test_zero_limits_disable()"
     },
     {
@@ -19926,8 +19926,8 @@
       "source_location": "L144",
       "_origin": "ast",
       "id": "tests_test_hardening_ratelimitertest_test_production_defaults",
-      "community": 47,
-      "community_name": "create_app",
+      "community": 24,
+      "community_name": "get_api_settings",
       "norm_label": ".test_production_defaults()"
     },
     {
@@ -19937,8 +19937,8 @@
       "source_location": "L150",
       "_origin": "ast",
       "id": "tests_test_hardening_ratelimitertest_test_negative_limits_rejected",
-      "community": 47,
-      "community_name": "create_app",
+      "community": 24,
+      "community_name": "get_api_settings",
       "norm_label": ".test_negative_limits_rejected()"
     },
     {
@@ -19959,8 +19959,8 @@
       "source_location": "L172",
       "_origin": "ast",
       "id": "tests_test_hardening_ratelimitertest_test_http_rate_limits_ocr_live_keys_independently_of_static_token",
-      "community": 47,
-      "community_name": "create_app",
+      "community": 7,
+      "community_name": "ProviderInvalidResponseError",
       "norm_label": ".test_http_rate_limits_ocr_live_keys_independently_of_static_token()"
     },
     {
@@ -20003,8 +20003,8 @@
       "source_location": "L294",
       "_origin": "ast",
       "id": "tests_test_hardening_ratelimitertest_test_session_jwt_and_ocr_live_key_share_account_quota",
-      "community": 47,
-      "community_name": "create_app",
+      "community": 7,
+      "community_name": "ProviderInvalidResponseError",
       "norm_label": ".test_session_jwt_and_ocr_live_key_share_account_quota()"
     },
     {
@@ -20168,8 +20168,8 @@
       "source_location": "L517",
       "_origin": "ast",
       "id": "tests_test_hardening_mcppathtooltest",
-      "community": 95,
-      "community_name": "McpPathToolTest",
+      "community": 7,
+      "community_name": "ProviderInvalidResponseError",
       "norm_label": "mcppathtooltest"
     },
     {
@@ -20179,8 +20179,8 @@
       "source_location": "L518",
       "_origin": "ast",
       "id": "tests_test_hardening_mcppathtooltest_tool_names",
-      "community": 95,
-      "community_name": "McpPathToolTest",
+      "community": 7,
+      "community_name": "ProviderInvalidResponseError",
       "norm_label": "._tool_names()"
     },
     {
@@ -20190,8 +20190,8 @@
       "source_location": "L530",
       "_origin": "ast",
       "id": "tests_test_hardening_mcppathtooltest_test_path_tool_hidden_in_production",
-      "community": 95,
-      "community_name": "McpPathToolTest",
+      "community": 7,
+      "community_name": "ProviderInvalidResponseError",
       "norm_label": ".test_path_tool_hidden_in_production()"
     },
     {
@@ -20201,8 +20201,8 @@
       "source_location": "L535",
       "_origin": "ast",
       "id": "tests_test_hardening_mcppathtooltest_test_path_tool_available_in_development",
-      "community": 95,
-      "community_name": "McpPathToolTest",
+      "community": 7,
+      "community_name": "ProviderInvalidResponseError",
       "norm_label": ".test_path_tool_available_in_development()"
     },
     {
@@ -20212,8 +20212,8 @@
       "source_location": "L538",
       "_origin": "ast",
       "id": "tests_test_hardening_mcppathtooltest_test_path_tool_override",
-      "community": 95,
-      "community_name": "McpPathToolTest",
+      "community": 7,
+      "community_name": "ProviderInvalidResponseError",
       "norm_label": ".test_path_tool_override()"
     },
     {
@@ -20223,8 +20223,8 @@
       "source_location": "L38",
       "_origin": "ast",
       "id": "tests_test_hardening_rationale_38",
-      "community": 47,
-      "community_name": "create_app",
+      "community": 7,
+      "community_name": "ProviderInvalidResponseError",
       "norm_label": "keep existing http quota tests on the in-memory store despite supabase env."
     },
     {
@@ -20751,8 +20751,8 @@
       "source_location": "L11",
       "_origin": "ast",
       "id": "tests_test_phase1_robustness_tokenusagecoerciontest",
-      "community": 4,
-      "community_name": "create_provider",
+      "community": 28,
+      "community_name": "exceptions.py",
       "norm_label": "tokenusagecoerciontest"
     },
     {
@@ -20762,8 +20762,8 @@
       "source_location": "L14",
       "_origin": "ast",
       "id": "tests_test_phase1_robustness_tokenusagecoerciontest_test_none_fields_coerced_to_zero",
-      "community": 4,
-      "community_name": "create_provider",
+      "community": 28,
+      "community_name": "exceptions.py",
       "norm_label": ".test_none_fields_coerced_to_zero()"
     },
     {
@@ -20773,8 +20773,8 @@
       "source_location": "L20",
       "_origin": "ast",
       "id": "tests_test_phase1_robustness_tokenusagecoerciontest_test_add_tolerates_none",
-      "community": 4,
-      "community_name": "create_provider",
+      "community": 28,
+      "community_name": "exceptions.py",
       "norm_label": ".test_add_tolerates_none()"
     },
     {
@@ -20872,8 +20872,8 @@
       "source_location": "L12",
       "_origin": "ast",
       "id": "tests_test_phase1_robustness_rationale_12",
-      "community": 4,
-      "community_name": "create_provider",
+      "community": 28,
+      "community_name": "exceptions.py",
       "norm_label": "b2 \u2014 null usage fields must not break token aggregation."
     },
     {
@@ -20916,8 +20916,8 @@
       "source_location": "L28",
       "_origin": "ast",
       "id": "tests_test_phase2_quality_preprocessorsinglewritetest",
-      "community": 3,
-      "community_name": ".detect_and_crop_team_fouls",
+      "community": 68,
+      "community_name": "Extractor",
       "norm_label": "preprocessorsinglewritetest"
     },
     {
@@ -20927,8 +20927,8 @@
       "source_location": "L29",
       "_origin": "ast",
       "id": "tests_test_phase2_quality_preprocessorsinglewritetest_test_preprocess_sheet_enhances_in_memory_without_reopening_output",
-      "community": 3,
-      "community_name": ".detect_and_crop_team_fouls",
+      "community": 68,
+      "community_name": "Extractor",
       "norm_label": ".test_preprocess_sheet_enhances_in_memory_without_reopening_output()"
     },
     {
@@ -20971,8 +20971,8 @@
       "source_location": "L68",
       "_origin": "ast",
       "id": "tests_test_phase2_quality_providerheaderstest",
-      "community": 20,
-      "community_name": "OpenrouterProvider",
+      "community": 29,
+      "community_name": "TokenUsage",
       "norm_label": "providerheaderstest"
     },
     {
@@ -20993,8 +20993,8 @@
       "source_location": "L74",
       "_origin": "ast",
       "id": "tests_test_phase2_quality_providerheaderstest_test_openrouter_uses_project_referer",
-      "community": 20,
-      "community_name": "OpenrouterProvider",
+      "community": 29,
+      "community_name": "TokenUsage",
       "norm_label": ".test_openrouter_uses_project_referer()"
     },
     {
@@ -21015,8 +21015,8 @@
       "source_location": "L82",
       "_origin": "ast",
       "id": "tests_test_phase2_quality_preprocessfallbackpropagationtest_test_preprocess_fallback_propagates_to_meta_and_low_warning",
-      "community": 12,
-      "community_name": "PipelineConfig",
+      "community": 49,
+      "community_name": "generate_api_key",
       "norm_label": ".test_preprocess_fallback_propagates_to_meta_and_low_warning()"
     },
     {
@@ -21026,8 +21026,8 @@
       "source_location": "L166",
       "_origin": "ast",
       "id": "tests_test_phase2_quality_extractordefaultsandhelperstest",
-      "community": 3,
-      "community_name": ".detect_and_crop_team_fouls",
+      "community": 55,
+      "community_name": "ValidationEngine",
       "norm_label": "extractordefaultsandhelperstest"
     },
     {
@@ -21048,8 +21048,8 @@
       "source_location": "L190",
       "_origin": "ast",
       "id": "tests_test_phase2_quality_extractordefaultsandhelperstest_test_parse_mark_flag_strict_and_non_strict",
-      "community": 3,
-      "community_name": ".detect_and_crop_team_fouls",
+      "community": 8,
+      "community_name": "team_markdown_parser.py",
       "norm_label": ".test_parse_mark_flag_strict_and_non_strict()"
     },
     {
@@ -21059,8 +21059,8 @@
       "source_location": "L197",
       "_origin": "ast",
       "id": "tests_test_phase2_quality_extractordefaultsandhelperstest_test_token_usage_from_usage_accepts_provider_usage",
-      "community": 118,
-      "community_name": "FibaOcrPipeline",
+      "community": 55,
+      "community_name": "ValidationEngine",
       "norm_label": ".test_token_usage_from_usage_accepts_provider_usage()"
     },
     {
@@ -21070,8 +21070,8 @@
       "source_location": "L202",
       "_origin": "ast",
       "id": "tests_test_phase2_quality_extractordefaultsandhelperstest_test_build_final_output_normalizes_three_point_alias_and_string_counts",
-      "community": 3,
-      "community_name": ".detect_and_crop_team_fouls",
+      "community": 55,
+      "community_name": "ValidationEngine",
       "norm_label": ".test_build_final_output_normalizes_three_point_alias_and_string_counts()"
     },
     {
@@ -21092,8 +21092,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "tests_test_phase3_api_mcp_hardening",
-      "community": 7,
-      "community_name": "ProviderInvalidResponseError",
+      "community": 43,
+      "community_name": "main.py",
       "norm_label": "test_phase3_api_mcp_hardening.py"
     },
     {
@@ -21246,8 +21246,8 @@
       "source_location": "L189",
       "_origin": "ast",
       "id": "tests_test_phase3_api_mcp_hardening_apihardeningphase3test_test_asymmetric_jwt_auth_caches_verified_claims_and_uses_standard_error_envelope",
-      "community": 43,
-      "community_name": "main.py",
+      "community": 61,
+      "community_name": "RunRepository",
       "norm_label": ".test_asymmetric_jwt_auth_caches_verified_claims_and_uses_standard_error_envelope()"
     },
     {
@@ -21257,8 +21257,8 @@
       "source_location": "L217",
       "_origin": "ast",
       "id": "tests_test_phase3_api_mcp_hardening_mcphardeningphase3test",
-      "community": 34,
-      "community_name": "McpTokenVerifier",
+      "community": 37,
+      "community_name": "OcrToolbox",
       "norm_label": "mcphardeningphase3test"
     },
     {
@@ -21268,8 +21268,8 @@
       "source_location": "L218",
       "_origin": "ast",
       "id": "tests_test_phase3_api_mcp_hardening_mcphardeningphase3test_test_client_validates_run_id_and_handles_timeouts_and_closes_owned_session",
-      "community": 34,
-      "community_name": "McpTokenVerifier",
+      "community": 1,
+      "community_name": "OcrApiClient",
       "norm_label": ".test_client_validates_run_id_and_handles_timeouts_and_closes_owned_session()"
     },
     {
@@ -21301,8 +21301,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "tests_test_phase3_api_mcp_hardening_rationale_1",
-      "community": 7,
-      "community_name": "ProviderInvalidResponseError",
+      "community": 43,
+      "community_name": "main.py",
       "norm_label": "unit tests for phase 3 api & mcp hardening, concurrency, and error consistency."
     },
     {
@@ -21400,8 +21400,8 @@
       "source_location": "L47",
       "_origin": "ast",
       "id": "tests_test_phase3_cleanup_agenticcapabilitytest",
-      "community": 20,
-      "community_name": "OpenrouterProvider",
+      "community": 55,
+      "community_name": "ValidationEngine",
       "norm_label": "agenticcapabilitytest"
     },
     {
@@ -21411,8 +21411,8 @@
       "source_location": "L50",
       "_origin": "ast",
       "id": "tests_test_phase3_cleanup_agenticcapabilitytest_test_docstrange_supports_agentic_openrouter_does_not",
-      "community": 20,
-      "community_name": "OpenrouterProvider",
+      "community": 55,
+      "community_name": "ValidationEngine",
       "norm_label": ".test_docstrange_supports_agentic_openrouter_does_not()"
     },
     {
@@ -21455,8 +21455,8 @@
       "source_location": "L48",
       "_origin": "ast",
       "id": "tests_test_phase3_cleanup_rationale_48",
-      "community": 20,
-      "community_name": "OpenrouterProvider",
+      "community": 55,
+      "community_name": "ValidationEngine",
       "norm_label": "p3 \u2014 capability detection is cached per provider class."
     },
     {
@@ -21466,8 +21466,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "tests_test_provider_http_base",
-      "community": 19,
-      "community_name": "extractor.py",
+      "community": 3,
+      "community_name": ".detect_and_crop_team_fouls",
       "norm_label": "test_provider_http_base.py"
     },
     {
@@ -21653,8 +21653,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "tests_test_provider_http_base_rationale_1",
-      "community": 19,
-      "community_name": "extractor.py",
+      "community": 3,
+      "community_name": ".detect_and_crop_team_fouls",
       "norm_label": "tests for the shared httpjsonprovider base: retry/backoff and parsing."
     },
     {
@@ -21829,8 +21829,8 @@
       "source_location": "L23",
       "_origin": "ast",
       "id": "tests_test_toolbox_toolboxtest",
-      "community": 12,
-      "community_name": "PipelineConfig",
+      "community": 49,
+      "community_name": "generate_api_key",
       "norm_label": "toolboxtest"
     },
     {
@@ -21840,8 +21840,8 @@
       "source_location": "L24",
       "_origin": "ast",
       "id": "tests_test_toolbox_toolboxtest_test_build_and_validate_return_tool_results",
-      "community": 12,
-      "community_name": "PipelineConfig",
+      "community": 49,
+      "community_name": "generate_api_key",
       "norm_label": ".test_build_and_validate_return_tool_results()"
     },
     {
@@ -21851,8 +21851,8 @@
       "source_location": "L73",
       "_origin": "ast",
       "id": "tests_test_toolbox_toolboxtest_test_run_full_pipeline_is_single_orchestrator",
-      "community": 12,
-      "community_name": "PipelineConfig",
+      "community": 49,
+      "community_name": "generate_api_key",
       "norm_label": ".test_run_full_pipeline_is_single_orchestrator()"
     },
     {
@@ -21862,8 +21862,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "tests_test_validation_confidence",
-      "community": 49,
-      "community_name": "generate_api_key",
+      "community": 9,
+      "community_name": "output_builder.py",
       "norm_label": "test_validation_confidence.py"
     },
     {
@@ -21950,8 +21950,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "tests_test_validation_confidence_rationale_1",
-      "community": 49,
-      "community_name": "generate_api_key",
+      "community": 9,
+      "community_name": "output_builder.py",
       "norm_label": "unit tests for phase 1 validation plugins, illegible mark propagation, and confi"
     },
     {
@@ -22035,7 +22035,7 @@
       "label": "Repository layout",
       "file_type": "document",
       "source_file": "AGENTS.md",
-      "source_location": "L65",
+      "source_location": "L64",
       "_origin": "ast",
       "id": "agents_repository_layout",
       "community": 15,
@@ -22046,7 +22046,7 @@
       "label": "Hard dependency rule",
       "file_type": "document",
       "source_file": "AGENTS.md",
-      "source_location": "L83",
+      "source_location": "L82",
       "_origin": "ast",
       "id": "agents_hard_dependency_rule",
       "community": 15,
@@ -22057,7 +22057,7 @@
       "label": "Git workflow",
       "file_type": "document",
       "source_file": "AGENTS.md",
-      "source_location": "L93",
+      "source_location": "L92",
       "_origin": "ast",
       "id": "agents_git_workflow",
       "community": 96,
@@ -22068,7 +22068,7 @@
       "label": "Branching",
       "file_type": "document",
       "source_file": "AGENTS.md",
-      "source_location": "L97",
+      "source_location": "L96",
       "_origin": "ast",
       "id": "agents_branching",
       "community": 96,
@@ -22079,7 +22079,7 @@
       "label": "Commit format",
       "file_type": "document",
       "source_file": "AGENTS.md",
-      "source_location": "L110",
+      "source_location": "L109",
       "_origin": "ast",
       "id": "agents_commit_format",
       "community": 96,
@@ -22090,7 +22090,7 @@
       "label": "Atomicity",
       "file_type": "document",
       "source_file": "AGENTS.md",
-      "source_location": "L130",
+      "source_location": "L129",
       "_origin": "ast",
       "id": "agents_atomicity",
       "community": 96,
@@ -22101,7 +22101,7 @@
       "label": "Project conventions (must follow)",
       "file_type": "document",
       "source_file": "AGENTS.md",
-      "source_location": "L135",
+      "source_location": "L134",
       "_origin": "ast",
       "id": "agents_project_conventions_must_follow",
       "community": 92,
@@ -22112,7 +22112,7 @@
       "label": "Python",
       "file_type": "document",
       "source_file": "AGENTS.md",
-      "source_location": "L137",
+      "source_location": "L136",
       "_origin": "ast",
       "id": "agents_python",
       "community": 92,
@@ -22123,7 +22123,7 @@
       "label": "FastAPI (api package)",
       "file_type": "document",
       "source_file": "AGENTS.md",
-      "source_location": "L145",
+      "source_location": "L144",
       "_origin": "ast",
       "id": "agents_fastapi_api_package",
       "community": 92,
@@ -22134,7 +22134,7 @@
       "label": "Next.js (web package)",
       "file_type": "document",
       "source_file": "AGENTS.md",
-      "source_location": "L152",
+      "source_location": "L151",
       "_origin": "ast",
       "id": "agents_next_js_web_package",
       "community": 92,
@@ -22145,7 +22145,7 @@
       "label": "MCP",
       "file_type": "document",
       "source_file": "AGENTS.md",
-      "source_location": "L159",
+      "source_location": "L158",
       "_origin": "ast",
       "id": "agents_mcp",
       "community": 92,
@@ -22156,7 +22156,7 @@
       "label": "Auto-invoke skills",
       "file_type": "document",
       "source_file": "AGENTS.md",
-      "source_location": "L165",
+      "source_location": "L164",
       "_origin": "ast",
       "id": "agents_auto_invoke_skills",
       "community": 15,
@@ -22167,7 +22167,7 @@
       "label": "Available first-party skills (located in each package)",
       "file_type": "document",
       "source_file": "AGENTS.md",
-      "source_location": "L183",
+      "source_location": "L182",
       "_origin": "ast",
       "id": "agents_available_first_party_skills_located_in_each_package",
       "community": 15,
@@ -22178,7 +22178,7 @@
       "label": "Domains / packages",
       "file_type": "document",
       "source_file": "AGENTS.md",
-      "source_location": "L193",
+      "source_location": "L192",
       "_origin": "ast",
       "id": "agents_domains_packages",
       "community": 15,
@@ -22189,7 +22189,7 @@
       "label": "Graphify \u2014 required repository knowledge",
       "file_type": "document",
       "source_file": "AGENTS.md",
-      "source_location": "L205",
+      "source_location": "L204",
       "_origin": "ast",
       "id": "agents_graphify_required_repository_knowledge",
       "community": 15,
@@ -22200,7 +22200,7 @@
       "label": "Engram \u2014 memoria t\u00e9cnica compartida",
       "file_type": "document",
       "source_file": "AGENTS.md",
-      "source_location": "L230",
+      "source_location": "L229",
       "_origin": "ast",
       "id": "agents_engram_memoria_t\u00e9cnica_compartida",
       "community": 15,
@@ -22211,7 +22211,7 @@
       "label": "Out of scope (do not touch)",
       "file_type": "document",
       "source_file": "AGENTS.md",
-      "source_location": "L236",
+      "source_location": "L235",
       "_origin": "ast",
       "id": "agents_out_of_scope_do_not_touch",
       "community": 15,
@@ -22373,21 +22373,43 @@
       "norm_label": "run the web app"
     },
     {
-      "label": "Run the test suite",
+      "label": "Run the test suites",
       "file_type": "document",
       "source_file": "README.md",
       "source_location": "L121",
       "_origin": "ast",
-      "id": "readme_run_the_test_suite",
+      "id": "readme_run_the_test_suites",
       "community": 21,
       "community_name": "Quickstart (local development)",
-      "norm_label": "run the test suite"
+      "norm_label": "run the test suites"
+    },
+    {
+      "label": "Validation plugins & confidence",
+      "file_type": "document",
+      "source_file": "README.md",
+      "source_location": "L140",
+      "_origin": "ast",
+      "id": "readme_validation_plugins_confidence",
+      "community": 63,
+      "community_name": "FIBA OCR Engine",
+      "norm_label": "validation plugins & confidence"
+    },
+    {
+      "label": "Production deployment overview",
+      "file_type": "document",
+      "source_file": "README.md",
+      "source_location": "L150",
+      "_origin": "ast",
+      "id": "readme_production_deployment_overview",
+      "community": 63,
+      "community_name": "FIBA OCR Engine",
+      "norm_label": "production deployment overview"
     },
     {
       "label": "Git workflow",
       "file_type": "document",
       "source_file": "README.md",
-      "source_location": "L128",
+      "source_location": "L156",
       "_origin": "ast",
       "id": "readme_git_workflow",
       "community": 89,
@@ -22398,7 +22420,7 @@
       "label": "Branches",
       "file_type": "document",
       "source_file": "README.md",
-      "source_location": "L132",
+      "source_location": "L160",
       "_origin": "ast",
       "id": "readme_branches",
       "community": 89,
@@ -22409,7 +22431,7 @@
       "label": "Lifecycle of a change",
       "file_type": "document",
       "source_file": "README.md",
-      "source_location": "L140",
+      "source_location": "L168",
       "_origin": "ast",
       "id": "readme_lifecycle_of_a_change",
       "community": 89,
@@ -22420,7 +22442,7 @@
       "label": "Branch naming",
       "file_type": "document",
       "source_file": "README.md",
-      "source_location": "L168",
+      "source_location": "L196",
       "_origin": "ast",
       "id": "readme_branch_naming",
       "community": 89,
@@ -22431,7 +22453,7 @@
       "label": "Commit messages",
       "file_type": "document",
       "source_file": "README.md",
-      "source_location": "L184",
+      "source_location": "L212",
       "_origin": "ast",
       "id": "readme_commit_messages",
       "community": 89,
@@ -22442,7 +22464,7 @@
       "label": "Releases and tags",
       "file_type": "document",
       "source_file": "README.md",
-      "source_location": "L198",
+      "source_location": "L226",
       "_origin": "ast",
       "id": "readme_releases_and_tags",
       "community": 89,
@@ -22453,7 +22475,7 @@
       "label": "Rules of thumb",
       "file_type": "document",
       "source_file": "README.md",
-      "source_location": "L202",
+      "source_location": "L230",
       "_origin": "ast",
       "id": "readme_rules_of_thumb",
       "community": 89,
@@ -22464,7 +22486,7 @@
       "label": "Contributing",
       "file_type": "document",
       "source_file": "README.md",
-      "source_location": "L209",
+      "source_location": "L237",
       "_origin": "ast",
       "id": "readme_contributing",
       "community": 63,
@@ -22475,7 +22497,7 @@
       "label": "License",
       "file_type": "document",
       "source_file": "README.md",
-      "source_location": "L215",
+      "source_location": "L243",
       "_origin": "ast",
       "id": "readme_license",
       "community": 63,
@@ -23132,15 +23154,15 @@
       "norm_label": "3. provider implementations"
     },
     {
-      "label": "4. Validation plugins",
+      "label": "4. Validation plugins and confidence",
       "file_type": "document",
       "source_file": "packages/core-engine/AGENTS.md",
       "source_location": "L81",
       "_origin": "ast",
-      "id": "packages_core_engine_agents_4_validation_plugins",
+      "id": "packages_core_engine_agents_4_validation_plugins_and_confidence",
       "community": 51,
       "community_name": "core-engine \u2014 AGENTS.md",
-      "norm_label": "4. validation plugins"
+      "norm_label": "4. validation plugins and confidence"
     },
     {
       "label": "5. Canonical run layout (artifacts)",
@@ -23366,7 +23388,7 @@
       "label": "Patterns",
       "file_type": "document",
       "source_file": "packages/mcp/AGENTS.md",
-      "source_location": "L31",
+      "source_location": "L32",
       "_origin": "ast",
       "id": "packages_mcp_agents_patterns",
       "community": 90,
@@ -23377,7 +23399,7 @@
       "label": "1. Tools wrap `OcrApiClient`, not the core engine",
       "file_type": "document",
       "source_file": "packages/mcp/AGENTS.md",
-      "source_location": "L33",
+      "source_location": "L34",
       "_origin": "ast",
       "id": "packages_mcp_agents_1_tools_wrap_ocrapiclient_not_the_core_engine",
       "community": 90,
@@ -23388,7 +23410,7 @@
       "label": "2. Error mapping via `handle_api_error`",
       "file_type": "document",
       "source_file": "packages/mcp/AGENTS.md",
-      "source_location": "L44",
+      "source_location": "L45",
       "_origin": "ast",
       "id": "packages_mcp_agents_2_error_mapping_via_handle_api_error",
       "community": 90,
@@ -23399,7 +23421,7 @@
       "label": "3. Resources expose run state",
       "file_type": "document",
       "source_file": "packages/mcp/AGENTS.md",
-      "source_location": "L48",
+      "source_location": "L49",
       "_origin": "ast",
       "id": "packages_mcp_agents_3_resources_expose_run_state",
       "community": 90,
@@ -23410,7 +23432,7 @@
       "label": "4. Auth: static MCP token or per-client `ocr_live_` keys",
       "file_type": "document",
       "source_file": "packages/mcp/AGENTS.md",
-      "source_location": "L52",
+      "source_location": "L53",
       "_origin": "ast",
       "id": "packages_mcp_agents_4_auth_static_mcp_token_or_per_client_ocr_live_keys",
       "community": 90,
@@ -23421,7 +23443,7 @@
       "label": "5. Transport selection",
       "file_type": "document",
       "source_file": "packages/mcp/AGENTS.md",
-      "source_location": "L61",
+      "source_location": "L62",
       "_origin": "ast",
       "id": "packages_mcp_agents_5_transport_selection",
       "community": 90,
@@ -23429,21 +23451,21 @@
       "norm_label": "5. transport selection"
     },
     {
-      "label": "Tools and resources (current)",
+      "label": "Tools, resources, and prompts (current)",
       "file_type": "document",
       "source_file": "packages/mcp/AGENTS.md",
-      "source_location": "L66",
+      "source_location": "L67",
       "_origin": "ast",
-      "id": "packages_mcp_agents_tools_and_resources_current",
+      "id": "packages_mcp_agents_tools_resources_and_prompts_current",
       "community": 82,
       "community_name": "mcp \u2014 AGENTS.md",
-      "norm_label": "tools and resources (current)"
+      "norm_label": "tools, resources, and prompts (current)"
     },
     {
       "label": "Rules specific to mcp",
       "file_type": "document",
       "source_file": "packages/mcp/AGENTS.md",
-      "source_location": "L85",
+      "source_location": "L84",
       "_origin": "ast",
       "id": "packages_mcp_agents_rules_specific_to_mcp",
       "community": 82,
@@ -23454,7 +23476,7 @@
       "label": "Auto-invoke skills (per task)",
       "file_type": "document",
       "source_file": "packages/mcp/AGENTS.md",
-      "source_location": "L93",
+      "source_location": "L92",
       "_origin": "ast",
       "id": "packages_mcp_agents_auto_invoke_skills_per_task",
       "community": 82,
@@ -23465,7 +23487,7 @@
       "label": "References",
       "file_type": "document",
       "source_file": "packages/mcp/AGENTS.md",
-      "source_location": "L100",
+      "source_location": "L99",
       "_origin": "ast",
       "id": "packages_mcp_agents_references",
       "community": 82,
@@ -23550,21 +23572,54 @@
       "norm_label": "run api + mcp as background services"
     },
     {
-      "label": "Tools and resources",
+      "label": "Tools, resources, and prompts",
       "file_type": "document",
       "source_file": "packages/mcp/docs/mcp-server.md",
       "source_location": "L75",
       "_origin": "ast",
-      "id": "packages_mcp_docs_mcp_server_tools_and_resources",
+      "id": "packages_mcp_docs_mcp_server_tools_resources_and_prompts",
       "community": 69,
       "community_name": "MCP Server",
-      "norm_label": "tools and resources"
+      "norm_label": "tools, resources, and prompts"
+    },
+    {
+      "label": "Tools",
+      "file_type": "document",
+      "source_file": "packages/mcp/docs/mcp-server.md",
+      "source_location": "L77",
+      "_origin": "ast",
+      "id": "packages_mcp_docs_mcp_server_tools",
+      "community": 69,
+      "community_name": "MCP Server",
+      "norm_label": "tools"
+    },
+    {
+      "label": "Resources",
+      "file_type": "document",
+      "source_file": "packages/mcp/docs/mcp-server.md",
+      "source_location": "L90",
+      "_origin": "ast",
+      "id": "packages_mcp_docs_mcp_server_resources",
+      "community": 69,
+      "community_name": "MCP Server",
+      "norm_label": "resources"
+    },
+    {
+      "label": "Prompts",
+      "file_type": "document",
+      "source_file": "packages/mcp/docs/mcp-server.md",
+      "source_location": "L97",
+      "_origin": "ast",
+      "id": "packages_mcp_docs_mcp_server_prompts",
+      "community": 69,
+      "community_name": "MCP Server",
+      "norm_label": "prompts"
     },
     {
       "label": "Production notes",
       "file_type": "document",
       "source_file": "packages/mcp/docs/mcp-server.md",
-      "source_location": "L84",
+      "source_location": "L103",
       "_origin": "ast",
       "id": "packages_mcp_docs_mcp_server_production_notes",
       "community": 69,
@@ -23575,7 +23630,7 @@
       "label": "Public deployment (Google Cloud Run)",
       "file_type": "document",
       "source_file": "packages/mcp/docs/mcp-server.md",
-      "source_location": "L90",
+      "source_location": "L110",
       "_origin": "ast",
       "id": "packages_mcp_docs_mcp_server_public_deployment_google_cloud_run",
       "community": 69,
@@ -23586,7 +23641,7 @@
       "label": "Continuous deployment (push to `main`)",
       "file_type": "document",
       "source_file": "packages/mcp/docs/mcp-server.md",
-      "source_location": "L98",
+      "source_location": "L118",
       "_origin": "ast",
       "id": "packages_mcp_docs_mcp_server_continuous_deployment_push_to_main",
       "community": 69,
@@ -69977,7 +70032,7 @@
       "relation": "defines",
       "confidence": "EXTRACTED",
       "source_file": "scripts/deploy_cloudrun.sh",
-      "source_location": "L123",
+      "source_location": "L125",
       "weight": 1.0,
       "_origin": "ast",
       "source": "scripts_deploy_cloudrun",
@@ -69988,7 +70043,7 @@
       "relation": "defines",
       "confidence": "EXTRACTED",
       "source_file": "scripts/deploy_cloudrun.sh",
-      "source_location": "L128",
+      "source_location": "L130",
       "weight": 1.0,
       "_origin": "ast",
       "source": "scripts_deploy_cloudrun",
@@ -69999,7 +70054,7 @@
       "relation": "defines",
       "confidence": "EXTRACTED",
       "source_file": "scripts/deploy_cloudrun.sh",
-      "source_location": "L132",
+      "source_location": "L134",
       "weight": 1.0,
       "_origin": "ast",
       "source": "scripts_deploy_cloudrun",
@@ -70010,7 +70065,7 @@
       "relation": "defines",
       "confidence": "EXTRACTED",
       "source_file": "scripts/deploy_cloudrun.sh",
-      "source_location": "L160",
+      "source_location": "L162",
       "weight": 1.0,
       "_origin": "ast",
       "source": "scripts_deploy_cloudrun",
@@ -70021,7 +70076,7 @@
       "relation": "defines",
       "confidence": "EXTRACTED",
       "source_file": "scripts/deploy_cloudrun.sh",
-      "source_location": "L63",
+      "source_location": "L65",
       "weight": 1.0,
       "_origin": "ast",
       "source": "scripts_deploy_cloudrun",
@@ -70032,7 +70087,7 @@
       "relation": "defines",
       "confidence": "EXTRACTED",
       "source_file": "scripts/deploy_cloudrun.sh",
-      "source_location": "L46",
+      "source_location": "L48",
       "weight": 1.0,
       "_origin": "ast",
       "source": "scripts_deploy_cloudrun",
@@ -70043,7 +70098,7 @@
       "relation": "defines",
       "confidence": "EXTRACTED",
       "source_file": "scripts/deploy_cloudrun.sh",
-      "source_location": "L52",
+      "source_location": "L54",
       "weight": 1.0,
       "_origin": "ast",
       "source": "scripts_deploy_cloudrun",
@@ -70054,7 +70109,7 @@
       "relation": "defines",
       "confidence": "EXTRACTED",
       "source_file": "scripts/deploy_cloudrun.sh",
-      "source_location": "L74",
+      "source_location": "L76",
       "weight": 1.0,
       "_origin": "ast",
       "source": "scripts_deploy_cloudrun",
@@ -70065,7 +70120,7 @@
       "relation": "defines",
       "confidence": "EXTRACTED",
       "source_file": "scripts/deploy_cloudrun.sh",
-      "source_location": "L48",
+      "source_location": "L50",
       "weight": 1.0,
       "_origin": "ast",
       "source": "scripts_deploy_cloudrun",
@@ -70076,7 +70131,7 @@
       "relation": "defines",
       "confidence": "EXTRACTED",
       "source_file": "scripts/deploy_cloudrun.sh",
-      "source_location": "L169",
+      "source_location": "L171",
       "weight": 1.0,
       "_origin": "ast",
       "source": "scripts_deploy_cloudrun",
@@ -70098,7 +70153,7 @@
       "relation": "defines",
       "confidence": "EXTRACTED",
       "source_file": "scripts/deploy_cloudrun.sh",
-      "source_location": "L57",
+      "source_location": "L59",
       "weight": 1.0,
       "_origin": "ast",
       "source": "scripts_deploy_cloudrun",
@@ -70109,7 +70164,7 @@
       "relation": "defines",
       "confidence": "EXTRACTED",
       "source_file": "scripts/deploy_cloudrun.sh",
-      "source_location": "L174",
+      "source_location": "L176",
       "weight": 1.0,
       "_origin": "ast",
       "source": "scripts_deploy_cloudrun",
@@ -70120,7 +70175,7 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "scripts/deploy_cloudrun.sh",
-      "source_location": "L180",
+      "source_location": "L182",
       "weight": 1.0,
       "context": "call",
       "_origin": "ast",
@@ -70132,7 +70187,7 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "scripts/deploy_cloudrun.sh",
-      "source_location": "L180",
+      "source_location": "L182",
       "weight": 1.0,
       "context": "call",
       "_origin": "ast",
@@ -70144,7 +70199,7 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "scripts/deploy_cloudrun.sh",
-      "source_location": "L180",
+      "source_location": "L182",
       "weight": 1.0,
       "context": "call",
       "_origin": "ast",
@@ -70156,7 +70211,7 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "scripts/deploy_cloudrun.sh",
-      "source_location": "L180",
+      "source_location": "L182",
       "weight": 1.0,
       "context": "call",
       "_origin": "ast",
@@ -70168,7 +70223,7 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "scripts/deploy_cloudrun.sh",
-      "source_location": "L180",
+      "source_location": "L182",
       "weight": 1.0,
       "context": "call",
       "_origin": "ast",
@@ -70180,7 +70235,7 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "scripts/deploy_cloudrun.sh",
-      "source_location": "L124",
+      "source_location": "L126",
       "weight": 1.0,
       "context": "call",
       "_origin": "ast",
@@ -70192,7 +70247,7 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "scripts/deploy_cloudrun.sh",
-      "source_location": "L150",
+      "source_location": "L152",
       "weight": 1.0,
       "context": "call",
       "_origin": "ast",
@@ -70204,7 +70259,7 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "scripts/deploy_cloudrun.sh",
-      "source_location": "L162",
+      "source_location": "L164",
       "weight": 1.0,
       "context": "call",
       "_origin": "ast",
@@ -70216,7 +70271,7 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "scripts/deploy_cloudrun.sh",
-      "source_location": "L65",
+      "source_location": "L67",
       "weight": 1.0,
       "context": "call",
       "_origin": "ast",
@@ -70228,7 +70283,7 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "scripts/deploy_cloudrun.sh",
-      "source_location": "L53",
+      "source_location": "L55",
       "weight": 1.0,
       "context": "call",
       "_origin": "ast",
@@ -70240,7 +70295,7 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "scripts/deploy_cloudrun.sh",
-      "source_location": "L75",
+      "source_location": "L77",
       "weight": 1.0,
       "context": "call",
       "_origin": "ast",
@@ -70252,7 +70307,7 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "scripts/deploy_cloudrun.sh",
-      "source_location": "L49",
+      "source_location": "L51",
       "weight": 1.0,
       "context": "call",
       "_origin": "ast",
@@ -70264,7 +70319,7 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "scripts/deploy_cloudrun.sh",
-      "source_location": "L58",
+      "source_location": "L60",
       "weight": 1.0,
       "context": "call",
       "_origin": "ast",
@@ -70276,7 +70331,7 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "scripts/deploy_cloudrun.sh",
-      "source_location": "L138",
+      "source_location": "L140",
       "weight": 1.0,
       "context": "call",
       "_origin": "ast",
@@ -70288,7 +70343,7 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "scripts/deploy_cloudrun.sh",
-      "source_location": "L98",
+      "source_location": "L100",
       "weight": 1.0,
       "context": "call",
       "_origin": "ast",
@@ -75631,7 +75686,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "AGENTS.md",
-      "source_location": "L165",
+      "source_location": "L164",
       "weight": 1.0,
       "_origin": "ast",
       "source": "agents_fiba_ocr_engine_agents_md",
@@ -75642,7 +75697,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "AGENTS.md",
-      "source_location": "L183",
+      "source_location": "L182",
       "weight": 1.0,
       "_origin": "ast",
       "source": "agents_fiba_ocr_engine_agents_md",
@@ -75664,7 +75719,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "AGENTS.md",
-      "source_location": "L193",
+      "source_location": "L192",
       "weight": 1.0,
       "_origin": "ast",
       "source": "agents_fiba_ocr_engine_agents_md",
@@ -75675,7 +75730,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "AGENTS.md",
-      "source_location": "L230",
+      "source_location": "L229",
       "weight": 1.0,
       "_origin": "ast",
       "source": "agents_fiba_ocr_engine_agents_md",
@@ -75697,7 +75752,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "AGENTS.md",
-      "source_location": "L93",
+      "source_location": "L92",
       "weight": 1.0,
       "_origin": "ast",
       "source": "agents_fiba_ocr_engine_agents_md",
@@ -75708,7 +75763,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "AGENTS.md",
-      "source_location": "L205",
+      "source_location": "L204",
       "weight": 1.0,
       "_origin": "ast",
       "source": "agents_fiba_ocr_engine_agents_md",
@@ -75730,7 +75785,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "AGENTS.md",
-      "source_location": "L236",
+      "source_location": "L235",
       "weight": 1.0,
       "_origin": "ast",
       "source": "agents_fiba_ocr_engine_agents_md",
@@ -75741,7 +75796,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "AGENTS.md",
-      "source_location": "L135",
+      "source_location": "L134",
       "weight": 1.0,
       "_origin": "ast",
       "source": "agents_fiba_ocr_engine_agents_md",
@@ -75763,7 +75818,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "AGENTS.md",
-      "source_location": "L65",
+      "source_location": "L64",
       "weight": 1.0,
       "_origin": "ast",
       "source": "agents_fiba_ocr_engine_agents_md",
@@ -75785,7 +75840,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "AGENTS.md",
-      "source_location": "L83",
+      "source_location": "L82",
       "weight": 1.0,
       "_origin": "ast",
       "source": "agents_repository_layout",
@@ -75796,7 +75851,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "AGENTS.md",
-      "source_location": "L130",
+      "source_location": "L129",
       "weight": 1.0,
       "_origin": "ast",
       "source": "agents_git_workflow",
@@ -75807,7 +75862,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "AGENTS.md",
-      "source_location": "L97",
+      "source_location": "L96",
       "weight": 1.0,
       "_origin": "ast",
       "source": "agents_git_workflow",
@@ -75818,7 +75873,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "AGENTS.md",
-      "source_location": "L110",
+      "source_location": "L109",
       "weight": 1.0,
       "_origin": "ast",
       "source": "agents_git_workflow",
@@ -75829,7 +75884,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "AGENTS.md",
-      "source_location": "L145",
+      "source_location": "L144",
       "weight": 1.0,
       "_origin": "ast",
       "source": "agents_project_conventions_must_follow",
@@ -75840,7 +75895,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "AGENTS.md",
-      "source_location": "L159",
+      "source_location": "L158",
       "weight": 1.0,
       "_origin": "ast",
       "source": "agents_project_conventions_must_follow",
@@ -75851,7 +75906,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "AGENTS.md",
-      "source_location": "L152",
+      "source_location": "L151",
       "weight": 1.0,
       "_origin": "ast",
       "source": "agents_project_conventions_must_follow",
@@ -75862,7 +75917,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "AGENTS.md",
-      "source_location": "L137",
+      "source_location": "L136",
       "weight": 1.0,
       "_origin": "ast",
       "source": "agents_project_conventions_must_follow",
@@ -75906,7 +75961,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "README.md",
-      "source_location": "L209",
+      "source_location": "L237",
       "weight": 1.0,
       "_origin": "ast",
       "source": "readme_fiba_ocr_engine",
@@ -75917,7 +75972,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "README.md",
-      "source_location": "L128",
+      "source_location": "L156",
       "weight": 1.0,
       "_origin": "ast",
       "source": "readme_fiba_ocr_engine",
@@ -75928,7 +75983,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "README.md",
-      "source_location": "L215",
+      "source_location": "L243",
       "weight": 1.0,
       "_origin": "ast",
       "source": "readme_fiba_ocr_engine",
@@ -75944,6 +75999,17 @@
       "_origin": "ast",
       "source": "readme_fiba_ocr_engine",
       "target": "readme_per_package_documentation",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "README.md",
+      "source_location": "L150",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "readme_fiba_ocr_engine",
+      "target": "readme_production_deployment_overview",
       "confidence_score": 1.0
     },
     {
@@ -75966,6 +76032,17 @@
       "_origin": "ast",
       "source": "readme_fiba_ocr_engine",
       "target": "readme_repository_layout",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "README.md",
+      "source_location": "L140",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "readme_fiba_ocr_engine",
+      "target": "readme_validation_plugins_confidence",
       "confidence_score": 1.0
     },
     {
@@ -76053,7 +76130,7 @@
       "weight": 1.0,
       "_origin": "ast",
       "source": "readme_quickstart_local_development",
-      "target": "readme_run_the_test_suite",
+      "target": "readme_run_the_test_suites",
       "confidence_score": 1.0
     },
     {
@@ -76071,7 +76148,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "README.md",
-      "source_location": "L168",
+      "source_location": "L196",
       "weight": 1.0,
       "_origin": "ast",
       "source": "readme_git_workflow",
@@ -76082,7 +76159,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "README.md",
-      "source_location": "L132",
+      "source_location": "L160",
       "weight": 1.0,
       "_origin": "ast",
       "source": "readme_git_workflow",
@@ -76093,7 +76170,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "README.md",
-      "source_location": "L184",
+      "source_location": "L212",
       "weight": 1.0,
       "_origin": "ast",
       "source": "readme_git_workflow",
@@ -76104,7 +76181,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "README.md",
-      "source_location": "L140",
+      "source_location": "L168",
       "weight": 1.0,
       "_origin": "ast",
       "source": "readme_git_workflow",
@@ -76115,7 +76192,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "README.md",
-      "source_location": "L198",
+      "source_location": "L226",
       "weight": 1.0,
       "_origin": "ast",
       "source": "readme_git_workflow",
@@ -76126,7 +76203,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "README.md",
-      "source_location": "L202",
+      "source_location": "L230",
       "weight": 1.0,
       "_origin": "ast",
       "source": "readme_git_workflow",
@@ -76746,7 +76823,7 @@
       "weight": 1.0,
       "_origin": "ast",
       "source": "packages_core_engine_agents_patterns",
-      "target": "packages_core_engine_agents_4_validation_plugins",
+      "target": "packages_core_engine_agents_4_validation_plugins_and_confidence",
       "confidence_score": 1.0
     },
     {
@@ -76896,7 +76973,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "packages/mcp/AGENTS.md",
-      "source_location": "L93",
+      "source_location": "L92",
       "weight": 1.0,
       "_origin": "ast",
       "source": "packages_mcp_agents_mcp_agents_md",
@@ -76918,7 +76995,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "packages/mcp/AGENTS.md",
-      "source_location": "L31",
+      "source_location": "L32",
       "weight": 1.0,
       "_origin": "ast",
       "source": "packages_mcp_agents_mcp_agents_md",
@@ -76929,7 +77006,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "packages/mcp/AGENTS.md",
-      "source_location": "L100",
+      "source_location": "L99",
       "weight": 1.0,
       "_origin": "ast",
       "source": "packages_mcp_agents_mcp_agents_md",
@@ -76940,7 +77017,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "packages/mcp/AGENTS.md",
-      "source_location": "L85",
+      "source_location": "L84",
       "weight": 1.0,
       "_origin": "ast",
       "source": "packages_mcp_agents_mcp_agents_md",
@@ -76973,18 +77050,18 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "packages/mcp/AGENTS.md",
-      "source_location": "L66",
+      "source_location": "L67",
       "weight": 1.0,
       "_origin": "ast",
       "source": "packages_mcp_agents_mcp_agents_md",
-      "target": "packages_mcp_agents_tools_and_resources_current",
+      "target": "packages_mcp_agents_tools_resources_and_prompts_current",
       "confidence_score": 1.0
     },
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "packages/mcp/AGENTS.md",
-      "source_location": "L33",
+      "source_location": "L34",
       "weight": 1.0,
       "_origin": "ast",
       "source": "packages_mcp_agents_patterns",
@@ -76995,7 +77072,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "packages/mcp/AGENTS.md",
-      "source_location": "L44",
+      "source_location": "L45",
       "weight": 1.0,
       "_origin": "ast",
       "source": "packages_mcp_agents_patterns",
@@ -77006,7 +77083,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "packages/mcp/AGENTS.md",
-      "source_location": "L48",
+      "source_location": "L49",
       "weight": 1.0,
       "_origin": "ast",
       "source": "packages_mcp_agents_patterns",
@@ -77017,7 +77094,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "packages/mcp/AGENTS.md",
-      "source_location": "L52",
+      "source_location": "L53",
       "weight": 1.0,
       "_origin": "ast",
       "source": "packages_mcp_agents_patterns",
@@ -77028,7 +77105,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "packages/mcp/AGENTS.md",
-      "source_location": "L61",
+      "source_location": "L62",
       "weight": 1.0,
       "_origin": "ast",
       "source": "packages_mcp_agents_patterns",
@@ -77061,7 +77138,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "packages/mcp/docs/mcp-server.md",
-      "source_location": "L84",
+      "source_location": "L103",
       "weight": 1.0,
       "_origin": "ast",
       "source": "packages_mcp_docs_mcp_server_mcp_server",
@@ -77072,7 +77149,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "packages/mcp/docs/mcp-server.md",
-      "source_location": "L90",
+      "source_location": "L110",
       "weight": 1.0,
       "_origin": "ast",
       "source": "packages_mcp_docs_mcp_server_mcp_server",
@@ -77120,7 +77197,7 @@
       "weight": 1.0,
       "_origin": "ast",
       "source": "packages_mcp_docs_mcp_server_mcp_server",
-      "target": "packages_mcp_docs_mcp_server_tools_and_resources",
+      "target": "packages_mcp_docs_mcp_server_tools_resources_and_prompts",
       "confidence_score": 1.0
     },
     {
@@ -77138,7 +77215,40 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "packages/mcp/docs/mcp-server.md",
-      "source_location": "L98",
+      "source_location": "L97",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "packages_mcp_docs_mcp_server_tools_resources_and_prompts",
+      "target": "packages_mcp_docs_mcp_server_prompts",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "packages/mcp/docs/mcp-server.md",
+      "source_location": "L90",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "packages_mcp_docs_mcp_server_tools_resources_and_prompts",
+      "target": "packages_mcp_docs_mcp_server_resources",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "packages/mcp/docs/mcp-server.md",
+      "source_location": "L77",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "packages_mcp_docs_mcp_server_tools_resources_and_prompts",
+      "target": "packages_mcp_docs_mcp_server_tools",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "packages/mcp/docs/mcp-server.md",
+      "source_location": "L118",
       "weight": 1.0,
       "_origin": "ast",
       "source": "packages_mcp_docs_mcp_server_public_deployment_google_cloud_run",
@@ -77356,5 +77466,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "33dcc27d01616566ebece01cea374896dce4727f"
+  "built_at_commit": "6002ee5d6a9c6dcb4fc058d9df9a440dfbc67bad"
 }

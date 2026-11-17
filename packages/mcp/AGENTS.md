@@ -23,6 +23,7 @@ packages/mcp/
 ├── pyproject.toml
 └── src/ocr_engine_mcp/
     ├── __init__.py
+    ├── auth.py      # Bearer token verifier (static token or live API key probe cache)
     ├── server.py    # FastMCP app, tool/resource/prompt definitions
     ├── client.py    # OcrApiClient (HTTP client to the OCR API)
     └── tools.py     # Business logic for each tool (uses OcrApiClient)
@@ -61,9 +62,9 @@ Stdio and local HTTP without `MCP_AUTH_TOKEN` stay unauthenticated and use `OCR_
 ### 5. Transport selection
 
 - **stdio** (default; used by local agents like Warp): `python mcp_server.py` (the repo-root wrapper delegates to `ocr_engine_mcp.server`).
-- **HTTP** (used by remote agents / hosting): `MCP_TRANSPORT=http MCP_HOST=... MCP_PORT=... python -m adapters.mcp.server`.
+- **HTTP** (used by remote agents / hosting): `MCP_TRANSPORT=http MCP_HOST=127.0.0.1 MCP_PORT=8001 uv run ocr-mcp` (or `python -m ocr_engine_mcp.server`).
 
-## Tools and resources (current)
+## Tools, resources, and prompts (current)
 
 | Tool | Purpose |
 |---|---|
@@ -76,11 +77,9 @@ Stdio and local HTTP without `MCP_AUTH_TOKEN` stay unauthenticated and use `OCR_
 | `get_run_result` | Structured OCR result |
 | `get_run_trace` | Full audit trace |
 | `list_run_artifacts` | Visual + JSON artifacts produced by the run |
+| `get_artifact` | Fetch a single run artifact encoded as base64 |
 
-Resources:
-
-- `run://{run_id}`
-- `artifact://{run_id}/{artifact_name}`
+Resources (`run://{run_id}`, `result://{run_id}`, `trace://{run_id}`, `artifact://{run_id}/{artifact_name}`) and prompts (`review_extraction`, `suggest_retry_strategy`, `explain_validation_warnings`).
 
 ## Rules specific to mcp
 
