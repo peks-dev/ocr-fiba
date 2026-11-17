@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import asyncio
 import os
 from pathlib import Path
 
@@ -60,16 +61,22 @@ def create_app() -> FastAPI:
             return await call_next(request)
 
         # /v1/me/* and /v1/admin/* handle their own auth via Supabase JWT dependencies
-        if request.url.path.startswith("/v1/me/") or request.url.path.startswith("/v1/admin/"):
+        path = request.url.path
+        if (
+            path == "/v1/me"
+            or path.startswith("/v1/me/")
+            or path == "/v1/admin"
+            or path.startswith("/v1/admin/")
+        ):
             return await call_next(request)
 
         # Supabase-backed ocr_live_ keys, then session JWTs, else static bearer fallback.
         if settings.has_supabase and is_api_key_request(request):
-            result = validate_api_key(request)
+            result = await asyncio.to_thread(validate_api_key, request)
             if result is not None:
                 return result
         elif settings.has_supabase and is_jwt_request(request):
-            result = validate_supabase_session(request)
+            result = await asyncio.to_thread(validate_supabase_session, request)
             if result is not None:
                 return result
         else:
@@ -77,13 +84,14 @@ def create_app() -> FastAPI:
             if not is_authorized(auth_header, settings.api_key):
                 return unauthorized_response()
 
-        if is_run_creation(request.method, request.url.path):
+        if is_run_creation(request.method, path):
             auth_header = request.headers.get("authorization", "")
             client_host = request.client.host if request.client else None
             account_id = getattr(request.state, "account_id", None)
             try:
-                allowed, window, retry_after = rate_limiter.check(
-                    request_rate_limit_key(account_id, auth_header, client_host)
+                allowed, window, retry_after = await asyncio.to_thread(
+                    rate_limiter.check,
+                    request_rate_limit_key(account_id, auth_header, client_host),
                 )
             except RateLimitBackendError:
                 return rate_limit_unavailable_response()

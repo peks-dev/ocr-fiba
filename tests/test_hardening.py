@@ -489,13 +489,13 @@ class CorsOriginsTest(unittest.TestCase):
 class ServerDefaultsTest(unittest.TestCase):
     def test_env_default_extractor_applies_when_unset(self) -> None:
         env = {
-            "OCR_DEFAULT_EXTRACTOR_PROVIDER": "openrouter",
-            "OCR_DEFAULT_EXTRACTOR_MODEL": "google/gemini-3-flash-preview",
+            "OCR_DEFAULT_EXTRACTOR_PROVIDER": "gemini",
+            "OCR_DEFAULT_EXTRACTOR_MODEL": "gemini-2.5-flash",
         }
         with patch.dict("os.environ", env, clear=True):
             config = build_config(parse_options_json(None))
-            self.assertEqual(config.extractor_provider, "openrouter")
-            self.assertEqual(config.extractor_model, "google/gemini-3-flash-preview")
+            self.assertEqual(config.extractor_provider, "gemini")
+            self.assertEqual(config.extractor_model, "gemini-2.5-flash")
 
             explicit = build_config(
                 parse_options_json('{"extractor_provider": "docstrange", "extractor_model": "nanonets-ocr-3"}')
@@ -504,13 +504,14 @@ class ServerDefaultsTest(unittest.TestCase):
             self.assertEqual(explicit.extractor_model, "nanonets-ocr-3")
 
             other_option = build_config(parse_options_json('{"gamma": 0.5}'))
-            self.assertEqual(other_option.extractor_provider, "openrouter")
+            self.assertEqual(other_option.extractor_provider, "gemini")
             self.assertEqual(other_option.gamma, 0.5)
 
     def test_without_env_keeps_schema_defaults(self) -> None:
         with patch.dict("os.environ", {}, clear=True):
             config = build_config(parse_options_json(None))
-        self.assertEqual(config.extractor_provider, "docstrange")
+        self.assertEqual(config.extractor_provider, "openrouter")
+        self.assertEqual(config.extractor_model, "google/gemini-3-flash-preview")
 
 
 class McpPathToolTest(unittest.TestCase):

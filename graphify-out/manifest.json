@@ -60,13 +60,13 @@
     "semantic_hash": ""
   },
   "packages/api/src/ocr_engine_api/auth_api_key.py": {
-    "mtime": 1794814254.2723246,
-    "ast_hash": "a36de8bf9470cc1bbb531c8d35a39e8d",
+    "mtime": 1794900854.5380602,
+    "ast_hash": "d7682d72f0db4b73011f4d40ca82d4fd",
     "semantic_hash": ""
   },
   "packages/api/src/ocr_engine_api/auth_supabase.py": {
-    "mtime": 1794814254.2723246,
-    "ast_hash": "4df99387fcaa48befab335068fa84b41",
+    "mtime": 1794900852.8120835,
+    "ast_hash": "266bc73a930c134eb2a1e3d031d318e3",
     "semantic_hash": ""
   },
   "packages/api/src/ocr_engine_api/errors.py": {
@@ -75,8 +75,8 @@
     "semantic_hash": ""
   },
   "packages/api/src/ocr_engine_api/main.py": {
-    "mtime": 1794896308.8371737,
-    "ast_hash": "c3764887c4baa01fd8a5cf26edcb2a6d",
+    "mtime": 1794900941.6559184,
+    "ast_hash": "d90a277178faf5c070baa68b9d4cad0f",
     "semantic_hash": ""
   },
   "packages/api/src/ocr_engine_api/pipeline_options.py": {
@@ -95,18 +95,18 @@
     "semantic_hash": ""
   },
   "packages/api/src/ocr_engine_api/routes/me.py": {
-    "mtime": 1790667022.0691073,
-    "ast_hash": "79cb03213d133cb549f745aee45f57b6",
+    "mtime": 1794900857.7380168,
+    "ast_hash": "80fdfe5cb01f29ad72e1ed3d9d065282",
     "semantic_hash": ""
   },
   "packages/api/src/ocr_engine_api/routes/runs.py": {
-    "mtime": 1794814254.2723246,
-    "ast_hash": "90a322c4cc22261e493442aecd8aedef",
+    "mtime": 1794900938.0439641,
+    "ast_hash": "315b5e30559fcd50639562bf7217a71e",
     "semantic_hash": ""
   },
   "packages/api/src/ocr_engine_api/schemas.py": {
-    "mtime": 1790667022.0691073,
-    "ast_hash": "c10f8c62999cb2b5817ec365a56ce669",
+    "mtime": 1794900943.962889,
+    "ast_hash": "f9f7c54ceee06d7b26814defab0cbd80",
     "semantic_hash": ""
   },
   "packages/api/src/ocr_engine_api/services/__init__.py": {
@@ -115,18 +115,18 @@
     "semantic_hash": ""
   },
   "packages/api/src/ocr_engine_api/services/run_executor.py": {
-    "mtime": 1790667022.0692303,
-    "ast_hash": "32812abc35e37aba442aee10019b7b98",
+    "mtime": 1794900907.165361,
+    "ast_hash": "1dbc947fba23227c1d2d82b6fc4c0040",
     "semantic_hash": ""
   },
   "packages/api/src/ocr_engine_api/services/run_repository.py": {
-    "mtime": 1790667022.0692303,
-    "ast_hash": "b685c87ab761cd25f3c13e1101661364",
+    "mtime": 1794900903.0824142,
+    "ast_hash": "30511ca3c6c2b3d51ddb5b96ebc614fd",
     "semantic_hash": ""
   },
   "packages/api/src/ocr_engine_api/settings.py": {
-    "mtime": 1794896308.8371737,
-    "ast_hash": "d073672678078224f0feb443357436a9",
+    "mtime": 1794900894.4355273,
+    "ast_hash": "c368f7c68dc861afaa5c436c6a80e4c1",
     "semantic_hash": ""
   },
   "packages/api/src/ocr_engine_api/supabase_client.py": {
@@ -395,18 +395,18 @@
     "semantic_hash": ""
   },
   "packages/mcp/src/ocr_engine_mcp/client.py": {
-    "mtime": 1790667022.0729043,
-    "ast_hash": "d33e3399d91f4948fa8921ab636e2739",
+    "mtime": 1794901013.0260372,
+    "ast_hash": "ba76658d8f226df4d7c1bfecd2e5f755",
     "semantic_hash": ""
   },
   "packages/mcp/src/ocr_engine_mcp/server.py": {
-    "mtime": 1794814254.2733245,
-    "ast_hash": "b68ea5a2bbdd3dbc05639505d69e58b3",
+    "mtime": 1794901019.4449604,
+    "ast_hash": "2eb3addb1b3dd2b0ab866acff3e9557b",
     "semantic_hash": ""
   },
   "packages/mcp/src/ocr_engine_mcp/tools.py": {
-    "mtime": 1790667022.0729043,
-    "ast_hash": "414494a8457e379d926d8f740d823a0f",
+    "mtime": 1794901074.1543167,
+    "ast_hash": "ac9a7334f1dd15cb12225a491c8f8d8e",
     "semantic_hash": ""
   },
   "packages/web/eslint.config.mjs": {
@@ -715,8 +715,8 @@
     "semantic_hash": ""
   },
   "tests/test_api.py": {
-    "mtime": 1790667022.0773745,
-    "ast_hash": "8969f5a0d664878ae495cf8532b38c6a",
+    "mtime": 1794900950.3388085,
+    "ast_hash": "bbe4aa019106de24744256d53d64e26d",
     "semantic_hash": ""
   },
   "tests/test_auth.py": {
@@ -1055,8 +1055,8 @@
     "semantic_hash": ""
   },
   "tests/test_hardening.py": {
-    "mtime": 1794896308.8381736,
-    "ast_hash": "357cbe3a078c166cdabb44ba8d4e8cb7",
+    "mtime": 1794900952.5577807,
+    "ast_hash": "9e892baf787c941fda8cbe9c8b8cb76d",
     "semantic_hash": ""
   },
   "tests/test_phase1_robustness.py": {
@@ -1090,8 +1090,8 @@
     "semantic_hash": ""
   },
   "packages/mcp/src/ocr_engine_mcp/auth.py": {
-    "mtime": 1794814254.2733245,
-    "ast_hash": "88c5b051eb57114136adffee0cc223af",
+    "mtime": 1794901024.2419028,
+    "ast_hash": "ff5bb70c8c387b65a7e9ed31d96182b0",
     "semantic_hash": ""
   },
   "scripts/issue_api_key.py": {
@@ -1110,8 +1110,8 @@
     "semantic_hash": ""
   },
   "packages/api/src/ocr_engine_api/routes/admin.py": {
-    "mtime": 1794814254.2723246,
-    "ast_hash": "b81390830c61c5677f9f0a9896d1bd84",
+    "mtime": 1794900860.4439802,
+    "ast_hash": "28bb36550028e0de104efbf7528ea9fd",
     "semantic_hash": ""
   },
   "packages/web/src/components/account-keys-panel.tsx": {
@@ -1142,6 +1142,11 @@
   "tests/test_phase2_quality.py": {
     "mtime": 1794898269.9176006,
     "ast_hash": "2ecec4e41be2c7152021bfba811a0c8b",
+    "semantic_hash": ""
+  },
+  "tests/test_phase3_api_mcp_hardening.py": {
+    "mtime": 1794901075.6412995,
+    "ast_hash": "a9d10b642d1b3edfaf6ec5f670d7f22d",
     "semantic_hash": ""
   }
 }

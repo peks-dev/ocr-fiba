@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from fastapi import APIRouter, Depends, HTTPException, Request
+from fastapi import APIRouter, Depends
 
 from ocr_engine_api.api_keys import (
     generate_api_key,
@@ -9,6 +9,7 @@ from ocr_engine_api.api_keys import (
     delete_api_key as delete_api_key_record,
     store_api_key,
 )
+from ocr_engine_api.auth_api_key import invalidate_api_key_cache
 from ocr_engine_api.auth_supabase import require_supabase_user
 from ocr_engine_api.errors import error_response
 
@@ -19,12 +20,12 @@ def _get_account_id(user: dict) -> str:
     """Resolve the internal account ID from a Supabase JWT payload."""
     supabase_uid = user.get("sub")
     if not supabase_uid:
-        raise HTTPException(status_code=401, detail="Invalid token: missing sub claim")
+        raise error_response(401, "UNAUTHORIZED", "Invalid token: missing sub claim")
     account = get_account_by_supabase_user_id(supabase_uid)
     if not account:
-        raise HTTPException(status_code=404, detail="Account not found. Signup may not have completed.")
+        raise error_response(404, "ACCOUNT_NOT_FOUND", "Account not found. Signup may not have completed.")
     if account.get("status") != "active":
-        raise HTTPException(status_code=403, detail="Account is not active")
+        raise error_response(403, "FORBIDDEN", "Account is not active")
     return account["id"]
 
 
@@ -89,4 +90,5 @@ async def delete_api_key(
     result = delete_api_key_record(key_id, account_id)
     if not result:
         raise error_response(404, "API_KEY_NOT_FOUND", "API key not found or does not belong to this account")
+    invalidate_api_key_cache(account_id=account_id)
     return {"success": True, "key_id": key_id, "status": "deleted"}

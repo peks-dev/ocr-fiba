@@ -23,12 +23,13 @@ def create_mcp() -> FastMCP:
             options: dict[str, Any] | None = None,
         ) -> dict[str, Any]:
             """Submit a scoresheet image path for async OCR processing and return a run id."""
-            return mcp_tools.submit_scoresheet_from_path(
-                _client(),
-                image_path,
-                run_id=run_id,
-                options=options,
-            )
+            with _client() as client:
+                return mcp_tools.submit_scoresheet_from_path(
+                    client,
+                    image_path,
+                    run_id=run_id,
+                    options=options,
+                )
 
     @mcp.tool
     def submit_scoresheet_base64(
@@ -38,18 +39,20 @@ def create_mcp() -> FastMCP:
         options: dict[str, Any] | None = None,
     ) -> dict[str, Any]:
         """Upload a base64-encoded scoresheet image for async OCR processing and return a run id."""
-        return mcp_tools.submit_scoresheet_base64(
-            _client(),
-            image_base64,
-            filename=filename,
-            run_id=run_id,
-            options=options,
-        )
+        with _client() as client:
+            return mcp_tools.submit_scoresheet_base64(
+                client,
+                image_base64,
+                filename=filename,
+                run_id=run_id,
+                options=options,
+            )
 
     @mcp.tool
     def poll_run(run_id: str) -> dict[str, Any]:
         """Poll one async OCR run and return its current status."""
-        return mcp_tools.poll_run(_client(), run_id)
+        with _client() as client:
+            return mcp_tools.poll_run(client, run_id)
 
     @mcp.tool
     def wait_for_run(
@@ -58,73 +61,60 @@ def create_mcp() -> FastMCP:
         poll_interval_seconds: float = 2,
     ) -> dict[str, Any]:
         """Wait for an async OCR run to complete, fail, or time out."""
-        return mcp_tools.wait_for_run(
-            _client(),
-            run_id,
-            timeout_seconds=timeout_seconds,
-            poll_interval_seconds=poll_interval_seconds,
-        )
+        with _client() as client:
+            return mcp_tools.wait_for_run(
+                client,
+                run_id,
+                timeout_seconds=timeout_seconds,
+                poll_interval_seconds=poll_interval_seconds,
+            )
 
     @mcp.tool
     def list_runs(limit: int = 20) -> dict[str, Any]:
         """List recent OCR runs."""
-        try:
-            return _client().list_runs(limit=limit)
-        except OcrApiError as exc:
-            return mcp_tools.handle_api_error(exc)
+        return _call_with_client(lambda client: client.list_runs(limit=limit))
 
     @mcp.tool
     def inspect_run(run_id: str) -> dict[str, Any]:
         """Inspect one OCR run and return summary plus MCP resource URIs."""
-        return mcp_tools.inspect_run(_client(), run_id)
+        with _client() as client:
+            return mcp_tools.inspect_run(client, run_id)
 
     @mcp.tool
     def get_run_result(run_id: str) -> dict[str, Any]:
         """Return the structured OCR result for a run."""
-        try:
-            return _client().get_run_result(run_id)
-        except OcrApiError as exc:
-            return mcp_tools.handle_api_error(exc)
+        return _call_with_client(lambda client: client.get_run_result(run_id))
 
     @mcp.tool
     def get_run_trace(run_id: str) -> dict[str, Any]:
         """Return the audit trace for a run."""
-        try:
-            return _client().get_run_trace(run_id)
-        except OcrApiError as exc:
-            return mcp_tools.handle_api_error(exc)
+        return _call_with_client(lambda client: client.get_run_trace(run_id))
 
     @mcp.tool
     def list_run_artifacts(run_id: str, limit: int = 200) -> dict[str, Any]:
         """List visual and JSON artifacts produced by a run."""
-        try:
-            return _client().list_run_artifacts(run_id, limit=limit)
-        except OcrApiError as exc:
-            return mcp_tools.handle_api_error(exc)
+        return _call_with_client(lambda client: client.list_run_artifacts(run_id, limit=limit))
 
     @mcp.tool
     def get_artifact(run_id: str, artifact_name: str) -> dict[str, Any]:
         """Return one run artifact encoded as base64."""
-        try:
-            return _client().get_artifact(run_id, artifact_name)
-        except OcrApiError as exc:
-            return mcp_tools.handle_api_error(exc)
+        return _call_with_client(lambda client: client.get_artifact(run_id, artifact_name))
 
     @mcp.resource("run://{run_id}", mime_type="application/json")
     def run_resource(run_id: str) -> str:
-        return _json_resource(_client().get_run(run_id))
+        return _json_resource(_call_with_client(lambda client: client.get_run(run_id)))
 
     @mcp.resource("result://{run_id}", mime_type="application/json")
     def result_resource(run_id: str) -> str:
-        return _json_resource(_client().get_run_result(run_id))
+        return _json_resource(_call_with_client(lambda client: client.get_run_result(run_id)))
 
     @mcp.resource("trace://{run_id}", mime_type="application/json")
     def trace_resource(run_id: str) -> str:
-        return _json_resource(_client().get_run_trace(run_id))
+        return _json_resource(_call_with_client(lambda client: client.get_run_trace(run_id)))
 
     @mcp.resource("artifact://{run_id}/{artifact_name}", mime_type="application/json")
     def artifact_resource(run_id: str, artifact_name: str) -> str:
-        return _json_resource(_client().get_artifact(run_id, artifact_name))
+        return _json_resource(_call_with_client(lambda client: client.get_artifact(run_id, artifact_name)))
 
     @mcp.prompt
     def review_extraction(run_id: str) -> str:
@@ -171,6 +161,14 @@ def _client() -> OcrApiClient:
     """Build an API client that forwards the caller's ocr_live_ key when present."""
     timeout = int(os.getenv("OCR_API_TIMEOUT_SECONDS", "300"))
     return OcrApiClient(api_key=api_key_for_request(), timeout_seconds=timeout)
+
+
+def _call_with_client(callback: Any) -> dict[str, Any]:
+    with _client() as client:
+        try:
+            return callback(client)
+        except OcrApiError as exc:
+            return mcp_tools.handle_api_error(exc)
 
 
 def _json_resource(payload: dict[str, Any]) -> str:

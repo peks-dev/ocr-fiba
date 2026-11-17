@@ -9,6 +9,7 @@ from ocr_engine_api.services.run_repository import (
     RUN_STATUS_FAILED,
     RUN_STATUS_RUNNING,
     RunRepository,
+    RunRepositoryError,
 )
 from ocr_engine_core.config.pipeline_config import PipelineConfig
 from ocr_engine_core.exceptions import OcrEngineError
@@ -90,11 +91,14 @@ class RunExecutor:
                     "retryable": False,
                 }
             )
-            self.repository.update_status(
-                run_id,
-                status=RUN_STATUS_FAILED,
-                error=error,
-            )
+            try:
+                self.repository.update_status(
+                    run_id,
+                    status=RUN_STATUS_FAILED,
+                    error=error,
+                )
+            except RunRepositoryError:
+                pass
             raise
 
     def _handle_progress(
