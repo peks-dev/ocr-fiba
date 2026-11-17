@@ -140,8 +140,8 @@
     "semantic_hash": ""
   },
   "packages/cli/src/ocr_engine_cli/binarize_image.py": {
-    "mtime": 1790667022.069505,
-    "ast_hash": "dc19ce21b90fe97b228cfac9ab778228",
+    "mtime": 1794898207.149183,
+    "ast_hash": "ec5b82a9c1c8e6b7aa9bfcf85cfabfdc",
     "semantic_hash": ""
   },
   "packages/cli/src/ocr_engine_cli/cv_progressive_score.py": {
@@ -150,13 +150,13 @@
     "semantic_hash": ""
   },
   "packages/cli/src/ocr_engine_cli/run_dataset.py": {
-    "mtime": 1794873872.6239777,
-    "ast_hash": "4e9a3488fec185edbcab3792f9261804",
+    "mtime": 1794898205.9841745,
+    "ast_hash": "8f93edfddf6d362744ac0c2e20514c74",
     "semantic_hash": ""
   },
   "packages/cli/src/ocr_engine_cli/run_pipeline.py": {
-    "mtime": 1790667022.069505,
-    "ast_hash": "5a26663089b78fd689938fa6229cc248",
+    "mtime": 1794898202.7141504,
+    "ast_hash": "1442052640be2c0f0f97d32525e58e29",
     "semantic_hash": ""
   },
   "packages/core-engine/src/ocr_engine_core/__init__.py": {
@@ -175,18 +175,18 @@
     "semantic_hash": ""
   },
   "packages/core-engine/src/ocr_engine_core/config/pipeline_config.py": {
-    "mtime": 1794814254.2723246,
-    "ast_hash": "5bcb3f7b3bbe78cd2b8128032809310f",
+    "mtime": 1794898198.5881197,
+    "ast_hash": "5f5eea2e9b1b559820d89af54fe71cd0",
     "semantic_hash": ""
   },
   "packages/core-engine/src/ocr_engine_core/cropper.py": {
-    "mtime": 1794814254.2723246,
-    "ast_hash": "e7f8f7aa4e68f425c3eb77e623405790",
+    "mtime": 1794898121.9334793,
+    "ast_hash": "bc5737b0f0512e997361139a2dbd2296",
     "semantic_hash": ""
   },
   "packages/core-engine/src/ocr_engine_core/enhancer.py": {
-    "mtime": 1790667022.070025,
-    "ast_hash": "3fff04fe791bf9609eaf9eb81a159af2",
+    "mtime": 1794898117.1504345,
+    "ast_hash": "f6e3381652e792aa01a7440dfdc82574",
     "semantic_hash": ""
   },
   "packages/core-engine/src/ocr_engine_core/exceptions.py": {
@@ -195,23 +195,23 @@
     "semantic_hash": ""
   },
   "packages/core-engine/src/ocr_engine_core/extractor.py": {
-    "mtime": 1794814254.2723246,
-    "ast_hash": "cb1526715e287040ddfe9ef32ea72fc7",
+    "mtime": 1794898141.6766574,
+    "ast_hash": "8b05804c5d5594c17a05e005a97dc010",
     "semantic_hash": ""
   },
   "packages/core-engine/src/ocr_engine_core/output_builder.py": {
-    "mtime": 1794873673.6832027,
-    "ast_hash": "bf076f574e299829fd1aa89c2e48fbe5",
+    "mtime": 1794898143.1426704,
+    "ast_hash": "81a2f18d96c7b69ce26b9f20c93f9b4a",
     "semantic_hash": ""
   },
   "packages/core-engine/src/ocr_engine_core/pipeline.py": {
-    "mtime": 1794814254.2723246,
-    "ast_hash": "180bfc4f3f00026caeeb49fa4e6de918",
+    "mtime": 1794898177.9019601,
+    "ast_hash": "2c7ed18a05b8084ffdf6465d71cfd423",
     "semantic_hash": ""
   },
   "packages/core-engine/src/ocr_engine_core/preprocessor.py": {
-    "mtime": 1790667022.070025,
-    "ast_hash": "dc45be5dbffdbad1c056c2adfb1efcbe",
+    "mtime": 1794898096.2872329,
+    "ast_hash": "f284bb039d9c0f51853131360d7ec768",
     "semantic_hash": ""
   },
   "packages/core-engine/src/ocr_engine_core/prompts/__init__.py": {
@@ -240,8 +240,8 @@
     "semantic_hash": ""
   },
   "packages/core-engine/src/ocr_engine_core/providers/base.py": {
-    "mtime": 1794814254.2723246,
-    "ast_hash": "e6b95e2277bc6853f5d36637b795bdc2",
+    "mtime": 1794898089.702167,
+    "ast_hash": "3f3dc103d0e67b1f1caf0808c9da1c41",
     "semantic_hash": ""
   },
   "packages/core-engine/src/ocr_engine_core/providers/docstrange.py": {
@@ -250,8 +250,8 @@
     "semantic_hash": ""
   },
   "packages/core-engine/src/ocr_engine_core/providers/gemini.py": {
-    "mtime": 1794814254.2723246,
-    "ast_hash": "2077cc977fb23993c0d7e3efa53fb140",
+    "mtime": 1794898091.5111852,
+    "ast_hash": "d0a4e93857f19f0e085ba42ea37b2842",
     "semantic_hash": ""
   },
   "packages/core-engine/src/ocr_engine_core/providers/glm.py": {
@@ -265,8 +265,8 @@
     "semantic_hash": ""
   },
   "packages/core-engine/src/ocr_engine_core/providers/openrouter.py": {
-    "mtime": 1794814254.2733245,
-    "ast_hash": "1bc7fe6e2a395541b2ac897cd0c52e69",
+    "mtime": 1794898092.9041991,
+    "ast_hash": "ff738a9c048175868d0cb15f4e554039",
     "semantic_hash": ""
   },
   "packages/core-engine/src/ocr_engine_core/providers/qubrid.py": {
@@ -315,8 +315,8 @@
     "semantic_hash": ""
   },
   "packages/core-engine/src/ocr_engine_core/toolbox.py": {
-    "mtime": 1790667022.071979,
-    "ast_hash": "9858d8cf21d065f2aef96cd1c644c022",
+    "mtime": 1794898175.3279397,
+    "ast_hash": "3f070926debbdd8b2aba2b264daf06ca",
     "semantic_hash": ""
   },
   "packages/core-engine/src/ocr_engine_core/tracing.py": {
@@ -330,8 +330,8 @@
     "semantic_hash": ""
   },
   "packages/core-engine/src/ocr_engine_core/utils/__init__.py": {
-    "mtime": 1790667022.071979,
-    "ast_hash": "89f455abd245bd4cefef233f3c5055e9",
+    "mtime": 1794898138.794632,
+    "ast_hash": "d123afc546ef63c7dfb3455c160f8fe7",
     "semantic_hash": ""
   },
   "packages/core-engine/src/ocr_engine_core/utils/footer_markdown_parser.py": {
@@ -345,8 +345,8 @@
     "semantic_hash": ""
   },
   "packages/core-engine/src/ocr_engine_core/utils/team_markdown_parser.py": {
-    "mtime": 1790667022.0723205,
-    "ast_hash": "1d5a337baf17923d1e8cb42cb6afabe8",
+    "mtime": 1794898137.4556203,
+    "ast_hash": "886935e07ebb842152d138c199337ee6",
     "semantic_hash": ""
   },
   "packages/core-engine/src/ocr_engine_core/validation/__init__.py": {
@@ -365,13 +365,13 @@
     "semantic_hash": ""
   },
   "packages/core-engine/src/ocr_engine_core/validation/plugins/__init__.py": {
-    "mtime": 1794873814.7723484,
-    "ast_hash": "9acde697c1727ffd3cb0adc876d30e65",
+    "mtime": 1794898172.2829154,
+    "ast_hash": "7f14fbd4f7c491272427e42457c54485",
     "semantic_hash": ""
   },
   "packages/core-engine/src/ocr_engine_core/validation/plugins/core.py": {
-    "mtime": 1794874011.9420452,
-    "ast_hash": "b836b384e1a9bfce5b9f01c97d202f5e",
+    "mtime": 1794898171.011905,
+    "ast_hash": "40f524fd12b153e8f44a7dd69549cc5f",
     "semantic_hash": ""
   },
   "packages/core-engine/src/ocr_engine_core/validation/plugins/fiba_rules.py": {
@@ -1137,6 +1137,11 @@
   "tests/test_validation_confidence.py": {
     "mtime": 1794874050.6207778,
     "ast_hash": "d502fea1c6c42fb012a01dd04be4dae9",
+    "semantic_hash": ""
+  },
+  "tests/test_phase2_quality.py": {
+    "mtime": 1794898269.9176006,
+    "ast_hash": "2ecec4e41be2c7152021bfba811a0c8b",
     "semantic_hash": ""
   }
 }
