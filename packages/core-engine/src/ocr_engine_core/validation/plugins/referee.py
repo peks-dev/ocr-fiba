@@ -11,7 +11,7 @@ from __future__ import annotations
 
 from typing import Any
 
-from ..base import ValidationPlugin, create_warning, CATEGORY_USE_CASE
+from ..base import ValidationPlugin, create_warning, CATEGORY_CORE, CATEGORY_USE_CASE
 
 
 class PlayerPointsSumPlugin(ValidationPlugin):
@@ -19,7 +19,7 @@ class PlayerPointsSumPlugin(ValidationPlugin):
 
     name = "referee_player_points_sum"
     description = "Sum of player points must match team final score"
-    category = CATEGORY_USE_CASE
+    category = CATEGORY_CORE
 
     def validate(self, data: dict[str, Any]) -> list[dict[str, Any]]:
         warnings: list[dict[str, Any]] = []
@@ -35,7 +35,9 @@ class PlayerPointsSumPlugin(ValidationPlugin):
                 points = player.get("points", {}) or {}
                 one = points.get("one_point") or 0
                 two = points.get("two_point") or 0
-                three = points.get("tree_point") or 0
+                three = points.get("tree_point")
+                if three is None:
+                    three = points.get("three_point") or 0
                 total_points += (one * 1) + (two * 2) + (three * 3)
 
             if total_points != final_score:
@@ -56,7 +58,7 @@ class WinnerConsistencyPlugin(ValidationPlugin):
 
     name = "referee_winner_consistency"
     description = "Declared winner must have the higher score"
-    category = CATEGORY_USE_CASE
+    category = CATEGORY_CORE
 
     def validate(self, data: dict[str, Any]) -> list[dict[str, Any]]:
         warnings: list[dict[str, Any]] = []

@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import asyncio
 import os
 from pathlib import Path
 
@@ -10,7 +11,15 @@ from fastapi.responses import JSONResponse
 from ocr_engine_api.auth import is_auth_exempt, is_authorized, unauthorized_response
 from ocr_engine_api.auth_api_key import is_api_key_request, validate_api_key
 from ocr_engine_api.auth_supabase import is_jwt_request, validate_supabase_session
-from ocr_engine_api.rate_limit import RunRateLimiter, is_run_creation, rate_limited_response, request_rate_limit_key
+from ocr_engine_api.rate_limit import (
+    RateLimitBackendError,
+    RunRateLimiter,
+    create_rate_limit_store,
+    is_run_creation,
+    rate_limit_unavailable_response,
+    rate_limited_response,
+    request_rate_limit_key,
+)
 from ocr_engine_api.routes import admin, me, runs
 from ocr_engine_api.settings import get_api_settings
 from ocr_engine_core.utils.image_utils import load_dotenv
@@ -38,6 +47,7 @@ def create_app() -> FastAPI:
         settings.rate_limit_per_minute,
         settings.rate_limit_per_day,
         state_file=settings.rate_limit_state_file,
+        store=create_rate_limit_store(settings),
     )
     app.state.rate_limiter = rate_limiter
 
@@ -51,16 +61,22 @@ def create_app() -> FastAPI:
             return await call_next(request)
 
         # /v1/me/* and /v1/admin/* handle their own auth via Supabase JWT dependencies
-        if request.url.path.startswith("/v1/me/") or request.url.path.startswith("/v1/admin/"):
+        path = request.url.path
+        if (
+            path == "/v1/me"
+            or path.startswith("/v1/me/")
+            or path == "/v1/admin"
+            or path.startswith("/v1/admin/")
+        ):
             return await call_next(request)
 
         # Supabase-backed ocr_live_ keys, then session JWTs, else static bearer fallback.
         if settings.has_supabase and is_api_key_request(request):
-            result = validate_api_key(request)
+            result = await asyncio.to_thread(validate_api_key, request)
             if result is not None:
                 return result
         elif settings.has_supabase and is_jwt_request(request):
-            result = validate_supabase_session(request)
+            result = await asyncio.to_thread(validate_supabase_session, request)
             if result is not None:
                 return result
         else:
@@ -68,13 +84,17 @@ def create_app() -> FastAPI:
             if not is_authorized(auth_header, settings.api_key):
                 return unauthorized_response()
 
-        if is_run_creation(request.method, request.url.path):
+        if is_run_creation(request.method, path):
             auth_header = request.headers.get("authorization", "")
             client_host = request.client.host if request.client else None
             account_id = getattr(request.state, "account_id", None)
-            allowed, window, retry_after = rate_limiter.check(
-                request_rate_limit_key(account_id, auth_header, client_host)
-            )
+            try:
+                allowed, window, retry_after = await asyncio.to_thread(
+                    rate_limiter.check,
+                    request_rate_limit_key(account_id, auth_header, client_host),
+                )
+            except RateLimitBackendError:
+                return rate_limit_unavailable_response()
             if not allowed:
                 limit = rate_limiter.per_minute if window == "minute" else rate_limiter.per_day
                 return rate_limited_response(window or "minute", retry_after, limit)

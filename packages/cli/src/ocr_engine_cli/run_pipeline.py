@@ -10,7 +10,7 @@ import sys
 from pathlib import Path
 
 from ocr_engine_core.utils.image_utils import load_dotenv
-from ocr_engine_core.config.pipeline_config import PipelineConfig, SectionOverride
+from ocr_engine_core.config.pipeline_config import PipelineConfig, SectionOverride, resolve_default_extractor
 from ocr_engine_core.pipeline import FibaOcrPipeline
 from ocr_engine_core.exceptions import OcrEngineError
 
@@ -87,13 +87,13 @@ def main():
     parser.add_argument(
         "--extractor",
         choices=["interfaze", "gemini", "glm", "docstrange", "qubrid", "openrouter"],
-        default="docstrange",
-        help="Proveedor para extracción de datos (default: docstrange)",
+        default=None,
+        help="Proveedor para extracción de datos (default: openrouter o OCR_DEFAULT_EXTRACTOR_PROVIDER)",
     )
     parser.add_argument(
         "--extractor-model",
-        default="nanonets-ocr-3",
-        help="Modelo del extractor (default: nanonets-ocr-3)",
+        default=None,
+        help="Modelo del extractor (default: google/gemini-3-flash-preview o OCR_DEFAULT_EXTRACTOR_MODEL)",
     )
     parser.add_argument(
         "--extractor-reasoning-effort",
@@ -196,11 +196,16 @@ def main():
             provider=provider, model=model, reasoning=reasoning,
         )
 
+    extractor_provider, extractor_model = resolve_default_extractor(
+        args.extractor,
+        args.extractor_model,
+    )
+
     config = PipelineConfig(
         cropper_provider=args.cropper,
         cropper_model=args.cropper_model,
-        extractor_provider=args.extractor,
-        extractor_model=args.extractor_model,
+        extractor_provider=extractor_provider,
+        extractor_model=extractor_model,
         extractor_reasoning=(
             {"effort": args.extractor_reasoning_effort, "exclude": True}
             if args.extractor_reasoning_effort and args.extractor_reasoning_effort != "none"

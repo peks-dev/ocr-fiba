@@ -11,13 +11,32 @@ from fastapi.testclient import TestClient
 
 from ocr_engine_api.main import create_app
 from ocr_engine_api.pipeline_options import build_config, parse_options_json
-from ocr_engine_api.rate_limit import RunRateLimiter, client_key, is_run_creation
+from ocr_engine_api.rate_limit import (
+    MemoryRateLimitStore,
+    RateLimitBackendError,
+    RunRateLimiter,
+    SupabaseRateLimitStore,
+    client_key,
+    is_run_creation,
+    parse_consume_rate_limit_payload,
+)
 from ocr_engine_api.routes.runs import create_run
 from ocr_engine_api.schemas import CreateRunRequest
 from ocr_engine_api.settings import get_api_settings
 
 
 PROD_ENV = {"OCR_ENV": "production", "OCR_ENGINE_API_KEY": "secret"}
+
+SUPABASE_ENV = {
+    "SUPABASE_URL": "https://example.supabase.co",
+    "SUPABASE_SERVICE_KEY": "service-role-key",
+    "SUPABASE_JWT_SECRET": "jwt-secret-at-least-32-chars!!",
+}
+
+
+def _patch_memory_rate_limit_store():
+    """Keep existing HTTP quota tests on the in-memory store despite Supabase env."""
+    return patch("ocr_engine_api.main.create_rate_limit_store", return_value=MemoryRateLimitStore())
 
 
 class PathInputTest(unittest.TestCase):
@@ -171,7 +190,8 @@ class RateLimiterTest(unittest.TestCase):
             }
             with patch.dict("os.environ", env, clear=True):
                 with patch("ocr_engine_api.main.validate_api_key", side_effect=accept_key):
-                    client = TestClient(create_app())
+                    with _patch_memory_rate_limit_store():
+                        client = TestClient(create_app())
                     key_a = {"Authorization": "Bearer ocr_live_aaaaaaaa"}
                     key_b = {"Authorization": "Bearer ocr_live_bbbbbbbb"}
                     static = {"Authorization": "Bearer secret"}
@@ -300,7 +320,8 @@ class RateLimiterTest(unittest.TestCase):
                             "ocr_engine_api.api_keys.get_account_by_supabase_user_id",
                             return_value={"id": "account-1", "status": "active", "role": "tester"},
                         ):
-                            client = TestClient(create_app())
+                            with _patch_memory_rate_limit_store():
+                                client = TestClient(create_app())
                             first = client.post(
                                 "/v1/runs",
                                 json={"image_path": "/x.jpg"},
@@ -321,6 +342,138 @@ class RateLimiterTest(unittest.TestCase):
         self.assertEqual(third.status_code, 429, "JWT and ocr_live_ for the same account share the quota")
 
 
+class SupabaseRateLimitStoreTest(unittest.TestCase):
+    def test_has_supabase_service_does_not_require_jwt_secret(self) -> None:
+        with patch.dict(
+            "os.environ",
+            {"SUPABASE_URL": "https://example.supabase.co", "SUPABASE_SERVICE_KEY": "service-role-key"},
+            clear=True,
+        ):
+            settings = get_api_settings()
+        self.assertTrue(settings.has_supabase_service)
+        self.assertFalse(settings.has_supabase)
+
+    def test_parse_rpc_payload_maps_allowed_and_denied_rows(self) -> None:
+        allowed = parse_consume_rate_limit_payload(
+            [{"allowed": True, "limit_window": None, "retry_after_seconds": 0, "remaining_minute": 2, "remaining_day": 49}]
+        )
+        self.assertTrue(allowed.allowed)
+        self.assertIsNone(allowed.window)
+        self.assertEqual(allowed.retry_after, 0)
+        self.assertEqual(allowed.remaining_minute, 2)
+        denied = parse_consume_rate_limit_payload(
+            {"allowed": False, "limit_window": "minute", "retry_after_seconds": 12, "remaining_minute": 0, "remaining_day": 48}
+        )
+        self.assertFalse(denied.allowed)
+        self.assertEqual(denied.window, "minute")
+        self.assertEqual(denied.retry_after, 12)
+
+    def test_parse_rpc_payload_fails_closed_on_empty_or_invalid(self) -> None:
+        with self.assertRaises(RateLimitBackendError):
+            parse_consume_rate_limit_payload([])
+        with self.assertRaises(RateLimitBackendError):
+            parse_consume_rate_limit_payload({"limit_window": "minute"})
+        with self.assertRaises(RateLimitBackendError):
+            parse_consume_rate_limit_payload([{"allowed": True, "retry_after_seconds": "nope"}])
+
+    def test_store_consume_calls_rpc_with_bucket_key_and_limits(self) -> None:
+        class FakeRpc:
+            def __init__(self) -> None:
+                self.params = None
+
+            def rpc(self, name, params):
+                self.name = name
+                self.params = params
+                return self
+
+            def execute(self):
+                return type("Resp", (), {"data": [{"allowed": True, "limit_window": None, "retry_after_seconds": 0, "remaining_minute": 1, "remaining_day": 49}]})()
+
+        client = FakeRpc()
+        with patch("ocr_engine_api.supabase_client.get_supabase_client", return_value=client):
+            decision = SupabaseRateLimitStore().consume("acct:account-1", 3, 50)
+        self.assertEqual(client.name, "consume_rate_limit")
+        self.assertEqual(client.params, {"p_key": "acct:account-1", "p_per_minute": 3, "p_per_day": 50})
+        self.assertTrue(decision.allowed)
+        self.assertEqual(decision.remaining_minute, 1)
+
+    def test_store_consume_fails_closed_when_rpc_raises(self) -> None:
+        with patch("ocr_engine_api.supabase_client.get_supabase_client", side_effect=RuntimeError("network down")):
+            with self.assertRaises(RateLimitBackendError):
+                SupabaseRateLimitStore().consume("acct:account-1", 3, 50)
+
+    def test_limiter_uses_injected_store_and_preserves_tuple(self) -> None:
+        class FakeStore:
+            def consume(self, key, per_minute, per_day):
+                self.seen = (key, per_minute, per_day)
+                return parse_consume_rate_limit_payload(
+                    [{"allowed": False, "limit_window": "day", "retry_after_seconds": 30, "remaining_minute": 3, "remaining_day": 0}]
+                )
+
+        store = FakeStore()
+        limiter = RunRateLimiter(3, 50, store=store)
+        allowed, window, retry = limiter.check("tok:abcd")
+        self.assertFalse(allowed)
+        self.assertEqual(window, "day")
+        self.assertEqual(retry, 30)
+        self.assertEqual(store.seen, ("tok:abcd", 3, 50))
+
+    def test_http_uses_supabase_rpc_decision_for_429(self) -> None:
+        class FakeRpc:
+            def __init__(self) -> None:
+                self.calls = 0
+
+            def rpc(self, name, params):
+                self.calls += 1
+                self.last = (name, params)
+                return self
+
+            def execute(self):
+                if self.calls <= 2:
+                    data = [{"allowed": True, "limit_window": None, "retry_after_seconds": 0, "remaining_minute": 2 - self.calls, "remaining_day": 49}]
+                else:
+                    data = [{"allowed": False, "limit_window": "minute", "retry_after_seconds": 12, "remaining_minute": 0, "remaining_day": 48}]
+                return type("Resp", (), {"data": data})()
+
+        rpc = FakeRpc()
+        with tempfile.TemporaryDirectory() as tmp:
+            env = {**PROD_ENV, **SUPABASE_ENV, "OCR_RUNS_DIR": tmp, "OCR_RATE_LIMIT_PER_MINUTE": "2"}
+            with patch.dict("os.environ", env, clear=True):
+                with patch("ocr_engine_api.supabase_client.get_supabase_client", return_value=rpc):
+                    client = TestClient(create_app())
+                    headers = {"Authorization": "Bearer secret"}
+                    codes = [
+                        client.post("/v1/runs", json={"image_path": "/x.jpg"}, headers=headers).status_code
+                        for _ in range(2)
+                    ]
+                    denied = client.post("/v1/runs", json={"image_path": "/x.jpg"}, headers=headers)
+        self.assertEqual(codes, [403, 403])
+        self.assertEqual(denied.status_code, 429)
+        self.assertEqual(denied.headers["Retry-After"], "12")
+        self.assertEqual(denied.json()["error"]["code"], "RATE_LIMITED")
+        self.assertEqual(rpc.calls, 3)
+        self.assertEqual(rpc.last[0], "consume_rate_limit")
+        self.assertEqual(rpc.last[1]["p_per_minute"], 2)
+        self.assertEqual(rpc.last[1]["p_per_day"], 50)
+        self.assertTrue(rpc.last[1]["p_key"].startswith("tok:"))
+
+    def test_http_fails_closed_with_503_when_rpc_errors(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            env = {**PROD_ENV, **SUPABASE_ENV, "OCR_RUNS_DIR": tmp, "OCR_RATE_LIMIT_PER_MINUTE": "2"}
+            with patch.dict("os.environ", env, clear=True):
+                with patch("ocr_engine_api.supabase_client.get_supabase_client", side_effect=RuntimeError("backend down")):
+                    client = TestClient(create_app())
+                    response = client.post(
+                        "/v1/runs",
+                        json={"image_path": "/x.jpg"},
+                        headers={"Authorization": "Bearer secret"},
+                    )
+        self.assertEqual(response.status_code, 503)
+        self.assertEqual(response.headers["Retry-After"], "5")
+        self.assertEqual(response.json()["error"]["code"], "RATE_LIMIT_UNAVAILABLE")
+        self.assertTrue(response.json()["error"]["retryable"])
+
+
 class CorsOriginsTest(unittest.TestCase):
     def test_parse_cors_origins_supports_a_list(self) -> None:
         from ocr_engine_api.settings import parse_cors_origins
@@ -336,13 +489,13 @@ class CorsOriginsTest(unittest.TestCase):
 class ServerDefaultsTest(unittest.TestCase):
     def test_env_default_extractor_applies_when_unset(self) -> None:
         env = {
-            "OCR_DEFAULT_EXTRACTOR_PROVIDER": "openrouter",
-            "OCR_DEFAULT_EXTRACTOR_MODEL": "google/gemini-3-flash-preview",
+            "OCR_DEFAULT_EXTRACTOR_PROVIDER": "gemini",
+            "OCR_DEFAULT_EXTRACTOR_MODEL": "gemini-2.5-flash",
         }
         with patch.dict("os.environ", env, clear=True):
             config = build_config(parse_options_json(None))
-            self.assertEqual(config.extractor_provider, "openrouter")
-            self.assertEqual(config.extractor_model, "google/gemini-3-flash-preview")
+            self.assertEqual(config.extractor_provider, "gemini")
+            self.assertEqual(config.extractor_model, "gemini-2.5-flash")
 
             explicit = build_config(
                 parse_options_json('{"extractor_provider": "docstrange", "extractor_model": "nanonets-ocr-3"}')
@@ -351,13 +504,14 @@ class ServerDefaultsTest(unittest.TestCase):
             self.assertEqual(explicit.extractor_model, "nanonets-ocr-3")
 
             other_option = build_config(parse_options_json('{"gamma": 0.5}'))
-            self.assertEqual(other_option.extractor_provider, "openrouter")
+            self.assertEqual(other_option.extractor_provider, "gemini")
             self.assertEqual(other_option.gamma, 0.5)
 
     def test_without_env_keeps_schema_defaults(self) -> None:
         with patch.dict("os.environ", {}, clear=True):
             config = build_config(parse_options_json(None))
-        self.assertEqual(config.extractor_provider, "docstrange")
+        self.assertEqual(config.extractor_provider, "openrouter")
+        self.assertEqual(config.extractor_model, "google/gemini-3-flash-preview")
 
 
 class McpPathToolTest(unittest.TestCase):

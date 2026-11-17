@@ -8,7 +8,7 @@ from __future__ import annotations
 
 from typing import Any
 
-from .base import ValidationPlugin, create_warning, determine_match_status
+from .base import ValidationPlugin, compute_confidence, create_warning, determine_match_status
 from .registry import resolve_plugins
 
 
@@ -77,6 +77,7 @@ class ValidationEngine:
 
         data["validation_warnings"] = all_warnings
         data["match_status"] = match_status
+        data["confidence"] = compute_confidence(data, all_warnings, match_status=match_status)
 
         return data
 

@@ -7,6 +7,10 @@
 .server-token
 .cloud-token
 .env
+.agents
+.codex
+.devin
+.engram
 runs
 outputs
 dataset
@@ -16,4 +20,5 @@ supabase
 tests
 packages/web
 **/node_modules
+**/.next
 .cloud-image

@@ -11,6 +11,7 @@ from ocr_engine_api.api_keys import (
     list_api_keys,
     store_api_key,
 )
+from ocr_engine_api.auth_api_key import invalidate_api_key_cache
 from ocr_engine_api.auth_supabase import require_supabase_user
 from ocr_engine_api.errors import error_response
 
@@ -84,4 +85,5 @@ async def delete_account_api_key(
     result = delete_api_key_record(key_id, account_id)
     if not result:
         raise error_response(404, "API_KEY_NOT_FOUND", "API key not found or does not belong to this account")
+    invalidate_api_key_cache(account_id=account_id)
     return {"success": True, "key_id": key_id, "account_id": account_id, "status": "deleted"}

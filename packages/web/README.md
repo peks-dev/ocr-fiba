@@ -35,6 +35,7 @@ After the first successful deploy, copy the production URL (for example `https:/
 | Name | Where | Notes |
 |---|---|---|
 | `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` | Browser + server | Used if `NEXT_PUBLIC_SUPABASE_ANON_KEY` is unset |
+| `NEXT_PUBLIC_SITE_URL` | Browser + server | Optional canonical origin used for Supabase invite `redirectTo` links |
 | `AIRTABLE_TOKEN` | Server only | Referee league view. The route returns a friendly error if unset. |
 | `AIRTABLE_BASE_ID` | Server only | Same as above |
 | `AIRTABLE_LEAGUE_TABLE` | Server only | Same as above |

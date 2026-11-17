@@ -12,12 +12,22 @@ from .core import (
     DuplicateNumbersPlugin,
     GhostPlayersPlugin,
     ProgressiveVsFinalPlugin,
+    PlayerVsProgressivePlugin,
+    ProgressiveSequencePlugin,
+    EntryAndFoulsConsistencyPlugin,
+    IllegibleMarksPlugin,
+    PreprocessFallbackPlugin,
 )
 
 register(QuarterSumsPlugin())
 register(DuplicateNumbersPlugin())
 register(GhostPlayersPlugin())
 register(ProgressiveVsFinalPlugin())
+register(PlayerVsProgressivePlugin())
+register(ProgressiveSequencePlugin())
+register(EntryAndFoulsConsistencyPlugin())
+register(IllegibleMarksPlugin())
+register(PreprocessFallbackPlugin())
 
 # FIBA sport rules
 from .fiba_rules import PlayerFoulsPlugin, TeamFoulsPlugin

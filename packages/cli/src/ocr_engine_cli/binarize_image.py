@@ -15,7 +15,8 @@ import argparse
 from pathlib import Path
 
 import cv2
-import numpy as np
+
+from ocr_engine_core.utils.image_utils import read_image, write_png
 
 
 def binarize_adaptive(image_path: Path, output_path: Path, block_size: int = 15, c: int = 10) -> Path:
@@ -24,9 +25,7 @@ def binarize_adaptive(image_path: Path, output_path: Path, block_size: int = 15,
     Good for images with uneven lighting — computes threshold
     per-region using a Gaussian-weighted window.
     """
-    img = cv2.imread(str(image_path))
-    if img is None:
-        raise ValueError(f"No se pudo abrir la imagen: {image_path}")
+    img = read_image(image_path)
 
     gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 
@@ -39,7 +38,7 @@ def binarize_adaptive(image_path: Path, output_path: Path, block_size: int = 15,
     )
 
     output_path.parent.mkdir(parents=True, exist_ok=True)
-    cv2.imwrite(str(output_path), binary)
+    write_png(output_path, binary)
     print(f"Binarizada (adaptive, block={block_size}, C={c}): {output_path}")
     return output_path
 
@@ -50,9 +49,7 @@ def binarize_otsu(image_path: Path, output_path: Path) -> Path:
     Good for images with even lighting and strong contrast.
     Automatically finds the optimal global threshold.
     """
-    img = cv2.imread(str(image_path))
-    if img is None:
-        raise ValueError(f"No se pudo abrir la imagen: {image_path}")
+    img = read_image(image_path)
 
     gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 
@@ -60,7 +57,7 @@ def binarize_otsu(image_path: Path, output_path: Path) -> Path:
     _, binary = cv2.threshold(gray, 0, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)
 
     output_path.parent.mkdir(parents=True, exist_ok=True)
-    cv2.imwrite(str(output_path), binary)
+    write_png(output_path, binary)
     print(f"Binarizada (otsu): {output_path}")
     return output_path
 

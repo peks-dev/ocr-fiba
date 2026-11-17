@@ -1,8 +1,10 @@
 from __future__ import annotations
 
+import asyncio
 import hashlib
 import os
 import secrets
+import threading
 import time
 from collections.abc import Callable
 
@@ -15,6 +17,7 @@ from ocr_engine_mcp.client import OcrApiClient, OcrApiError
 OCR_LIVE_PREFIX = "ocr_live_"
 DEFAULT_CACHE_TTL_SECONDS = 60
 DEFAULT_PROBE_TIMEOUT_SECONDS = 10
+MAX_CACHE_ENTRIES = 1024
 
 
 def probe_ocr_api_key(
@@ -30,11 +33,24 @@ def probe_ocr_api_key(
     2xx and 429 (authenticated but rate-limited) count as valid. 401/403 and
     transport or server errors fail closed (the token is not accepted).
     """
+    if session is not None:
+        return _probe_with_session(token, base_url=base_url, timeout_seconds=timeout_seconds, session=session)
+    with requests.Session() as owned_session:
+        return _probe_with_session(token, base_url=base_url, timeout_seconds=timeout_seconds, session=owned_session)
+
+
+def _probe_with_session(
+    token: str,
+    *,
+    base_url: str | None,
+    timeout_seconds: float,
+    session: requests.Session,
+) -> bool:
     client = OcrApiClient(
         base_url,
         api_key=token,
         timeout_seconds=int(timeout_seconds),
-        session=session or requests.Session(),
+        session=session,
     )
     try:
         client.list_runs(limit=1)
@@ -67,6 +83,7 @@ class McpTokenVerifier(TokenVerifier):
         self._probe = probe or probe_ocr_api_key
         self.cache_ttl_seconds = cache_ttl_seconds
         self._cache: dict[str, tuple[bool, float]] = {}
+        self._lock = threading.Lock()
 
     async def verify_token(self, token: str) -> AccessToken | None:
         if not token:
@@ -80,7 +97,7 @@ class McpTokenVerifier(TokenVerifier):
             )
         if not token.startswith(OCR_LIVE_PREFIX):
             return None
-        if not self._is_valid_live_key(token):
+        if not await self._is_valid_live_key_async(token):
             return None
         return AccessToken(
             token=token,
@@ -95,20 +112,54 @@ class McpTokenVerifier(TokenVerifier):
             return False
         return secrets.compare_digest(token, expected)
 
-    def _is_valid_live_key(self, token: str) -> bool:
+    def _get_cached_live_key(self, cache_key: str) -> bool | None:
         now = time.monotonic()
-        cache_key = hashlib.sha256(token.encode("utf-8")).hexdigest()
-        cached = self._cache.get(cache_key)
-        if cached is not None:
+        with self._lock:
+            cached = self._cache.get(cache_key)
+            if cached is None:
+                return None
             valid, cached_at = cached
             if now - cached_at <= self.cache_ttl_seconds:
                 return valid
             del self._cache[cache_key]
+            return None
+
+    def _set_cached_live_key(self, cache_key: str, valid: bool) -> None:
+        now = time.monotonic()
+        with self._lock:
+            if len(self._cache) >= MAX_CACHE_ENTRIES and cache_key not in self._cache:
+                expired = [
+                    k for k, (_, ts) in self._cache.items() if now - ts > self.cache_ttl_seconds
+                ]
+                for k in expired:
+                    del self._cache[k]
+                if len(self._cache) >= MAX_CACHE_ENTRIES:
+                    oldest_key = min(self._cache, key=lambda k: self._cache[k][1])
+                    del self._cache[oldest_key]
+            self._cache[cache_key] = (valid, now)
+
+    async def _is_valid_live_key_async(self, token: str) -> bool:
+        cache_key = hashlib.sha256(token.encode("utf-8")).hexdigest()
+        cached = self._get_cached_live_key(cache_key)
+        if cached is not None:
+            return cached
+        try:
+            valid = bool(await asyncio.to_thread(self._probe, token))
+        except Exception:
+            return False
+        self._set_cached_live_key(cache_key, valid)
+        return valid
+
+    def _is_valid_live_key(self, token: str) -> bool:
+        cache_key = hashlib.sha256(token.encode("utf-8")).hexdigest()
+        cached = self._get_cached_live_key(cache_key)
+        if cached is not None:
+            return cached
         try:
             valid = bool(self._probe(token))
         except Exception:
             return False
-        self._cache[cache_key] = (valid, now)
+        self._set_cached_live_key(cache_key, valid)
         return valid
 
 

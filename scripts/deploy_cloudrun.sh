@@ -6,6 +6,7 @@
 # Env overrides:
 #   GCP_PROJECT (ocr-fiba-8d0920)  GCP_REGION (us-central1)  RUNS_BUCKET (<project>-runs)
 #   OCR_RATE_LIMIT_PER_MINUTE (3)  OCR_RATE_LIMIT_PER_DAY (50)  RUNS_RETENTION_DAYS (30)
+#   OCR_STALE_RUN_SECONDS (900)
 #   OCR_DEFAULT_EXTRACTOR_PROVIDER (openrouter)  OCR_DEFAULT_EXTRACTOR_MODEL (google/gemini-3-flash-preview)
 #   OPENROUTER_API_KEY   only read when the openrouter-api-key secret does not exist yet,
 #                        or when ROTATE_OPENROUTER_KEY=1.
@@ -38,6 +39,7 @@ TOKEN_FILE="$ROOT/.cloud-token"
 RETENTION_DAYS="${RUNS_RETENTION_DAYS:-30}"
 PER_MIN="${OCR_RATE_LIMIT_PER_MINUTE:-3}"
 PER_DAY="${OCR_RATE_LIMIT_PER_DAY:-50}"
+STALE_RUN_SECONDS="${OCR_STALE_RUN_SECONDS:-900}"
 EXTRACTOR_PROVIDER="${OCR_DEFAULT_EXTRACTOR_PROVIDER:-openrouter}"
 EXTRACTOR_MODEL="${OCR_DEFAULT_EXTRACTOR_MODEL:-google/gemini-3-flash-preview}"
 SUPABASE_URL_VALUE="${SUPABASE_URL:-https://cgcejoqsmouieijkkogw.supabase.co}"
@@ -140,17 +142,20 @@ deploy_api() {
   else
     echo "skipping Supabase secrets: create supabase-service-key and supabase-jwt-secret first"
   fi
-  # Bucket is mounted at /mnt/data: runs/ holds run folders, quota/ the persisted rate-limit state.
-  # API: max 1 instance so the quota is exact and run status on the GCS mount is
-  # read by the same process that writes it. CPU stays allocated (--no-cpu-throttling) because
-  # OCR runs execute in a background thread after the HTTP response returns.
+  # Bucket is mounted at /mnt/data: runs/ holds run folders, quota/ the persisted rate-limit state
+  # (used only as a local fallback if Supabase is not configured).
+  # API: max 3 instances so cold-start traffic is not serialized behind a single instance.
+  # When Supabase is configured, run-creation quotas are enforced by the shared
+  # consume_rate_limit RPC so limits hold across instances. CPU stays allocated
+  # (--no-cpu-throttling) because OCR runs execute in a background thread after the HTTP
+  # response returns.
   g run deploy ocr-api --image "$(current_image)" --region "$REGION" \
     --service-account "$API_SA" --allow-unauthenticated \
     --execution-environment gen2 --no-cpu-throttling \
-    --cpu 1 --memory 1Gi --concurrency 20 --min-instances 0 --max-instances 1 --timeout 600 \
+    --cpu 1 --memory 1Gi --concurrency 20 --min-instances 0 --max-instances 3 --timeout 600 \
     --add-volume "name=runs,type=cloud-storage,bucket=$BUCKET" \
     --add-volume-mount "volume=runs,mount-path=/mnt/data" \
-    --set-env-vars "^|^OCR_SERVICE=api|OCR_ENV=production|OCR_RUNS_DIR=/mnt/data/runs|OCR_RATE_LIMIT_STATE_FILE=/mnt/data/quota/rate_limit.json|OCR_MAX_UPLOAD_MB=20|OCR_ALLOW_PATH_INPUT=false|OCR_RATE_LIMIT_PER_MINUTE=$PER_MIN|OCR_RATE_LIMIT_PER_DAY=$PER_DAY|OCR_DEFAULT_EXTRACTOR_PROVIDER=$EXTRACTOR_PROVIDER|OCR_DEFAULT_EXTRACTOR_MODEL=$EXTRACTOR_MODEL|OCR_CORS_ORIGINS=${OCR_CORS_ORIGINS:-}|SUPABASE_URL=$SUPABASE_URL_VALUE|SUPABASE_PUBLISHABLE_KEY=$SUPABASE_PUBLISHABLE_KEY_VALUE" \
+    --set-env-vars "^|^OCR_SERVICE=api|OCR_ENV=production|OCR_RUNS_DIR=/mnt/data/runs|OCR_RATE_LIMIT_STATE_FILE=/mnt/data/quota/rate_limit.json|OCR_MAX_UPLOAD_MB=20|OCR_ALLOW_PATH_INPUT=false|OCR_RATE_LIMIT_PER_MINUTE=$PER_MIN|OCR_RATE_LIMIT_PER_DAY=$PER_DAY|OCR_STALE_RUN_SECONDS=$STALE_RUN_SECONDS|OCR_DEFAULT_EXTRACTOR_PROVIDER=$EXTRACTOR_PROVIDER|OCR_DEFAULT_EXTRACTOR_MODEL=$EXTRACTOR_MODEL|OCR_CORS_ORIGINS=${OCR_CORS_ORIGINS:-}|SUPABASE_URL=$SUPABASE_URL_VALUE|SUPABASE_PUBLISHABLE_KEY=$SUPABASE_PUBLISHABLE_KEY_VALUE" \
     --set-secrets "$api_secrets"
 }
 

@@ -90,6 +90,7 @@ export function ReconcileClient({ basePath = DEFAULT_BASE_PATH }: { basePath?: s
         <div className="mt-4">
           <StatusBanner status={summary.status} blockingCount={summary.blockingCount} />
         </div>
+        {result.confidence ? <ConfidenceSummaryBar confidence={result.confidence} /> : null}
         <div className="mt-4 rounded-card border border-border bg-elevated p-3">
           <p className="text-xs font-semibold uppercase tracking-[0.16em] text-faint">Plugins usados en esta revisión</p>
           <div className="mt-2 flex flex-wrap gap-2">
@@ -182,6 +183,51 @@ export function ReconcileClient({ basePath = DEFAULT_BASE_PATH }: { basePath?: s
   );
 }
 
+
+function ConfidenceSummaryBar({ confidence }: { confidence: NonNullable<OcrResult["confidence"]> }) {
+  const score = typeof confidence.score === "number" ? Math.round(confidence.score * 100) : null;
+  const level = confidence.level;
+  const levelLabel = level === "high" ? "Alta" : level === "medium" ? "Media" : "Baja";
+  const pillStyle =
+    level === "high"
+      ? "bg-success-soft text-success"
+      : level === "medium"
+        ? "bg-warning-soft text-warning"
+        : "bg-danger-soft text-danger";
+
+  const sectionLabels: { key: keyof NonNullable<NonNullable<OcrResult["confidence"]>["sections"]>; label: string }[] = [
+    { key: "header", label: "Datos" },
+    { key: "team_a", label: "Eq. A" },
+    { key: "team_b", label: "Eq. B" },
+    { key: "progressive_score", label: "Progresivo" },
+    { key: "footer", label: "Cierre" },
+  ];
+
+  return (
+    <div className="mt-3 rounded-card border border-border bg-elevated p-3">
+      <div className="flex flex-wrap items-center justify-between gap-2">
+        <p className="text-xs font-semibold uppercase tracking-[0.16em] text-faint">Confianza de extracción</p>
+        <span className={`rounded-full px-3 py-1 text-xs font-semibold ${pillStyle}`}>
+          {score !== null ? `${score}% · ` : ""}
+          {levelLabel}
+        </span>
+      </div>
+      {confidence.sections ? (
+        <div className="mt-2 flex flex-wrap gap-2">
+          {sectionLabels.map(({ key, label }) => {
+            const value = confidence.sections?.[key];
+            if (typeof value !== "number") return null;
+            return (
+              <span key={key} className="rounded-full bg-surface px-2.5 py-1 text-xs text-muted">
+                {label}: <strong className="text-ink">{Math.round(value * 100)}%</strong>
+              </span>
+            );
+          })}
+        </div>
+      ) : null}
+    </div>
+  );
+}
 
 function pluginsFromWarnings(result: OcrResult): string[] {
   const plugins = Array.from(

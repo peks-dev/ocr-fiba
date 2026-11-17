@@ -1,12 +1,18 @@
 from __future__ import annotations
 
 import json
+import os
+import re
 import shutil
+import tempfile
 import time
 from dataclasses import dataclass
 from pathlib import Path
 
 from ocr_engine_api.responses import run_links
+from ocr_engine_api.settings import get_api_settings
+
+RUN_ID_RE = re.compile(r"^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$")
 
 
 RUN_STATUS_QUEUED = "queued"
@@ -38,8 +44,18 @@ class RunRepositoryError(Exception):
 class RunRepository:
     """Filesystem-backed access to OCR run records."""
 
-    def __init__(self, runs_dir: str | Path = "runs") -> None:
+    def __init__(
+        self,
+        runs_dir: str | Path = "runs",
+        *,
+        stale_run_seconds: float | None = None,
+    ) -> None:
         self.runs_dir = Path(runs_dir)
+        self.stale_run_seconds = (
+            float(stale_run_seconds)
+            if stale_run_seconds is not None
+            else float(get_api_settings().stale_run_seconds)
+        )
 
     def list_runs(self, *, limit: int = 50) -> dict:
         if not self.runs_dir.exists():
@@ -47,7 +63,11 @@ class RunRepository:
         if not self.runs_dir.is_dir():
             raise RunRepositoryError(400, "INVALID_RUNS_DIR", "runs_dir is not a directory")
 
-        run_dirs = [path for path in self.runs_dir.iterdir() if path.is_dir()]
+        run_dirs = [
+            path
+            for path in self.runs_dir.iterdir()
+            if path.is_dir() and not path.name.startswith(".")
+        ]
         run_dirs.sort(key=lambda path: path.stat().st_mtime, reverse=True)
         runs = [self._run_summary(path) for path in run_dirs[:limit]]
         return {
@@ -55,6 +75,23 @@ class RunRepository:
             "count": len(runs),
             "runs": runs,
         }
+
+    def ensure_new_run_available(self, run_id: str) -> Path:
+        """Validate run_id syntax and ensure no run directory already exists for it."""
+        run_dir = self.resolve_run_dir(run_id)
+        if run_dir.exists():
+            raise RunRepositoryError(409, "RUN_ALREADY_EXISTS", f"Run '{run_id}' already exists")
+        return run_dir
+
+    def reserve_run_dir(self, run_id: str) -> Path:
+        """Atomically create a new run directory, failing with 409 on collision."""
+        run_dir = self.resolve_run_dir(run_id)
+        self.runs_dir.mkdir(parents=True, exist_ok=True)
+        try:
+            run_dir.mkdir(parents=False, exist_ok=False)
+        except FileExistsError as exc:
+            raise RunRepositoryError(409, "RUN_ALREADY_EXISTS", f"Run '{run_id}' already exists") from exc
+        return run_dir
 
     def get_run(self, run_id: str) -> dict:
         run_dir = self.resolve_run_dir(run_id)
@@ -68,12 +105,21 @@ class RunRepository:
         detail["artifacts"] = artifacts[:20]
         return detail
 
-    def create_status(self, run_id: str, *, status: str = RUN_STATUS_QUEUED) -> dict:
+    def create_status(
+        self,
+        run_id: str,
+        *,
+        status: str = RUN_STATUS_QUEUED,
+        exist_ok: bool = False,
+    ) -> dict:
         if status not in VALID_RUN_STATUSES:
             raise RunRepositoryError(400, "INVALID_RUN_STATUS", "Invalid run status")
         now = time.time()
-        run_dir = self.resolve_run_dir(run_id)
-        run_dir.mkdir(parents=True, exist_ok=True)
+        if exist_ok:
+            run_dir = self.resolve_run_dir(run_id)
+            run_dir.mkdir(parents=True, exist_ok=True)
+        else:
+            run_dir = self.reserve_run_dir(run_id)
         status_payload = {
             "run_id": run_id,
             "status": status,
@@ -140,6 +186,39 @@ class RunRepository:
             }
         status.setdefault("run_id", run_id)
         status.setdefault("links", run_links(run_id))
+        return self._reconcile_active_status(run_dir, status)
+
+    def _reconcile_active_status(self, run_dir: Path, status: dict) -> dict:
+        """Reconcile orphaned queued/running statuses when a worker crashed or timed out."""
+        if status.get("status") not in ACTIVE_RUN_STATUSES:
+            return status
+
+        updated_at = status.get("updated_at")
+        if not isinstance(updated_at, (int, float)):
+            updated_at = run_dir.stat().st_mtime
+        age = time.time() - float(updated_at)
+
+        result_path = run_dir / "result.json"
+        if result_path.exists() and age > 5.0 and _read_optional_json(result_path) is not None:
+            reconciled = {
+                **status,
+                "status": RUN_STATUS_COMPLETED,
+                "completed_at": status.get("completed_at") or result_path.stat().st_mtime,
+                "error": None,
+            }
+            return reconciled
+
+        if self.stale_run_seconds > 0 and age > self.stale_run_seconds:
+            return {
+                **status,
+                "status": RUN_STATUS_FAILED,
+                "completed_at": status.get("completed_at") or time.time(),
+                "error": {
+                    "code": "RUN_STALLED",
+                    "message": "OCR run stalled or worker restarted before completion",
+                    "retryable": True,
+                },
+            }
         return status
 
     def delete_run(self, run_id: str) -> dict:
@@ -201,7 +280,7 @@ class RunRepository:
         return artifact_path
 
     def resolve_run_dir(self, run_id: str) -> Path:
-        if "/" in run_id or "\\" in run_id or run_id in {"", ".", ".."}:
+        if not RUN_ID_RE.fullmatch(run_id) or ".." in run_id:
             raise RunRepositoryError(400, "INVALID_RUN_ID", "Invalid run_id")
         return self.runs_dir / run_id
 
@@ -219,9 +298,24 @@ class RunRepository:
     def _write_status(self, run_id: str, status: dict) -> None:
         status_path = self.resolve_run_dir(run_id) / "status.json"
         status_path.parent.mkdir(parents=True, exist_ok=True)
-        tmp_path = status_path.with_suffix(".json.tmp")
-        tmp_path.write_text(json.dumps(status, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
-        tmp_path.replace(status_path)
+        payload = json.dumps(status, indent=2, ensure_ascii=False) + "\n"
+        tmp_name: str | None = None
+        try:
+            with tempfile.NamedTemporaryFile(
+                mode="w",
+                encoding="utf-8",
+                dir=status_path.parent,
+                prefix=".status-",
+                suffix=".tmp",
+                delete=False,
+            ) as tmp_file:
+                tmp_name = tmp_file.name
+                tmp_file.write(payload)
+            os.replace(tmp_name, status_path)
+            tmp_name = None
+        finally:
+            if tmp_name is not None:
+                Path(tmp_name).unlink(missing_ok=True)
 
     def _run_summary(self, run_dir: Path) -> dict:
         result_path = run_dir / "result.json"
@@ -229,6 +323,8 @@ class RunRepository:
         input_dir = run_dir / "input"
         result = _read_optional_json(result_path)
         status = _read_optional_json(run_dir / "status.json") or {}
+        if status:
+            status = self._reconcile_active_status(run_dir, status)
         run_status = status.get("status")
         if run_status is None and result_path.exists():
             run_status = RUN_STATUS_COMPLETED

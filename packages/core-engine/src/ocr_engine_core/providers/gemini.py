@@ -27,12 +27,16 @@ class GeminiProvider(HttpJsonProvider):
             f"https://generativelanguage.googleapis.com/v1beta/models/{model_name}:generateContent"
         )
 
-    # Gemini authenticates via the ?key= query parameter, not a Bearer header.
+    # Gemini authenticates via the x-goog-api-key header so the secret never leaks in URLs.
     def _auth_headers(self) -> dict[str, str]:
-        return {"Content-Type": "application/json"}
+        return {
+            "Content-Type": "application/json",
+            "Accept": "application/json",
+            "x-goog-api-key": self.api_key,
+        }
 
     def _request_url(self) -> str:
-        return f"{self.endpoint}?key={self.api_key}"
+        return self.endpoint
 
     def _extract_usage(self, response_body: dict) -> TokenUsage:
         usage = response_body.get("usageMetadata", {})

@@ -5,25 +5,13 @@
 
 import { NextResponse } from "next/server";
 
-import type { LeagueRecord, LeagueSubmissionPayload } from "@/components/referee-demo/types";
+import { validateLeagueSubmissionPayload } from "@/components/referee-demo/league-validation";
+import type { LeagueRecord } from "@/components/referee-demo/types";
+import { authorizeDemoApiAccess } from "@/lib/auth/account";
 
 export const dynamic = "force-dynamic";
 
 const AIRTABLE_API = "https://api.airtable.com/v0";
-const SUBMISSION_FIELDS: (keyof LeagueSubmissionPayload)[] = [
-  "match_id",
-  "league",
-  "tournament",
-  "game_date",
-  "team_a",
-  "team_b",
-  "final_score",
-  "winner",
-  "reconcile_status",
-  "warnings_remaining",
-  "source_run_id",
-  "payload_json",
-];
 
 type AirtableConfig = { token: string; baseId: string; table: string };
 
@@ -47,6 +35,11 @@ function notConfigured() {
 }
 
 export async function GET() {
+  const access = await authorizeDemoApiAccess("referee");
+  if (!access.ok) {
+    return NextResponse.json({ error: access.error }, { status: access.status });
+  }
+
   const config = readConfig();
   if (!config) return notConfigured();
 
@@ -75,30 +68,31 @@ export async function GET() {
 }
 
 export async function POST(request: Request) {
+  const access = await authorizeDemoApiAccess("referee");
+  if (!access.ok) {
+    return NextResponse.json({ error: access.error }, { status: access.status });
+  }
+
   const config = readConfig();
   if (!config) return notConfigured();
 
-  let body: Partial<LeagueSubmissionPayload>;
+  let body: unknown;
   try {
-    body = (await request.json()) as Partial<LeagueSubmissionPayload>;
+    body = await request.json();
   } catch {
     return NextResponse.json({ error: "Cuerpo de la petición inválido." }, { status: 400 });
   }
 
-  if (!body.match_id) {
-    return NextResponse.json({ error: "Falta match_id en el envío." }, { status: 400 });
-  }
-
-  const fields: Record<string, unknown> = {};
-  for (const key of SUBMISSION_FIELDS) {
-    if (body[key] !== undefined) fields[key] = body[key];
+  const validated = validateLeagueSubmissionPayload(body);
+  if (!validated.ok) {
+    return NextResponse.json({ error: validated.error }, { status: 400 });
   }
 
   try {
     const response = await fetch(airtableUrl(config), {
       method: "POST",
       headers: { Authorization: `Bearer ${config.token}`, "content-type": "application/json" },
-      body: JSON.stringify({ fields, typecast: true }),
+      body: JSON.stringify({ fields: validated.fields, typecast: true }),
     });
     const payload = await response.json();
     if (!response.ok) {

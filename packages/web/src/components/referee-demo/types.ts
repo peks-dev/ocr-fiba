@@ -56,6 +56,17 @@ export type OcrFooter = {
   quarters?: Partial<Record<QuarterKey, QuarterScore>> | null;
 } | null;
 
+export type ConfidenceLevel = "high" | "medium" | "low";
+
+export type ConfidenceSectionKey = "header" | "team_a" | "team_b" | "progressive_score" | "footer";
+
+export type ConfidenceSummary = {
+  score?: number | null;
+  level?: ConfidenceLevel | string | null;
+  sections?: Partial<Record<ConfidenceSectionKey, number>> | null;
+  warning_counts?: Partial<Record<IssueSeverity, number>> | null;
+};
+
 export type OcrResult = {
   match_status?: string | null;
   header?: {
@@ -72,6 +83,8 @@ export type OcrResult = {
   progressive_score?: Partial<Record<TeamKey, ProgressiveEvent[]>> | null;
   footer?: OcrFooter;
   validation_warnings?: ValidationWarning[] | null;
+  confidence?: ConfidenceSummary | null;
+  meta?: Record<string, unknown> | null;
 };
 
 // A structured, serialisable suggestion the referee can apply with one click.

@@ -36,9 +36,13 @@ async def create_run(
     image_path = _resolve_input_file(request.image_path)
     runs_dir = resolve_runs_dir(request.runs_dir)
     context = RunContext.create_run(image_path, runs_dir, run_id=request.run_id)
-    context.ensure_dirs()
     repository = RunRepository(runs_dir)
-    status = repository.create_status(context.run_id)
+    try:
+        repository.reserve_run_dir(context.run_id)
+    except RunRepositoryError as exc:
+        raise error_response(exc.status_code, exc.code, exc.message) from exc
+    context.ensure_dirs()
+    status = repository.create_status(context.run_id, exist_ok=True)
     RunExecutor(repository).submit_full_pipeline(
         image_path,
         run_id=context.run_id,
@@ -58,29 +62,29 @@ async def upload_and_create_run(
     options = parse_options_json(options_json)
     filename = _safe_upload_filename(file.filename)
     resolved_runs_dir = resolve_runs_dir(runs_dir)
-
-    content = await file.read()
-    if not content:
-        raise error_response(400, "EMPTY_UPLOAD", "Uploaded file is empty")
+    context = RunContext.create_run(Path(filename), resolved_runs_dir, run_id=run_id)
+    repository = RunRepository(resolved_runs_dir)
+    try:
+        repository.ensure_new_run_available(context.run_id)
+    except RunRepositoryError as exc:
+        raise error_response(exc.status_code, exc.code, exc.message) from exc
 
     from ocr_engine_api.settings import get_api_settings
 
     max_upload_mb = get_api_settings().max_upload_mb
-    max_upload_bytes = max_upload_mb * 1024 * 1024
-    if len(content) > max_upload_bytes:
-        raise error_response(
-            413,
-            "UPLOAD_TOO_LARGE",
-            f"Uploaded file exceeds {max_upload_mb} MB limit",
-        )
+    content = await _read_bounded_upload(file, max_upload_mb=max_upload_mb)
+    _validate_image_magic_bytes(content)
 
-    context = RunContext.create_run(Path(filename), resolved_runs_dir, run_id=run_id)
+    try:
+        repository.reserve_run_dir(context.run_id)
+    except RunRepositoryError as exc:
+        raise error_response(exc.status_code, exc.code, exc.message) from exc
+
     context.ensure_dirs()
     input_path = context.input_dir / filename
     input_path.write_bytes(content)
 
-    repository = RunRepository(resolved_runs_dir)
-    status = repository.create_status(context.run_id)
+    status = repository.create_status(context.run_id, exist_ok=True)
     RunExecutor(repository).submit_full_pipeline(
         input_path,
         run_id=context.run_id,
@@ -194,3 +198,66 @@ def _safe_upload_filename(filename: str | None) -> str:
     if suffix not in {".jpg", ".jpeg", ".png", ".webp"}:
         raise unsupported_upload_type_error()
     return name
+
+
+_UPLOAD_CHUNK_BYTES = 65_536
+
+
+async def _read_bounded_upload(file: UploadFile, *, max_upload_mb: int) -> bytes:
+    """Read an UploadFile without exceeding max_upload_mb in memory."""
+    max_upload_bytes = max_upload_mb * 1024 * 1024
+    declared_size = getattr(file, "size", None)
+    if isinstance(declared_size, int) and declared_size > max_upload_bytes:
+        raise error_response(
+            413,
+            "UPLOAD_TOO_LARGE",
+            f"Uploaded file exceeds {max_upload_mb} MB limit",
+        )
+
+    chunks: list[bytes] = []
+    total = 0
+    while True:
+        try:
+            chunk = await file.read(_UPLOAD_CHUNK_BYTES)
+        except TypeError:
+            chunk = await file.read()
+            if not chunk:
+                break
+            total += len(chunk)
+            if total > max_upload_bytes:
+                raise error_response(
+                    413,
+                    "UPLOAD_TOO_LARGE",
+                    f"Uploaded file exceeds {max_upload_mb} MB limit",
+                )
+            chunks.append(chunk)
+            break
+
+        if not chunk:
+            break
+        total += len(chunk)
+        if total > max_upload_bytes:
+            raise error_response(
+                413,
+                "UPLOAD_TOO_LARGE",
+                f"Uploaded file exceeds {max_upload_mb} MB limit",
+            )
+        chunks.append(chunk)
+
+    content = b"".join(chunks)
+    if not content:
+        raise error_response(400, "EMPTY_UPLOAD", "Uploaded file is empty")
+    return content
+
+
+def _validate_image_magic_bytes(content: bytes) -> None:
+    """Ensure uploaded bytes match a supported image file signature (JPEG, PNG, WebP)."""
+    is_jpeg = content.startswith(b"\xff\xd8\xff")
+    is_png = content.startswith(b"\x89PNG\r\n\x1a\n")
+    is_webp = len(content) >= 12 and content[:4] == b"RIFF" and content[8:12] == b"WEBP"
+    if not (is_jpeg or is_png or is_webp):
+        raise error_response(
+            400,
+            "INVALID_IMAGE_CONTENT",
+            "Uploaded file content is not a valid JPEG, PNG, or WebP image",
+        )

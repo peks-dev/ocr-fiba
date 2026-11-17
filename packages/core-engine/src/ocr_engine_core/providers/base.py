@@ -35,6 +35,23 @@ class TokenUsage:
         self.completion_tokens += int(other.completion_tokens or 0)
         self.total_tokens += int(other.total_tokens or 0)
 
+    @classmethod
+    def from_usage(cls, usage: Any) -> TokenUsage:
+        """Build TokenUsage from another TokenUsage, ProviderUsage, dict, or None."""
+        if usage is None:
+            return cls()
+        if isinstance(usage, dict):
+            return cls(
+                prompt_tokens=int(usage.get("prompt_tokens", 0) or 0),
+                completion_tokens=int(usage.get("completion_tokens", 0) or 0),
+                total_tokens=int(usage.get("total_tokens", 0) or 0),
+            )
+        return cls(
+            prompt_tokens=int(getattr(usage, "prompt_tokens", 0) or 0),
+            completion_tokens=int(getattr(usage, "completion_tokens", 0) or 0),
+            total_tokens=int(getattr(usage, "total_tokens", 0) or 0),
+        )
+
 
 @dataclass(frozen=True)
 class BoundingBox:
