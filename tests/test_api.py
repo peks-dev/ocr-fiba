@@ -313,7 +313,7 @@ class ApiTest(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmp:
             server_runs_dir = Path(tmp) / "server-runs"
             user_runs_dir = Path(tmp) / "user-controlled"
-            fake_file = FakeUploadFile("sheet.jpg", b"image")
+            fake_file = FakeUploadFile("sheet.jpg", b"\xff\xd8\xff\xe0image")
 
             with patch.dict(
                 "os.environ",
@@ -343,7 +343,7 @@ class ApiTest(unittest.TestCase):
     def test_async_upload_sanitizes_paths_in_production(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             server_runs_dir = Path(tmp) / "server-runs"
-            fake_file = FakeUploadFile("sheet.jpg", b"image")
+            fake_file = FakeUploadFile("sheet.jpg", b"\xff\xd8\xff\xe0image")
 
             with patch.dict(
                 "os.environ",
@@ -373,7 +373,7 @@ class ApiTest(unittest.TestCase):
 
     def test_async_upload_creates_queued_run_and_background_completes(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
-            fake_file = FakeUploadFile("sheet.jpg", b"image")
+            fake_file = FakeUploadFile("sheet.jpg", b"\xff\xd8\xff\xe0image")
 
             with patch("ocr_engine_api.services.run_executor.OcrToolbox", FakeToolbox):
                 response = run_async(
