@@ -26,13 +26,13 @@ from ocr_engine_core.exceptions import OcrEngineError
 DATASET_DIR = Path.cwd() / "dataset"
 RESULTS_DIR = DATASET_DIR / "results"
 
-# Sheets to process (sheet-006 excluded — no usable image)
 ALL_SHEETS = [
     "sheet-001",
     "sheet-002",
     "sheet-003",
     "sheet-004",
     "sheet-005",
+    "sheet-006",
     "sheet-007",
     "sheet-008",
     "sheet-009",
@@ -92,6 +92,28 @@ def main():
         help="Gamma correction value (e.g. 0.7 to darken overexposed images). "
              "Default: 0.7 (enabled). Use --gamma 1.0 to disable.",
     )
+    parser.add_argument(
+        "--cropper",
+        choices=["interfaze", "gemini", "glm", "docstrange", "qubrid", "openrouter"],
+        default="openrouter",
+        help="Proveedor para detección de secciones (default: openrouter)",
+    )
+    parser.add_argument(
+        "--cropper-model",
+        default="google/gemini-3-flash-preview",
+        help="Modelo del cropper (default: google/gemini-3-flash-preview)",
+    )
+    parser.add_argument(
+        "--extractor",
+        choices=["interfaze", "gemini", "glm", "docstrange", "qubrid", "openrouter"],
+        default=None,
+        help="Proveedor para extracción de datos (default: openrouter si no hay DOCSTRANGE_API_KEY)",
+    )
+    parser.add_argument(
+        "--extractor-model",
+        default=None,
+        help="Modelo del extractor (default: google/gemini-3-flash-preview en openrouter)",
+    )
     args = parser.parse_args()
 
     load_dotenv(Path.cwd() / ".env")
@@ -105,11 +127,20 @@ def main():
     results_dir = Path(args.output_dir) if args.output_dir else RESULTS_DIR
     runs_dir = Path(args.runs_dir) if args.runs_dir else DATASET_DIR / "runs"
 
+    from ocr_engine_core.utils.image_utils import resolve_provider_api_key
+
+    extractor_provider = args.extractor or (
+        "docstrange" if resolve_provider_api_key("docstrange") else "openrouter"
+    )
+    extractor_model = args.extractor_model or (
+        "nanonets-ocr-3" if extractor_provider == "docstrange" else "google/gemini-3-flash-preview"
+    )
+
     config = PipelineConfig(
-        cropper_provider="openrouter",
-        cropper_model="google/gemini-3-flash-preview",
-        extractor_provider="docstrange",
-        extractor_model="nanonets-ocr-3",
+        cropper_provider=args.cropper,
+        cropper_model=args.cropper_model,
+        extractor_provider=extractor_provider,
+        extractor_model=extractor_model,
         validation_plugins="all",
         grid_removal=args.grid_removal or False,
         gamma=args.gamma if args.gamma is not None else 0.7,
