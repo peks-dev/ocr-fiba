@@ -1,7 +1,7 @@
 from __future__ import annotations
 
+import threading
 import time
-from typing import Any
 
 from fastapi import Request
 from fastapi.responses import JSONResponse
@@ -10,8 +10,10 @@ from ocr_engine_api.api_keys import KEY_PREFIX, find_active_key_by_hash, hash_ap
 
 # In-memory cache: key_hash -> (account_id, status, cached_at)
 _cache: dict[str, tuple[str, str, float]] = {}
+_cache_lock = threading.Lock()
 
 TTL_SECONDS = 60
+MAX_CACHE_ENTRIES = 1024
 
 
 def is_api_key_request(request: Request) -> bool:
@@ -27,19 +29,45 @@ def is_api_key_request(request: Request) -> bool:
 
 def _cache_get(key_hash: str) -> tuple[str, str] | None:
     """Return (account_id, status) from cache if present and not expired."""
-    entry = _cache.get(key_hash)
-    if entry is None:
-        return None
-    account_id, status, cached_at = entry
-    if time.monotonic() - cached_at > TTL_SECONDS:
-        del _cache[key_hash]
-        return None
-    return account_id, status
+    now = time.monotonic()
+    with _cache_lock:
+        entry = _cache.get(key_hash)
+        if entry is None:
+            return None
+        account_id, status, cached_at = entry
+        if now - cached_at > TTL_SECONDS:
+            del _cache[key_hash]
+            return None
+        return account_id, status
 
 
 def _cache_set(key_hash: str, account_id: str, status: str) -> None:
-    """Store a validated key in the cache."""
-    _cache[key_hash] = (account_id, status, time.monotonic())
+    """Store a validated key in the bounded cache."""
+    now = time.monotonic()
+    with _cache_lock:
+        if len(_cache) >= MAX_CACHE_ENTRIES and key_hash not in _cache:
+            expired = [k for k, (_, _, ts) in _cache.items() if now - ts > TTL_SECONDS]
+            for k in expired:
+                del _cache[k]
+            if len(_cache) >= MAX_CACHE_ENTRIES:
+                oldest_key = min(_cache, key=lambda k: _cache[k][2])
+                del _cache[oldest_key]
+        _cache[key_hash] = (account_id, status, now)
+
+
+def invalidate_api_key_cache(*, key_hash: str | None = None, account_id: str | None = None) -> int:
+    """Evict cached API keys by key_hash or account_id after revocation/deletion."""
+    removed = 0
+    with _cache_lock:
+        if key_hash is not None and key_hash in _cache:
+            del _cache[key_hash]
+            removed += 1
+        if account_id is not None:
+            matching = [k for k, (acct, _, _) in _cache.items() if acct == account_id]
+            for k in matching:
+                del _cache[k]
+                removed += 1
+    return removed
 
 
 def validate_api_key(request: Request) -> JSONResponse | None:
