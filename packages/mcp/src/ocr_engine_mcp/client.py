@@ -3,15 +3,18 @@ from __future__ import annotations
 import base64
 import json
 import os
+import re
 import time
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
+from urllib.parse import quote
 
 import requests
 
 
 DEFAULT_TIMEOUT_SECONDS = 300
+_RUN_ID_RE = re.compile(r"^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$")
 
 
 @dataclass(frozen=True)
@@ -49,7 +52,18 @@ class OcrApiClient:
         self.base_url = (base_url or os.getenv("OCR_API_BASE_URL") or "http://127.0.0.1:8000").rstrip("/")
         self.api_key = api_key if api_key is not None else os.getenv("OCR_API_KEY")
         self.timeout_seconds = timeout_seconds
+        self._owns_session = session is None
         self.session = session or requests.Session()
+
+    def close(self) -> None:
+        if self._owns_session and hasattr(self.session, "close"):
+            self.session.close()
+
+    def __enter__(self) -> OcrApiClient:
+        return self
+
+    def __exit__(self, *_exc: object) -> None:
+        self.close()
 
     def submit_scoresheet_from_path(
         self,
@@ -68,11 +82,11 @@ class OcrApiClient:
             payload["runs_dir"] = runs_dir
         if options:
             payload["options"] = options
-        response = self.session.post(
+        response = self._request(
+            "POST",
             self._url("/v1/runs"),
             json=payload,
             headers=self._headers(),
-            timeout=self.timeout_seconds,
         )
         return self._json_response(response)
 
@@ -95,12 +109,12 @@ class OcrApiClient:
         files = {
             "file": (Path(filename).name or "scoresheet.jpg", image_bytes),
         }
-        response = self.session.post(
+        response = self._request(
+            "POST",
             self._url("/v1/runs/upload"),
             data=data,
             files=files,
             headers=self._headers(),
-            timeout=self.timeout_seconds,
         )
         return self._json_response(response)
 
@@ -131,16 +145,17 @@ class OcrApiClient:
         params: dict[str, Any] = {"limit": limit}
         if runs_dir:
             params["runs_dir"] = runs_dir
-        response = self.session.get(
+        response = self._request(
+            "GET",
             self._url("/v1/runs"),
             params=params,
             headers=self._headers(),
-            timeout=self.timeout_seconds,
         )
         return self._json_response(response)
 
     def get_run(self, run_id: str, *, runs_dir: str | None = None) -> dict[str, Any]:
-        return self._get_run_json(f"/v1/runs/{run_id}", runs_dir=runs_dir)
+        encoded_id = _validate_run_id(run_id)
+        return self._get_run_json(f"/v1/runs/{encoded_id}", runs_dir=runs_dir)
 
     def poll_run(self, run_id: str, *, runs_dir: str | None = None) -> dict[str, Any]:
         return self.get_run(run_id, runs_dir=runs_dir)
@@ -167,7 +182,7 @@ class OcrApiClient:
                     422,
                     str(error.get("code") or "RUN_FAILED"),
                     str(error.get("message") or "Run failed"),
-                    {"run": run},
+                    {"run": run, "terminal_status": "failed"},
                 )
             time.sleep(max(poll_interval_seconds, 0.1))
         raise OcrApiError(
@@ -178,10 +193,12 @@ class OcrApiClient:
         )
 
     def get_run_result(self, run_id: str, *, runs_dir: str | None = None) -> dict[str, Any]:
-        return self._get_run_json(f"/v1/runs/{run_id}/result", runs_dir=runs_dir)
+        encoded_id = _validate_run_id(run_id)
+        return self._get_run_json(f"/v1/runs/{encoded_id}/result", runs_dir=runs_dir)
 
     def get_run_trace(self, run_id: str, *, runs_dir: str | None = None) -> dict[str, Any]:
-        return self._get_run_json(f"/v1/runs/{run_id}/trace", runs_dir=runs_dir)
+        encoded_id = _validate_run_id(run_id)
+        return self._get_run_json(f"/v1/runs/{encoded_id}/trace", runs_dir=runs_dir)
 
     def list_run_artifacts(
         self,
@@ -190,14 +207,15 @@ class OcrApiClient:
         limit: int = 200,
         runs_dir: str | None = None,
     ) -> dict[str, Any]:
+        encoded_id = _validate_run_id(run_id)
         params: dict[str, Any] = {"limit": limit}
         if runs_dir:
             params["runs_dir"] = runs_dir
-        response = self.session.get(
-            self._url(f"/v1/runs/{run_id}/artifacts"),
+        response = self._request(
+            "GET",
+            self._url(f"/v1/runs/{encoded_id}/artifacts"),
             params=params,
             headers=self._headers(),
-            timeout=self.timeout_seconds,
         )
         return self._json_response(response)
 
@@ -208,12 +226,14 @@ class OcrApiClient:
         *,
         runs_dir: str | None = None,
     ) -> dict[str, Any]:
+        encoded_id = _validate_run_id(run_id)
+        encoded_artifact = _encode_artifact_name(artifact_name)
         params = {"runs_dir": runs_dir} if runs_dir else None
-        response = self.session.get(
-            self._url(f"/v1/runs/{run_id}/artifacts/{artifact_name}"),
+        response = self._request(
+            "GET",
+            self._url(f"/v1/runs/{encoded_id}/artifacts/{encoded_artifact}"),
             params=params,
             headers=self._headers(),
-            timeout=self.timeout_seconds,
         )
         self._raise_for_error(response)
         content_type = response.headers.get("content-type")
@@ -227,13 +247,23 @@ class OcrApiClient:
 
     def _get_run_json(self, path: str, *, runs_dir: str | None = None) -> dict[str, Any]:
         params = {"runs_dir": runs_dir} if runs_dir else None
-        response = self.session.get(
+        response = self._request(
+            "GET",
             self._url(path),
             params=params,
             headers=self._headers(),
-            timeout=self.timeout_seconds,
         )
         return self._json_response(response)
+
+    def _request(self, method: str, url: str, **kwargs: Any) -> requests.Response:
+        try:
+            if method == "GET":
+                return self.session.get(url, timeout=self.timeout_seconds, **kwargs)
+            return self.session.post(url, timeout=self.timeout_seconds, **kwargs)
+        except requests.Timeout as exc:
+            raise OcrApiError(504, "API_TIMEOUT", f"OCR API request timed out: {exc}") from exc
+        except requests.RequestException as exc:
+            raise OcrApiError(502, "API_CONNECTION_ERROR", f"Could not reach OCR API: {exc}") from exc
 
     def _url(self, path: str) -> str:
         return f"{self.base_url}{path}"
@@ -283,3 +313,18 @@ class OcrApiClient:
                 raw_details = error.get("details")
                 details = raw_details if isinstance(raw_details, dict) else None
         raise OcrApiError(response.status_code, code, message, details)
+
+
+def _validate_run_id(run_id: str) -> str:
+    if not isinstance(run_id, str) or not _RUN_ID_RE.fullmatch(run_id) or ".." in run_id:
+        raise OcrApiError(400, "INVALID_RUN_ID", "Invalid run_id")
+    return quote(run_id, safe="")
+
+
+def _encode_artifact_name(artifact_name: str) -> str:
+    if not isinstance(artifact_name, str) or not artifact_name.strip() or "\\" in artifact_name:
+        raise OcrApiError(400, "INVALID_ARTIFACT_PATH", "Invalid artifact_name")
+    parts = [part for part in artifact_name.split("/") if part]
+    if not parts or any(part in {".", ".."} for part in parts):
+        raise OcrApiError(400, "INVALID_ARTIFACT_PATH", "Invalid artifact_name")
+    return "/".join(quote(part, safe="") for part in parts)

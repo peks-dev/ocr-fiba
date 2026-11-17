@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-import time
 from typing import Any
 
 from ocr_engine_mcp.client import OcrApiClient, OcrApiError
@@ -94,38 +93,39 @@ def wait_for_run(
     poll_interval_seconds: float = 2,
     runs_dir: str | None = None,
 ) -> dict[str, Any]:
-    deadline = time.monotonic() + timeout_seconds
-    last_run: dict[str, Any] | None = None
     try:
-        while time.monotonic() < deadline:
-            run = client.poll_run(run_id, runs_dir=runs_dir)
-            last_run = run
-            status = run.get("status")
-            if status == "completed":
-                return _run_status_response(run_id, run)
-            if status == "failed":
-                return {
-                    "success": False,
-                    "run_id": run_id,
-                    "status": status,
-                    "run": run,
-                    "resources": _resources(run_id),
-                    "next_actions": ["Inspect the run trace.", "Review the error and retry with adjusted options."],
-                }
-            time.sleep(max(poll_interval_seconds, 0.1))
-        return {
-            "success": False,
-            "run_id": run_id,
-            "status": last_run.get("status") if last_run else "unknown",
-            "error": {
-                "code": "RUN_TIMEOUT",
-                "message": f"Run did not complete within {timeout_seconds} seconds",
-            },
-            "run": last_run,
-            "resources": _resources(run_id),
-            "next_actions": ["Poll the run again later.", "Increase timeout_seconds if this run is expected to be slow."],
-        }
+        run = client.wait_for_run(
+            run_id,
+            timeout_seconds=timeout_seconds,
+            poll_interval_seconds=poll_interval_seconds,
+            runs_dir=runs_dir,
+        )
+        return _run_status_response(run_id, run)
     except OcrApiError as exc:
+        if exc.code == "RUN_TIMEOUT":
+            last_run = exc.details.get("run") if isinstance(exc.details, dict) else None
+            return {
+                "success": False,
+                "run_id": run_id,
+                "status": last_run.get("status") if isinstance(last_run, dict) else "unknown",
+                "error": {
+                    "code": "RUN_TIMEOUT",
+                    "message": exc.message,
+                },
+                "run": last_run,
+                "resources": _resources(run_id),
+                "next_actions": ["Poll the run again later.", "Increase timeout_seconds if this run is expected to be slow."],
+            }
+        if isinstance(exc.details, dict) and exc.details.get("terminal_status") == "failed":
+            run = exc.details["run"]
+            return {
+                "success": False,
+                "run_id": run_id,
+                "status": run.get("status", "failed"),
+                "run": run,
+                "resources": _resources(run_id),
+                "next_actions": ["Inspect the run trace.", "Review the error and retry with adjusted options."],
+            }
         return handle_api_error(exc)
 
 
