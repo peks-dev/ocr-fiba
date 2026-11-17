@@ -4,6 +4,14 @@ from typing import Any, Literal
 
 from pydantic import BaseModel, Field
 
+from ocr_engine_core.config.pipeline_config import (
+    DEFAULT_CROPPER_MODEL,
+    DEFAULT_CROPPER_PROVIDER,
+    DEFAULT_EXTRACTOR_MODEL,
+    DEFAULT_EXTRACTOR_PROVIDER,
+    default_extractor_reasoning,
+)
+
 
 ProviderName = Literal["interfaze", "gemini", "glm", "docstrange", "qubrid", "openrouter"]
 
@@ -16,11 +24,11 @@ class SectionOverrideRequest(BaseModel):
 
 
 class PipelineOptions(BaseModel):
-    cropper_provider: ProviderName = "openrouter"
-    cropper_model: str = "google/gemini-3-flash-preview"
-    extractor_provider: ProviderName = "openrouter"
-    extractor_model: str = "google/gemini-3-flash-preview"
-    extractor_reasoning: dict[str, Any] | None = None
+    cropper_provider: ProviderName = DEFAULT_CROPPER_PROVIDER
+    cropper_model: str = DEFAULT_CROPPER_MODEL
+    extractor_provider: ProviderName = DEFAULT_EXTRACTOR_PROVIDER
+    extractor_model: str = DEFAULT_EXTRACTOR_MODEL
+    extractor_reasoning: dict[str, Any] | None = Field(default_factory=default_extractor_reasoning)
     extractor_max_workers: int = 7
     section_overrides: dict[str, SectionOverrideRequest] = Field(default_factory=dict)
     validation_plugins: list[str] | Literal["all"] | None = None

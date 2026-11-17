@@ -19,7 +19,13 @@ import time
 from pathlib import Path
 
 from ocr_engine_core.utils.image_utils import load_dotenv
-from ocr_engine_core.config.pipeline_config import PipelineConfig, resolve_default_extractor
+from ocr_engine_core.config.pipeline_config import (
+    DEFAULT_CROPPER_MODEL,
+    DEFAULT_EXTRACTOR_MODEL,
+    PipelineConfig,
+    build_reasoning_config,
+    resolve_default_extractor,
+)
 from ocr_engine_core.pipeline import FibaOcrPipeline
 from ocr_engine_core.exceptions import OcrEngineError
 
@@ -100,19 +106,28 @@ def main():
     )
     parser.add_argument(
         "--cropper-model",
-        default="google/gemini-3-flash-preview",
-        help="Modelo del cropper (default: google/gemini-3-flash-preview)",
+        default=DEFAULT_CROPPER_MODEL,
+        help=f"Modelo del cropper (default: {DEFAULT_CROPPER_MODEL})",
     )
     parser.add_argument(
         "--extractor",
         choices=["interfaze", "gemini", "glm", "docstrange", "qubrid", "openrouter"],
         default=None,
-        help="Proveedor para extracción de datos (default: openrouter si no hay DOCSTRANGE_API_KEY)",
+        help="Proveedor para extracción de datos (default: openrouter o OCR_DEFAULT_EXTRACTOR_PROVIDER)",
     )
     parser.add_argument(
         "--extractor-model",
         default=None,
-        help="Modelo del extractor (default: google/gemini-3-flash-preview en openrouter)",
+        help=f"Modelo del extractor (default: {DEFAULT_EXTRACTOR_MODEL} o OCR_DEFAULT_EXTRACTOR_MODEL)",
+    )
+    parser.add_argument(
+        "--extractor-reasoning-effort",
+        default=None,
+        choices=["xhigh", "high", "medium", "low", "minimal", "none"],
+        help=(
+            "Reasoning effort for the extractor (OpenRouter only). "
+            f"Default: low (exclude=true) when {DEFAULT_EXTRACTOR_MODEL} is selected."
+        ),
     )
     args = parser.parse_args()
 
@@ -137,6 +152,11 @@ def main():
         cropper_model=args.cropper_model,
         extractor_provider=extractor_provider,
         extractor_model=extractor_model,
+        extractor_reasoning=build_reasoning_config(
+            args.extractor_reasoning_effort,
+            extractor_provider,
+            extractor_model,
+        ),
         validation_plugins="all",
         grid_removal=args.grid_removal or False,
         gamma=args.gamma if args.gamma is not None else 0.7,

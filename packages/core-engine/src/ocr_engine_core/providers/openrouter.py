@@ -16,7 +16,7 @@ from .http_base import HttpJsonProvider
 
 
 class OpenrouterProvider(HttpJsonProvider):
-    """Provider for OpenRouter-hosted models such as google/gemini-3-flash-preview."""
+    """Provider for OpenRouter-hosted models such as google/gemini-4-carbon."""
 
     name = "openrouter"
     ENDPOINT = "https://openrouter.ai/api/v1/chat/completions"
