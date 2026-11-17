@@ -1,9 +1,10 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import type { Session } from "@supabase/supabase-js";
 import { toast } from "sonner";
 
+import { KeyStatusChip, NewApiKeyBanner } from "@/components/api-key-widgets";
 import {
   createAccountApiKey,
   deleteAccountApiKey,
@@ -12,11 +13,10 @@ import {
   type AccountRecord,
   type ApiKeyRecord,
 } from "@/lib/api";
-import { createClient } from "@/lib/supabase/client";
+import { useSupabaseSession } from "@/lib/supabase/use-session";
 
 export function AccountKeysPanel() {
-  const supabase = useMemo(() => createClient(), []);
-  const [session, setSession] = useState<Session | null>(null);
+  const { session, isBooting } = useSupabaseSession();
   const [accounts, setAccounts] = useState<AccountRecord[]>([]);
   const [selectedAccountId, setSelectedAccountId] = useState<string>("");
   const [keys, setKeys] = useState<ApiKeyRecord[]>([]);
@@ -25,6 +25,7 @@ export function AccountKeysPanel() {
   const [isLoading, setIsLoading] = useState(true);
   const [isMutating, setIsMutating] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const didInitialLoadRef = useRef(false);
 
   const selectedAccount = accounts.find((account) => account.id === selectedAccountId) ?? null;
 
@@ -34,31 +35,28 @@ export function AccountKeysPanel() {
   }
 
   useEffect(() => {
+    if (isBooting) return;
+    if (!session) {
+      setIsLoading(false);
+      setError("No active Supabase session. Please log in again.");
+      return;
+    }
+    if (didInitialLoadRef.current) return;
+    didInitialLoadRef.current = true;
+
     let mounted = true;
-
     async function load() {
-      const { data } = await supabase.auth.getSession();
-      if (!mounted) return;
-
-      if (!data.session) {
-        setSession(null);
-        setIsLoading(false);
-        setError("No active Supabase session. Please log in again.");
-        toast.error("No active Supabase session. Please log in again.");
-        return;
-      }
-
-      setSession(data.session);
-
       try {
-        const response = await listAdminAccounts(data.session);
+        const response = await listAdminAccounts(session!);
         if (!mounted) return;
         const nextAccounts = response.accounts;
         setAccounts(nextAccounts);
         const initialId = nextAccounts[0]?.id ?? "";
         setSelectedAccountId(initialId);
         if (initialId) {
-          await loadKeys(data.session, initialId);
+          const keysResponse = await listAccountApiKeys(session!, initialId);
+          if (!mounted) return;
+          setKeys(keysResponse.keys);
         }
       } catch (err) {
         if (!mounted) return;
@@ -75,7 +73,7 @@ export function AccountKeysPanel() {
     return () => {
       mounted = false;
     };
-  }, [supabase]);
+  }, [isBooting, session]);
 
   async function onSelectAccount(accountId: string) {
     if (!session) return;
@@ -138,32 +136,11 @@ export function AccountKeysPanel() {
   return (
     <div className="space-y-6">
       {newKey ? (
-        <div className="rounded-panel border border-success/30 bg-success-soft p-5 text-ink shadow-sm sm:p-6">
-          <div className="flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
-            <div>
-              <p className="text-sm font-semibold uppercase tracking-[0.18em] text-success">Save this key now</p>
-              <p className="mt-2 text-sm text-muted">
-                It will not be shown again after you dismiss this message. Share it out of band with the account owner.
-              </p>
-              <div className="mt-4 flex flex-wrap gap-3">
-                <button
-                  className="rounded-full bg-primary px-4 py-2 text-sm font-semibold text-primary-contrast transition hover:bg-primary/85"
-                  type="button"
-                  onClick={async () => {
-                    await navigator.clipboard.writeText(newKey);
-                    toast.success("API key copied to clipboard.");
-                  }}
-                >
-                  Copy key
-                </button>
-              </div>
-            </div>
-            <button className="self-start text-sm font-semibold text-ink underline" onClick={() => setNewKey(null)} type="button">
-              Dismiss
-            </button>
-          </div>
-          <code className="mt-4 block overflow-x-auto rounded-card bg-surface p-4 text-sm text-ink">{newKey}</code>
-        </div>
+        <NewApiKeyBanner
+          apiKey={newKey}
+          helperText="It will not be shown again after you dismiss this message. Share it out of band with the account owner."
+          onDismiss={() => setNewKey(null)}
+        />
       ) : null}
 
       {error ? <div className="rounded-card bg-danger-soft p-4 text-sm text-danger">{error}</div> : null}
@@ -174,7 +151,7 @@ export function AccountKeysPanel() {
             <p className="text-xs font-semibold uppercase tracking-[0.18em] text-primary-deep sm:text-sm">Accounts</p>
             <h2 className="mt-2 text-2xl font-semibold text-ink">Issue keys for another account</h2>
             <p className="mt-2 max-w-2xl text-sm leading-6 text-muted">
-              Pick any account, including invited testers such as agentic-os, then issue or revoke an <code className="rounded bg-elevated px-1.5 py-0.5">ocr_live_</code> key. The raw key is shown once.
+              Pick any account, including invited testers, then issue or revoke an <code className="rounded bg-elevated px-1.5 py-0.5">ocr_live_</code> key. The raw key is shown once.
             </p>
           </div>
 
@@ -287,13 +264,5 @@ export function AccountKeysPanel() {
         )}
       </div>
     </div>
-  );
-}
-
-function KeyStatusChip({ status }: { status: string }) {
-  return (
-    <span className={`rounded-full px-2.5 py-1 text-xs font-semibold ${status === "active" ? "bg-success-soft text-success" : "bg-elevated text-muted"}`}>
-      {status}
-    </span>
   );
 }

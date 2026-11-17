@@ -7,6 +7,7 @@ import {
   removeProgressiveEvent,
   setFinalScore,
   setHeaderField,
+  setPlayerFlag,
   setPlayerFoulsText,
   setPlayerPoint,
   setPlayerTextField,
@@ -191,6 +192,28 @@ function TeamPlayersSection({ team, result, issues, onChange }: SectionProps & {
                   onChange={(value) => onChange(setPlayerFoulsText(result, team, index, value))}
                 />
               </div>
+              <div className="mt-3 flex flex-wrap gap-4 border-t border-border/60 pt-3 text-xs text-muted">
+                <label className="inline-flex items-center gap-2">
+                  <input
+                    type="checkbox"
+                    checked={Boolean(player.started)}
+                    onChange={(event) => onChange(setPlayerFlag(result, team, index, "started", event.target.checked))}
+                    className="size-4 accent-[var(--color-primary)]"
+                  />
+                  <span>Titular</span>
+                </label>
+                <label
+                  className={`inline-flex items-center gap-2 rounded px-1.5 py-0.5 ${sectionHasFieldIssue(issues, `${base}.entered`) ? "bg-warning-soft/50 text-ink" : ""}`}
+                >
+                  <input
+                    type="checkbox"
+                    checked={Boolean(player.entered)}
+                    onChange={(event) => onChange(setPlayerFlag(result, team, index, "entered", event.target.checked))}
+                    className="size-4 accent-[var(--color-primary)]"
+                  />
+                  <span>Entró a jugar</span>
+                </label>
+              </div>
             </div>
           );
         })}
@@ -224,12 +247,7 @@ function TeamFoulsSection({ team, result, issues, onChange }: SectionProps & { t
 
 function ProgressiveScoreSection({ team, result, issues, onChange }: SectionProps & { team: TeamKey }) {
   const events = result.progressive_score?.[team] || [];
-  const suspiciousIndexes = new Set<number>();
-  for (const issue of issues) {
-    const details = issue.warning?.details;
-    const indices = Array.isArray(details?.event_indices) ? details.event_indices : [];
-    for (const idx of indices) if (typeof idx === "number") suspiciousIndexes.add(idx);
-  }
+  const suspiciousIndexes = collectSuspiciousProgressiveIndices(issues);
 
   return (
     <div className="space-y-5">
@@ -328,6 +346,28 @@ type SectionProps = {
   issues: ReconcileIssue[];
   onChange: (next: OcrResult) => void;
 };
+
+function collectSuspiciousProgressiveIndices(issues: ReconcileIssue[]): Set<number> {
+  const suspiciousIndexes = new Set<number>();
+  for (const issue of issues) {
+    const details = issue.warning?.details;
+    if (!details) continue;
+    if (Array.isArray(details.event_indices)) {
+      for (const idx of details.event_indices) {
+        if (typeof idx === "number") suspiciousIndexes.add(idx);
+      }
+    }
+    for (const list of [details.invalid_jumps, details.events]) {
+      if (!Array.isArray(list)) continue;
+      for (const item of list) {
+        if (item && typeof item === "object" && "index" in item && typeof item.index === "number") {
+          suspiciousIndexes.add(item.index);
+        }
+      }
+    }
+  }
+  return suspiciousIndexes;
+}
 
 function matchWinner(result: OcrResult, teamAName: string, teamBName: string): string {
   const winner = typeof result.footer?.winner === "string" ? result.footer.winner.trim().toLowerCase() : "";

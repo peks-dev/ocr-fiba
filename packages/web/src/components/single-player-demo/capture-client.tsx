@@ -1,161 +1,54 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import type { Session } from "@supabase/supabase-js";
+import { useMemo, useRef, useState } from "react";
 import { toast } from "sonner";
 
-import { getRun, getRunResult, uploadRun, type RunRecord } from "@/lib/api";
-import { createClient } from "@/lib/supabase/client";
+import { CheckIcon, RunStatusBadge, UploadIcon, formatFileSize } from "@/components/ocr-capture-ui";
+import { useOcrRunCapture } from "@/lib/use-ocr-run-capture";
 
 import { createSavedGame, extractPlayers, formatFinalScore, formatGameTitle } from "./result-utils";
 import { readSavedGames, writeSavedGames } from "./storage";
 import type { OcrResult } from "./types";
 import { GameDetailCard, Panel } from "./ui";
 
-const POLL_INTERVAL_MS = 2200;
-const ACCEPTED_IMAGE_TYPES = ["image/jpeg", "image/png", "image/webp"];
-
 export function CaptureClient() {
-  const supabase = useMemo(() => createClient(), []);
   const fileInputRef = useRef<HTMLInputElement | null>(null);
-  const [session, setSession] = useState<Session | null>(null);
-  const [selectedFile, setSelectedFile] = useState<File | null>(null);
-  const [run, setRun] = useState<RunRecord | null>(null);
-  const [result, setResult] = useState<OcrResult | null>(null);
   const [selectedPlayerId, setSelectedPlayerId] = useState<string | null>(null);
-  const [isBooting, setIsBooting] = useState(true);
-  const [isUploading, setIsUploading] = useState(false);
-  const [isLoadingResult, setIsLoadingResult] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+
+  const {
+    isBooting,
+    selectedFile,
+    run,
+    result,
+    status,
+    isProcessing,
+    isUploading,
+    isLoadingResult,
+    error,
+    pollStopped,
+    onFileChange,
+    retryPolling,
+    startOcr,
+    loadResult,
+  } = useOcrRunCapture<OcrResult>({
+    onResultLoaded: ({ silent }) => {
+      setSelectedPlayerId(null);
+      if (!silent) {
+        toast.success("OCR result loaded. Pick yourself from the roster to see your game.");
+      }
+    },
+  });
 
   const players = useMemo(() => extractPlayers(result), [result]);
   const selectedPlayer = players.find((player) => player.id === selectedPlayerId) || players[0] || null;
-  const status = run?.status || "idle";
-  const isProcessing = status === "queued" || status === "pending" || status === "running";
-
   const pendingGame = useMemo(
     () => (result && run?.run_id && selectedPlayer ? createSavedGame(result, run.run_id, selectedPlayer) : null),
     [result, run?.run_id, selectedPlayer],
   );
 
-  const loadResult = useCallback(
-    async (
-      currentSession = session,
-      runId = run?.run_id,
-      options: { silent?: boolean } = {},
-    ) => {
-      if (!currentSession || !runId) return;
-
-      setIsLoadingResult(true);
-      setError(null);
-      try {
-        const nextResult = await getRunResult<OcrResult>(currentSession, runId);
-        setResult(nextResult);
-        setSelectedPlayerId(null);
-        if (!options.silent) {
-          toast.success("OCR result loaded. Pick yourself from the roster to see your game.");
-        }
-      } catch (err) {
-        const message = err instanceof Error ? err.message : "Could not load OCR result.";
-        setError(message);
-        if (!options.silent) toast.error(message);
-      } finally {
-        setIsLoadingResult(false);
-      }
-    },
-    [run?.run_id, session],
-  );
-
-  useEffect(() => {
-    let mounted = true;
-
-    async function boot() {
-      const { data } = await supabase.auth.getSession();
-      if (!mounted) return;
-      setSession(data.session);
-      setIsBooting(false);
-    }
-
-    boot();
-
-    return () => {
-      mounted = false;
-    };
-  }, [supabase]);
-
-  useEffect(() => {
-    if (!run?.run_id || !session || !isProcessing) return;
-    const currentSession = session;
-    const currentRunId = run.run_id;
-    let cancelled = false;
-
-    async function poll() {
-      try {
-        const nextRun = await getRun(currentSession, currentRunId);
-        if (cancelled) return;
-        setRun(nextRun);
-
-        if (nextRun.status === "completed") {
-          await loadResult(currentSession, nextRun.run_id, { silent: cancelled });
-        }
-
-        if (nextRun.status === "failed") {
-          toast.error(extractRunError(nextRun.error) || "OCR run failed.");
-        }
-      } catch (err) {
-        if (cancelled) return;
-        const message = err instanceof Error ? err.message : "Could not refresh run status.";
-        setError(message);
-      }
-    }
-
-    const timeout = window.setTimeout(poll, POLL_INTERVAL_MS);
-    return () => {
-      cancelled = true;
-      window.clearTimeout(timeout);
-    };
-  }, [isProcessing, loadResult, run, session]);
-
-  function onFileChange(file: File | null) {
-    if (!file) return;
-    if (!ACCEPTED_IMAGE_TYPES.includes(file.type)) {
-      toast.error("Please upload a JPG, PNG, or WEBP image.");
-      return;
-    }
-    setSelectedFile(file);
-    setError(null);
-  }
-
-  async function startOcr() {
-    if (!session) {
-      toast.error("No active session. Please log in again.");
-      return;
-    }
-    if (!selectedFile) {
-      toast.error("Choose a scoresheet image first.");
-      return;
-    }
-
-    setIsUploading(true);
-    setError(null);
-    setResult(null);
+  async function handleStartOcr() {
     setSelectedPlayerId(null);
-
-    try {
-      const response = await uploadRun(session, selectedFile);
-      setRun(response);
-      if (response.status === "completed") {
-        await loadResult(session, response.run_id);
-      } else {
-        toast.success("Scoresheet uploaded. OCR is running.");
-      }
-    } catch (err) {
-      const message = err instanceof Error ? err.message : "Upload failed.";
-      setError(message);
-      toast.error(message);
-    } finally {
-      setIsUploading(false);
-    }
+    await startOcr();
   }
 
   function saveSelectedGame() {
@@ -182,7 +75,7 @@ export function CaptureClient() {
             <p className="text-xs font-semibold uppercase tracking-[0.18em] text-primary-deep sm:text-sm">Capture</p>
             <h2 className="mt-2 text-xl font-semibold text-ink sm:text-2xl">Run OCR on a scoresheet</h2>
           </div>
-          <StatusBadge status={status} />
+          <RunStatusBadge status={status} idleLabel="Ready" />
         </div>
 
         <div className="mt-5 sm:mt-6">
@@ -204,7 +97,7 @@ export function CaptureClient() {
           onClick={() => fileInputRef.current?.click()}
         >
           <span className="grid size-12 place-items-center rounded-full bg-primary/15 text-primary-deep">
-            <UploadIcon />
+            <UploadIcon className="size-5" />
           </span>
           {selectedFile ? (
             <>
@@ -229,11 +122,21 @@ export function CaptureClient() {
         <button
           type="button"
           disabled={!selectedFile || isUploading || isProcessing}
-          onClick={startOcr}
+          onClick={handleStartOcr}
           className="mt-4 w-full rounded-field bg-primary px-5 py-3 text-sm font-semibold text-primary-contrast transition hover:bg-primary/85 disabled:opacity-60"
         >
           {isUploading ? "Uploading..." : isProcessing ? "Processing..." : "Start OCR analysis"}
         </button>
+
+        {pollStopped ? (
+          <button
+            type="button"
+            onClick={retryPolling}
+            className="mt-3 w-full rounded-field border border-warning/40 bg-warning-soft px-5 py-3 text-sm font-semibold text-warning transition hover:opacity-90"
+          >
+            Retry status check
+          </button>
+        ) : null}
 
         {run?.status === "completed" && !result ? (
           <button
@@ -341,49 +244,4 @@ function Stepper({ steps }: { steps: { label: string; state: StepState }[] }) {
       ))}
     </ol>
   );
-}
-
-function StatusBadge({ status }: { status: string }) {
-  const label = status === "idle" ? "Ready" : status;
-  const styles =
-    status === "completed"
-      ? "bg-success-soft text-success"
-      : status === "failed"
-        ? "bg-danger-soft text-danger"
-        : status === "queued" || status === "pending" || status === "running"
-          ? "bg-warning-soft text-warning"
-          : "bg-elevated text-muted";
-
-  return <span className={`rounded-full px-3 py-1 text-xs font-semibold capitalize ${styles}`}>{label}</span>;
-}
-
-function UploadIcon() {
-  return (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="size-5" aria-hidden="true">
-      <path d="M12 16V4" />
-      <path d="M7 9l5-5 5 5" />
-      <path d="M4 16v3a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-3" />
-    </svg>
-  );
-}
-
-function CheckIcon() {
-  return (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" className="size-3.5" aria-hidden="true">
-      <path d="M5 13l4 4 10-10" />
-    </svg>
-  );
-}
-
-function formatFileSize(bytes: number) {
-  if (bytes < 1024) return `${bytes} B`;
-  if (bytes < 1024 * 1024) return `${Math.round(bytes / 1024)} KB`;
-  return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
-}
-
-function extractRunError(error: unknown) {
-  if (!error) return null;
-  if (typeof error === "string") return error;
-  if (typeof error === "object" && "message" in error && typeof error.message === "string") return error.message;
-  return null;
 }

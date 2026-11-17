@@ -1,0 +1,24 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "noEmit": false,
+    "outDir": ".next/test-dist",
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "target": "ES2022",
+    "incremental": false,
+    "isolatedModules": false
+  },
+  "include": [
+    "tests/**/*.ts",
+    "src/lib/auth/origin.ts",
+    "src/components/referee-demo/league-validation.ts",
+    "src/components/referee-demo/plugins.ts",
+    "src/components/referee-demo/reconcile-utils.ts",
+    "src/components/referee-demo/sections.ts",
+    "src/components/referee-demo/types.ts",
+    "src/components/referee-demo/validation.ts",
+    "src/components/club-demo/name-match.ts",
+    "src/components/club-demo/types.ts"
+  ]
+}

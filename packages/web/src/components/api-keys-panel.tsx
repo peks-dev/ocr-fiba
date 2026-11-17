@@ -1,9 +1,10 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import type { Session } from "@supabase/supabase-js";
 import { toast } from "sonner";
 
+import { KeyStatusChip, NewApiKeyBanner } from "@/components/api-key-widgets";
 import {
   bootstrapApiKey,
   createApiKey,
@@ -11,17 +12,17 @@ import {
   deleteApiKey,
   type ApiKeyRecord,
 } from "@/lib/api";
-import { createClient } from "@/lib/supabase/client";
+import { useSupabaseSession } from "@/lib/supabase/use-session";
 
 export function ApiKeysPanel() {
-  const supabase = useMemo(() => createClient(), []);
-  const [session, setSession] = useState<Session | null>(null);
+  const { session, isBooting } = useSupabaseSession();
   const [keys, setKeys] = useState<ApiKeyRecord[]>([]);
   const [newKey, setNewKey] = useState<string | null>(null);
   const [keyName, setKeyName] = useState("default");
   const [isLoading, setIsLoading] = useState(true);
   const [isMutating, setIsMutating] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const didInitialLoadRef = useRef(false);
 
   async function refresh(currentSession: Session) {
     setError(null);
@@ -30,42 +31,35 @@ export function ApiKeysPanel() {
   }
 
   useEffect(() => {
+    if (isBooting) return;
+    if (!session) {
+      setIsLoading(false);
+      setError("No active Supabase session. Please log in again.");
+      return;
+    }
+    if (didInitialLoadRef.current) return;
+    didInitialLoadRef.current = true;
+
     let mounted = true;
-
-    async function loadSessionAndKeys() {
-      const { data } = await supabase.auth.getSession();
-      if (!mounted) return;
-
-      if (!data.session) {
-        setSession(null);
-        setIsLoading(false);
-        setError("No active Supabase session. Please log in again.");
-        toast.error("No active Supabase session. Please log in again.");
-        return;
-      }
-
-      setSession(data.session);
-
-      try {
-        const response = await listApiKeys(data.session);
+    listApiKeys(session)
+      .then((response) => {
         if (!mounted) return;
         setKeys(response.keys);
-      } catch (err) {
+      })
+      .catch((err) => {
         if (!mounted) return;
         const message = err instanceof Error ? err.message : "Failed to load API keys";
         setError(message);
         toast.error(message);
-      } finally {
+      })
+      .finally(() => {
         if (mounted) setIsLoading(false);
-      }
-    }
-
-    loadSessionAndKeys();
+      });
 
     return () => {
       mounted = false;
     };
-  }, [supabase]);
+  }, [isBooting, session]);
 
   async function mutate(action: () => Promise<{ key?: string } | unknown>) {
     if (!session) return;
@@ -104,30 +98,11 @@ export function ApiKeysPanel() {
   return (
     <div className="space-y-6">
       {newKey ? (
-        <div className="rounded-panel border border-success/30 bg-success-soft p-5 text-ink shadow-sm sm:p-6">
-          <div className="flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
-            <div>
-              <p className="text-sm font-semibold uppercase tracking-[0.18em] text-success">Save this key now</p>
-              <p className="mt-2 text-sm text-muted">It will not be shown again after you dismiss this message.</p>
-              <div className="mt-4 flex flex-wrap gap-3">
-                <button
-                  className="rounded-full bg-primary px-4 py-2 text-sm font-semibold text-primary-contrast transition hover:bg-primary/85"
-                  type="button"
-                  onClick={async () => {
-                    await navigator.clipboard.writeText(newKey);
-                    toast.success("API key copied to clipboard.");
-                  }}
-                >
-                  Copy key
-                </button>
-              </div>
-            </div>
-            <button className="self-start text-sm font-semibold text-ink underline" onClick={() => setNewKey(null)} type="button">
-              Dismiss
-            </button>
-          </div>
-          <code className="mt-4 block overflow-x-auto rounded-card bg-surface p-4 text-sm text-ink">{newKey}</code>
-        </div>
+        <NewApiKeyBanner
+          apiKey={newKey}
+          helperText="It will not be shown again after you dismiss this message."
+          onDismiss={() => setNewKey(null)}
+        />
       ) : null}
 
       {error ? <div className="rounded-card bg-danger-soft p-4 text-sm text-danger">{error}</div> : null}
@@ -151,7 +126,7 @@ export function ApiKeysPanel() {
             <button
               className="rounded-field bg-primary px-5 py-3 text-sm font-semibold text-primary-contrast transition hover:bg-primary/85 disabled:opacity-60"
               type="button"
-              disabled={isMutating}
+              disabled={isMutating || !session}
               onClick={() =>
                 mutate(() => (activeKeys.length === 0 ? bootstrapApiKey(session!) : createApiKey(session!, keyName || "default")))
               }
@@ -229,13 +204,5 @@ export function ApiKeysPanel() {
         )}
       </div>
     </div>
-  );
-}
-
-function KeyStatusChip({ status }: { status: string }) {
-  return (
-    <span className={`rounded-full px-2.5 py-1 text-xs font-semibold ${status === "active" ? "bg-success-soft text-success" : "bg-elevated text-muted"}`}>
-      {status}
-    </span>
   );
 }

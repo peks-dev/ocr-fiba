@@ -31,6 +31,36 @@ export const REFEREE_PLUGINS: RefereePlugin[] = [
     category: "Extracción",
   },
   {
+    id: "core_player_vs_progressive",
+    label: "Puntos vs progresivo",
+    description: "Cruza los puntos y desglose de tiros de cada jugador contra el tanteo progresivo.",
+    category: "Extracción",
+  },
+  {
+    id: "core_progressive_sequence",
+    label: "Secuencia progresiva",
+    description: "Revisa saltos del tanteo progresivo, dorsales faltantes y suma por cuarto.",
+    category: "Extracción",
+  },
+  {
+    id: "core_entry_and_fouls_consistency",
+    label: "Entradas y faltas",
+    description: "Valida marcas de entrada/titularidad y coherencia entre faltas personales y de equipo.",
+    category: "Extracción",
+  },
+  {
+    id: "core_illegible_marks",
+    label: "Marcas ilegibles",
+    description: "Reporta casillas marcadas como ilegibles durante la extracción.",
+    category: "Extracción",
+  },
+  {
+    id: "core_preprocess_fallback",
+    label: "Recorte de hoja",
+    description: "Avisa si el recorte automático usó la imagen original como respaldo.",
+    category: "Extracción",
+  },
+  {
     id: "referee_player_points_sum",
     label: "Puntos por jugador",
     description: "Compara suma individual de jugadores contra marcador.",

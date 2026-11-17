@@ -12,6 +12,7 @@ type AccountRole = "admin" | "tester";
 type AccountPayload = {
   email: string;
   role: AccountRole;
+  status?: string;
   assigned_demo: AssignedDemo | null;
   accepted_at: string | null;
 };
@@ -81,7 +82,7 @@ export function InviteSetupCard() {
 
         const { data: accountData, error: accountError } = await supabase
           .from("accounts")
-          .select("email,role,assigned_demo,accepted_at")
+          .select("email,role,status,assigned_demo,accepted_at")
           .eq("supabase_user_id", user.id)
           .single();
 
@@ -90,6 +91,9 @@ export function InviteSetupCard() {
         }
 
         const nextAccount = accountData as AccountPayload;
+        if (nextAccount.status && nextAccount.status !== "active") {
+          throw new Error("This account is inactive. Contact an administrator.");
+        }
         if (!hasAuthParams && nextAccount.accepted_at) {
           window.location.assign(destinationForAccount(nextAccount));
           return;

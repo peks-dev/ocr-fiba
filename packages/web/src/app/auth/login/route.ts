@@ -42,13 +42,18 @@ export async function POST(request: NextRequest) {
 
   const { data: account } = await supabase
     .from("accounts")
-    .select("role,assigned_demo")
+    .select("role,assigned_demo,status")
     .eq("supabase_user_id", user.id)
     .maybeSingle();
 
   if (!account) {
     await supabase.auth.signOut();
     return NextResponse.json({ error: "Your product account is not ready yet. Ask the admin to verify your invite." }, { status: 403 });
+  }
+
+  if (account.status !== "active") {
+    await supabase.auth.signOut();
+    return NextResponse.json({ error: "This account is inactive. Contact an administrator." }, { status: 403 });
   }
 
   return NextResponse.json({ destination: next || destinationForAccount(account) });

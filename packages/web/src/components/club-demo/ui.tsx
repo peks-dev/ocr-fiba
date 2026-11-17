@@ -1,5 +1,7 @@
 import Link from "next/link";
 
+import { RunStatusBadge } from "@/components/ocr-capture-ui";
+
 export function Panel({ children, className = "" }: { children: React.ReactNode; className?: string }) {
   return <section className={`rounded-panel border border-border bg-surface shadow-sm ${className}`}>{children}</section>;
 }
@@ -35,8 +37,5 @@ export function MiniStat({ label, value, hint }: { label: string; value: number 
 }
 
 export function StatusBadge({ status }: { status: string }) {
-  const isActive = status === "running" || status === "pending" || status === "queued";
-  const isDone = status === "completed";
-  const className = isDone ? "bg-success-soft text-success" : isActive ? "bg-warning-soft text-warning" : status === "failed" ? "bg-danger-soft text-danger" : "bg-elevated text-muted";
-  return <span className={`rounded-full px-3 py-1 text-xs font-semibold ${className}`}>{status}</span>;
+  return <RunStatusBadge status={status} idleLabel={status} capitalize={false} />;
 }
