@@ -252,6 +252,30 @@ def build_final_output(
         progressive_score_with_points, footer_normalized
     )
 
+    illegible_marks: list[dict[str, Any]] = []
+    team_a_normalized = _normalize_team(
+        team_a,
+        fouls_override=team_a_fouls,
+        team_key="team_a",
+        illegible_marks=illegible_marks,
+    )
+    team_b_normalized = _normalize_team(
+        team_b,
+        fouls_override=team_b_fouls,
+        team_key="team_b",
+        illegible_marks=illegible_marks,
+    )
+
+    meta: dict[str, Any] = {
+        "processing_time_ms": processing_time_ms,
+        "extractor_model": model,
+        "input_tokens": (token_usage or {}).get("prompt_tokens", 0),
+        "output_tokens": (token_usage or {}).get("completion_tokens", 0),
+        "total_tokens": (token_usage or {}).get("total_tokens", 0),
+    }
+    if illegible_marks:
+        meta["illegible_marks"] = illegible_marks
+
     return {
         "match_status": None,
         "header": {
@@ -263,17 +287,11 @@ def build_final_output(
             "first_judge": _normalize_judge_name(header.get("first_judge")),
             "second_judge": _normalize_judge_name(header.get("second_judge")),
         },
-        "team_a": _normalize_team(team_a, fouls_override=team_a_fouls),
-        "team_b": _normalize_team(team_b, fouls_override=team_b_fouls),
+        "team_a": team_a_normalized,
+        "team_b": team_b_normalized,
         "progressive_score": progressive_score_final,
         "footer": footer_normalized,
-        "meta": {
-            "processing_time_ms": processing_time_ms,
-            "extractor_model": model,
-            "input_tokens": (token_usage or {}).get("prompt_tokens", 0),
-            "output_tokens": (token_usage or {}).get("completion_tokens", 0),
-            "total_tokens": (token_usage or {}).get("total_tokens", 0),
-        },
+        "meta": meta,
         "validation_warnings": [],
     }
 
@@ -281,6 +299,9 @@ def build_final_output(
 def _normalize_team(
     team: dict[str, Any],
     fouls_override: dict[str, Any] | None = None,
+    *,
+    team_key: str = "team",
+    illegible_marks: list[dict[str, Any]] | None = None,
 ) -> dict[str, Any]:
     """Normalize a team result, applying fouls override if available."""
     return {
@@ -289,11 +310,20 @@ def _normalize_team(
             fouls_override or team
         ),
         "captain": _normalize_string(team.get("captain")),
-        "players": _normalize_players(team.get("players") or []),
+        "players": _normalize_players(
+            team.get("players") or [],
+            team_key=team_key,
+            illegible_marks=illegible_marks,
+        ),
     }
 
 
-def _normalize_players(players: Any) -> list[dict[str, Any]]:
+def _normalize_players(
+    players: Any,
+    *,
+    team_key: str = "team",
+    illegible_marks: list[dict[str, Any]] | None = None,
+) -> list[dict[str, Any]]:
     """Normalize player rows while deriving personal fouls from atomic cells."""
     if not isinstance(players, list):
         return []
@@ -304,12 +334,48 @@ def _normalize_players(players: Any) -> list[dict[str, Any]]:
             continue
         normalized = _normalize_strings_in_obj(player)
         if isinstance(normalized, dict):
+            player_idx = len(normalized_players)
             foul_cells = normalized.pop("foul_cells", None)
             if foul_cells is not None:
+                if illegible_marks is not None and isinstance(foul_cells, list):
+                    for cell_idx, cell in enumerate(foul_cells):
+                        kind = cell.get("kind") if isinstance(cell, dict) else cell
+                        if isinstance(kind, str) and kind.strip().lower() in {"illegible", "ilegible"}:
+                            illegible_marks.append({
+                                "team": team_key,
+                                "player_index": player_idx,
+                                "player_number": normalized.get("number"),
+                                "player_name": normalized.get("name"),
+                                "target": "foul_cell",
+                                "cell_index": cell_idx,
+                                "field": f"{team_key}.players[{player_idx}].fouls[{cell_idx}]",
+                            })
                 normalized["fouls"] = _derive_fouls_from_cells(foul_cells)
             else:
-                normalized["fouls"] = _normalize_personal_fouls(normalized.get("fouls"))
+                raw_fouls = normalized.get("fouls")
+                if illegible_marks is not None and isinstance(raw_fouls, list):
+                    for cell_idx, item in enumerate(raw_fouls):
+                        if isinstance(item, str) and item.strip().lower() in {"illegible", "ilegible"}:
+                            illegible_marks.append({
+                                "team": team_key,
+                                "player_index": player_idx,
+                                "player_number": normalized.get("number"),
+                                "player_name": normalized.get("name"),
+                                "target": "foul_cell",
+                                "cell_index": cell_idx,
+                                "field": f"{team_key}.players[{player_idx}].fouls[{cell_idx}]",
+                            })
+                normalized["fouls"] = _normalize_personal_fouls(raw_fouls)
             entry_mark = normalized.pop("entry_mark", None)
+            if illegible_marks is not None and _is_illegible_entry_mark(entry_mark):
+                illegible_marks.append({
+                    "team": team_key,
+                    "player_index": player_idx,
+                    "player_number": normalized.get("number"),
+                    "player_name": normalized.get("name"),
+                    "target": "entry_mark",
+                    "field": f"{team_key}.players[{player_idx}].entered",
+                })
             entered, started = _derive_entry_flags(
                 entry_mark,
                 fallback_entered=normalized.get("entered"),
@@ -319,6 +385,18 @@ def _normalize_players(players: Any) -> list[dict[str, Any]]:
             normalized["started"] = started
             normalized_players.append(normalized)
     return normalized_players
+
+
+def _is_illegible_entry_mark(entry_mark: Any) -> bool:
+    """Return True when an entry_mark explicitly indicates an illegible mark."""
+    state: str | None = None
+    if isinstance(entry_mark, dict):
+        raw_state = entry_mark.get("state")
+        if raw_state is not None:
+            state = str(raw_state).strip().lower()
+    elif entry_mark is not None:
+        state = str(entry_mark).strip().lower()
+    return state in {"illegible", "ilegible"}
 
 
 def _derive_entry_flags(

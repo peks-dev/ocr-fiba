@@ -20,7 +20,7 @@ RESULTS_DIR = DATASET_DIR / "results"
 
 ALL_SHEETS = [
     "sheet-001", "sheet-002", "sheet-003", "sheet-004", "sheet-005",
-    "sheet-007", "sheet-008", "sheet-009", "sheet-010",
+    "sheet-006", "sheet-007", "sheet-008", "sheet-009", "sheet-010",
 ]
 
 

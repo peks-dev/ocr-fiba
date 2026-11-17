@@ -34,6 +34,7 @@ from . import plugins as _plugins  # noqa: F401
 
 from .base import (
     ValidationPlugin,
+    compute_confidence,
     create_warning,
     determine_match_status,
     CATEGORY_CORE,
@@ -54,6 +55,7 @@ from .engine import ValidationEngine
 __all__ = [
     "ValidationEngine",
     "ValidationPlugin",
+    "compute_confidence",
     "create_warning",
     "determine_match_status",
     "register",
