@@ -80,8 +80,8 @@
     "semantic_hash": ""
   },
   "packages/api/src/ocr_engine_api/pipeline_options.py": {
-    "mtime": 1794814254.2723246,
-    "ast_hash": "6a1e2297f176fdc18eb72e76b311e313",
+    "mtime": 1794943529.2517862,
+    "ast_hash": "fd63451039b90ec13255b661b60868ea",
     "semantic_hash": ""
   },
   "packages/api/src/ocr_engine_api/responses.py": {
@@ -105,8 +105,8 @@
     "semantic_hash": ""
   },
   "packages/api/src/ocr_engine_api/schemas.py": {
-    "mtime": 1794900943.962889,
-    "ast_hash": "f9f7c54ceee06d7b26814defab0cbd80",
+    "mtime": 1794943501.99875,
+    "ast_hash": "ac217a8355394ecc7ee847916d81c2af",
     "semantic_hash": ""
   },
   "packages/api/src/ocr_engine_api/services/__init__.py": {
@@ -125,8 +125,8 @@
     "semantic_hash": ""
   },
   "packages/api/src/ocr_engine_api/settings.py": {
-    "mtime": 1794900894.4355273,
-    "ast_hash": "c368f7c68dc861afaa5c436c6a80e4c1",
+    "mtime": 1794943527.9194987,
+    "ast_hash": "21b994a800717f6dac8a5dc6dd2f3cae",
     "semantic_hash": ""
   },
   "packages/api/src/ocr_engine_api/supabase_client.py": {
@@ -150,13 +150,13 @@
     "semantic_hash": ""
   },
   "packages/cli/src/ocr_engine_cli/run_dataset.py": {
-    "mtime": 1794898205.9841745,
-    "ast_hash": "8f93edfddf6d362744ac0c2e20514c74",
+    "mtime": 1794943556.8165617,
+    "ast_hash": "535ccf83a20c6a19d4d9691e604a52d7",
     "semantic_hash": ""
   },
   "packages/cli/src/ocr_engine_cli/run_pipeline.py": {
-    "mtime": 1794898202.7141504,
-    "ast_hash": "1442052640be2c0f0f97d32525e58e29",
+    "mtime": 1794943595.33511,
+    "ast_hash": "924c4a80bd9b5625ae5499b33abd2db9",
     "semantic_hash": ""
   },
   "packages/core-engine/src/ocr_engine_core/__init__.py": {
@@ -175,8 +175,8 @@
     "semantic_hash": ""
   },
   "packages/core-engine/src/ocr_engine_core/config/pipeline_config.py": {
-    "mtime": 1794898198.5881197,
-    "ast_hash": "5f5eea2e9b1b559820d89af54fe71cd0",
+    "mtime": 1794943497.5907419,
+    "ast_hash": "2594156a30e68f279eeadf217449270e",
     "semantic_hash": ""
   },
   "packages/core-engine/src/ocr_engine_core/cropper.py": {
@@ -265,8 +265,8 @@
     "semantic_hash": ""
   },
   "packages/core-engine/src/ocr_engine_core/providers/openrouter.py": {
-    "mtime": 1794898092.9041991,
-    "ast_hash": "ff738a9c048175868d0cb15f4e554039",
+    "mtime": 1794943499.1050892,
+    "ast_hash": "c5643bae3ae275fecee1939545086784",
     "semantic_hash": ""
   },
   "packages/core-engine/src/ocr_engine_core/providers/qubrid.py": {
@@ -750,8 +750,8 @@
     "semantic_hash": ""
   },
   "README.md": {
-    "mtime": 1794908533.9093435,
-    "ast_hash": "40b531117f3e7de074b0636d2282ba7d",
+    "mtime": 1794943561.9906104,
+    "ast_hash": "6787374b2f599f8b1fcea2145c7540ef",
     "semantic_hash": ""
   },
   "evaluation/README.md": {
@@ -780,8 +780,8 @@
     "semantic_hash": ""
   },
   "packages/core-engine/AGENTS.md": {
-    "mtime": 1794908560.5926893,
-    "ast_hash": "27f38506ad9172686f8c5427bbe6704e",
+    "mtime": 1794943563.6749494,
+    "ast_hash": "228cbcbb805352ec1ceffc1336889f74",
     "semantic_hash": ""
   },
   "packages/core-engine/skills/ocr-run-lifecycle/SKILL.md": {
@@ -1020,8 +1020,8 @@
     "semantic_hash": ""
   },
   "scripts/deploy_cloudrun.sh": {
-    "mtime": 1794908527.5095005,
-    "ast_hash": "c28b2a87a36647e22d6a6d51c9cdb813",
+    "mtime": 1794943580.7443202,
+    "ast_hash": "f76b34ca0e60d4276a0e26c71da79354",
     "semantic_hash": ""
   },
   "scripts/graphify-check": {
@@ -1050,8 +1050,8 @@
     "semantic_hash": ""
   },
   "tests/test_hardening.py": {
-    "mtime": 1794900952.5577807,
-    "ast_hash": "9e892baf787c941fda8cbe9c8b8cb76d",
+    "mtime": 1794943681.2179515,
+    "ast_hash": "6ecb87c3c9eb899bf74d50793d01c5e7",
     "semantic_hash": ""
   },
   "tests/test_phase1_robustness.py": {
@@ -1135,8 +1135,8 @@
     "semantic_hash": ""
   },
   "tests/test_phase2_quality.py": {
-    "mtime": 1794898269.9176006,
-    "ast_hash": "2ecec4e41be2c7152021bfba811a0c8b",
+    "mtime": 1794943720.5819294,
+    "ast_hash": "d9af6d507a68a8997718bc1fe1ef8b08",
     "semantic_hash": ""
   },
   "tests/test_phase3_api_mcp_hardening.py": {

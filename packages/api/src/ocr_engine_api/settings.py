@@ -4,6 +4,8 @@ import os
 from dataclasses import dataclass
 from pathlib import Path
 
+from ocr_engine_core.config.pipeline_config import parse_reasoning_config
+
 
 @dataclass(frozen=True)
 class ApiSettings:
@@ -22,6 +24,7 @@ class ApiSettings:
     rate_limit_state_file: Path | None = None
     default_extractor_provider: str | None = None
     default_extractor_model: str | None = None
+    default_extractor_reasoning: str | None = None
     stale_run_seconds: int = 900
 
     @property
@@ -67,6 +70,7 @@ def get_api_settings() -> ApiSettings:
         rate_limit_state_file=Path(os.environ["OCR_RATE_LIMIT_STATE_FILE"]) if os.getenv("OCR_RATE_LIMIT_STATE_FILE") else None,
         default_extractor_provider=os.getenv("OCR_DEFAULT_EXTRACTOR_PROVIDER") or None,
         default_extractor_model=os.getenv("OCR_DEFAULT_EXTRACTOR_MODEL") or None,
+        default_extractor_reasoning=os.getenv("OCR_DEFAULT_EXTRACTOR_REASONING") or None,
         stale_run_seconds=int(os.getenv("OCR_STALE_RUN_SECONDS", "900")),
     )
     validate_api_settings(settings)
@@ -82,6 +86,11 @@ def validate_api_settings(settings: ApiSettings) -> None:
         raise RuntimeError("OCR_RATE_LIMIT_PER_MINUTE / OCR_RATE_LIMIT_PER_DAY must be >= 0")
     if settings.stale_run_seconds < 0:
         raise RuntimeError("OCR_STALE_RUN_SECONDS must be >= 0")
+    if settings.default_extractor_reasoning is not None:
+        try:
+            parse_reasoning_config(settings.default_extractor_reasoning)
+        except ValueError as exc:
+            raise RuntimeError(str(exc)) from exc
 
 
 def resolve_runs_dir(requested_runs_dir: str | Path | None = None) -> Path:

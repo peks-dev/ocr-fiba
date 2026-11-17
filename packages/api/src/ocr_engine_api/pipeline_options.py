@@ -7,27 +7,54 @@ from pydantic import ValidationError
 
 from ocr_engine_api.errors import error_response
 from ocr_engine_api.schemas import PipelineOptions
-from ocr_engine_core.config.pipeline_config import PipelineConfig, SectionOverride
+from ocr_engine_core.config.pipeline_config import (
+    PipelineConfig,
+    SectionOverride,
+    resolve_default_extractor_reasoning,
+)
 
 
 ALLOWED_UPLOAD_SUFFIXES = {".jpg", ".jpeg", ".png", ".webp"}
 
 
 def apply_server_defaults(options: PipelineOptions) -> PipelineOptions:
-    """Fill extractor provider/model from server env when the client did not set them.
+    """Fill extractor provider/model/reasoning from server env when the client did not set them.
 
     Lets a deployment (e.g. without DOCSTRANGE_API_KEY) pick a working default extractor
-    via OCR_DEFAULT_EXTRACTOR_PROVIDER / OCR_DEFAULT_EXTRACTOR_MODEL.
+    via OCR_DEFAULT_EXTRACTOR_PROVIDER / OCR_DEFAULT_EXTRACTOR_MODEL /
+    OCR_DEFAULT_EXTRACTOR_REASONING.
     """
     from ocr_engine_api.settings import get_api_settings
 
     settings = get_api_settings()
-    updates: dict[str, str] = {}
+    updates: dict[str, object] = {}
     provider_set = "extractor_provider" in options.model_fields_set
+    model_set = "extractor_model" in options.model_fields_set
+    reasoning_set = "extractor_reasoning" in options.model_fields_set
+
     if settings.default_extractor_provider and not provider_set:
         updates["extractor_provider"] = settings.default_extractor_provider
-    if settings.default_extractor_model and not provider_set and "extractor_model" not in options.model_fields_set:
+    if settings.default_extractor_model and not provider_set and not model_set:
         updates["extractor_model"] = settings.default_extractor_model
+
+    if not reasoning_set:
+        effective_provider = str(updates.get("extractor_provider", options.extractor_provider))
+        effective_model = str(updates.get("extractor_model", options.extractor_model))
+        use_env = not provider_set and not model_set
+        if use_env and settings.default_extractor_reasoning is not None:
+            updates["extractor_reasoning"] = resolve_default_extractor_reasoning(
+                effective_provider,
+                effective_model,
+                from_env=True,
+                env_value=settings.default_extractor_reasoning,
+            )
+        else:
+            updates["extractor_reasoning"] = resolve_default_extractor_reasoning(
+                effective_provider,
+                effective_model,
+                from_env=False,
+            )
+
     if not updates:
         return options
     return PipelineOptions.model_validate({**options.model_dump(exclude_unset=True), **updates})

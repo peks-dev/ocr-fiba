@@ -145,7 +145,7 @@ The core engine runs 13 validation plugins across three categories and emits `va
 - **FIBA rules (2):** `fiba_player_fouls`, `fiba_team_fouls`.
 - **Referee checks (2):** `referee_player_points_sum`, `referee_winner_consistency`.
 
-Default extractor settings fall back to `openrouter` (`google/gemini-3-flash-preview`), configurable via `OCR_DEFAULT_EXTRACTOR_PROVIDER` and `OCR_DEFAULT_EXTRACTOR_MODEL`.
+Default extractor settings fall back to `openrouter` (`google/gemini-4-carbon` with `{"effort": "low", "exclude": true}`), configurable via `OCR_DEFAULT_EXTRACTOR_PROVIDER`, `OCR_DEFAULT_EXTRACTOR_MODEL`, and `OCR_DEFAULT_EXTRACTOR_REASONING`.
 
 ## Production deployment overview
 

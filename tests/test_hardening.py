@@ -496,12 +496,14 @@ class ServerDefaultsTest(unittest.TestCase):
             config = build_config(parse_options_json(None))
             self.assertEqual(config.extractor_provider, "gemini")
             self.assertEqual(config.extractor_model, "gemini-2.5-flash")
+            self.assertIsNone(config.extractor_reasoning)
 
             explicit = build_config(
                 parse_options_json('{"extractor_provider": "docstrange", "extractor_model": "nanonets-ocr-3"}')
             )
             self.assertEqual(explicit.extractor_provider, "docstrange")
             self.assertEqual(explicit.extractor_model, "nanonets-ocr-3")
+            self.assertIsNone(explicit.extractor_reasoning)
 
             other_option = build_config(parse_options_json('{"gamma": 0.5}'))
             self.assertEqual(other_option.extractor_provider, "gemini")
@@ -510,8 +512,34 @@ class ServerDefaultsTest(unittest.TestCase):
     def test_without_env_keeps_schema_defaults(self) -> None:
         with patch.dict("os.environ", {}, clear=True):
             config = build_config(parse_options_json(None))
+            other_openrouter = build_config(
+                parse_options_json('{"extractor_model": "google/gemini-3-flash-preview"}')
+            )
+            custom_reasoning = build_config(
+                parse_options_json('{"extractor_reasoning": {"effort": "medium", "exclude": true}}')
+            )
+        self.assertEqual(config.cropper_model, "google/gemini-3-flash-preview")
         self.assertEqual(config.extractor_provider, "openrouter")
-        self.assertEqual(config.extractor_model, "google/gemini-3-flash-preview")
+        self.assertEqual(config.extractor_model, "google/gemini-4-carbon")
+        self.assertEqual(config.extractor_reasoning, {"effort": "low", "exclude": True})
+        self.assertEqual(other_openrouter.extractor_provider, "openrouter")
+        self.assertEqual(other_openrouter.extractor_model, "google/gemini-3-flash-preview")
+        self.assertIsNone(other_openrouter.extractor_reasoning)
+        self.assertEqual(custom_reasoning.extractor_model, "google/gemini-4-carbon")
+        self.assertEqual(custom_reasoning.extractor_reasoning, {"effort": "medium", "exclude": True})
+
+    def test_env_default_reasoning_and_validation(self) -> None:
+        with patch.dict("os.environ", {"OCR_DEFAULT_EXTRACTOR_REASONING": "medium"}, clear=True):
+            config = build_config(parse_options_json(None))
+            self.assertEqual(config.extractor_model, "google/gemini-4-carbon")
+            self.assertEqual(config.extractor_reasoning, {"effort": "medium", "exclude": True})
+
+            explicit_null = build_config(parse_options_json('{"extractor_reasoning": null}'))
+            self.assertIsNone(explicit_null.extractor_reasoning)
+
+        with patch.dict("os.environ", {"OCR_DEFAULT_EXTRACTOR_REASONING": "{bad"}, clear=True):
+            with self.assertRaises(RuntimeError):
+                get_api_settings()
 
 
 class McpPathToolTest(unittest.TestCase):
