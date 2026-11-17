@@ -1,137 +1,62 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { useRouter } from "next/navigation";
-import type { Session } from "@supabase/supabase-js";
 import { toast } from "sonner";
 
-import { getRun, getRunResult, uploadRun, type RunRecord } from "@/lib/api";
-import { createClient } from "@/lib/supabase/client";
+import { RunStatusBadge, UploadIcon, formatFileSize } from "@/components/ocr-capture-ui";
+import { useOcrRunCapture } from "@/lib/use-ocr-run-capture";
 
 import { writeDraft } from "./draft";
 import { DEFAULT_REFEREE_PLUGIN_IDS, REFEREE_PLUGINS } from "./plugins";
 import type { OcrResult } from "./types";
 import { Panel } from "./ui";
 
-const POLL_INTERVAL_MS = 2200;
-const ACCEPTED_IMAGE_TYPES = ["image/jpeg", "image/png", "image/webp"];
 const DEFAULT_BASE_PATH = "/test/referee";
 
 export function CaptureClient({ basePath = DEFAULT_BASE_PATH }: { basePath?: string }) {
   const router = useRouter();
-  const supabase = useMemo(() => createClient(), []);
   const fileInputRef = useRef<HTMLInputElement | null>(null);
-  const [session, setSession] = useState<Session | null>(null);
-  const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [selectedPlugins, setSelectedPlugins] = useState<string[]>(DEFAULT_REFEREE_PLUGIN_IDS);
-  const [run, setRun] = useState<RunRecord | null>(null);
-  const [isBooting, setIsBooting] = useState(true);
-  const [isUploading, setIsUploading] = useState(false);
-  const [isLoadingResult, setIsLoadingResult] = useState(false);
-  const [error, setError] = useState<string | null>(null);
 
-  const status = run?.status || "idle";
-  const isProcessing = status === "queued" || status === "pending" || status === "running";
-
-  const loadResult = useCallback(
-    async (currentSession = session, runId = run?.run_id) => {
-      if (!currentSession || !runId) return;
-      setIsLoadingResult(true);
-      setError(null);
-      try {
-        const nextResult = await getRunResult<OcrResult>(currentSession, runId);
-        writeDraft(runId, nextResult, selectedPlugins);
-        toast.success("Acta extraída. Vamos a corregirla.");
-        router.push(`${basePath}/reconcile`);
-      } catch (err) {
-        const message = err instanceof Error ? err.message : "No se pudo cargar el resultado del OCR.";
-        setError(message);
-        toast.error(message);
-      } finally {
-        setIsLoadingResult(false);
-      }
+  const {
+    isBooting,
+    selectedFile,
+    run,
+    status,
+    isProcessing,
+    isUploading,
+    isLoadingResult,
+    error,
+    pollStopped,
+    onFileChange,
+    retryPolling,
+    startOcr,
+    loadResult,
+  } = useOcrRunCapture<OcrResult>({
+    messages: {
+      invalidFileType: "Sube una imagen JPG, PNG o WEBP.",
+      noSession: "No hay sesión activa. Inicia sesión de nuevo.",
+      noFileSelected: "Elige primero una imagen del acta.",
+      uploadStarted: "Acta subida. Estoy leyendo la hoja.",
+      uploadFailed: "La subida falló.",
+      runFailed: "El OCR falló.",
+      pollFailed: "No se pudo refrescar el estado del run.",
+      resultFailed: "No se pudo cargar el resultado del OCR.",
     },
-    [basePath, router, run?.run_id, selectedPlugins, session],
-  );
+    onResultLoaded: ({ runId, result }) => {
+      writeDraft(runId, result, selectedPlugins);
+      toast.success("Acta extraída. Vamos a corregirla.");
+      router.push(`${basePath}/reconcile`);
+    },
+  });
 
-  useEffect(() => {
-    let mounted = true;
-    async function boot() {
-      const { data } = await supabase.auth.getSession();
-      if (!mounted) return;
-      setSession(data.session);
-      setIsBooting(false);
-    }
-    boot();
-    return () => {
-      mounted = false;
-    };
-  }, [supabase]);
-
-  useEffect(() => {
-    if (!run?.run_id || !session || !isProcessing) return;
-    const currentSession = session;
-    const currentRunId = run.run_id;
-    let cancelled = false;
-
-    async function poll() {
-      try {
-        const nextRun = await getRun(currentSession, currentRunId);
-        if (cancelled) return;
-        setRun(nextRun);
-        if (nextRun.status === "completed") await loadResult(currentSession, nextRun.run_id);
-        if (nextRun.status === "failed") toast.error(extractRunError(nextRun.error) || "El OCR falló.");
-      } catch (err) {
-        if (cancelled) return;
-        setError(err instanceof Error ? err.message : "No se pudo refrescar el estado del run.");
-      }
-    }
-
-    const timeout = window.setTimeout(poll, POLL_INTERVAL_MS);
-    return () => {
-      cancelled = true;
-      window.clearTimeout(timeout);
-    };
-  }, [isProcessing, loadResult, run, session]);
-
-  function onFileChange(file: File | null) {
-    if (!file) return;
-    if (!ACCEPTED_IMAGE_TYPES.includes(file.type)) {
-      toast.error("Sube una imagen JPG, PNG o WEBP.");
-      return;
-    }
-    setSelectedFile(file);
-    setRun(null);
-    setError(null);
-  }
-
-  async function startOcr() {
-    if (!session) {
-      toast.error("No hay sesión activa. Inicia sesión de nuevo.");
-      return;
-    }
-    if (!selectedFile) {
-      toast.error("Elige primero una imagen del acta.");
-      return;
-    }
+  async function handleStartOcr() {
     if (selectedPlugins.length === 0) {
       toast.error("Activa al menos un plugin de revisión.");
       return;
     }
-    setIsUploading(true);
-    setError(null);
-    try {
-      const response = await uploadRun(session, selectedFile, { validationPlugins: selectedPlugins });
-      setRun(response);
-      if (response.status === "completed") await loadResult(session, response.run_id);
-      else toast.success("Acta subida. Estoy leyendo la hoja.");
-    } catch (err) {
-      const message = err instanceof Error ? err.message : "La subida falló.";
-      setError(message);
-      toast.error(message);
-    } finally {
-      setIsUploading(false);
-    }
+    await startOcr({ validationPlugins: selectedPlugins });
   }
 
   function togglePlugin(pluginId: string) {
@@ -153,7 +78,7 @@ export function CaptureClient({ basePath = DEFAULT_BASE_PATH }: { basePath?: str
               Sube la hoja FIBA completa. Cuando el motor termine, te llevo directo a corregir las secciones que necesiten revisión.
             </p>
           </div>
-          <StatusBadge status={status} />
+          <RunStatusBadge status={status} idleLabel="Listo" />
         </div>
 
         <button
@@ -210,8 +135,11 @@ export function CaptureClient({ basePath = DEFAULT_BASE_PATH }: { basePath?: str
                     disabled={isUploading || isProcessing}
                     className="mt-1 size-4 accent-[var(--color-primary)]"
                   />
-                  <span className="min-w-0">
-                    <span className="block text-sm font-semibold text-ink">{plugin.label}</span>
+                  <span className="min-w-0 flex-1">
+                    <span className="flex items-center justify-between gap-2">
+                      <span className="block text-sm font-semibold text-ink">{plugin.label}</span>
+                      <span className="rounded-full bg-surface px-2 py-0.5 text-[0.65rem] font-semibold text-muted">{plugin.category}</span>
+                    </span>
                     <span className="mt-0.5 block text-xs leading-5 text-muted">{plugin.description}</span>
                   </span>
                 </label>
@@ -223,7 +151,7 @@ export function CaptureClient({ basePath = DEFAULT_BASE_PATH }: { basePath?: str
         <button
           type="button"
           disabled={!selectedFile || selectedPlugins.length === 0 || isUploading || isProcessing || isLoadingResult}
-          onClick={startOcr}
+          onClick={handleStartOcr}
           className="mt-4 w-full rounded-field bg-primary px-5 py-4 text-base font-semibold text-primary-contrast transition hover:bg-primary/85 disabled:opacity-60"
         >
           {buttonLabel({ isUploading, isProcessing, isLoadingResult })}
@@ -233,6 +161,16 @@ export function CaptureClient({ basePath = DEFAULT_BASE_PATH }: { basePath?: str
           <div className="mt-4 rounded-card bg-warning-soft p-4 text-sm font-semibold text-warning">
             {isLoadingResult ? "Preparando el asistente de corrección..." : "Leyendo secciones y validando inconsistencias..."}
           </div>
+        ) : null}
+
+        {pollStopped ? (
+          <button
+            type="button"
+            onClick={retryPolling}
+            className="mt-3 w-full rounded-field border border-warning/40 bg-warning-soft px-5 py-3 text-sm font-semibold text-warning transition hover:opacity-90"
+          >
+            Reintentar comprobación de estado
+          </button>
         ) : null}
 
         {run?.status === "completed" ? (
@@ -253,45 +191,9 @@ export function CaptureClient({ basePath = DEFAULT_BASE_PATH }: { basePath?: str
   );
 }
 
-function StatusBadge({ status }: { status: string }) {
-  const label = status === "idle" ? "Listo" : status;
-  const styles =
-    status === "completed"
-      ? "bg-success-soft text-success"
-      : status === "failed"
-        ? "bg-danger-soft text-danger"
-        : status === "queued" || status === "pending" || status === "running"
-          ? "bg-warning-soft text-warning"
-          : "bg-elevated text-muted";
-  return <span className={`rounded-full px-3 py-1 text-xs font-semibold capitalize ${styles}`}>{label}</span>;
-}
-
 function buttonLabel({ isUploading, isProcessing, isLoadingResult }: { isUploading: boolean; isProcessing: boolean; isLoadingResult: boolean }) {
   if (isUploading) return "Subiendo acta...";
   if (isLoadingResult) return "Abriendo corrección...";
   if (isProcessing) return "Procesando OCR...";
   return "Leer acta";
-}
-
-function UploadIcon() {
-  return (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="size-6" aria-hidden="true">
-      <path d="M12 16V4" />
-      <path d="M7 9l5-5 5 5" />
-      <path d="M4 16v3a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-3" />
-    </svg>
-  );
-}
-
-function formatFileSize(bytes: number) {
-  if (bytes < 1024) return `${bytes} B`;
-  if (bytes < 1024 * 1024) return `${Math.round(bytes / 1024)} KB`;
-  return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
-}
-
-function extractRunError(error: unknown): string | null {
-  if (!error) return null;
-  if (typeof error === "string") return error;
-  if (typeof error === "object" && "message" in error && typeof error.message === "string") return error.message;
-  return null;
 }

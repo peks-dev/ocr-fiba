@@ -195,6 +195,7 @@ export function computeReconciliation(result: OcrResult): ReconcileSummary {
       field: warning.field,
       title: engineTitle(warning.type),
       message: warning.message || "Observación del motor de validación.",
+      warning,
     });
   }
 
@@ -214,19 +215,26 @@ function quarterLabel(q: QuarterKey): string {
   return { first: "1", second: "2", third: "3", fourth: "4", extra: "EX" }[q];
 }
 
+const ENGINE_WARNING_TITLES: Record<string, string> = {
+  ghost_player: "Jugador fantasma detectado",
+  duplicate_jersey_number: "Dorsal duplicado",
+  progressive_final_mismatch: "Marcador progresivo ≠ final",
+  player_progressive_mismatch: "Puntos de jugador ≠ progresivo",
+  player_shot_breakdown_mismatch: "Desglose de tiros ≠ progresivo",
+  progressive_sequence_jump: "Salto inválido en progresivo",
+  progressive_null_player: "Evento progresivo sin dorsal",
+  progressive_quarter_mismatch: "Progresivo ≠ puntos del cuarto",
+  invalid_entry_state: "Estado de entrada inconsistente",
+  unentered_player_activity: "Actividad sin marca de entrada",
+  team_fouls_mismatch: "Faltas de equipo ≠ individuales",
+  team_fouls_exceeded: "Faltas de equipo excedidas",
+  illegible_mark: "Marca ilegible detectada",
+  preprocess_fallback: "Recorte automático con respaldo",
+  plugin_error: "Error en plugin de validación",
+};
+
 function engineTitle(type?: string): string {
-  switch (type) {
-    case "ghost_player":
-      return "Jugador fantasma detectado";
-    case "duplicate_jersey_number":
-      return "Dorsal duplicado";
-    case "progressive_final_mismatch":
-      return "Marcador progresivo ≠ final";
-    case "team_fouls_exceeded":
-      return "Faltas de equipo excedidas";
-    default:
-      return "Observación del motor";
-  }
+  return (type && ENGINE_WARNING_TITLES[type]) || "Observación del motor";
 }
 
 function severityRank(severity: IssueSeverity): number {

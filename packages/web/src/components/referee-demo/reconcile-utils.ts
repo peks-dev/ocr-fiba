@@ -76,9 +76,29 @@ export function setPlayerTextField(result: OcrResult, team: TeamKey, index: numb
 }
 
 export function setPlayerPoint(result: OcrResult, team: TeamKey, index: number, field: keyof PlayerPoints, value: number | null): OcrResult {
+  return updatePlayer(result, team, index, (player) => {
+    const nextPoints: PlayerPoints = { ...(player.points || {}), [field]: value };
+    if (field === "tree_point") {
+      delete nextPoints.three_point;
+    } else if (field === "three_point") {
+      nextPoints.tree_point = value;
+      delete nextPoints.three_point;
+    }
+    return { ...player, points: nextPoints };
+  });
+}
+
+export function setPlayerFlag(
+  result: OcrResult,
+  team: TeamKey,
+  index: number,
+  field: "started" | "entered",
+  value: boolean,
+): OcrResult {
   return updatePlayer(result, team, index, (player) => ({
     ...player,
-    points: { ...(player.points || {}), [field]: value },
+    [field]: value,
+    ...(field === "started" && value ? { entered: true } : {}),
   }));
 }
 
