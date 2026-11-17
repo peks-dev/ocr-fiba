@@ -22,6 +22,8 @@ from pathlib import Path
 import cv2
 import numpy as np
 
+from ocr_engine_core.utils.image_utils import read_image, write_png
+
 
 # Section images to enhance (all cropped PNGs)
 SECTION_IMAGES = [
@@ -320,8 +322,9 @@ def enhance_sections(
         if not image_path.exists():
             continue
 
-        img = cv2.imread(str(image_path))
-        if img is None:
+        try:
+            img = read_image(image_path)
+        except ValueError:
             continue
 
         # Step 0: Gamma correction (only for sections that benefit from it)
@@ -344,7 +347,7 @@ def enhance_sections(
 
         # Step 3: Sharpening for all sections
         enhanced_img = _enhance_image(img)
-        cv2.imwrite(str(image_path), enhanced_img)
+        write_png(image_path, enhanced_img)
         enhanced.append(image_name)
 
     return enhanced

@@ -33,6 +33,9 @@ SECTION_NAMES = ("header", "team_a", "team_b", "progressive_score", "footer")
 
 SectionName = Literal["header", "team_a", "team_b", "progressive_score", "footer"]
 
+# Minimum cropped side in pixels (clamped to source image bounds for tiny test images).
+MIN_CROP_DIM_PX = 16
+
 
 # ---------------------------------------------------------------------------
 # Cropper class
@@ -172,11 +175,7 @@ class Cropper:
             fouls_pixel = self._to_pixel_box(fouls_box, w, h)
 
             fouls_name = f"{team}_fouls"
-            crop = team_image[fouls_pixel.y : fouls_pixel.y + fouls_pixel.height,
-                              fouls_pixel.x : fouls_pixel.x + fouls_pixel.width]
-            if crop.size == 0:
-                raise CroppingError(f"El recorte de {fouls_name} quedó vacío", code=ErrorCode.CROP_EMPTY_CROP)
-            write_png(sections_dir / f"{fouls_name}.png", crop)
+            self._crop_and_save_box(team_image, fouls_pixel, sections_dir / f"{fouls_name}.png")
             result.append(fouls_pixel)
 
             # Track data
@@ -331,32 +330,53 @@ class Cropper:
 
         output_dir.mkdir(parents=True, exist_ok=True)
         for box in pixel_boxes:
-            crop = image[box.y : box.y + box.height, box.x : box.x + box.width]
-            if crop.size == 0:
-                raise CroppingError(f"El recorte de {box.name} quedó vacío", code=ErrorCode.CROP_EMPTY_CROP)
-            write_png(output_dir / f"{box.name}.png", crop)
+            self._crop_and_save_box(image, box, output_dir / f"{box.name}.png")
 
         return pixel_boxes
 
     @staticmethod
+    def _crop_and_save_box(image: Any, box: PixelBox, output_path: Path) -> None:
+        """Slice one validated PixelBox from image and write it as PNG."""
+        crop = image[box.y : box.y + box.height, box.x : box.x + box.width]
+        if crop.size == 0:
+            raise CroppingError(f"El recorte de {output_path.stem} quedó vacío", code=ErrorCode.CROP_EMPTY_CROP)
+        write_png(output_path, crop)
+
+    @staticmethod
     def _to_pixel_box(box: BoundingBox, image_width: int, image_height: int) -> PixelBox:
         """Convert a normalized (0-1000) bounding box to pixel coordinates."""
-        x1 = round(box.x_min / 1000 * image_width)
-        y1 = round(box.y_min / 1000 * image_height)
-        x2 = round(box.x_max / 1000 * image_width)
-        y2 = round(box.y_max / 1000 * image_height)
+        if image_width <= 0 or image_height <= 0:
+            raise CroppingError(
+                f"Dimensiones de imagen inválidas para {box.name}: {image_width}x{image_height}",
+                code=ErrorCode.CROP_EMPTY_CROP,
+            )
 
-        x1 = max(0, min(x1, image_width - 1))
-        y1 = max(0, min(y1, image_height - 1))
-        x2 = max(x1 + 1, min(x2, image_width))
-        y2 = max(y1 + 1, min(y2, image_height))
+        x1 = max(0, min(round(box.x_min / 1000 * image_width), image_width))
+        y1 = max(0, min(round(box.y_min / 1000 * image_height), image_height))
+        x2 = max(0, min(round(box.x_max / 1000 * image_width), image_width))
+        y2 = max(0, min(round(box.y_max / 1000 * image_height), image_height))
+
+        width = x2 - x1
+        height = y2 - y1
+        if width <= 0 or height <= 0:
+            raise CroppingError(
+                f"El recorte de {box.name} quedó vacío ({width}x{height}px)",
+                code=ErrorCode.CROP_EMPTY_CROP,
+            )
+
+        min_side = min(MIN_CROP_DIM_PX, image_width, image_height)
+        if width < min_side or height < min_side:
+            raise CroppingError(
+                f"El recorte de {box.name} es demasiado pequeño ({width}x{height}px)",
+                code=ErrorCode.CROP_EMPTY_CROP,
+            )
 
         return PixelBox(
             name=box.name,
             x=x1,
             y=y1,
-            width=x2 - x1,
-            height=y2 - y1,
+            width=width,
+            height=height,
             confidence=box.confidence,
         )
 
@@ -364,9 +384,19 @@ class Cropper:
     def _validate_layout(boxes: list[PixelBox], image_width: int, image_height: int) -> None:
         """Validate that the detected layout makes sense for a FIBA scoresheet."""
         by_name = {box.name: box for box in boxes}
+        if by_name["header"].y >= by_name["team_a"].y:
+            raise CroppingError(
+                "Layout inválido: header debe estar arriba de team_a",
+                code=ErrorCode.CROP_LAYOUT_INVALID,
+            )
         if by_name["team_a"].y >= by_name["team_b"].y:
             raise CroppingError(
                 "Layout inválido: team_a debe estar arriba de team_b",
+                code=ErrorCode.CROP_LAYOUT_INVALID,
+            )
+        if by_name["team_b"].y >= by_name["footer"].y:
+            raise CroppingError(
+                "Layout inválido: team_b debe estar arriba de footer",
                 code=ErrorCode.CROP_LAYOUT_INVALID,
             )
         if by_name["header"].y > int(image_height * 0.20):

@@ -19,7 +19,7 @@ from pathlib import Path
 from typing import Any
 
 from ocr_engine_core.exceptions import ExtractionError, ErrorCode
-from ocr_engine_core.utils import parse_team_markdown, TeamMarkdownParseError
+from ocr_engine_core.utils import parse_mark_flag, parse_team_markdown, TeamMarkdownParseError
 from ocr_engine_core.providers.base import TokenUsage
 from ocr_engine_core.providers import create_provider, ProviderType
 from ocr_engine_core.prompts.extraction import (
@@ -286,8 +286,8 @@ def _convert_interfaze_team_json(data: dict[str, Any]) -> dict[str, Any]:
 
         entered_raw = j.get("entrada", "")
         started_raw = j.get("inicial", "")
-        entered = _parse_mark_flag(entered_raw)
-        started = _parse_mark_flag(started_raw)
+        entered = parse_mark_flag(entered_raw, strict=False)
+        started = parse_mark_flag(started_raw, strict=False)
         if started:
             entered = True
 
@@ -310,15 +310,3 @@ def _convert_interfaze_team_json(data: dict[str, Any]) -> dict[str, Any]:
         "captain": captain,
         "players": players,
     }
-
-
-def _parse_mark_flag(value: Any) -> bool:
-    """Parse a boolean mark flag from various formats."""
-    if isinstance(value, bool):
-        return value
-    normalized = str(value).strip().casefold()
-    if normalized in {"", "no", "false", "n", "0", "-", "null", "vacio", "vacío"}:
-        return False
-    if normalized in {"x", "si", "sí", "true", "s", "1", "yes"}:
-        return True
-    return False

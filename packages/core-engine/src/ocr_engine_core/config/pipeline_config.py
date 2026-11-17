@@ -4,11 +4,34 @@ Pipeline configuration for model selection per phase.
 
 from __future__ import annotations
 
+import os
 from dataclasses import dataclass, field
-from typing import Any
+from typing import Any, cast
 
 from ocr_engine_core.providers import ProviderType
 from ocr_engine_core.utils.image_utils import resolve_provider_api_key
+
+
+def resolve_default_extractor(
+    provider: ProviderType | None = None,
+    model: str | None = None,
+) -> tuple[ProviderType, str]:
+    """Resolve the default extractor provider/model from overrides or env vars.
+
+    Reads OCR_DEFAULT_EXTRACTOR_PROVIDER (default: openrouter) and
+    OCR_DEFAULT_EXTRACTOR_MODEL (default: google/gemini-3-flash-preview,
+    or nanonets-ocr-3 when provider is docstrange).
+    """
+    resolved_provider = cast(
+        ProviderType,
+        provider or os.environ.get("OCR_DEFAULT_EXTRACTOR_PROVIDER", "").strip() or "openrouter",
+    )
+    resolved_model = (
+        model
+        or (os.environ.get("OCR_DEFAULT_EXTRACTOR_MODEL", "").strip() if provider is None else "")
+        or ("nanonets-ocr-3" if resolved_provider == "docstrange" else "google/gemini-3-flash-preview")
+    )
+    return resolved_provider, resolved_model
 
 
 @dataclass
@@ -32,8 +55,10 @@ class PipelineConfig:
     cropper_model: str = "google/gemini-3-flash-preview"
 
     # === Extraction Phase ===
-    extractor_provider: ProviderType = "docstrange"
-    extractor_model: str = "nanonets-ocr-3"
+    # Defaults honor OCR_DEFAULT_EXTRACTOR_PROVIDER / OCR_DEFAULT_EXTRACTOR_MODEL
+    # and otherwise fall back to openrouter (google/gemini-3-flash-preview).
+    extractor_provider: ProviderType = field(default_factory=lambda: resolve_default_extractor()[0])
+    extractor_model: str = field(default_factory=lambda: resolve_default_extractor()[1])
     extractor_reasoning: dict[str, Any] | None = None
     extractor_max_workers: int = 7
 

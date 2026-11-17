@@ -128,13 +128,24 @@ def parse_fouls(value: str) -> list[str]:
     return [item.strip() for item in text.split(",") if item.strip()]
 
 
-def parse_mark_flag(value: str) -> bool:
-    normalized = normalize_token(value)
-    if normalized in {"", "no", "false", "n", "0", "-", "null", "vacio", "vacío"}:
+_FALSY_MARK_TOKENS = frozenset({"", "no", "false", "n", "0", "-", "null", "none", "vacio", "vacío"})
+_TRUTHY_MARK_TOKENS = frozenset({"x", "si", "sí", "true", "s", "1", "yes"})
+
+
+def parse_mark_flag(value: object, *, strict: bool = True) -> bool:
+    """Parse a boolean mark flag from Markdown cells or JSON mark values."""
+    if isinstance(value, bool):
+        return value
+    if value is None:
         return False
-    if normalized in {"x", "si", "sí", "true", "s", "1", "yes"}:
+    normalized = normalize_token(str(value))
+    if normalized in _FALSY_MARK_TOKENS:
+        return False
+    if normalized in _TRUTHY_MARK_TOKENS:
         return True
-    raise TeamMarkdownParseError(f"Marca booleana no reconocida: {value!r}")
+    if strict:
+        raise TeamMarkdownParseError(f"Marca booleana no reconocida: {value!r}")
+    return False
 
 
 def parse_required_int(value: str) -> int:

@@ -19,7 +19,7 @@ import time
 from pathlib import Path
 
 from ocr_engine_core.utils.image_utils import load_dotenv
-from ocr_engine_core.config.pipeline_config import PipelineConfig
+from ocr_engine_core.config.pipeline_config import PipelineConfig, resolve_default_extractor
 from ocr_engine_core.pipeline import FibaOcrPipeline
 from ocr_engine_core.exceptions import OcrEngineError
 
@@ -127,13 +127,9 @@ def main():
     results_dir = Path(args.output_dir) if args.output_dir else RESULTS_DIR
     runs_dir = Path(args.runs_dir) if args.runs_dir else DATASET_DIR / "runs"
 
-    from ocr_engine_core.utils.image_utils import resolve_provider_api_key
-
-    extractor_provider = args.extractor or (
-        "docstrange" if resolve_provider_api_key("docstrange") else "openrouter"
-    )
-    extractor_model = args.extractor_model or (
-        "nanonets-ocr-3" if extractor_provider == "docstrange" else "google/gemini-3-flash-preview"
+    extractor_provider, extractor_model = resolve_default_extractor(
+        args.extractor,
+        args.extractor_model,
     )
 
     config = PipelineConfig(
