@@ -16,6 +16,7 @@ from .core import (
     ProgressiveSequencePlugin,
     EntryAndFoulsConsistencyPlugin,
     IllegibleMarksPlugin,
+    PreprocessFallbackPlugin,
 )
 
 register(QuarterSumsPlugin())
@@ -26,6 +27,7 @@ register(PlayerVsProgressivePlugin())
 register(ProgressiveSequencePlugin())
 register(EntryAndFoulsConsistencyPlugin())
 register(IllegibleMarksPlugin())
+register(PreprocessFallbackPlugin())
 
 # FIBA sport rules
 from .fiba_rules import PlayerFoulsPlugin, TeamFoulsPlugin

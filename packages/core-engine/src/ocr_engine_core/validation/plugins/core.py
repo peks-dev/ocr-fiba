@@ -709,3 +709,25 @@ class IllegibleMarksPlugin(ValidationPlugin):
                 )
             )
         return warnings
+
+
+class PreprocessFallbackPlugin(ValidationPlugin):
+    """Surface preprocess sheet-isolation fallbacks in validation warnings."""
+
+    name = "core_preprocess_fallback"
+    description = "Report when sheet isolation fell back to the uncropped original image"
+    category = CATEGORY_CORE
+
+    def validate(self, data: dict[str, Any]) -> list[dict[str, Any]]:
+        meta = data.get("meta")
+        if not isinstance(meta, dict) or not meta.get("preprocess_fallback"):
+            return []
+        return [
+            create_warning(
+                warning_type="preprocess_fallback",
+                severity="low",
+                message="Sheet contour isolation fell back to the original image.",
+                field=None,
+                details={"fallback": "original_image"},
+            )
+        ]

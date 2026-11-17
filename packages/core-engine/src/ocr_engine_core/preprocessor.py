@@ -17,6 +17,8 @@ import cv2
 import numpy as np
 from PIL import Image, ImageEnhance
 
+from ocr_engine_core.utils.image_utils import read_image
+
 PADDING_RATIO = 0.03
 EXPECTED_ASPECT_RATIO = 1.32
 
@@ -283,9 +285,7 @@ def preprocess_sheet(image_path: Path, output_path: Path) -> Path:
     Raises:
         ValueError: If the sheet contour cannot be detected.
     """
-    img = cv2.imread(str(image_path))
-    if img is None:
-        raise ValueError(f"No se pudo abrir la imagen: {image_path}")
+    img = read_image(image_path)
 
     orig = img.copy()
     gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
@@ -330,12 +330,13 @@ def preprocess_sheet(image_path: Path, output_path: Path) -> Path:
     matrix = cv2.getPerspectiveTransform(rect, dst)
     warp = cv2.warpPerspective(orig, matrix, (max_w, max_h))
 
-    output_path.parent.mkdir(parents=True, exist_ok=True)
-    cv2.imwrite(str(output_path), warp, [int(cv2.IMWRITE_JPEG_QUALITY), 95])
-
-    pil = Image.open(output_path)
+    # Enhance directly in memory before writing once to avoid double JPEG recompression.
+    rgb_warp = cv2.cvtColor(warp, cv2.COLOR_BGR2RGB)
+    pil = Image.fromarray(rgb_warp)
     pil = ImageEnhance.Contrast(pil).enhance(1.08)
     pil = ImageEnhance.Sharpness(pil).enhance(1.15)
+
+    output_path.parent.mkdir(parents=True, exist_ok=True)
     pil.save(output_path, quality=95)
 
     return output_path

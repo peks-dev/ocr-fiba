@@ -380,14 +380,14 @@ class OcrToolbox:
         _emit(progress_callback, "step_complete", step="detect_sections", result=detection)
         crop_usage = detection.usage
         if crop_usage:
-            total_usage.add(_to_token_usage(crop_usage))
+            total_usage.add(TokenUsage.from_usage(crop_usage))
 
         _emit(progress_callback, "step_start", step="crop_team_fouls", context=context)
         fouls = self.crop_team_fouls(context, tracer=tracer)
         _emit(progress_callback, "step_complete", step="crop_team_fouls", result=fouls)
         fouls_usage = fouls.usage
         if fouls_usage:
-            total_usage.add(_to_token_usage(fouls_usage))
+            total_usage.add(TokenUsage.from_usage(fouls_usage))
 
         _emit(progress_callback, "step_start", step="enhance_sections", context=context)
         enhanced = self.enhance_sections(context, tracer=tracer)
@@ -398,7 +398,7 @@ class OcrToolbox:
         _emit(progress_callback, "step_complete", step="extract_sections", result=extraction)
         extract_usage = extraction.usage
         if extract_usage:
-            total_usage.add(_to_token_usage(extract_usage))
+            total_usage.add(TokenUsage.from_usage(extract_usage))
 
         elapsed_ms = int((time.monotonic() - started) * 1000)
         _emit(progress_callback, "step_start", step="build_final_output", context=context)
@@ -409,9 +409,14 @@ class OcrToolbox:
             token_usage=total_usage,
             tracer=tracer,
         )
+        result_payload = built.data["result"]
+        if preprocess.data.get("used_fallback") and isinstance(result_payload, dict):
+            meta = result_payload.setdefault("meta", {})
+            if isinstance(meta, dict):
+                meta["preprocess_fallback"] = True
         _emit(progress_callback, "step_complete", step="build_final_output", result=built)
         _emit(progress_callback, "step_start", step="validate_result", context=context)
-        validated = self.validate_result(context, built.data["result"], tracer=tracer)
+        validated = self.validate_result(context, result_payload, tracer=tracer)
         _emit(progress_callback, "step_complete", step="validate_result", result=validated)
         result_artifact = artifact_store.write_result(validated.data["result"]) if artifact_store else None
         if result_artifact:
@@ -528,14 +533,6 @@ class OcrToolbox:
             usage=usage,
             trace=tracer.steps,
         )
-
-
-def _to_token_usage(usage: ProviderUsage) -> TokenUsage:
-    return TokenUsage(
-        prompt_tokens=usage.prompt_tokens,
-        completion_tokens=usage.completion_tokens,
-        total_tokens=usage.total_tokens,
-    )
 
 
 def _emit(

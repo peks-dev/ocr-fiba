@@ -383,8 +383,23 @@ def _normalize_players(
             )
             normalized["entered"] = entered
             normalized["started"] = started
+            normalized["points"] = _normalize_player_points(normalized.get("points"))
             normalized_players.append(normalized)
     return normalized_players
+
+
+def _normalize_player_points(points: Any) -> dict[str, int]:
+    """Normalize player points dict to integer one_point/two_point/tree_point counts."""
+    if not isinstance(points, dict):
+        return {"one_point": 0, "two_point": 0, "tree_point": 0}
+    raw_three = points.get("tree_point")
+    if raw_three is None:
+        raw_three = points.get("three_point")
+    return {
+        "one_point": _coerce_int(points.get("one_point")) or 0,
+        "two_point": _coerce_int(points.get("two_point")) or 0,
+        "tree_point": _coerce_int(raw_three) or 0,
+    }
 
 
 def _is_illegible_entry_mark(entry_mark: Any) -> bool:

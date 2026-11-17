@@ -28,8 +28,8 @@ class OpenrouterProvider(HttpJsonProvider):
     def _auth_headers(self) -> dict[str, str]:
         return {
             **super()._auth_headers(),
-            "HTTP-Referer": "https://github.com/openai/codex",
-            "X-OpenRouter-Title": "ocr-engine",
+            "HTTP-Referer": "https://github.com/peks-dev/ocr-fiba",
+            "X-OpenRouter-Title": "ocr-fiba",
         }
 
     def _build_payload(

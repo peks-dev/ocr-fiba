@@ -95,7 +95,7 @@ class FibaOcrPipeline:
             progress_callback=self._print_progress,
         )
         result = pipeline_result.data["result"]
-        self.total_usage = _to_token_usage(pipeline_result.usage) if pipeline_result.usage else TokenUsage()
+        self.total_usage = TokenUsage.from_usage(pipeline_result.usage)
         self.last_context = pipeline_result.data["context"]
 
         print(f"\nPipeline finalizado.", file=sys.stderr)
@@ -164,11 +164,3 @@ class FibaOcrPipeline:
         elif step == "enhance_sections":
             for name in result.data["enhanced"]:
                 print(f"  - {name}", file=sys.stderr)
-
-
-def _to_token_usage(usage) -> TokenUsage:
-    return TokenUsage(
-        prompt_tokens=usage.prompt_tokens,
-        completion_tokens=usage.completion_tokens,
-        total_tokens=usage.total_tokens,
-    )
