@@ -12,6 +12,7 @@ export type Account = {
   supabase_user_id: string | null;
   email: string;
   role: AccountRole;
+  status: string;
   assigned_demo: AssignedDemo | null;
   invited_by: string | null;
   invited_at: string | null;
@@ -22,6 +23,16 @@ export type CurrentUserAccount = {
   user: { id: string; email?: string };
   account: Account;
 };
+
+export type AccountLookupResult =
+  | { state: "ok"; current: CurrentUserAccount }
+  | { state: "unauthenticated" }
+  | { state: "missing" }
+  | { state: "inactive" };
+
+export type DemoApiAccessResult =
+  | { ok: true; current: CurrentUserAccount }
+  | { ok: false; status: 401 | 403; error: string };
 
 export const demoHomePaths: Record<AssignedDemo, string> = {
   referee: "/test/referee",
@@ -40,28 +51,58 @@ export function destinationForAccount(account: Pick<Account, "role" | "assigned_
   return "/login?error=No%20demo%20assigned";
 }
 
-export async function getCurrentUserAccount(): Promise<CurrentUserAccount | null> {
+export async function lookupCurrentUserAccount(): Promise<AccountLookupResult> {
   const supabase = await createClient();
   const {
     data: { user },
   } = await supabase.auth.getUser();
 
-  if (!user) return null;
+  if (!user) return { state: "unauthenticated" };
 
   const { data: account, error } = await supabase
     .from("accounts")
-    .select("id,supabase_user_id,email,role,assigned_demo,invited_by,invited_at,accepted_at")
+    .select("id,supabase_user_id,email,role,status,assigned_demo,invited_by,invited_at,accepted_at")
     .eq("supabase_user_id", user.id)
     .single();
 
-  if (error || !account) return null;
-  return { user: { id: user.id, email: user.email }, account: account as Account };
+  if (error || !account) return { state: "missing" };
+  if (account.status !== "active") return { state: "inactive" };
+
+  return {
+    state: "ok",
+    current: { user: { id: user.id, email: user.email }, account: account as Account },
+  };
+}
+
+export async function getCurrentUserAccount(): Promise<CurrentUserAccount | null> {
+  const result = await lookupCurrentUserAccount();
+  return result.state === "ok" ? result.current : null;
 }
 
 export async function requireCurrentUserAccount() {
-  const current = await getCurrentUserAccount();
-  if (!current) redirect("/login");
-  return current;
+  const result = await lookupCurrentUserAccount();
+  if (result.state === "inactive") redirect("/login?error=Account%20inactive");
+  if (result.state === "missing") redirect("/login?error=Account%20not%20provisioned");
+  if (result.state !== "ok") redirect("/login");
+  return result.current;
+}
+
+export async function authorizeDemoApiAccess(demo: AssignedDemo): Promise<DemoApiAccessResult> {
+  const result = await lookupCurrentUserAccount();
+  if (result.state === "unauthenticated") {
+    return { ok: false, status: 401, error: "No autenticado." };
+  }
+  if (result.state === "inactive") {
+    return { ok: false, status: 403, error: "Tu cuenta está inactiva." };
+  }
+  if (result.state !== "ok") {
+    return { ok: false, status: 403, error: "Tu cuenta aún no está aprovisionada." };
+  }
+  const { account } = result.current;
+  if (account.role !== "admin" && account.assigned_demo !== demo) {
+    return { ok: false, status: 403, error: "No tienes acceso a esta demo." };
+  }
+  return { ok: true, current: result.current };
 }
 
 export async function requireAdminAccount() {
@@ -83,11 +124,11 @@ export async function markCurrentAccountAccepted(userId: string) {
 
   const { data: existing } = await admin
     .from("accounts")
-    .select("id,email,role,assigned_demo,accepted_at")
+    .select("id,email,role,status,assigned_demo,accepted_at")
     .eq("supabase_user_id", userId)
     .maybeSingle();
 
-  if (!existing) return null;
+  if (!existing || existing.status !== "active") return null;
 
   const account = existing.accepted_at
     ? existing
@@ -96,7 +137,7 @@ export async function markCurrentAccountAccepted(userId: string) {
           .from("accounts")
           .update({ accepted_at: now })
           .eq("supabase_user_id", userId)
-          .select("id,email,role,assigned_demo,accepted_at")
+          .select("id,email,role,status,assigned_demo,accepted_at")
           .maybeSingle()
       ).data || existing;
 

@@ -3,6 +3,7 @@ import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 
 import { DEMOS, requireAdminAccount, type AssignedDemo } from "@/lib/auth/account";
+import { resolveAppOrigin } from "@/lib/auth/origin";
 import { createAdminClient } from "@/lib/supabase/admin";
 
 const demoLabels: Record<AssignedDemo, string> = {
@@ -124,7 +125,7 @@ async function inviteTester(formData: FormData) {
   }
 
   const requestHeaders = await headers();
-  const origin = requestHeaders.get("origin") || "http://localhost:3000";
+  const origin = resolveAppOrigin(requestHeaders);
   const admin = createAdminClient();
   const now = new Date().toISOString();
 
