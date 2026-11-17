@@ -7,7 +7,8 @@
 #   GCP_PROJECT (ocr-fiba-8d0920)  GCP_REGION (us-central1)  RUNS_BUCKET (<project>-runs)
 #   OCR_RATE_LIMIT_PER_MINUTE (3)  OCR_RATE_LIMIT_PER_DAY (50)  RUNS_RETENTION_DAYS (30)
 #   OCR_STALE_RUN_SECONDS (900)
-#   OCR_DEFAULT_EXTRACTOR_PROVIDER (openrouter)  OCR_DEFAULT_EXTRACTOR_MODEL (google/gemini-3-flash-preview)
+#   OCR_DEFAULT_EXTRACTOR_PROVIDER (openrouter)  OCR_DEFAULT_EXTRACTOR_MODEL (google/gemini-4-carbon)
+#   OCR_DEFAULT_EXTRACTOR_REASONING ({"effort":"low","exclude":true} when google/gemini-4-carbon is active)
 #   OPENROUTER_API_KEY   only read when the openrouter-api-key secret does not exist yet,
 #                        or when ROTATE_OPENROUTER_KEY=1.
 #   ROTATE_CLIENT_TOKEN=1  generate a new public client token (old one stops working).
@@ -41,7 +42,16 @@ PER_MIN="${OCR_RATE_LIMIT_PER_MINUTE:-3}"
 PER_DAY="${OCR_RATE_LIMIT_PER_DAY:-50}"
 STALE_RUN_SECONDS="${OCR_STALE_RUN_SECONDS:-900}"
 EXTRACTOR_PROVIDER="${OCR_DEFAULT_EXTRACTOR_PROVIDER:-openrouter}"
-EXTRACTOR_MODEL="${OCR_DEFAULT_EXTRACTOR_MODEL:-google/gemini-3-flash-preview}"
+EXTRACTOR_MODEL="${OCR_DEFAULT_EXTRACTOR_MODEL:-google/gemini-4-carbon}"
+if [[ -z "${OCR_DEFAULT_EXTRACTOR_REASONING+x}" ]]; then
+  if [[ "$EXTRACTOR_PROVIDER" == "openrouter" && "$EXTRACTOR_MODEL" == "google/gemini-4-carbon" ]]; then
+    EXTRACTOR_REASONING='{"effort":"low","exclude":true}'
+  else
+    EXTRACTOR_REASONING=""
+  fi
+else
+  EXTRACTOR_REASONING="$OCR_DEFAULT_EXTRACTOR_REASONING"
+fi
 SUPABASE_URL_VALUE="${SUPABASE_URL:-https://cgcejoqsmouieijkkogw.supabase.co}"
 SUPABASE_PUBLISHABLE_KEY_VALUE="${SUPABASE_PUBLISHABLE_KEY:-sb_publishable_Q-y9BVYWe-wyVj5eLl91lA_zwxAvGKp}"
 
@@ -155,7 +165,7 @@ deploy_api() {
     --cpu 1 --memory 1Gi --concurrency 20 --min-instances 0 --max-instances 3 --timeout 600 \
     --add-volume "name=runs,type=cloud-storage,bucket=$BUCKET" \
     --add-volume-mount "volume=runs,mount-path=/mnt/data" \
-    --set-env-vars "^|^OCR_SERVICE=api|OCR_ENV=production|OCR_RUNS_DIR=/mnt/data/runs|OCR_RATE_LIMIT_STATE_FILE=/mnt/data/quota/rate_limit.json|OCR_MAX_UPLOAD_MB=20|OCR_ALLOW_PATH_INPUT=false|OCR_RATE_LIMIT_PER_MINUTE=$PER_MIN|OCR_RATE_LIMIT_PER_DAY=$PER_DAY|OCR_STALE_RUN_SECONDS=$STALE_RUN_SECONDS|OCR_DEFAULT_EXTRACTOR_PROVIDER=$EXTRACTOR_PROVIDER|OCR_DEFAULT_EXTRACTOR_MODEL=$EXTRACTOR_MODEL|OCR_CORS_ORIGINS=${OCR_CORS_ORIGINS:-}|SUPABASE_URL=$SUPABASE_URL_VALUE|SUPABASE_PUBLISHABLE_KEY=$SUPABASE_PUBLISHABLE_KEY_VALUE" \
+    --set-env-vars "^|^OCR_SERVICE=api|OCR_ENV=production|OCR_RUNS_DIR=/mnt/data/runs|OCR_RATE_LIMIT_STATE_FILE=/mnt/data/quota/rate_limit.json|OCR_MAX_UPLOAD_MB=20|OCR_ALLOW_PATH_INPUT=false|OCR_RATE_LIMIT_PER_MINUTE=$PER_MIN|OCR_RATE_LIMIT_PER_DAY=$PER_DAY|OCR_STALE_RUN_SECONDS=$STALE_RUN_SECONDS|OCR_DEFAULT_EXTRACTOR_PROVIDER=$EXTRACTOR_PROVIDER|OCR_DEFAULT_EXTRACTOR_MODEL=$EXTRACTOR_MODEL|OCR_DEFAULT_EXTRACTOR_REASONING=$EXTRACTOR_REASONING|OCR_CORS_ORIGINS=${OCR_CORS_ORIGINS:-}|SUPABASE_URL=$SUPABASE_URL_VALUE|SUPABASE_PUBLISHABLE_KEY=$SUPABASE_PUBLISHABLE_KEY_VALUE" \
     --set-secrets "$api_secrets"
 }
 

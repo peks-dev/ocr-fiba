@@ -58,7 +58,7 @@ packages/core-engine/
 
 ### 2. Configuration via `PipelineConfig`
 
-All model selection (per phase and per section override) flows through `PipelineConfig` in `config/pipeline_config.py`. Default extraction uses `resolve_default_extractor()` (`OCR_DEFAULT_EXTRACTOR_PROVIDER`, default `openrouter`; `OCR_DEFAULT_EXTRACTOR_MODEL`, default `google/gemini-3-flash-preview` or `nanonets-ocr-3` when `docstrange` is selected). Sections can override the default extractor with `SectionOverride`. To add a new pipeline option:
+All model selection (per phase and per section override) flows through `PipelineConfig` in `config/pipeline_config.py`. Default extraction uses `resolve_default_extractor()` and `resolve_default_extractor_reasoning()` (`OCR_DEFAULT_EXTRACTOR_PROVIDER`, default `openrouter`; `OCR_DEFAULT_EXTRACTOR_MODEL`, default `google/gemini-4-carbon` or `nanonets-ocr-3` when `docstrange` is selected; `OCR_DEFAULT_EXTRACTOR_REASONING`, default `{"effort": "low", "exclude": True}` when `openrouter` + `google/gemini-4-carbon` is active). Sections can override the default extractor with `SectionOverride`. To add a new pipeline option:
 
 1. Add a typed field to `PipelineConfig` (or `SectionOverride` if it's per-section).
 2. Document the env var it reads in the field's comment.

@@ -4,12 +4,56 @@ Pipeline configuration for model selection per phase.
 
 from __future__ import annotations
 
+import json
 import os
 from dataclasses import dataclass, field
 from typing import Any, cast
 
 from ocr_engine_core.providers import ProviderType
 from ocr_engine_core.utils.image_utils import resolve_provider_api_key
+
+DEFAULT_CROPPER_PROVIDER: ProviderType = "openrouter"
+DEFAULT_CROPPER_MODEL = "google/gemini-3-flash-preview"
+DEFAULT_EXTRACTOR_PROVIDER: ProviderType = "openrouter"
+DEFAULT_EXTRACTOR_MODEL = "google/gemini-4-carbon"
+DEFAULT_EXTRACTOR_REASONING: dict[str, Any] = {"effort": "low", "exclude": True}
+
+_REASONING_EFFORTS = frozenset({"max", "xhigh", "high", "medium", "low", "minimal", "none"})
+_REASONING_DISABLED_VALUES = frozenset({"off", "false", "disabled"})
+_UNSET_REASONING: Any = object()
+
+
+def default_extractor_reasoning() -> dict[str, Any]:
+    """Return a fresh copy of the default extractor reasoning config."""
+    return dict(DEFAULT_EXTRACTOR_REASONING)
+
+
+def parse_reasoning_config(raw: str | None) -> tuple[bool, dict[str, Any] | None]:
+    """Parse ``OCR_DEFAULT_EXTRACTOR_REASONING`` into ``(is_set, reasoning_dict)``.
+
+    Accepts a JSON object string (e.g. ``'{"effort":"low","exclude":true}'``),
+    a bare OpenRouter effort name (``max``, ``xhigh``, ``high``, ``medium``,
+    ``low``, ``minimal``, ``none`` -> ``{"effort": ..., "exclude": True}``),
+    or ``off`` / ``false`` / ``disabled`` (maps to ``None``).
+    """
+    if raw is None or not raw.strip():
+        return False, None
+
+    cleaned = raw.strip()
+    lowered = cleaned.lower()
+    if lowered in _REASONING_DISABLED_VALUES:
+        return True, None
+    if lowered in _REASONING_EFFORTS:
+        return True, {"effort": lowered, "exclude": True}
+    if cleaned.startswith("{"):
+        parsed = json.loads(cleaned)
+        if not isinstance(parsed, dict):
+            raise ValueError("OCR_DEFAULT_EXTRACTOR_REASONING JSON must be an object")
+        return True, parsed
+    raise ValueError(
+        "OCR_DEFAULT_EXTRACTOR_REASONING must be a JSON object, an effort level "
+        "(max/xhigh/high/medium/low/minimal/none), or off/false/disabled"
+    )
 
 
 def resolve_default_extractor(
@@ -19,19 +63,55 @@ def resolve_default_extractor(
     """Resolve the default extractor provider/model from overrides or env vars.
 
     Reads OCR_DEFAULT_EXTRACTOR_PROVIDER (default: openrouter) and
-    OCR_DEFAULT_EXTRACTOR_MODEL (default: google/gemini-3-flash-preview,
+    OCR_DEFAULT_EXTRACTOR_MODEL (default: google/gemini-4-carbon,
     or nanonets-ocr-3 when provider is docstrange).
     """
     resolved_provider = cast(
         ProviderType,
-        provider or os.environ.get("OCR_DEFAULT_EXTRACTOR_PROVIDER", "").strip() or "openrouter",
+        provider or os.environ.get("OCR_DEFAULT_EXTRACTOR_PROVIDER", "").strip() or DEFAULT_EXTRACTOR_PROVIDER,
     )
     resolved_model = (
         model
         or (os.environ.get("OCR_DEFAULT_EXTRACTOR_MODEL", "").strip() if provider is None else "")
-        or ("nanonets-ocr-3" if resolved_provider == "docstrange" else "google/gemini-3-flash-preview")
+        or ("nanonets-ocr-3" if resolved_provider == "docstrange" else DEFAULT_EXTRACTOR_MODEL)
     )
     return resolved_provider, resolved_model
+
+
+def resolve_default_extractor_reasoning(
+    provider: str,
+    model: str,
+    *,
+    from_env: bool = True,
+    env_value: str | None = None,
+) -> dict[str, Any] | None:
+    """Resolve OpenRouter reasoning config for the given extractor provider/model.
+
+    Honors OCR_DEFAULT_EXTRACTOR_REASONING when ``from_env`` is True (only applied
+    for ``openrouter``). Otherwise defaults to ``{"effort": "low", "exclude": True}``
+    when ``openrouter`` + ``google/gemini-4-carbon`` is active, and ``None`` elsewhere.
+    """
+    if provider != "openrouter":
+        return None
+    if from_env:
+        raw = env_value if env_value is not None else os.environ.get("OCR_DEFAULT_EXTRACTOR_REASONING")
+        is_set, parsed = parse_reasoning_config(raw)
+        if is_set:
+            return parsed
+    if model == DEFAULT_EXTRACTOR_MODEL:
+        return default_extractor_reasoning()
+    return None
+
+
+def build_reasoning_config(
+    effort: str | None,
+    provider: str,
+    model: str,
+) -> dict[str, Any] | None:
+    """Resolve reasoning config from an optional CLI effort override or defaults."""
+    if effort is not None:
+        return {"effort": effort, "exclude": True}
+    return resolve_default_extractor_reasoning(provider, model)
 
 
 @dataclass
@@ -51,15 +131,16 @@ class PipelineConfig:
     """
 
     # === Cropping Phase ===
-    cropper_provider: ProviderType = "openrouter"
-    cropper_model: str = "google/gemini-3-flash-preview"
+    cropper_provider: ProviderType = DEFAULT_CROPPER_PROVIDER
+    cropper_model: str = DEFAULT_CROPPER_MODEL
 
     # === Extraction Phase ===
-    # Defaults honor OCR_DEFAULT_EXTRACTOR_PROVIDER / OCR_DEFAULT_EXTRACTOR_MODEL
-    # and otherwise fall back to openrouter (google/gemini-3-flash-preview).
+    # Defaults honor OCR_DEFAULT_EXTRACTOR_PROVIDER / OCR_DEFAULT_EXTRACTOR_MODEL /
+    # OCR_DEFAULT_EXTRACTOR_REASONING and otherwise fall back to openrouter
+    # (google/gemini-4-carbon with {"effort": "low", "exclude": True}).
     extractor_provider: ProviderType = field(default_factory=lambda: resolve_default_extractor()[0])
     extractor_model: str = field(default_factory=lambda: resolve_default_extractor()[1])
-    extractor_reasoning: dict[str, Any] | None = None
+    extractor_reasoning: dict[str, Any] | None = field(default_factory=lambda: cast(Any, _UNSET_REASONING))
     extractor_max_workers: int = 7
 
     # === Section-specific extractor overrides ===
@@ -94,6 +175,12 @@ class PipelineConfig:
     openrouter_api_key: str | None = None
 
     def __post_init__(self):
+        if self.extractor_reasoning is _UNSET_REASONING:
+            self.extractor_reasoning = resolve_default_extractor_reasoning(
+                self.extractor_provider,
+                self.extractor_model,
+            )
+
         # Resolve any unset key from its provider's canonical env vars
         # (single source of truth in utils.image_utils).
         if self.interfaze_api_key is None:

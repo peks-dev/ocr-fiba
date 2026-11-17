@@ -10,7 +10,14 @@ import sys
 from pathlib import Path
 
 from ocr_engine_core.utils.image_utils import load_dotenv
-from ocr_engine_core.config.pipeline_config import PipelineConfig, SectionOverride, resolve_default_extractor
+from ocr_engine_core.config.pipeline_config import (
+    DEFAULT_CROPPER_MODEL,
+    DEFAULT_EXTRACTOR_MODEL,
+    PipelineConfig,
+    SectionOverride,
+    build_reasoning_config,
+    resolve_default_extractor,
+)
 from ocr_engine_core.pipeline import FibaOcrPipeline
 from ocr_engine_core.exceptions import OcrEngineError
 
@@ -81,8 +88,8 @@ def main():
     )
     parser.add_argument(
         "--cropper-model",
-        default="google/gemini-3-flash-preview",
-        help="Modelo del cropper (default: google/gemini-3-flash-preview)",
+        default=DEFAULT_CROPPER_MODEL,
+        help=f"Modelo del cropper (default: {DEFAULT_CROPPER_MODEL})",
     )
     parser.add_argument(
         "--extractor",
@@ -93,13 +100,16 @@ def main():
     parser.add_argument(
         "--extractor-model",
         default=None,
-        help="Modelo del extractor (default: google/gemini-3-flash-preview o OCR_DEFAULT_EXTRACTOR_MODEL)",
+        help=f"Modelo del extractor (default: {DEFAULT_EXTRACTOR_MODEL} o OCR_DEFAULT_EXTRACTOR_MODEL)",
     )
     parser.add_argument(
         "--extractor-reasoning-effort",
         default=None,
         choices=["xhigh", "high", "medium", "low", "minimal", "none"],
-        help="Reasoning effort for the global extractor (OpenRouter only). Default: no reasoning.",
+        help=(
+            "Reasoning effort for the global extractor (OpenRouter only). "
+            f"Default: low (exclude=true) when {DEFAULT_EXTRACTOR_MODEL} is selected."
+        ),
     )
     parser.add_argument(
         "--extractor-max-workers",
@@ -206,10 +216,10 @@ def main():
         cropper_model=args.cropper_model,
         extractor_provider=extractor_provider,
         extractor_model=extractor_model,
-        extractor_reasoning=(
-            {"effort": args.extractor_reasoning_effort, "exclude": True}
-            if args.extractor_reasoning_effort and args.extractor_reasoning_effort != "none"
-            else None
+        extractor_reasoning=build_reasoning_config(
+            args.extractor_reasoning_effort,
+            extractor_provider,
+            extractor_model,
         ),
         extractor_max_workers=args.extractor_max_workers,
         section_overrides=section_overrides,

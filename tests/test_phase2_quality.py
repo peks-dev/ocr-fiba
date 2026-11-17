@@ -11,7 +11,12 @@ from unittest import mock
 import cv2
 import numpy as np
 
-from ocr_engine_core.config.pipeline_config import PipelineConfig, resolve_default_extractor
+from ocr_engine_core.config.pipeline_config import (
+    PipelineConfig,
+    build_reasoning_config,
+    parse_reasoning_config,
+    resolve_default_extractor,
+)
 from ocr_engine_core.cropper import Cropper
 from ocr_engine_core.exceptions import CroppingError, ErrorCode
 from ocr_engine_core.output_builder import build_final_output
@@ -72,10 +77,16 @@ class ProviderHeadersTest(unittest.TestCase):
         self.assertEqual(provider._auth_headers().get("x-goog-api-key"), "secret-gemini-key")
 
     def test_openrouter_uses_project_referer(self) -> None:
-        provider = OpenrouterProvider("google/gemini-3-flash-preview", "secret-or-key")
+        provider = OpenrouterProvider("google/gemini-4-carbon", "secret-or-key", reasoning={"effort": "low", "exclude": True})
         headers = provider._auth_headers()
         self.assertEqual(headers.get("HTTP-Referer"), "https://github.com/peks-dev/ocr-fiba")
         self.assertEqual(headers.get("X-OpenRouter-Title"), "ocr-fiba")
+        with tempfile.TemporaryDirectory() as tmp:
+            img = Path(tmp) / "crop.png"
+            img.write_bytes(b"png")
+            payload = provider._build_payload(img, "extract")
+        self.assertEqual(payload["model"], "google/gemini-4-carbon")
+        self.assertEqual(payload["reasoning"], {"effort": "low", "exclude": True})
 
 
 class PreprocessFallbackPropagationTest(unittest.TestCase):
@@ -167,8 +178,14 @@ class ExtractorDefaultsAndHelpersTest(unittest.TestCase):
     def test_pipeline_config_defaults_to_openrouter_and_honors_env(self) -> None:
         with mock.patch.dict(os.environ, {}, clear=True):
             cfg = PipelineConfig()
+        self.assertEqual(cfg.cropper_model, "google/gemini-3-flash-preview")
         self.assertEqual(cfg.extractor_provider, "openrouter")
-        self.assertEqual(cfg.extractor_model, "google/gemini-3-flash-preview")
+        self.assertEqual(cfg.extractor_model, "google/gemini-4-carbon")
+        self.assertEqual(cfg.extractor_reasoning, {"effort": "low", "exclude": True})
+
+        with mock.patch.dict(os.environ, {}, clear=True):
+            opted_out = PipelineConfig(extractor_reasoning=None)
+        self.assertIsNone(opted_out.extractor_reasoning)
 
         with mock.patch.dict(
             os.environ,
@@ -181,11 +198,40 @@ class ExtractorDefaultsAndHelpersTest(unittest.TestCase):
             env_cfg = PipelineConfig()
         self.assertEqual(env_cfg.extractor_provider, "gemini")
         self.assertEqual(env_cfg.extractor_model, "gemini-2.5-flash")
+        self.assertIsNone(env_cfg.extractor_reasoning)
 
+        with mock.patch.dict(
+            os.environ,
+            {"OCR_DEFAULT_EXTRACTOR_REASONING": '{"effort": "medium", "exclude": false}'},
+            clear=True,
+        ):
+            custom_reasoning_cfg = PipelineConfig()
+        self.assertEqual(custom_reasoning_cfg.extractor_reasoning, {"effort": "medium", "exclude": False})
+
+        with mock.patch.dict(os.environ, {"OCR_DEFAULT_EXTRACTOR_REASONING": "off"}, clear=True):
+            disabled_reasoning_cfg = PipelineConfig()
+        self.assertIsNone(disabled_reasoning_cfg.extractor_reasoning)
+
+        self.assertEqual(parse_reasoning_config("medium"), (True, {"effort": "medium", "exclude": True}))
+        with self.assertRaises(ValueError):
+            parse_reasoning_config("not-a-valid-effort")
+
+        self.assertEqual(
+            build_reasoning_config("none", "openrouter", "google/gemini-3-flash-preview"),
+            {"effort": "none", "exclude": True},
+        )
         self.assertEqual(
             resolve_default_extractor("docstrange", None),
             ("docstrange", "nanonets-ocr-3"),
         )
+
+    def test_toolbox_wires_default_gemini4_carbon_and_low_reasoning(self) -> None:
+        with mock.patch.dict(os.environ, {"OPENROUTER_API_KEY": "or-test-key"}, clear=True):
+            cfg = PipelineConfig()
+            toolbox = OcrToolbox(cfg)
+            extractor = toolbox._build_extractor(cfg)
+        self.assertEqual(extractor.provider.model_name, "google/gemini-4-carbon")
+        self.assertEqual(extractor.provider.reasoning, {"effort": "low", "exclude": True})
 
     def test_parse_mark_flag_strict_and_non_strict(self) -> None:
         self.assertTrue(parse_mark_flag("X"))
