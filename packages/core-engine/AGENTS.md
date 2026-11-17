@@ -58,11 +58,11 @@ packages/core-engine/
 
 ### 2. Configuration via `PipelineConfig`
 
-All model selection (per phase and per section override) flows through `PipelineConfig` in `config/pipeline_config.py`. Sections can override the default extractor with `SectionOverride`. To add a new pipeline option:
+All model selection (per phase and per section override) flows through `PipelineConfig` in `config/pipeline_config.py`. Default extraction uses `resolve_default_extractor()` (`OCR_DEFAULT_EXTRACTOR_PROVIDER`, default `openrouter`; `OCR_DEFAULT_EXTRACTOR_MODEL`, default `google/gemini-3-flash-preview` or `nanonets-ocr-3` when `docstrange` is selected). Sections can override the default extractor with `SectionOverride`. To add a new pipeline option:
 
 1. Add a typed field to `PipelineConfig` (or `SectionOverride` if it's per-section).
 2. Document the env var it reads in the field's comment.
-3. Update `PipelineConfig.from_env` if it should be loadable from env.
+3. Update `resolve_default_extractor` / env helpers if it should be loadable from env.
 
 ### 3. Provider implementations
 
@@ -78,9 +78,9 @@ Adding a new provider:
 2. Register it in `providers/__init__.py` (`create_provider` factory + `ProviderType` literal).
 3. Add a unit test under `tests/test_core_contracts.py` exercising the contract.
 
-### 4. Validation plugins
+### 4. Validation plugins and confidence
 
-Plugins live in `validation/plugins/` and extend `validation.base.ValidationPlugin`. The engine in `validation/engine.py` runs all registered plugins from `PipelineConfig.validation_plugins` and aggregates results. To add a new check, add a plugin class and reference it from the default config.
+Plugins live in `validation/plugins/` (`core.py`, `fiba_rules.py`, `referee.py` — 13 registered plugins: 9 core, 2 FIBA, 2 referee) and extend `validation.base.ValidationPlugin`. `ValidationEngine` in `validation/engine.py` runs the selected plugins (`None` = core defaults; `"all"` = every registered plugin), emits `validation_warnings`, sets `match_status`, and computes weighted per-section + global `confidence` via `compute_confidence`. Sheet isolation fallbacks are flagged in `meta.preprocess_fallback` and surfaced by `PreprocessFallbackPlugin`.
 
 ### 5. Canonical run layout (artifacts)
 

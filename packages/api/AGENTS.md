@@ -30,8 +30,8 @@ packages/api/
     ├── errors.py              # error_response, engine_error_response
     ├── api_keys.py            # generate/hash/list/find API keys
     ├── auth.py                # Static-bearer auth (local dev)
-    ├── auth_api_key.py        # ocr_live_ API key auth + 60s cache
-    ├── auth_supabase.py       # Supabase JWT verification (HS256 + asymmetric)
+    ├── auth_api_key.py        # ocr_live_ API key auth + locked 1024-entry 60s cache + invalidation
+    ├── auth_supabase.py       # Supabase JWT verification (HS256 + locked 1024-entry 30s asymmetric cache)
     ├── supabase_client.py     # Server-side Supabase client factory
     ├── routes/
     │   ├── runs.py            # /v1/runs/*
@@ -60,7 +60,7 @@ When adding a new router, follow the same conditional pattern based on a `settin
 
 Four auth surfaces, in priority order:
 
-1. **`api_key_auth` middleware** (always on): detects Bearer tokens starting with `ocr_live_` and validates them via `auth_api_key.validate_api_key`. When Supabase is configured, three-part JWTs are validated with `auth_supabase.validate_supabase_session` and `request.state.account_id` is set so run quotas are keyed on the account (`acct:{id}`), shared with that account's `ocr_live_` keys. Shared `ocr_pub_` tokens fall through to the static bearer check. Skips `/v1/me/*`, `/v1/admin/*`, and `OPTIONS`.
+1. **`api_key_auth` middleware** (always on): detects Bearer tokens starting with `ocr_live_` and validates them via `auth_api_key.validate_api_key` (offloaded with `asyncio.to_thread` alongside `validate_supabase_session` and `rate_limiter.check`). When Supabase is configured, three-part JWTs are validated with `auth_supabase.validate_supabase_session` and `request.state.account_id` is set so run quotas are keyed on the account (`acct:{id}`), shared with that account's `ocr_live_` keys. Shared `ocr_pub_` tokens fall through to the static bearer check. Uses exact/prefix boundary checks for `/v1/me` and `/v1/admin`, and skips `OPTIONS`.
 2. **Static bearer** (fallback): `auth.is_authorized(settings.api_key)`.
 3. **Supabase JWT on `/v1/me/*`**: `auth_supabase.require_supabase_user`.
 4. **Admin JWT on `/v1/admin/*`**: `routes.admin.require_admin_account` (session JWT + `public.accounts.role == admin`).
@@ -98,7 +98,7 @@ Error envelopes are: `{ "error": { "code": str, "message": str, "retryable": boo
 
 ### 5. Run repository is filesystem-backed
 
-`services/run_repository.py` implements `RunRepository` over the `runs/` directory. It understands the canonical run layout (see core-engine `artifacts.py`). Adding a new query:
+`services/run_repository.py` implements `RunRepository` over the `runs/` directory (`reserve_run_dir` atomically allocates new run folders -> `409 RUN_ALREADY_EXISTS`; `_write_status` writes atomically via temp file + `os.replace`; `_reconcile_active_status` recovers crashed runs with `result.json` or marks active runs past `OCR_STALE_RUN_SECONDS` as `RUN_STALLED`). Uploads on `POST /v1/runs/upload` enforce bounded chunked reads and JPEG/PNG/WebP magic-byte verification. It understands the canonical run layout (see core-engine `artifacts.py`). Adding a new query:
 
 1. Add a method on `RunRepository` that reads from `runs/<run_id>/...`.
 2. Raise `RunRepositoryError` with a typed `code` on failure (so routes can map it to an HTTP status).

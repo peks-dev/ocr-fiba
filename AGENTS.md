@@ -54,10 +54,9 @@ export NEXT_PUBLIC_SUPABASE_ANON_KEY=...
 | Install workspace | `uv sync` |
 | Run API (dev) | `ocr-api` → `http://127.0.0.1:8000` |
 | Run MCP server (stdio) | `python mcp_server.py` |
-| Run MCP server (HTTP) | `MCP_TRANSPORT=http MCP_HOST=127.0.0.1 MCP_PORT=8001 python -m adapters.mcp.server` |
+| Run MCP server (HTTP) | `MCP_TRANSPORT=http MCP_HOST=127.0.0.1 MCP_PORT=8001 uv run ocr-mcp` (or `python -m ocr_engine_mcp.server`) |
 | Run web dev server | `cd packages/web && npm install && npm run dev` |
-| Web lint | `cd packages/web && npm run lint` |
-| Web build | `cd packages/web && npm run build` |
+| Web lint / test / build | `npm --prefix packages/web run lint`, `npm --prefix packages/web test`, `npm --prefix packages/web run build` |
 | Run all tests | `uv run pytest -q` (or the `python -m unittest` form documented in `README.md`) |
 | Smoke API end-to-end | `python scripts/smoke_async_api.py --image <path>` |
 | Smoke MCP end-to-end | `python scripts/smoke_async_mcp.py --image <path>` |
@@ -73,7 +72,7 @@ export NEXT_PUBLIC_SUPABASE_ANON_KEY=...
 │   ├── mcp/           # MCP server adapter (talks to the API over HTTP)
 │   └── web/           # Next.js 15 web app (Supabase auth, admin + tester demos)
 ├── supabase/
-│   └── migrations/    # Versioned SQL migrations (5 applied)
+│   └── migrations/    # Versioned SQL migrations (9 applied)
 ├── scripts/           # smoke_async_api.py, smoke_async_mcp.py
 ├── tests/             # unittest-style tests (run via pytest)
 ├── runs/, outputs/    # Runtime artifacts (gitignored, never inside packages/)

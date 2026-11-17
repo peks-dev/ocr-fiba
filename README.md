@@ -103,7 +103,7 @@ Or as HTTP:
 
 ```bash
 MCP_TRANSPORT=http MCP_HOST=127.0.0.1 MCP_PORT=8001 \
-  python -m adapters.mcp.server
+  uv run ocr-mcp
 ```
 
 ### Run the web app
@@ -118,12 +118,40 @@ npm run dev
 
 Hosting is on Vercel with the project Root Directory set to `packages/web`. See [`packages/web/README.md`](./packages/web/README.md) for the required env vars and the `OCR_CORS_ORIGINS` follow-up after the first deploy.
 
-### Run the test suite
+### Run the test suites
+
+Python workspace (`core-engine`, `api`, `cli`, `mcp`):
 
 ```bash
+uv run pytest -q
+# or with unittest directly:
 PYTHONPATH=packages/core-engine/src:packages/api/src:packages/cli/src:packages/mcp/src \
   python -m unittest discover -s tests -p 'test_*.py'
 ```
+
+Web app (`packages/web`):
+
+```bash
+npm --prefix packages/web run lint
+npm --prefix packages/web test
+npm --prefix packages/web run build
+```
+
+## Validation plugins & confidence
+
+The core engine runs 13 validation plugins across three categories and emits `validation_warnings`, `match_status`, and a weighted `confidence` object (`score`, `level`, `sections`, `warning_counts`):
+
+- **Core extraction consistency (9, run by default):** `core_quarter_sums`, `core_duplicate_numbers`, `core_ghost_players`, `core_progressive_vs_final`, `core_player_vs_progressive`, `core_progressive_sequence`, `core_entry_and_fouls_consistency`, `core_illegible_marks`, `core_preprocess_fallback`.
+- **FIBA rules (2):** `fiba_player_fouls`, `fiba_team_fouls`.
+- **Referee checks (2):** `referee_player_points_sum`, `referee_winner_consistency`.
+
+Default extractor settings fall back to `openrouter` (`google/gemini-3-flash-preview`), configurable via `OCR_DEFAULT_EXTRACTOR_PROVIDER` and `OCR_DEFAULT_EXTRACTOR_MODEL`.
+
+## Production deployment overview
+
+- **Google Cloud Run (`ocr-api` + `ocr-mcp`):** `scripts/deploy_cloudrun.sh` provisions Artifact Registry, GCS bucket (`gs://<project>-runs` mounted at `/mnt/data`), Secret Manager bindings (`openrouter-api-key`, `ocr-client-token`, optional `supabase-service-key` / `supabase-jwt-secret`), and deploys both services (`OCR_STALE_RUN_SECONDS=900` by default). Pushes to `main` trigger `cloudbuild.yaml` to build and roll out updated images without overwriting Cloud Run env vars/secrets.
+- **Vercel (`packages/web`):** Deploy with Root Directory `packages/web`. Set `NEXT_PUBLIC_OCR_API_URL`, `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY` (or `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY`), `SUPABASE_SERVICE_KEY`, and optionally `NEXT_PUBLIC_SITE_URL` + `AIRTABLE_*`. Then set `OCR_CORS_ORIGINS` on `ocr-api` via `scripts/deploy_cloudrun.sh api`.
+- **Supabase (`supabase/migrations/`):** Contains 9 versioned SQL migrations (tables, RLS policies, `handle_new_user()` trigger restricted to `raw_app_meta_data` for admin promotion, and `private.consume_rate_limit` RPC). Note the comments in `20260620090000_add_admin_invite_demo_access.sql` / `20261116033000_restrict_admin_role_to_app_metadata.sql` and `20261116181000_fix_consume_rate_limit_greatest.sql` regarding remote timestamp names before applying migrations cleanly to an existing database.
 
 ## Git workflow
 
