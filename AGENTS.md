@@ -1,239 +1,60 @@
 # FIBA OCR Engine — AGENTS.md
 
-> **Human contributors** should read [`README.md`](./README.md) instead. This file is the equivalent for AI agents: machine-actionable conventions, scopes, and auto-invoke skills.
+Cross-cutting instructions for AI agents working in `ocr-engine`. Before editing inside a package, also read `packages/<pkg>/AGENTS.md` and [`docs/CODEBASE-GUIDE.md`](docs/CODEBASE-GUIDE.md).
 
-## How to use this file
+## Non-Negotiable Guardrails
 
-1. Read this root `AGENTS.md` first — it establishes cross-cutting rules.
-2. Read the target package's `AGENTS.md` (e.g. `packages/api/AGENTS.md`) before modifying code there.
-3. Skills in `.agents/skills/` (and the bundled `agent-skill-creation` skill) override the generic patterns below when they conflict.
-4. The human source of truth is `README.md`. If you find a contradiction, the `README.md` wins for product-level decisions; this file wins for operational conventions.
+1. **Hard dependency direction:**
+   - `ocr_engine_core` **NEVER** imports `ocr_engine_api`, `ocr_engine_cli`, `ocr_engine_mcp`, FastAPI, or Supabase.
+   - `ocr_engine_mcp` **NEVER** imports `ocr_engine_core`, `ocr_engine_api`, or `ocr_engine_cli` (HTTP client only via `OcrApiClient`).
+   - `ocr_engine_api` **NEVER** imports `ocr_engine_cli` or `ocr_engine_mcp`.
+2. **Trunk-based Git workflow:** Never commit directly to `main` or `development`. Branch from `development` (`<prefix>/<area>-<slug>`), keep atomic conventional commits (`<type>(<scope>): <description>`), and merge back with `--ff-only` (see [`CONTRIBUTING.md`](CONTRIBUTING.md)). Commit only with explicit user authorization.
+3. **Never commit runtime or local state:** Exclude `runs/`, `outputs/`, `dataset/results*`, `.env*` (except `.env*.example`), `.server/`, `.server-token`, `.cloud-token`, `.cloud-image`, `.venv/`, `.graphify-venv/`, `node_modules/`, `.next/`, `.codex/`, `.devin/`, `.agents/`.
+4. **Canonical contracts live in [`DOCS.md`](DOCS.md):** Document verified current behavior, never duplicate full API/env/schema tables elsewhere, and keep sibling surfaces in [Documentation Authority](DOCS.md#documentation-authority) aligned.
 
-## Project summary
+## Graphify (Required Repository Knowledge)
 
-Monorepo that extracts structured basketball game data from FIBA score sheet images. The pipeline is exposed through a FastAPI HTTP API, a CLI, an MCP server adapter, and a Next.js web app. Authentication is Supabase-backed (with a static-bearer fallback for local dev).
+Graphify `0.9.26` is required (see [`docs/graphify.md`](docs/graphify.md)); canonical outputs live in `graphify-out/`.
 
-## Stack
+- Start architecture, dependency, or impact work with `graphify query`, `graphify path`, or `graphify explain`, then verify against source files.
+- After logical changes to code, tests, scripts, or architecture docs:
+  1. Run applicable tests and lint.
+  2. Run `./scripts/graphify-update` and `./scripts/graphify-check`.
+  3. Review the `graphify-out/` diff (`$graphify . --update` for semantic doc changes).
+- Never edit `graphify-out/` manually, never install Graphify Git hooks, and never auto-stage/commit.
 
-- **Language (engine + adapters):** Python ≥ 3.12
-- **Workspace manager:** `uv` (Astral)
-- **HTTP server:** FastAPI ≥ 0.115, uvicorn
-- **OCR providers:** openrouter, docstrange, glm, gemini, interfaze, qubrid (all via `ocr_engine_core.providers`)
-- **Validation:** `validation` engine with pluggable plugins
-- **CLI entry points:** `ocr-api`, `ocr-run`, `ocr-dataset`, `ocr-binarize`, `ocr-progressive-score`, `ocr-mcp`
-- **Web:** Next.js 15 (App Router) + React 19 + Tailwind CSS v4 + Supabase SSR
-- **DB:** Supabase (Postgres) with versioned SQL migrations in `supabase/migrations/`
-- **Tests:** `pytest` against the workspace's PYTHONPATH
+## Engram (Shared Technical Memory)
 
-## Environment setup
+- Engram is available only when opened through its local MCP server. Before saving, run `mem_current_project` and confirm `ocr-engine`.
+- Save architectural decisions, bugs, configurations, and discoveries; never store secrets or personal notes.
+- `.engram/` is an explicit exception for Git Sync: version only sync artifacts under `.engram/`, never `~/.engram/engram.db`.
 
-```bash
-# one-time
-uv sync
+## Repository Skills (`skills/`)
 
-# required env (see .env.example for the full list)
-export OCR_ENGINE_API_KEY=dev-local-token
-export OCR_ENV=development
-export OCR_RUNS_DIR=runs
-export OCR_MAX_UPLOAD_MB=20
-# at least one provider key
-export OPENROUTER_API_KEY=...
-```
+Load matching skills **before** writing code or docs (full list: [`skills/catalog.md`](skills/catalog.md)):
 
-When working in `packages/web`, also set:
-
-```bash
-export NEXT_PUBLIC_SUPABASE_URL=...
-export NEXT_PUBLIC_SUPABASE_ANON_KEY=...
-```
-
-## Commands (verified to work)
-
-| Action | Command |
-|---|---|
-| Install workspace | `uv sync` |
-| Run API (dev) | `ocr-api` → `http://127.0.0.1:8000` |
-| Run MCP server (stdio) | `python mcp_server.py` |
-| Run MCP server (HTTP) | `MCP_TRANSPORT=http MCP_HOST=127.0.0.1 MCP_PORT=8001 uv run ocr-mcp` (or `python -m ocr_engine_mcp.server`) |
-| Run web dev server | `cd packages/web && npm install && npm run dev` |
-| Web lint / test / build | `npm --prefix packages/web run lint`, `npm --prefix packages/web test`, `npm --prefix packages/web run build` |
-| Run all tests | `uv run pytest -q` (or the `python -m unittest` form documented in `README.md`) |
-| Smoke API end-to-end | `python scripts/smoke_async_api.py --image <path>` |
-| Smoke MCP end-to-end | `python scripts/smoke_async_mcp.py --image <path>` |
-
-## Repository layout
-
-```text
-.
-├── packages/
-│   ├── core-engine/   # OCR domain library: pipeline, providers, schemas, validation, toolbox
-│   ├── api/           # FastAPI HTTP adapter (depends on core-engine)
-│   ├── cli/           # Command-line tools (depends on core-engine)
-│   ├── mcp/           # MCP server adapter (talks to the API over HTTP)
-│   └── web/           # Next.js 15 web app (Supabase auth, admin + tester demos)
-├── supabase/
-│   └── migrations/    # Versioned SQL migrations (9 applied)
-├── scripts/           # smoke_async_api.py, smoke_async_mcp.py
-├── tests/             # unittest-style tests (run via pytest)
-├── runs/, outputs/    # Runtime artifacts (gitignored, never inside packages/)
-└── dataset/           # Test datasets
-```
-
-### Hard dependency rule
-
-```text
-ocr-engine-core  ←  ocr-engine-api  ←  ocr-engine-mcp
-ocr-engine-core  ←  ocr-engine-cli
-ocr-engine-web   (independent; talks to API over HTTP)
-```
-
-`ocr_engine_core` **must not** import `ocr_engine_api`, `ocr_engine_cli`, or `ocr_engine_mcp`. The core stays pure. This rule is enforced by the import direction in code reviews; there is no automated linter for it yet.
-
-## Git workflow
-
-This repo uses **trunk-based** with short-lived branches and fast-forward merges into `development`. Detailed policy is in `README.md` § Git workflow. The agent-facing summary is:
-
-### Branching
-
-- `main` and `development` are protected: **no direct commits**.
-- Working branches: `feat/<area>-<slug>`, `fix/<area>-<slug>`, `chore/<area>-<slug>`, `docs/<area>-<slug>`, `refactor/<area>-<slug>`, `test/<area>-<slug>`.
-- Always create from `development` and merge back with `--ff-only`:
-
-```bash
-git switch -c feat/web-single-player-demo development
-# work, atomic commits
-git switch development && git merge --ff-only feat/web-single-player-demo
-git branch -d feat/web-single-player-demo
-```
-
-### Commit format
-
-```text
-<type>(<scope>[,<scope>...]): <imperative description>
-```
-
-- **Types:** `feat`, `fix`, `refactor`, `docs`, `test`, `chore`, `perf`, `style`, `ci`
-- **Scopes (valid areas):** `core`, `api`, `cli`, `mcp`, `web`, `supabase`, `repo`
-- Multiple scopes allowed for cross-package changes.
-- `repo` is for changes that don't belong to a single package (e.g. `pyproject.toml`, `uv.lock`, root scripts).
-
-Examples seen in real history:
-
-```text
-feat(api,supabase): add Supabase auth, API keys, and /v1/me/* endpoints
-feat(mcp): add async run tools
-refactor(api,mcp): remove-legacy-sync
-chore(repo): restructure docs into per-package layout and add root README
-```
-
-### Atomicity
-
-- One commit = one logical change. Never mix a refactor with a feature.
-- Stage with `git add -p` or by explicit file path. Avoid `git add .` without reviewing.
-
-## Project conventions (must follow)
-
-### Python
-
-- All public modules use `from __future__ import annotations`.
-- Type hints everywhere on public surfaces. Pydantic models for input/output schemas in `ocr_engine_api.schemas` and `ocr_engine_core.types`.
-- Errors raised by the core engine extend `OcrEngineError` (see `ocr_engine_core.exceptions`). Convert them in the API layer via `errors.engine_error_response` to HTTP 422.
-- Configuration objects use `@dataclass` (see `PipelineConfig` in `core-engine`).
-- Provider implementations live in `ocr_engine_core/providers/` and must inherit from `providers.base.Provider`.
-
-### FastAPI (api package)
-
-- `create_app()` is the composition root in `ocr_engine_api/main.py`. Routes are mounted from `routes/` and registered conditionally based on `settings.has_supabase`.
-- Auth is layered: `api_key_auth` middleware → optional Supabase JWT for `/v1/me/*` (handled inside `routes/me.py`).
-- Standard error envelope: `error_response(status_code, code, message, retryable=False, details=None)`. Never return raw `HTTPException` to clients.
-- Public responses are sanitized via `responses.sanitize_for_public_response` before leaving the API.
-
-### Next.js (web package)
-
-- App Router only (no `pages/`). RSC by default; mark `'use client'` only for components that need state/effects.
-- All Supabase I/O goes through `lib/supabase/server.ts` (RSC) or `lib/supabase/client.ts` (browser). Never instantiate `createClient` directly in a component.
-- Admin routes live under `app/admin/*` and rely on `admin/layout.tsx` plus `requireAdminAccount()`. Tester demos live under `app/test/*`; each demo segment uses `requireDemoAccess()` so testers can only open their assigned demo while admins can access all demos. Do not duplicate auth checks inside individual demo pages.
-- UI feedback uses `sonner` toasts. Existing helpers: see `components/nav.tsx` for the `signOut` pattern.
-
-### MCP
-
-- The MCP server is an **HTTP client** of the API; it does not import the core. All OCR work happens server-side.
-- Tools, resources, and prompts are defined in `ocr_engine_mcp/server.py`. Business logic for each tool is in `tools.py` and uses `OcrApiClient` from `client.py`.
-- Error mapping uses `tools.handle_api_error` — never re-raise `OcrApiError` to MCP callers without translating it.
-
-## Auto-invoke skills
-
-When the request matches the action in the left column, load the skill in the right column **before** writing code.
-
-| Action | Skill |
-|---|---|
-| Creating or editing FastAPI routes in `packages/api` | `next-best-practices` for web side; no first-party skill yet for FastAPI, follow conventions in this file |
-| Creating/editing React/Next.js components in `packages/web` | `next-best-practices` + `vercel-react-best-practices` |
-| Refactoring for performance in `packages/web` | `react-performance-optimization` |
-| Working with Tailwind design tokens / system | `design-tailwind-system` |
-| Adding motion to web UI | `design-motion-animation` + the appropriate `library-gsap-*` skill |
-| Doing git operations (commit, branch, merge) | `git-commit-creation` |
-| Before declaring a feature "done" (security check) | `audit-security-implementation` |
-| Editing system configs / installing CLI tools | `sys-config-context` |
-| Creating/updating skills | `agent-skill-creation` (the bundled one) |
-| Obsidian note management | `obsidian-core` (load first per its rules) |
-| Researching APIs/libraries | `research-core` (load first per its rules) |
-
-## Available first-party skills (located in each package)
-
-After Phase B, the following skills live inside this repo (see `packages/<x>/skills/SKILL.md`):
-
-- `packages/core-engine/skills/ocr-run-lifecycle/SKILL.md` — how the canonical run layout, RunContext, and RunTracer work
-- `packages/api/skills/api-error-envelope/SKILL.md` — how to emit a structured error from any route
-- `packages/api/skills/api-key-auth/SKILL.md` — bearer API key flow including caching and Supabase fallback
-
-These are the **only** SKILL.md files justified by repeated patterns (each appears in 3+ call sites in their domain). New SKILL.md files should not be created speculatively.
-
-## Domains / packages
-
-| Domain | Path | Owns |
+| Skill | Trigger | Path |
 |---|---|---|
-| Core OCR engine | `packages/core-engine/` | Pipeline, providers, validation, schemas, tracing |
-| HTTP API | `packages/api/` | FastAPI app, auth, runs, /v1/me/*, sanitization |
-| CLI | `packages/cli/` | Local CLI entry points |
-| MCP server | `packages/mcp/` | Tools, resources, prompts that wrap the API |
-| Web app | `packages/web/` | Next.js 15 app, Supabase auth, admin API key/invite management, tester demos |
-| Database | `supabase/` | Versioned SQL migrations |
+| `architecture-guardrails` | Package boundaries, imports, auth/trust boundaries | [`skills/architecture-guardrails/SKILL.md`](skills/architecture-guardrails/SKILL.md) |
+| `docs-alignment` | Changes affecting endpoints, tools, CLI flags, env vars, or docs | [`skills/docs-alignment/SKILL.md`](skills/docs-alignment/SKILL.md) |
+| `commit-hygiene` | Branch creation, staging, commits, or merging into `development` | [`skills/commit-hygiene/SKILL.md`](skills/commit-hygiene/SKILL.md) |
+| `testing-coverage` | Implementing behavior changes or verifying before merge | [`skills/testing-coverage/SKILL.md`](skills/testing-coverage/SKILL.md) |
+| `project-structure` | Creating new modules, routes, pages, migrations, or scripts | [`skills/project-structure/SKILL.md`](skills/project-structure/SKILL.md) |
+| `ocr-run-lifecycle` | Pipeline phases, `RunContext`/`ArtifactStore`, `PipelineConfig` | [`skills/ocr-run-lifecycle/SKILL.md`](skills/ocr-run-lifecycle/SKILL.md) |
+| `api-error-envelope` | FastAPI error responses or `OcrEngineError` HTTP translation | [`skills/api-error-envelope/SKILL.md`](skills/api-error-envelope/SKILL.md) |
+| `api-key-auth` | `ocr_live_` keys, `api_key_auth` middleware, `/v1/me`, `/v1/admin`, JWT auth | [`skills/api-key-auth/SKILL.md`](skills/api-key-auth/SKILL.md) |
 
+## Stack & External Skills
 
-## Graphify — required repository knowledge
+When installed in your agent environment, also load stack skills on matching work:
+- **Next.js / React (`packages/web`):** `next-best-practices` + `vercel-react-best-practices`; `react-performance-optimization` for performance; `design-tailwind-system` for Tailwind tokens; `design-motion-animation` + `library-gsap-*` for motion.
+- **Python optimization:** `python-codebase-optimization`.
+- **Pre-completion security check:** `audit-security-implementation`.
+- **Tooling & research:** `git-commit-creation`, `sys-config-context`, `agent-skill-creation`, `obsidian-core`, `research-core`.
 
-Graphify `0.9.26` is required. Its project-scoped skill lives in
-`.agents/skills/graphify/`; canonical outputs are versioned in `graphify-out/`.
+## Quick Pointers
 
-At the start of architecture, dependency, or impact work, use `graphify query`,
-`graphify path`, or `graphify explain`. Graphify is the initial map, not a
-replacement for checking source files.
-
-After a logical unit that changes code, tests, scripts, or architecture docs:
-
-1. Run the applicable tests and lint.
-2. Run `./scripts/graphify-update`.
-3. Run `./scripts/graphify-check`.
-4. Review the canonical Graphify diff.
-
-Use `$graphify . --update` for semantic documentation changes. Do not edit
-`graphify-out/` manually or install Graphify Git hooks. Repository scripts never
-stage or commit files, and agents commit only with explicit user authorization.
-If the exact version is unavailable, run `./scripts/setup-graphify`.
-
-Version `graph.json`, `graph.html`, `GRAPH_REPORT.md`, and `manifest.json`.
-Ignore caches, local interpreter/root markers, internal labels, costs, locks,
-and backups.
-
-## Engram — memoria técnica compartida
-
-- Engram solo está disponible al abrir este repositorio mediante su MCP local. Antes del primer guardado, ejecuta `mem_current_project` y confirma `ocr-engine`.
-- Guarda decisiones, bugs, configuraciones y descubrimientos técnicos; no guardes secretos ni memoria personal.
-- `.engram/` es una excepción explícita para Git Sync: versiona únicamente sus artefactos de sincronización y nunca `~/.engram/engram.db`.
-
-## Out of scope (do not touch)
-
-- `runs/`, `outputs/`, `dataset/results/` — runtime artifacts, gitignored.
-- `.venv/`, `__pycache__/`, `.pytest_cache/`, `node_modules/`, `.next/` — build/cache artifacts.
-- `.codex/`, `.devin/`, `.agents/` — local agent state, not part of the product.
+- Technical reference & authority: [`DOCS.md`](DOCS.md)
+- Codebase ownership & flows: [`docs/CODEBASE-GUIDE.md`](docs/CODEBASE-GUIDE.md) · [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md)
+- Git, verification & conventions: [`CONTRIBUTING.md`](CONTRIBUTING.md)
+- Per-package stubs: `packages/core-engine/AGENTS.md`, `packages/api/AGENTS.md`, `packages/cli/AGENTS.md`, `packages/mcp/AGENTS.md`, `packages/web/AGENTS.md`

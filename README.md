@@ -1,244 +1,141 @@
 # FIBA OCR Engine
 
-Monorepo for the FIBA scoresheet OCR engine. Extracts structured basketball game data from score sheet images and exposes the pipeline through an HTTP API, a CLI, an MCP server, and a Next.js web app.
+Monorepo for extracting structured, validated basketball game data from FIBA scoresheet images. A pure-Python domain engine (`ocr-engine-core`) powers an async FastAPI HTTP service (`ocr-engine-api`), local CLI commands (`ocr-engine-cli`), an MCP server (`ocr-engine-mcp`), and a Next.js 15 web application (`packages/web`).
 
-> **AI agents**: read [`AGENTS.md`](./AGENTS.md) instead — it contains the same project knowledge plus machine-actionable conventions, scopes, and auto-invoke skills.
+> **AI agents:** start with [`AGENTS.md`](./AGENTS.md) for non-negotiable guardrails and skill triggers, and [`docs/CODEBASE-GUIDE.md`](./docs/CODEBASE-GUIDE.md) for package ownership.
 
-## Repository layout
+---
 
-```text
-.
-├── packages/
-│   ├── core-engine/   # OCR domain library: pipeline, providers, schemas, validation
-│   ├── api/           # FastAPI HTTP adapter (depends on core-engine)
-│   ├── cli/           # Command-line tools (depends on core-engine)
-│   ├── mcp/           # MCP server adapter (talks to the API over HTTP)
-│   └── web/           # Next.js 15 web app (Supabase auth, admin, tester demos)
-├── supabase/          # Versioned SQL migrations
-├── scripts/           # Smoke tests and ops utilities
-├── runs/              # Runtime output (gitignored, not in packages)
-├── outputs/           # Local OCR outputs (gitignored)
-└── dataset/           # Test datasets
-```
-
-### Dependency direction
+## How it fits together
 
 ```text
-ocr-engine-core  ←  ocr-engine-api  ←  ocr-engine-mcp
-ocr-engine-core  ←  ocr-engine-cli
-ocr-engine-web   (independent; talks to the API over HTTP)
+  Web App (packages/web)     MCP Server (packages/mcp)     CLI (packages/cli)
+    Next.js 15 + Supabase      FastMCP (pure HTTP client)    ocr-run / ocr-dataset
+           │                              │                          │
+           └──────────── HTTPS ───────────┘                          │
+                           │                                         │
+                           ▼                                         │
+                   HTTP API (packages/api)                           │
+                     FastAPI · Auth · Rate limit                     │
+                     Sanitization · RunRepository                    │
+                           │                                         │
+                           └──────────────────┬──────────────────────┘
+                                              ▼
+                               Core Engine (packages/core-engine)
+                                 7-phase pipeline · ModelProviders
+                                 13 validation plugins · Confidence
+                                              │
+                                              ▼
+                               runs/<run_id>/ (canonical run layout)
 ```
 
-Hard rule: `ocr_engine_core` must **never** import `ocr_engine_api`, `ocr_engine_cli`, or `ocr_engine_mcp`. The core stays pure.
+> **Core stays pure:** `ocr_engine_core` never imports `ocr_engine_api`, `ocr_engine_cli`, or `ocr_engine_mcp`, and `ocr_engine_mcp` talks strictly to the API over HTTP.
 
-## Per-package documentation
+---
 
-- MCP server: [`packages/mcp/docs/mcp-server.md`](./packages/mcp/docs/mcp-server.md)
-- Web app (local + Vercel): [`packages/web/README.md`](./packages/web/README.md)
-- Other packages: each has its own `AGENTS.md` for AI-agent context.
+## Packages
 
-## Quickstart (local development)
+| Package / Area | Purpose | Docs |
+|---|---|---|
+| `packages/core-engine` | 7-phase OCR pipeline, `OcrToolbox`, 6 model providers, 13 validation plugins, `confidence`, `RunTracer`, `ArtifactStore` | [Core Pipeline](docs/codebase/core-pipeline.md) |
+| `packages/api` | FastAPI service (`/v1/runs/*`, `/v1/me/*`, `/v1/admin/*`), layered auth, rate limiting, `RunRepository` | [API & Auth](docs/codebase/api-and-auth.md) |
+| `packages/cli` | Local console scripts (`ocr-run`, `ocr-dataset`, `ocr-binarize`, `ocr-progressive-score`) | [Adapters & Web](docs/codebase/adapters-and-web.md#1-cli-packagescli-ocr_engine_cli) |
+| `packages/mcp` | `FastMCP` server (stdio / Streamable HTTP) wrapping `ocr-engine-api` with 10 tools, 4 resources, and 3 prompts | [MCP Server](packages/mcp/docs/mcp-server.md) |
+| `packages/web` | Next.js 15 App Router UI: Supabase login/invites, admin API key panel, `/test/{player,referee,club}` demos | [Web README](packages/web/README.md) |
+| `supabase/` | 9 Postgres SQL migrations (`accounts`, `api_keys`, `admin_invitations`, RLS, `consume_rate_limit` RPC) | [DOCS.md § Supabase](DOCS.md#supabase-schema) |
+| `evaluation/` | Full-sheet and focused ground-truth accuracy evaluators | [Evaluation Guide](docs/EVALUATION.md) |
+
+---
+
+## Get started (local development)
 
 ### Prerequisites
 
-- Python ≥ 3.12
-- [`uv`](https://docs.astral.sh/uv/) (workspace manager)
-- Node.js ≥ 20 (only for `packages/web`)
+- Python `>= 3.12`
+- [`uv`](https://docs.astral.sh/uv/)
+- Node.js `>= 20` (for `packages/web`)
 
-### Environment
-
-Copy `.env.example` to `.env` and fill in what you need:
+### 1. Install and configure
 
 ```bash
+uv sync
 cp .env.example .env
 ```
 
-At minimum for OCR runs:
+Set at least one provider key (e.g. `OPENROUTER_API_KEY`) and local API defaults in `.env`:
 
 ```bash
-# At least one provider key
 OPENROUTER_API_KEY=...
-# Local API auth fallback (development)
 OCR_ENGINE_API_KEY=dev-local-token
 OCR_ENV=development
 OCR_RUNS_DIR=runs
 OCR_MAX_UPLOAD_MB=20
 ```
 
-For the Supabase-backed web app, also set:
+For Supabase-backed endpoints (`/v1/me/*`, `/v1/admin/*`, `ocr_live_` keys) and `packages/web`, also configure `SUPABASE_URL`, `SUPABASE_SERVICE_KEY`, `SUPABASE_PUBLISHABLE_KEY`, and `SUPABASE_JWT_SECRET` (see [DOCS.md § Environment Variables](DOCS.md#environment-variables)).
+
+### 2. Run services and tools
 
 ```bash
-SUPABASE_URL=...
-SUPABASE_SERVICE_KEY=...
-SUPABASE_PUBLISHABLE_KEY=...
-SUPABASE_JWT_SECRET=...
-```
-
-### Install
-
-```bash
-uv sync
-```
-
-### Run the API
-
-```bash
+# HTTP API -> http://127.0.0.1:8000
 ocr-api
-# → http://127.0.0.1:8000
-```
 
-### Run a CLI OCR job
+# Single scoresheet via CLI (positional image argument)
+ocr-run path/to/scoresheet.jpg --run-layout
 
-```bash
-ocr-run --image path/to/score-sheet.jpg
-```
-
-### Run the MCP server (stdio)
-
-```bash
+# MCP server (stdio)
 python mcp_server.py
+
+# MCP server (Streamable HTTP -> http://127.0.0.1:8001/mcp)
+MCP_TRANSPORT=http MCP_HOST=127.0.0.1 MCP_PORT=8001 uv run ocr-mcp
+
+# Web app -> http://localhost:3000
+cd packages/web && cp .env.local.example .env.local && npm install && npm run dev
 ```
 
-Or as HTTP:
+### 3. Run verification suites
 
 ```bash
-MCP_TRANSPORT=http MCP_HOST=127.0.0.1 MCP_PORT=8001 \
-  uv run ocr-mcp
-```
-
-### Run the web app
-
-```bash
-cd packages/web
-cp .env.local.example .env.local   # then fill in values
-npm install
-npm run dev
-# → http://localhost:3000
-```
-
-Hosting is on Vercel with the project Root Directory set to `packages/web`. See [`packages/web/README.md`](./packages/web/README.md) for the required env vars and the `OCR_CORS_ORIGINS` follow-up after the first deploy.
-
-### Run the test suites
-
-Python workspace (`core-engine`, `api`, `cli`, `mcp`):
-
-```bash
+# Python workspace (core-engine, api, cli, mcp)
 uv run pytest -q
-# or with unittest directly:
-PYTHONPATH=packages/core-engine/src:packages/api/src:packages/cli/src:packages/mcp/src \
-  python -m unittest discover -s tests -p 'test_*.py'
-```
 
-Web app (`packages/web`):
-
-```bash
+# Web app (lint, unit tests, production build)
 npm --prefix packages/web run lint
 npm --prefix packages/web test
 npm --prefix packages/web run build
+
+# End-to-end smoke checks (requires running services + provider key)
+python scripts/smoke_async_api.py --image path/to/scoresheet.jpg
+python scripts/smoke_async_mcp.py --image path/to/scoresheet.jpg
 ```
 
-## Validation plugins & confidence
+---
 
-The core engine runs 13 validation plugins across three categories and emits `validation_warnings`, `match_status`, and a weighted `confidence` object (`score`, `level`, `sections`, `warning_counts`):
+## For AI agents
 
-- **Core extraction consistency (9, run by default):** `core_quarter_sums`, `core_duplicate_numbers`, `core_ghost_players`, `core_progressive_vs_final`, `core_player_vs_progressive`, `core_progressive_sequence`, `core_entry_and_fouls_consistency`, `core_illegible_marks`, `core_preprocess_fallback`.
-- **FIBA rules (2):** `fiba_player_fouls`, `fiba_team_fouls`.
-- **Referee checks (2):** `referee_player_points_sum`, `referee_winner_consistency`.
+1. Read [`AGENTS.md`](./AGENTS.md) for cross-cutting guardrails, Graphify/Engram rules, and skill triggers.
+2. Read the target package's `AGENTS.md` (`packages/<pkg>/AGENTS.md`) and load matching [`skills/`](skills/catalog.md) before writing code.
+3. Consult [`docs/CODEBASE-GUIDE.md`](docs/CODEBASE-GUIDE.md) to confirm package ownership and [`DOCS.md`](DOCS.md) for canonical contracts.
 
-Default extractor settings fall back to `openrouter` (`google/gemini-4-carbon` with `{"effort": "low", "exclude": true}`), configurable via `OCR_DEFAULT_EXTRACTOR_PROVIDER`, `OCR_DEFAULT_EXTRACTOR_MODEL`, and `OCR_DEFAULT_EXTRACTOR_REASONING`.
+---
 
-## Production deployment overview
+## Documentation
 
-- **Google Cloud Run (`ocr-api` + `ocr-mcp`):** `scripts/deploy_cloudrun.sh` provisions Artifact Registry, GCS bucket (`gs://<project>-runs` mounted at `/mnt/data`), Secret Manager bindings (`openrouter-api-key`, `ocr-client-token`, optional `supabase-service-key` / `supabase-jwt-secret`), and deploys both services (`OCR_STALE_RUN_SECONDS=900` by default). Pushes to `main` trigger `cloudbuild.yaml` to build and roll out updated images without overwriting Cloud Run env vars/secrets.
-- **Vercel (`packages/web`):** Deploy with Root Directory `packages/web`. Set `NEXT_PUBLIC_OCR_API_URL`, `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY` (or `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY`), `SUPABASE_SERVICE_KEY`, and optionally `NEXT_PUBLIC_SITE_URL` + `AIRTABLE_*`. Then set `OCR_CORS_ORIGINS` on `ocr-api` via `scripts/deploy_cloudrun.sh api`.
-- **Supabase (`supabase/migrations/`):** Contains 9 versioned SQL migrations (tables, RLS policies, `handle_new_user()` trigger restricted to `raw_app_meta_data` for admin promotion, and `private.consume_rate_limit` RPC). Note the comments in `20260620090000_add_admin_invite_demo_access.sql` / `20261116033000_restrict_admin_role_to_app_metadata.sql` and `20261116181000_fix_consume_rate_limit_greatest.sql` regarding remote timestamp names before applying migrations cleanly to an existing database.
+| Where to go | What you'll find |
+|---|---|
+| **[Technical Reference (`DOCS.md`)](DOCS.md)** | Canonical contracts: env vars, HTTP API, MCP surface, CLI flags, plugins, run layout, Supabase schema, and Documentation Authority Matrix |
+| **[Architecture](docs/ARCHITECTURE.md)** | End-to-end async flow, 7-phase pipeline, run lifecycle, stale-run recovery, auth layers, and validation model |
+| **[Codebase Guide](docs/CODEBASE-GUIDE.md)** | 90-second mental model, reading path, [Repository Map](docs/codebase/repository-map.md), [Maintainer Playbook](docs/codebase/maintainer-playbook.md), and [Reference Map](docs/codebase/reference-map.md) |
+| **[Deployment & Ops](docs/DEPLOYMENT.md)** | `scripts/serve.sh`, Cloud Run + GCS + Cloud Build (`cloudbuild.yaml`), Vercel + CORS, and Supabase ops scripts |
+| **[Dataset Evaluation](docs/EVALUATION.md)** | Ground-truth comparison scripts and section evaluators (`evaluation/`) |
+| **[Graphify Guide](docs/graphify.md)** | Pinned Graphify `0.9.26` setup, update, and verification workflow |
+| **[Contributing](CONTRIBUTING.md)** | Trunk-based Git workflow (`development`, `--ff-only`, conventional commits), testing, and skill authoring standard |
 
-## Git workflow
-
-This repository uses a **trunk-based** model with short-lived feature branches and fast-forward merges.
-
-### Branches
-
-| Branch | Purpose | Direct commits? |
-|---|---|---|
-| `main` | Stable, production-ready snapshots. | ❌ Prohibited |
-| `development` | Active integration branch. The default target for merges. | ❌ Prohibited |
-| `feat/*`, `fix/*`, `chore/*`, `docs/*`, `refactor/*`, `test/*` | Short-lived working branches. | ✅ |
-
-### Lifecycle of a change
-
-```text
-development ──switch -c─→ feat/<area>-<slug>
-                              │
-                              ▼
-                       commits atómicos
-                              │
-                              ▼
-                    lint + tests + smoke
-                              │
-                              ▼
-            merge a development con --ff-only
-                              │
-                              ▼
-                    git branch -d feat/<area>-<slug>
-```
-
-Example:
-
-```bash
-git switch -c feat/web-single-player-demo development
-# … work, atomic commits …
-git switch development
-git merge --ff-only feat/web-single-player-demo
-git branch -d feat/web-single-player-demo
-```
-
-### Branch naming
-
-```text
-<prefix>/<area>-<short-slug>
-```
-
-Prefixes: `feat`, `fix`, `chore`, `docs`, `refactor`, `test`.
-Areas: `core`, `api`, `cli`, `mcp`, `web`, `supabase`, `repo`.
-
-Examples:
-
-- `feat/web-single-player-demo`
-- `fix/mcp-timeout-on-large-image`
-- `docs/api-runs-endpoint`
-- `chore/repo-bump-deps`
-
-### Commit messages
-
-Format: `<type>(<scope>): <imperative description>`
-
-Types: `feat`, `fix`, `refactor`, `docs`, `test`, `chore`, `perf`, `style`, `ci`.
-Scopes: `core`, `api`, `cli`, `mcp`, `web`, `supabase`, `repo`.
-
-Multiple scopes are allowed when a change spans packages:
-
-```text
-feat(api,supabase): add account creation trigger
-refactor(core,api): extract pipeline options
-```
-
-### Releases and tags
-
-Not used yet. We will adopt semantic versioning (`vMAJOR.MINOR.PATCH`) and git tags only when the engine ships to real production users. Until then, `main` is just the most recent stable snapshot.
-
-### Rules of thumb
-
-- One commit = one logical change. Never mix a refactor with a new feature.
-- Run `git diff` and `git diff --staged` before every commit. Avoid `git add .` without reviewing.
-- Never rewrite published history (no force-push to `main` or `development`).
-- If a branch is no longer fast-forwardable, rebase it onto `development` instead of merging `development` into it.
+---
 
 ## Contributing
 
-- Read the relevant `packages/<x>/AGENTS.md` before modifying a package.
-- AI agents should load `AGENTS.md` (root) and the target package's `AGENTS.md` before writing code.
-- Run the test suite and any package-specific smoke scripts (`scripts/smoke_async_api.py`, `scripts/smoke_async_mcp.py`) before opening a merge.
+Branches start from `development` and merge back with `--ff-only` (direct commits to `main` and `development` are prohibited). See [`CONTRIBUTING.md`](CONTRIBUTING.md) for the full Git, testing, and Graphify workflow.
 
 ## License
 
