@@ -1,565 +1,582 @@
-# Graph Report - ocr-engine  (2026-11-17)
+# Graph Report - ocr-engine  (2026-11-18)
 
 ## Corpus Check
-- 232 files · ~96,814 words
+- 257 files · ~105,351 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 2170 nodes · 4670 edges · 117 communities (106 shown, 11 thin omitted)
-- Extraction: 94% EXTRACTED · 6% INFERRED · 0% AMBIGUOUS · INFERRED: 283 edges (avg confidence: 0.51)
+- 2045 nodes · 4622 edges · 118 communities (109 shown, 9 thin omitted)
+- Extraction: 94% EXTRACTED · 6% INFERRED · 0% AMBIGUOUS · INFERRED: 287 edges (avg confidence: 0.52)
 - Token cost: 0 input · 0 output
 
-## Graph Freshness
-- Built from commit: `64fc6932`
-- Run `git rev-parse HEAD` and compare to check if the graph is stale.
-- Run `graphify update .` after code changes (no API cost).
-
 ## Community Hubs (Navigation)
-- club-demo/capture-client.tsx
-- OcrApiClient
-- single-player-demo/capture-client.tsx
-- .detect_and_crop_team_fouls
-- create_provider
-- devDependencies
-- HttpJsonProvider
-- ProviderInvalidResponseError
-- team_markdown_parser.py
-- output_builder.py
-- ApiTest
-- PipelineConfig
-- reconcile-sections.tsx
-- compilerOptions
-- FIBA OCR Engine — AGENTS.md
-- plugins/__init__.py
-- league-store.ts
-- extractor.py
-- OpenrouterProvider
-- Quickstart (local development)
-- _StubProvider
-- validation/__init__.py
-- get_api_settings
-- Artifact
-- OcrEngineError
-- FakeSession
-- exceptions.py
-- TokenUsage
-- MatchStatusTest
-- enhance_sections
-- StepTrace
-- account.ts
-- McpTokenVerifier
-- reconcile-client.tsx
-- preprocessor.py
-- OcrToolbox
-- api.ts
-- smoke_async_api.py
-- sanitize_for_public_response
-- submit-client.tsx
-- main.py
-- ValidationPlugin
-- server.py
-- api — AGENTS.md
-- create_app
-- generate_api_key
-- cv_progressive_score.py
-- core-engine — AGENTS.md
-- evaluate_dataset.py
-- web — AGENTS.md
-- ProviderUsage
-- ValidationEngine
-- validation.ts
-- cli — AGENTS.md
-- create_warning
-- OcrApiError
-- deploy_cloudrun.sh
-- RunRepository
-- smoke_async_mcp.py
-- FIBA OCR Engine
-- API Key Auth
-- OCR Run Lifecycle
-- Extractor
-- MCP Server
-- referee-demo/types.ts
+-   Init  
+- Evaluate Dataset
+- Evaluate Entry Marks
+- Evaluate Header
+- Evaluate Player Fouls
+- Evaluate Player Points
+- Evaluate Progressive Score
+- Evaluate Team Identity
+- Server
+- Pyproject
+-   Init  
+- Api Keys
+- Test Auth
+- Me
+- Auth Api Key
+- Auth Supabase
+- Test Api
+- Test Auth
+- API Key Cache & Stub
+- FastAPI App & Auth Docs
+- Test Hardening
+- Runs
+- Rate Limit
+- Async Run Execution & Repo
+- Test Api
+-   Init  
+- Core Pipeline Docs
+- Image Utils
+- Cv Progressive Score
+- Run Dataset
+- CLI & Adapters Docs
+- Tracing
+- Artifact Store
+- Pipeline Config
 - Cropper
-- CoreContractsTest
-- evaluate_header.py
-- evaluate_player_fouls.py
-- evaluate_progressive_score.py
-- evaluate_team_identity.py
-- test_grid_removal.py
-- API Error Envelope
-- evaluate_entry_marks.py
-- evaluate_player_points.py
-- invite-setup-card.tsx
-- mcp — AGENTS.md
-- evaluation/__init__.py
-- evaluation/README.md
-- main
-- serve.sh
-- app/layout.tsx
-- Git workflow
-- Patterns
-- login/page.tsx
-- Project conventions (must follow)
-- eslint.config.mjs
-- ocr-engine-workspace
-- McpPathToolTest
-- Git workflow
-- README.md
-- graphify.md
-- ocr_engine_api/__init__.py
-- services/__init__.py
-- next.config.ts
-- postcss.config.mjs
-- graphify-check script
-- resolve_provider_api_key
-- graphify-update
-- create_admin_user.py
-- setup-graphify
-- tools.py
-- load_schema
-- issue_api_key.py
-- name-match.ts
-- auth_api_key.py
-- ApiHardeningPhase3Test
-- cropper.py
+- Cropper
+- Cropper
+- Cropper
+- Test Phase2 Quality
+- Enhancer
+- Test Provider Http Base
+- Exceptions
+- Extractor
+- Interfaze
+- Output Builder
+- FibaOcrPipeline Orchestrator
+- Preprocessor
+- Docstrange
+- Base
+- Gemini
+- Http Base
+- Openrouter
+- Qubrid
+- Toolbox
+- Tracing
+- Ocr Engine Core Types
+- Ocr Engine Core Types
+- Image Utils
+- Registry
+- Base
+- Fiba Rules
+- Registry
+- Validation Engine & Plugins
+- Plugins Core
+- Test Mcp Auth
+- MCP Auth Verifier
+- MCP HTTP Client
+- Tools
+- Eslint.Config
+- Next.Config
+- Package
+- Postcss.Config
+- Api
+- Nav
+- Admin Page
+- Submissions Route
+- Account
+- Invite-Setup-Card
+- App Layout
+- Login Page
+- Result-Utils
+- Club Layout
+- Stats-Utils
+- Plugins
+- League-Store
+- Sections
+- Ui
+- Referee Demo Types
+- Reconcile-Utils
+- Validation
+- Origin
+- Env
+- Middleware
+- Tsconfig
+- Tsconfig.Test
+- Create Admin User
+- Deploy Cloudrun
+- Graphify-Check
+- Graphify-Update
+- Graphify Check
+- Issue Api Key
+- Serve
+- Setup-Graphify
+- Smoke Async Api
+- Smoke Async Mcp
+- Test Grid Removal
+- Test Mcp Client
+- Docs
+- Repo Guardrails & Contributing
+- Cloud Run & Vercel Deployment
 
 ## God Nodes (most connected - your core abstractions)
 1. `TokenUsage` - 68 edges
-2. `OcrApiClient` - 52 edges
-3. `RunRepository` - 44 edges
-4. `HttpJsonProvider` - 42 edges
-5. `OcrToolbox` - 41 edges
+2. `OcrApiClient` - 55 edges
+3. `RunRepository` - 45 edges
+4. `OcrToolbox` - 45 edges
+5. `HttpJsonProvider` - 42 edges
 6. `RunContext` - 35 edges
-7. `ValidationPlugin` - 34 edges
-8. `ApiTest` - 34 edges
-9. `get_api_settings()` - 33 edges
-10. `Artifact` - 33 edges
+7. `get_api_settings()` - 34 edges
+8. `ValidationPlugin` - 34 edges
+9. `ApiTest` - 34 edges
+10. `create_app()` - 33 edges
 
 ## Surprising Connections (you probably didn't know these)
-- `CorsOriginsTest` --uses--> `RateLimitBackendError`  [INFERRED]
-  tests/test_hardening.py → packages/api/src/ocr_engine_api/rate_limit.py
-- `PathInputTest` --uses--> `RateLimitBackendError`  [INFERRED]
-  tests/test_hardening.py → packages/api/src/ocr_engine_api/rate_limit.py
-- `RateLimiterTest` --uses--> `RateLimitBackendError`  [INFERRED]
-  tests/test_hardening.py → packages/api/src/ocr_engine_api/rate_limit.py
-- `ServerDefaultsTest` --uses--> `RateLimitBackendError`  [INFERRED]
-  tests/test_hardening.py → packages/api/src/ocr_engine_api/rate_limit.py
-- `CorsOriginsTest` --uses--> `MemoryRateLimitStore`  [INFERRED]
-  tests/test_hardening.py → packages/api/src/ocr_engine_api/rate_limit.py
+- `Seven-Phase FIBA OCR Pipeline Flow` --references--> `OcrToolbox`  [EXTRACTED]
+  docs/ARCHITECTURE.md → packages/core-engine/src/ocr_engine_core/toolbox.py
+- `Middleware JSONResponse vs FastAPI HTTPException(detail=...) Split` --conceptually_related_to--> `OcrApiClient`  [INFERRED]
+  skills/api-error-envelope/SKILL.md → packages/mcp/src/ocr_engine_mcp/client.py
+- `60s Key Cache & Mandatory Eviction on Delete` --rationale_for--> `invalidate_api_key_cache()`  [EXTRACTED]
+  skills/api-key-auth/SKILL.md → packages/api/src/ocr_engine_api/auth_api_key.py
+- `Skill: api-key-auth` --references--> `validate_api_key()`  [EXTRACTED]
+  skills/api-key-auth/SKILL.md → packages/api/src/ocr_engine_api/auth_api_key.py
+- `Skill: api-key-auth` --references--> `validate_supabase_session()`  [EXTRACTED]
+  skills/api-key-auth/SKILL.md → packages/api/src/ocr_engine_api/auth_supabase.py
 
 ## Import Cycles
 - None detected.
 
-## Communities (117 total, 11 thin omitted)
+## Hyperedges (group relationships)
+- **Engram-Style Layered Documentation Architecture** — readme_md_landing, docs_md_technical_reference, docs_codebase_guide_landing, agents_md_root_index [INFERRED 0.95]
+- **Centralized Agent Skills & Package Stub System** — agents_md_root_index, skills_catalog_index, packages_core_engine_agents_stub, packages_api_agents_stub [INFERRED 0.95]
 
-### Community 0 - "club-demo/capture-client.tsx"
-Cohesion: 0.05
-Nodes (63): CaptureClient(), INITIAL_STORE, findBestRosterNameMatch(), hasRosterNameMatch(), initials(), levenshtein(), NameMatch, nameSimilarity() (+55 more)
+## Communities (118 total, 9 thin omitted)
 
-### Community 1 - "OcrApiClient"
-Cohesion: 0.22
-Nodes (6): OcrApiClient, Any, Response, Session, HTTP client used by the remote MCP adapter., _validate_run_id()
+### Community 50 - "Evaluate Dataset"
+Cohesion: 0.19
+Nodes (14): compare_values(), Any, count_fields(), count_matches(), evaluate_sheet(), print_mismatches(), main(), Evaluate OCR pipeline results against ground truth for all sheets.  Compares eve (+6 more)
 
-### Community 2 - "single-player-demo/capture-client.tsx"
-Cohesion: 0.07
-Nodes (40): CaptureClient(), StepState, HistoryClient(), ProgressClient(), createSavedGame(), extractPlayers(), extractTeamPlayers(), formatFinalScore() (+32 more)
-
-### Community 3 - ".detect_and_crop_team_fouls"
-Cohesion: 0.08
-Nodes (28): Core Cropper — Model-agnostic section detection, validation, and cropping.  This, Save boxes.json alongside cropped sections., ProviderInvalidResponseError, Excepción base y jerarquía para el OCR Engine.  Toda excepción del engine hereda, El provider devolvió una respuesta que no se puede interpretar., Core Extractor — Model-agnostic structured extraction from FIBA sections.  This, Prompts for the Cropping phase (bounding box detection for main sections)., Prompts detallados para extracción de secciones de hojas FIBA. Migrados desde ex (+20 more)
-
-### Community 4 - "create_provider"
-Cohesion: 0.12
-Nodes (14): ProviderType, Factory method to create an Extractor from configuration., GlmProvider, Any, Path, Provider for Z.AI VLM models (GLM-5V-Turbo, GLM-4.6V, etc.)     via the OpenAI-c, create_provider(), ProviderType (+6 more)
-
-### Community 5 - "devDependencies"
-Cohesion: 0.05
-Nodes (39): eslint, eslint-config-next, next, dependencies, next, react, react-dom, sonner (+31 more)
-
-### Community 6 - "HttpJsonProvider"
-Cohesion: 0.09
-Nodes (17): HttpJsonProvider, Any, Path, Sleep ``BACKOFF_BASE * 2**(attempt-1)`` (capped) plus jitter., Encode an image as a base64 ``data:`` URI., Encode an image as raw base64 (no data URI prefix)., Strip markdown code fences (```json ... ```) wrapped around JSON., Parse content as JSON, tolerating code fences; fall back to raw_text. (+9 more)
-
-### Community 7 - "ProviderInvalidResponseError"
-Cohesion: 0.27
-Nodes (18): _apply_inverse_rotation(), _contour_metrics(), _estimate_rotation_angle(), _expand_quad(), _find_best_sheet_contour(), _find_canny_sheet_candidates(), _find_paper_mask_candidates(), _find_sheet_contour() (+10 more)
-
-### Community 8 - "team_markdown_parser.py"
-Cohesion: 0.12
-Nodes (28): FooterMarkdownParseError, _is_separator(), _is_table_header(), _map_period(), parse_footer_markdown(), _parse_int_or_null(), _parse_text_or_null(), ValueError (+20 more)
-
-### Community 9 - "output_builder.py"
-Cohesion: 0.06
-Nodes (52): build_final_output(), _coerce_bool(), _coerce_int(), _compute_points_from_running_score(), _derive_entry_flags(), _derive_fouls_from_cells(), _foul_token(), _is_illegible_entry_mark() (+44 more)
-
-### Community 11 - "ApiTest"
-Cohesion: 0.09
-Nodes (18): FileResponse, ge, le, is_authorized(), delete_run(), get_run(), get_run_artifact(), get_run_result() (+10 more)
-
-### Community 12 - "PipelineConfig"
-Cohesion: 0.16
-Nodes (9): _normalize_grid_mode(), Normalize grid_removal config value to a string mode., FibaOcrPipeline, Any, Path, Save the result JSON to a file., Pipeline completo para procesar hojas de anotación FIBA.     Usa la arquitectura, Run the full pipeline on a FIBA scoresheet image.          Args:             ima (+1 more)
-
-### Community 13 - "reconcile-sections.tsx"
-Cohesion: 0.16
-Nodes (28): collectSuspiciousProgressiveIndices(), FooterScoreSection(), HeaderSection(), matchWinner(), ProgressiveScoreSection(), QUARTERS, SectionProps, TeamFoulsSection() (+20 more)
-
-### Community 14 - "compilerOptions"
-Cohesion: 0.07
-Nodes (28): compilerOptions, allowJs, esModuleInterop, incremental, isolatedModules, jsx, lib, module (+20 more)
-
-### Community 15 - "FIBA OCR Engine — AGENTS.md"
-Cohesion: 0.14
-Nodes (14): Auto-invoke skills, Available first-party skills (located in each package), Commands (verified to work), Domains / packages, Engram — memoria técnica compartida, Environment setup, FIBA OCR Engine — AGENTS.md, Graphify — required repository knowledge (+6 more)
-
-### Community 17 - "plugins/__init__.py"
-Cohesion: 0.10
-Nodes (23): DuplicateNumbersPlugin, EntryAndFoulsConsistencyPlugin, GhostPlayersPlugin, IllegibleMarksPlugin, _player_shot_counts(), _player_table_points(), PlayerVsProgressivePlugin, PreprocessFallbackPlugin (+15 more)
-
-### Community 18 - "league-store.ts"
-Cohesion: 0.29
-Nodes (7): LeagueClient(), createSubmission(), errorText(), LeagueStoreError, listSubmissions(), safeJson(), LeagueRecord
-
-### Community 19 - "extractor.py"
-Cohesion: 0.15
-Nodes (13): ProviderAuthError, ProviderError, ProviderRateLimitError, ProviderServerError, Error originado en un provider de IA externo., Error de autenticación (401/403) — API key inválida o sin permisos., Rate limit excedido (429) — reintentable con backoff., Error del lado del servidor (5xx) — reintentable. (+5 more)
-
-### Community 20 - "OpenrouterProvider"
-Cohesion: 0.12
-Nodes (10): PipelineConfig, Configuration object that defines which model/provider to use     for each phase, Get the API key for the cropper provider., Get the API key for the extractor provider., Resolve the API key for a given provider., Get the override for a section, if any., Get the API key for a section override provider., ProviderType (+2 more)
-
-### Community 21 - "Quickstart (local development)"
-Cohesion: 0.22
-Nodes (9): Environment, Install, Prerequisites, Quickstart (local development), Run a CLI OCR job, Run the API, Run the MCP server (stdio), Run the test suites (+1 more)
-
-### Community 22 - "_StubProvider"
-Cohesion: 0.33
-Nodes (5): Any, Path, QubridProvider, Provider for Qubrid-hosted multimodal models such as Qwen/Qwen3-VL-Flash., Extract the first choice finish reason, if present.
-
-### Community 23 - "validation/__init__.py"
-Cohesion: 0.12
-Nodes (25): compute_confidence(), determine_match_status(), Any, Base types for the validation plugin system.  Defines the ValidationPlugin proto, Determine the overall match status based on warning severities., Compute a deterministic, explainable confidence summary per section and globally, _section_for_field(), Validation Engine — orchestrates plugin execution and determines match status. (+17 more)
-
-### Community 24 - "get_api_settings"
-Cohesion: 0.06
-Nodes (44): BaseModel, FastAPI, File, Form, is_auth_exempt(), Run the API app with uvicorn for the ocr-api console script., run(), apply_server_defaults() (+36 more)
-
-### Community 25 - "Artifact"
-Cohesion: 0.10
-Nodes (17): Helpers for recording OCR run artifacts., FibaOcrPipeline — Complete pipeline orchestrator (model-agnostic).  This module, Agent-ready tool layer for the FIBA OCR engine.  The toolbox exposes atomic oper, _exception_to_dict(), Any, Trace recording for OCR engine runs., Collects step traces and persists them as JSON., RunTracer (+9 more)
-
-### Community 26 - "OcrEngineError"
-Cohesion: 0.13
-Nodes (11): ConfigurationError, InputError, OcrEngineError, Any, Exception, Serializar al formato de respuesta de error estandarizado., Error en la configuración del pipeline (.env, providers, API keys)., Error con la imagen de entrada (no existe, corrupta, formato inválido). (+3 more)
-
-### Community 27 - "FakeSession"
-Cohesion: 0.20
-Nodes (4): FakeResponse, FakeSession, OcrApiClientTest, Any
-
-### Community 28 - "exceptions.py"
-Cohesion: 0.12
-Nodes (18): ProviderConnectionError, ProviderTimeoutError, Timeout en la llamada al provider — reintentable., Error de conexión (DNS, network unreachable) — reintentable., Represents token usage from a model call., TokenUsage, DocstrangeProvider, Any (+10 more)
-
-### Community 29 - "TokenUsage"
-Cohesion: 0.18
-Nodes (6): GeminiProvider, Any, Path, Attempt to repair truncated JSON by removing incomplete values and closing struc, Provider for Google Gemini models (via Google AI Studio)., Extract text content from a Gemini response.
-
-### Community 31 - "enhance_sections"
-Cohesion: 0.09
-Nodes (29): Cropper, Any, Path, Sub-crop team fouls from already-cropped team sections.          For each team (, Detect the team-fouls bounding box for one team (network-bound)., Validate and normalize a list of detected bounding boxes., Validate a single team fouls bounding box., Normalize section names, handling common aliases. (+21 more)
-
-### Community 32 - "StepTrace"
-Cohesion: 0.42
-Nodes (7): AdminPage(), demoLabels, inviteTester(), redirectWithMessage(), DEMOS, requireAdminAccount(), createAdminClient()
-
-### Community 33 - "account.ts"
-Cohesion: 0.17
-Nodes (18): POST(), getSafeNextPath(), LoginPayload, POST(), Home(), Account, AccountLookupResult, AccountRole (+10 more)
-
-### Community 34 - "McpTokenVerifier"
-Cohesion: 0.14
-Nodes (6): AccessToken, McpTokenVerifier, Accept the static MCP_AUTH_TOKEN or a validated ``ocr_live_`` API key.      ``oc, McpTokenVerifierTest, McpHardeningPhase3Test, TokenVerifier
-
-### Community 35 - "reconcile-client.tsx"
-Cohesion: 0.16
-Nodes (17): pluginsFromWarnings(), ReconcileClient(), ReconcileSectionEditor(), gameTitle(), buildSheetSections(), firstActionableSection(), nextSectionId(), SECTION_ORDER (+9 more)
-
-### Community 36 - "preprocessor.py"
-Cohesion: 0.09
-Nodes (35): binarize_adaptive(), binarize_otsu(), main(), Path, Binarize a FIBA scoresheet section image for OCR testing.  Standalone utility —, Binarize using adaptive Gaussian thresholding.      Good for images with uneven, Binarize using Otsu's global threshold.      Good for images with even lighting, _apply_clahe() (+27 more)
-
-### Community 37 - "OcrToolbox"
-Cohesion: 0.27
-Nodes (11): _emit(), OcrToolbox, Any, Path, Composable OCR operations with structured results and tracing., Execution context shared by tool-layer operations., Structured response returned by each engine tool operation., Build usage from TokenUsage or a usage dict. (+3 more)
-
-### Community 38 - "api.ts"
-Cohesion: 0.06
-Nodes (53): AccountKeysPanel(), KeyStatusChip(), NewApiKeyBanner(), ApiKeysPanel(), AccountPayload, AccountRole, AssignedDemo, demoHomePaths (+45 more)
-
-### Community 39 - "smoke_async_api.py"
-Cohesion: 0.24
-Nodes (19): Exception, cleanup_run(), get_json(), guess_mime_type(), main(), make_run_id(), parse_args(), parse_json_response() (+11 more)
-
-### Community 40 - "sanitize_for_public_response"
-Cohesion: 0.16
-Nodes (10): ArtifactStore, _guess_image_mime_type(), Any, Path, Small filesystem-backed artifact registry for one run., Copy the source image into the run input directory., Write the final engine result to the run result path., Artifact (+2 more)
-
-### Community 41 - "submit-client.tsx"
-Cohesion: 0.14
-Nodes (14): readDraft(), buildSubmissionPayload(), formatFinalScore(), text(), buildPreview(), SubmitClient(), IssueSeverity, OcrResult (+6 more)
-
-### Community 43 - "main.py"
-Cohesion: 0.12
-Nodes (22): forbidden_response(), JSONResponse, extract_bearer_token(), is_jwt_request(), _jwt_cache_get(), _jwt_cache_key(), _jwt_cache_set(), JSONResponse (+14 more)
-
-### Community 44 - "ValidationPlugin"
-Cohesion: 0.12
-Nodes (12): ABC, Base class for validation plugins.      Every plugin must define:     - name: un, Run validations on extracted data. Returns a list of warnings., ValidationPlugin, Internal singleton-style registry for validation plugins., Register a validation plugin. Overwrites if name already exists., Get a plugin by name, or None if not found., Get all registered plugins. (+4 more)
-
-### Community 45 - "server.py"
-Cohesion: 0.13
-Nodes (13): FastMCP, auth_from_env(), Build the HTTP token verifier from the environment.      When MCP_AUTH_TOKEN is, Remote MCP adapter for the OCR Engine API., _call_with_client(), _client(), create_mcp(), _json_resource() (+5 more)
-
-### Community 46 - "api — AGENTS.md"
-Cohesion: 0.12
-Nodes (15): 1. Composition root: `create_app()`, 2. Auth is layered, 3. Standard error envelope, 4. Response sanitization, 5. Run repository is filesystem-backed, 6. `/v1/me/*` is Supabase-only, 7. `/v1/admin/*` is admin-only, api — AGENTS.md (+7 more)
-
-### Community 47 - "create_app"
-Cohesion: 0.08
-Nodes (17): create_app(), _load_project_env(), Load .env from cwd or the repository root without overriding env vars., client_key(), JSONResponse, rate_limit_unavailable_response(), rate_limited_response(), Sliding-window limiter for run creation, keyed per token. A limit of 0 disables (+9 more)
-
-### Community 49 - "generate_api_key"
-Cohesion: 0.17
-Nodes (7): Any, Runs selected validation plugins against extracted data.      Usage:         # D, Run all selected plugins against the data.          Adds 'validation_warnings' a, Names of currently active plugins., ValidationEngine, Unit tests for Phase 1 validation plugins, illegible mark propagation, and confi, ValidationAndConfidenceTest
-
-### Community 50 - "cv_progressive_score.py"
-Cohesion: 0.21
-Nodes (14): cell_has_ink(), create_ink_masks(), detect_row_positions(), evaluate(), extract_progressive_score(), main(), ndarray, Path (+6 more)
-
-### Community 51 - "core-engine — AGENTS.md"
-Cohesion: 0.13
-Nodes (14): 1. Pipeline orchestration is split into "pipeline" and "toolbox", 2. Configuration via `PipelineConfig`, 3. Provider implementations, 4. Validation plugins and confidence, 5. Canonical run layout (artifacts), 6. Tracing, Auto-invoke skills (per task), Context (+6 more)
-
-### Community 52 - "evaluate_dataset.py"
-Cohesion: 0.22
-Nodes (13): compare_values(), count_fields(), count_matches(), evaluate_sheet(), main(), print_mismatches(), Any, Evaluate OCR pipeline results against ground truth for all sheets.  Compares eve (+5 more)
-
-### Community 53 - "web — AGENTS.md"
-Cohesion: 0.13
-Nodes (14): 1. App Router only, RSC by default, 2. Auth and role gates live in shared layouts/helpers, 3. API calls go through `lib/api.ts`, 4. Toasts via `sonner`, 5. Docs under `app/docs/*`, 6. Avoid infinite re-fetch loops in client effects, Auto-invoke skills (per task), Context (+6 more)
-
-### Community 54 - "ProviderUsage"
-Cohesion: 0.09
-Nodes (21): compilerOptions, incremental, isolatedModules, module, moduleResolution, noEmit, outDir, target (+13 more)
-
-### Community 55 - "ValidationEngine"
-Cohesion: 0.13
-Nodes (12): Whether a provider's structured_completion accepts agentic_mode.      Cached per, _supports_agentic_mode(), Any, Path, Perform a completion on an image.          If schema is provided, uses structure, Detect bounding boxes in an image (used for section cropping).          Args:, OpenrouterProvider, Any (+4 more)
-
-### Community 56 - "validation.ts"
-Cohesion: 0.28
-Nodes (14): computeReconciliation(), ENGINE_WARNING_TITLES, engineTitle(), finalScore(), normalize(), normalizeSeverity(), playerPointsSum(), quarterLabel() (+6 more)
-
-### Community 57 - "cli — AGENTS.md"
-Cohesion: 0.17
-Nodes (11): 1. Each script is a `main()` callable, 2. Reuse core utilities, never reimplement, 3. Use the canonical run layout, Auto-invoke skills (per task), cli — AGENTS.md, Context, Patterns, References (+3 more)
-
-### Community 58 - "create_warning"
-Cohesion: 0.13
-Nodes (14): create_warning(), Create a standardized validation warning., PlayerFoulsPlugin, Any, FIBA rules validation plugins — rules of the sport of basketball.  These check t, Validate that no player has more than 5 personal fouls (FIBA rule)., Validate that teams do not exceed 4 team fouls per quarter (FIBA rule)., TeamFoulsPlugin (+6 more)
-
-### Community 59 - "OcrApiError"
-Cohesion: 0.14
-Nodes (11): api_key_for_request(), probe_ocr_api_key(), _probe_with_session(), Session, API key to send upstream: the caller's ``ocr_live_`` token, else OCR_API_KEY., Return True when the OCR API accepts ``token`` as a bearer key.      Uses GET /v, _encode_artifact_name(), OcrApiError (+3 more)
-
-### Community 60 - "deploy_cloudrun.sh"
-Cohesion: 0.31
-Nodes (11): build(), deploy_api(), deploy_mcp(), ensure_secret(), g(), grant_secret_access(), infra(), secret_exists() (+3 more)
-
-### Community 61 - "RunRepository"
-Cohesion: 0.07
-Nodes (21): Future, run_links(), Any, Path, Execute OCR runs and update filesystem-backed status., Submit a local/preview run without holding the HTTP response open., RunExecutor, _is_relative_to() (+13 more)
-
-### Community 62 - "smoke_async_mcp.py"
-Cohesion: 0.33
-Nodes (10): _assert_success(), _call_tool_data(), main(), parse_args(), Any, Client, Namespace, Path (+2 more)
-
-### Community 63 - "FIBA OCR Engine"
-Cohesion: 0.25
-Nodes (8): Contributing, Dependency direction, FIBA OCR Engine, License, Per-package documentation, Production deployment overview, Repository layout, Validation plugins & confidence
-
-### Community 64 - "API Key Auth"
-Cohesion: 0.20
-Nodes (9): Adding a new caller, API Key Auth, Constraints (do not violate), Debugging a 401, How validation works, Key format, References, What "active" means (+1 more)
-
-### Community 65 - "OCR Run Lifecycle"
-Cohesion: 0.20
-Nodes (9): Canonical phases, Canonical run layout, Configuration plumbing, Constraints (do not violate), How callers wire in, OCR Run Lifecycle, References, Tracing rule (+1 more)
-
-### Community 68 - "Extractor"
-Cohesion: 0.17
-Nodes (14): ExtractionError, PipelineError, Error genérico durante una fase del pipeline., Error durante la fase de extracción de datos., _convert_interfaze_team_json(), ExtractionTarget, Extractor, Any (+6 more)
-
-### Community 69 - "MCP Server"
-Cohesion: 0.15
-Nodes (13): Bearer auth on HTTP transport, Configuration, Continuous deployment (push to `main`), MCP Server, Production notes, Prompts, Public deployment (Google Cloud Run), Resources (+5 more)
-
-### Community 70 - "referee-demo/types.ts"
-Cohesion: 0.12
-Nodes (16): LeagueValidationResult, ConfidenceLevel, ConfidenceSectionKey, ConfidenceSummary, LeagueSubmissionPayload, OcrFooter, OcrPlayer, OcrTeam (+8 more)
-
-### Community 71 - "Cropper"
-Cohesion: 0.09
-Nodes (40): delete_api_key(), get_account_by_id(), get_account_by_supabase_user_id(), list_accounts(), list_api_keys(), List all accounts (admin use). Emails are included for the admin picker., Insert a new API key record in Supabase and return the stored row., Delete an API key row. Returns the deleted row when available. (+32 more)
-
-### Community 72 - "CoreContractsTest"
-Cohesion: 0.16
-Nodes (8): _sum_usage(), new_run_id(), ProviderUsage, Path, Create a compact, sortable-enough run identifier for local executions., Usage reported by a model/provider call., FakeToolbox, CoreContractsTest
-
-### Community 73 - "evaluate_header.py"
-Cohesion: 0.53
-Nodes (5): evaluate_sheet(), main(), _norm(), Any, Evaluate header extraction against ground truth.  Usage:     python evaluation/e
-
-### Community 74 - "evaluate_player_fouls.py"
-Cohesion: 0.53
-Nodes (5): evaluate_sheet(), _foul_family(), main(), Any, Evaluate individual player foul extraction against ground truth.  This focuses o
-
-### Community 75 - "evaluate_progressive_score.py"
-Cohesion: 0.53
-Nodes (5): evaluate_sheet(), _events_by_running_score(), main(), Any, Evaluate progressive_score extraction against ground truth.  Reports running_sco
-
-### Community 76 - "evaluate_team_identity.py"
-Cohesion: 0.53
-Nodes (5): evaluate_sheet(), main(), _norm(), Any, Evaluate team/player identity extraction against ground truth.  Focuses on team.
-
-### Community 77 - "test_grid_removal.py"
-Cohesion: 0.06
-Nodes (48): find_image(), main(), Path, Batch runner: process the entire FIBA scoresheet dataset through the pipeline., Find the .jpg image inside a sheet directory., main(), _output_error(), _output_success() (+40 more)
-
-### Community 78 - "API Error Envelope"
-Cohesion: 0.25
-Nodes (7): Adding a new error code, API Error Envelope, Constraints (do not violate), Envelope shape, How to emit, References, When to use
-
-### Community 79 - "evaluate_entry_marks.py"
+### Community 97 - "Evaluate Entry Marks"
 Cohesion: 0.50
-Nodes (4): evaluate_sheet(), main(), Any, Evaluate player entered/started extraction against ground truth.  Usage:     pyt
+Nodes (4): evaluate_sheet(), Any, main(), Evaluate player entered/started extraction against ground truth.  Usage:     pyt
 
-### Community 80 - "evaluate_player_points.py"
+### Community 91 - "Evaluate Header"
+Cohesion: 0.53
+Nodes (5): _norm(), Any, evaluate_sheet(), main(), Evaluate header extraction against ground truth.  Usage:     python evaluation/e
+
+### Community 92 - "Evaluate Player Fouls"
+Cohesion: 0.53
+Nodes (5): _foul_family(), Any, evaluate_sheet(), main(), Evaluate individual player foul extraction against ground truth.  This focuses o
+
+### Community 98 - "Evaluate Player Points"
 Cohesion: 0.50
-Nodes (4): evaluate_sheet(), main(), Any, Evaluate player points extraction against ground truth.  Usage:     python evalu
+Nodes (4): evaluate_sheet(), Any, main(), Evaluate player points extraction against ground truth.  Usage:     python evalu
 
-### Community 81 - "invite-setup-card.tsx"
-Cohesion: 0.17
-Nodes (9): AdminLayout(), QuickstartPage(), TestLayout(), AccountRole, adminLinks, AssignedDemo, Nav(), testerLinks (+1 more)
+### Community 93 - "Evaluate Progressive Score"
+Cohesion: 0.53
+Nodes (5): _events_by_running_score(), Any, evaluate_sheet(), main(), Evaluate progressive_score extraction against ground truth.  Reports running_sco
 
-### Community 82 - "mcp — AGENTS.md"
-Cohesion: 0.25
-Nodes (8): Auto-invoke skills (per task), Context, mcp — AGENTS.md, References, Rules specific to mcp, Stack, Structure, Tools, resources, and prompts (current)
+### Community 94 - "Evaluate Team Identity"
+Cohesion: 0.53
+Nodes (5): _norm(), Any, evaluate_sheet(), main(), Evaluate team/player identity extraction against ground truth.  Focuses on team.
 
-### Community 86 - "main"
-Cohesion: 0.43
-Nodes (7): fail(), is_sensitive(), main(), md5_file(), Any, Path, source_locations()
+### Community 33 - "Server"
+Cohesion: 0.13
+Nodes (13): Remote MCP adapter for the OCR Engine API., auth_from_env(), Build the HTTP token verifier from the environment.      When MCP_AUTH_TOKEN is, create_mcp(), FastMCP, path_input_allowed(), _client(), _call_with_client() (+5 more)
 
-### Community 87 - "serve.sh"
-Cohesion: 0.50
-Nodes (6): ensure_token(), is_running(), print_urls(), serve.sh script, start_service(), stop_service()
-
-### Community 88 - "app/layout.tsx"
-Cohesion: 0.33
-Nodes (4): bodyFont, headingFont, metadata, AppToaster()
-
-### Community 89 - "Git workflow"
-Cohesion: 0.29
-Nodes (7): Branch naming, Branches, Commit messages, Git workflow, Lifecycle of a change, Releases and tags, Rules of thumb
-
-### Community 90 - "Patterns"
-Cohesion: 0.33
-Nodes (6): 1. Tools wrap `OcrApiClient`, not the core engine, 2. Error mapping via `handle_api_error`, 3. Resources expose run state, 4. Auth: static MCP token or per-client `ocr_live_` keys, 5. Transport selection, Patterns
-
-### Community 91 - "login/page.tsx"
-Cohesion: 0.47
-Nodes (3): flowSteps, AuthCard(), getSafeNextPath()
-
-### Community 92 - "Project conventions (must follow)"
-Cohesion: 0.40
-Nodes (5): FastAPI (api package), MCP, Next.js (web package), Project conventions (must follow), Python
-
-### Community 93 - "eslint.config.mjs"
-Cohesion: 0.40
-Nodes (4): compat, __dirname, eslintConfig, __filename
-
-### Community 94 - "ocr-engine-workspace"
+### Community 100 - "Pyproject"
 Cohesion: 0.60
 Nodes (5): ocr-engine-api, ocr-engine-cli, ocr-engine-core, ocr-engine-mcp, ocr-engine-workspace
 
-### Community 95 - "McpPathToolTest"
-Cohesion: 0.07
-Nodes (22): create_rate_limit_store(), is_run_creation(), MemoryRateLimitStore, parse_consume_rate_limit_payload(), Any, Exception, Path, RateLimitBackendError (+14 more)
+### Community 27 - "Api Keys"
+Cohesion: 0.15
+Nodes (20): store_api_key(), delete_api_key(), get_account_by_supabase_user_id(), get_account_by_id(), list_accounts(), Insert a new API key record in Supabase and return the stored row., Delete an API key row. Returns the deleted row when available., Look up an account by its Supabase user ID. (+12 more)
 
-### Community 96 - "Git workflow"
-Cohesion: 0.50
-Nodes (4): Atomicity, Branching, Commit format, Git workflow
+### Community 66 - "Test Auth"
+Cohesion: 0.24
+Nodes (6): generate_api_key(), hash_api_key(), Generate an OCR API key and return (raw_key, key_hash, key_prefix).      The raw, Return the SHA-256 hash of an API key., GenerateApiKeyTest, UpdateLastUsedAtTest
 
-### Community 97 - "README.md"
-Cohesion: 0.20
-Nodes (5): Deploy on Vercel, Local development, Optional environment variables, packages/web, Required environment variables
+### Community 41 - "Me"
+Cohesion: 0.18
+Nodes (17): list_api_keys(), List API keys for an account. Returns prefix, name, status, timestamps only., error_response(), Any, HTTPException, engine_error_response(), _get_account_id(), bootstrap_api_key() (+9 more)
 
-### Community 109 - "resolve_provider_api_key"
-Cohesion: 0.39
-Nodes (8): cleanHost(), firstHeaderValue(), HeaderReader, isLocalHost(), OriginEnv, parseHttpOrigin(), resolveAppOrigin(), withHttpsScheme()
+### Community 34 - "Auth Api Key"
+Cohesion: 0.15
+Nodes (13): find_active_key_by_hash(), update_last_used_at(), Find an active API key by its hash. Returns the key row or None., Fire-and-forget update of last_used_at for an API key., _cache_get(), _cache_set(), validate_api_key(), JSONResponse (+5 more)
 
-### Community 111 - "create_admin_user.py"
-Cohesion: 0.43
-Nodes (6): find_user_by_email(), main(), parse_args(), Any, Namespace, require_env()
+### Community 8 - "Auth Supabase"
+Cohesion: 0.10
+Nodes (27): is_auth_exempt(), unauthorized_response(), JSONResponse, forbidden_response(), verify_supabase_jwt(), _verify_hs256_token(), _jwt_cache_key(), _jwt_cache_get() (+19 more)
 
-### Community 119 - "tools.py"
-Cohesion: 0.42
-Nodes (12): OcrApiError, _async_next_actions(), handle_api_error(), inspect_run(), poll_run(), process_submit_response(), Any, _resources() (+4 more)
+### Community 17 - "Test Api"
+Cohesion: 0.10
+Nodes (10): is_authorized(), ApiSettings, get_api_settings(), validate_api_settings(), resolve_runs_dir(), Path, _env_bool(), True when the service-role client can be constructed (URL + service key). (+2 more)
 
-### Community 121 - "load_schema"
+### Community 77 - "Test Auth"
 Cohesion: 0.33
-Nodes (10): _convert_dict(), _convert_node(), _convert_type(), load_schema(), Any, Centralized schemas for the FIBA OCR pipeline.  Schemas are stored in canonical, Convert type field from canonical to Gemini format.      Returns:         Tuple, Load a JSON schema by name, optionally converting for a specific provider. (+2 more)
+Nodes (4): is_api_key_request(), Request, Return True when the Bearer token is a per-client ``ocr_live_`` API key.      Th, IsApiKeyRequestTest
 
-### Community 123 - "issue_api_key.py"
-Cohesion: 0.43
-Nodes (7): find_user_by_email(), main(), parse_args(), Any, Namespace, require_env(), resolve_user_id()
+### Community 83 - "API Key Cache & Stub"
+Cohesion: 0.25
+Nodes (8): invalidate_api_key_cache(), Evict cached API keys by key_hash or account_id after revocation/deletion., delete_account_api_key(), Permanently delete an API key belonging to the given account., packages/api/AGENTS.md (API Guardrails Stub), Skill: api-error-envelope, Skill: api-key-auth, 60s Key Cache & Mandatory Eviction on Delete
 
-### Community 124 - "name-match.ts"
-Cohesion: 0.23
-Nodes (9): formatFileSize(), buttonLabel(), CaptureClient(), writeDraft(), DEFAULT_REFEREE_PLUGIN_IDS, pluginLabel(), REFEREE_PLUGINS, RefereePlugin (+1 more)
-
-### Community 125 - "auth_api_key.py"
+### Community 9 - "FastAPI App & Auth Docs"
 Cohesion: 0.08
-Nodes (23): find_active_key_by_hash(), generate_api_key(), hash_api_key(), Find an active API key by its hash. Returns the key row or None., Fire-and-forget update of last_used_at for an API key., Generate an OCR API key and return (raw_key, key_hash, key_prefix).      The raw, Return the SHA-256 hash of an API key., update_last_used_at() (+15 more)
+Nodes (15): create_app(), _load_project_env(), Load .env from cwd or the repository root without overriding env vars., is_run_creation(), RunRateLimiter, rate_limited_response(), JSONResponse, rate_limit_unavailable_response() (+7 more)
 
-### Community 126 - "ApiHardeningPhase3Test"
+### Community 22 - "Test Hardening"
+Cohesion: 0.14
+Nodes (14): apply_server_defaults(), build_config(), parse_options_json(), Fill extractor provider/model/reasoning from server env when the client did not, SectionOverrideRequest, BaseModel, PipelineOptions, parse_cors_origins() (+6 more)
+
+### Community 20 - "Runs"
+Cohesion: 0.12
+Nodes (21): unsupported_upload_type_error(), HTTPException, sanitize_for_public_response(), Any, _sanitize(), Remove local filesystem paths from API responses in production., create_run(), upload_and_create_run() (+13 more)
+
+### Community 5 - "Rate Limit"
+Cohesion: 0.07
+Nodes (24): client_key(), request_rate_limit_key(), RateLimitBackendError, Exception, RateLimitDecision, RateLimitStore, Protocol, MemoryRateLimitStore (+16 more)
+
+### Community 4 - "Async Run Execution & Repo"
+Cohesion: 0.09
+Nodes (15): run_links(), RunRepositoryError, Exception, RunRepository, Path, _read_optional_json(), _list_input_files(), _is_relative_to() (+7 more)
+
+### Community 15 - "Test Api"
+Cohesion: 0.11
+Nodes (16): list_runs(), Query, ge, le, get_run(), delete_run(), get_run_trace(), get_run_result() (+8 more)
+
+### Community 14 - "Core Pipeline Docs"
+Cohesion: 0.10
+Nodes (17): Path, Future, Any, Submit a local/preview run without holding the HTTP response open., PipelineConfig, Configuration object that defines which model/provider to use     for each phase, Get the API key for the cropper provider., Get the API key for the extractor provider. (+9 more)
+
+### Community 45 - "Image Utils"
+Cohesion: 0.18
+Nodes (16): binarize_adaptive(), Path, binarize_otsu(), main(), Binarize a FIBA scoresheet section image for OCR testing.  Standalone utility —, Binarize using adaptive Gaussian thresholding.      Good for images with uneven, Binarize using Otsu's global threshold.      Good for images with even lighting, Path (+8 more)
+
+### Community 54 - "Cv Progressive Score"
+Cohesion: 0.21
+Nodes (14): detect_row_positions(), ndarray, create_ink_masks(), cell_has_ink(), extract_progressive_score(), Path, evaluate(), main() (+6 more)
+
+### Community 78 - "Run Dataset"
+Cohesion: 0.28
+Nodes (8): find_image(), Path, main(), Batch runner: process the entire FIBA scoresheet dataset through the pipeline., Find the .jpg image inside a sheet directory., resolve_default_extractor(), ProviderType, Resolve the default extractor provider/model from overrides or env vars.      Re
+
+### Community 76 - "CLI & Adapters Docs"
+Cohesion: 0.31
+Nodes (7): _output_success(), _output_error(), main(), Entry point for running the FIBA OCR pipeline with model selection., Output a successful pipeline result., Output a pipeline error in standardized format., packages/cli/AGENTS.md (CLI Guardrails Stub)
+
+### Community 58 - "Tracing"
+Cohesion: 0.21
+Nodes (7): Helpers for recording OCR run artifacts., FibaOcrPipeline — Complete pipeline orchestrator (model-agnostic).  This module, Agent-ready tool layer for the FIBA OCR engine.  The toolbox exposes atomic oper, _timestamp_iso(), Trace recording for OCR engine runs., Shared contracts for the OCR engine tool layer.  These types are intentionally l, toolbox_usage()
+
+### Community 35 - "Artifact Store"
+Cohesion: 0.16
+Nodes (10): ArtifactStore, Path, Any, _guess_image_mime_type(), Small filesystem-backed artifact registry for one run., Copy the source image into the run input directory., Write the final engine result to the run result path., Artifact (+2 more)
+
+### Community 68 - "Pipeline Config"
+Cohesion: 0.25
+Nodes (9): default_extractor_reasoning(), Any, parse_reasoning_config(), resolve_default_extractor_reasoning(), build_reasoning_config(), Return a fresh copy of the default extractor reasoning config., Parse ``OCR_DEFAULT_EXTRACTOR_REASONING`` into ``(is_set, reasoning_dict)``., Resolve OpenRouter reasoning config for the given extractor provider/model. (+1 more)
+
+### Community 95 - "Cropper"
+Cohesion: 0.33
+Nodes (3): Core Cropper — Model-agnostic section detection, validation, and cropping.  This, Prompts for the Cropping phase (bounding box detection for main sections)., Prompts for the Team Fouls sub-cropping phase (bounding box detection within tea
+
+### Community 25 - "Cropper"
+Cohesion: 0.16
+Nodes (15): Cropper, Path, Any, Responsible for detecting and cropping sections from a FIBA scoresheet image., Detect main sections, validate bounding boxes, and crop.          Detection and, Sub-crop team fouls from already-cropped team sections.          For each team (, Detect the team-fouls bounding box for one team (network-bound)., Crop sections from the source image based on validated bounding boxes. (+7 more)
+
+### Community 69 - "Cropper"
+Cohesion: 0.18
+Nodes (6): SectionName, Validate and normalize a list of detected bounding boxes., Validate a single team fouls bounding box., Normalize section names, handling common aliases., Normalize team fouls section name., Validate that normalized coordinates are in 0..1000 range and box is valid.
+
+### Community 42 - "Test Phase2 Quality"
+Cohesion: 0.19
+Nodes (13): Convert a normalized (0-1000) bounding box to pixel coordinates., ErrorCode, CroppingError, Catálogo de códigos de error machine-readable., Error durante la fase de detección y recorte de secciones., BoundingBox, Normalized bounding box (0-1000 scale)., PreprocessorSingleWriteTest (+5 more)
+
+### Community 38 - "Enhancer"
 Cohesion: 0.17
-Nodes (10): ClubDemoLayout(), metadata, metadata, PlayerDemoLayout(), metadata, RefereeDemoLayout(), DemoTabs(), DemoTabs() (+2 more)
+Nodes (19): _apply_gamma(), ndarray, _apply_clahe(), _remove_grid_lines(), _remove_grid_protect_handwriting(), _enhance_image(), _upscale_dense_progressive_score(), _normalize_grid_mode() (+11 more)
 
-### Community 128 - "cropper.py"
+### Community 10 - "Test Provider Http Base"
+Cohesion: 0.12
+Nodes (21): ProviderError, ProviderAuthError, ProviderRateLimitError, ProviderTimeoutError, ProviderServerError, ProviderConnectionError, Excepción base y jerarquía para el OCR Engine.  Toda excepción del engine hereda, Error originado en un provider de IA externo. (+13 more)
+
+### Community 19 - "Exceptions"
+Cohesion: 0.11
+Nodes (13): OcrEngineError, Exception, Any, ConfigurationError, InputError, PipelineError, ValidationEngineError, Excepción base de todo el OCR Engine.      Atributos:         message: Descripci (+5 more)
+
+### Community 1 - "Extractor"
+Cohesion: 0.05
+Nodes (56): ExtractionError, Error durante la fase de extracción de datos., ExtractionTarget, Extractor, Any, ProviderType, Path, _supports_agentic_mode() (+48 more)
+
+### Community 11 - "Interfaze"
+Cohesion: 0.09
+Nodes (23): ProviderInvalidResponseError, El provider devolvió una respuesta que no se puede interpretar., create_provider(), ProviderType, Provider factory — centralized creation of ModelProvider instances., Create a ModelProvider instance from configuration.      Extra kwargs are passed, ABC, Base abstraction for AI model providers.  This module defines the common interfa (+15 more)
+
+### Community 3 - "Output Builder"
+Cohesion: 0.06
+Nodes (52): _strip_diacritics(), _normalize_string(), _normalize_judge_name(), _reassign_periods_from_footer(), Any, _compute_points_from_running_score(), _coerce_int(), _normalize_strings_in_obj() (+44 more)
+
+### Community 59 - "FibaOcrPipeline Orchestrator"
+Cohesion: 0.21
+Nodes (7): FibaOcrPipeline, Path, Any, Pipeline completo para procesar hojas de anotación FIBA.     Usa la arquitectura, Run the full pipeline on a FIBA scoresheet image.          Args:             ima, Save the result JSON to a file., Build TokenUsage from another TokenUsage, ProviderUsage, dict, or None.
+
+### Community 43 - "Preprocessor"
+Cohesion: 0.27
+Nodes (18): _order_points(), ndarray, _expand_quad(), _contour_metrics(), _score_sheet_candidate(), _find_canny_sheet_candidates(), _find_paper_mask_candidates(), _select_best_sheet_contour() (+10 more)
+
+### Community 23 - "Docstrange"
+Cohesion: 0.13
+Nodes (15): TokenUsage, Represents token usage from a model call., DocstrangeProvider, Path, Any, _unwrap_docstrange_content(), Provider for Nanonets DocStrange document extraction API.      Supports custom_i, Make a call to DocStrange Extraction API using requests library. (+7 more)
+
+### Community 74 - "Base"
+Cohesion: 0.24
+Nodes (6): Any, ModelProvider, Path, Abstract base class for all model providers.      Each provider (Interfaze, Gemi, Perform a completion on an image.          If schema is provided, uses structure, Detect bounding boxes in an image (used for section cropping).          Args:
+
+### Community 51 - "Gemini"
+Cohesion: 0.15
+Nodes (8): GeminiProvider, Path, Any, Provider for Google Gemini models (via Google AI Studio)., Extract text content from a Gemini response., Attempt to repair truncated JSON by removing incomplete values and closing struc, guess_mime_type(), Guess MIME type from filename, defaulting to image/jpeg.
+
+### Community 12 - "Http Base"
+Cohesion: 0.10
+Nodes (17): HttpJsonProvider, Any, Path, Base for providers that POST JSON and parse a JSON/text response., Default OpenAI-compatible auth headers. Override as needed., URL to POST to. Override for providers that key in the query string., POST ``payload`` and return the parsed JSON body, with retries., POST with exponential backoff + jitter on retryable provider errors. (+9 more)
+
+### Community 70 - "Openrouter"
+Cohesion: 0.25
+Nodes (6): OpenrouterProvider, Any, Path, Provider for OpenRouter-hosted models such as google/gemini-4-carbon., AgenticCapabilityTest, P3 — capability detection is cached per provider class.
+
+### Community 79 - "Qubrid"
+Cohesion: 0.33
+Nodes (5): QubridProvider, Path, Any, Provider for Qubrid-hosted multimodal models such as Qwen/Qwen3-VL-Flash., Extract the first choice finish reason, if present.
+
+### Community 29 - "Toolbox"
+Cohesion: 0.26
+Nodes (9): Path, Any, ProgressCallback, _emit(), RunContext, ToolResult, Build usage from TokenUsage or a usage dict., Execution context shared by tool-layer operations. (+1 more)
+
+### Community 55 - "Tracing"
+Cohesion: 0.24
+Nodes (7): RunTracer, Any, _exception_to_dict(), Exception, Collects step traces and persists them as JSON., StepTrace, Audit record for one engine step.
+
+### Community 46 - "Ocr Engine Core Types"
+Cohesion: 0.16
+Nodes (8): _sum_usage(), new_run_id(), ProviderUsage, Path, Create a compact, sortable-enough run identifier for local executions., Usage reported by a model/provider call., FakeToolbox, CoreContractsTest
+
+### Community 71 - "Ocr Engine Core Types"
+Cohesion: 0.29
+Nodes (4): to_jsonable(), Any, _duration_ms(), Convert engine values to plain JSON-compatible structures.
+
+### Community 72 - "Image Utils"
+Cohesion: 0.22
+Nodes (8): env_names_for_provider(), resolve_provider_api_key(), get_api_key(), Candidate env var names for a provider (falls back to the default)., Resolve a provider's API key from its candidate env vars., Resolve an API key from environment variables.      If ``api_key_env`` is given, ApiKeyResolutionTest, M7 — single source of truth for provider → env var names.
+
+### Community 28 - "Registry"
+Cohesion: 0.15
+Nodes (17): Validation plugin system for FIBA scoresheet OCR.  Architecture: - base: Validat, Validation Engine — orchestrates plugin execution and determines match status., Args:             plugins: List of plugin names, "all" for every registered plug, register(), get(), get_all(), get_by_category(), get_names() (+9 more)
+
+### Community 44 - "Base"
+Cohesion: 0.14
+Nodes (13): Any, determine_match_status(), compute_confidence(), _section_for_field(), ABC, Base types for the validation plugin system.  Defines the ValidationPlugin proto, Determine the overall match status based on warning severities., Compute a deterministic, explainable confidence summary per section and globally (+5 more)
+
+### Community 39 - "Fiba Rules"
+Cohesion: 0.13
+Nodes (14): create_warning(), Create a standardized validation warning., PlayerFoulsPlugin, Any, TeamFoulsPlugin, FIBA rules validation plugins — rules of the sport of basketball.  These check t, Validate that no player has more than 5 personal fouls (FIBA rule)., Validate that teams do not exceed 4 team fouls per quarter (FIBA rule). (+6 more)
+
+### Community 65 - "Registry"
+Cohesion: 0.19
+Nodes (8): ValidationPlugin, Base class for validation plugins.      Every plugin must define:     - name: un, _Registry, Internal singleton-style registry for validation plugins., Register a validation plugin. Overwrites if name already exists., Get a plugin by name, or None if not found., Get all plugins in a given category., Get names of all core plugins (useful as default).
+
+### Community 63 - "Validation Engine & Plugins"
+Cohesion: 0.21
+Nodes (6): ValidationEngine, Runs selected validation plugins against extracted data.      Usage:         # D, Names of currently active plugins., ValidationAndConfidenceTest, Unit tests for Phase 1 validation plugins, illegible mark propagation, and confi, 13 Validation Plugins (11 Default Core, 2 Opt-In) & Confidence
+
+### Community 13 - "Plugins Core"
+Cohesion: 0.10
+Nodes (23): Built-in validation plugins.  Importing this module registers all built-in plugi, QuarterSumsPlugin, Any, DuplicateNumbersPlugin, GhostPlayersPlugin, ProgressiveVsFinalPlugin, _player_shot_counts(), _player_table_points() (+15 more)
+
+### Community 26 - "Test Mcp Auth"
+Cohesion: 0.14
+Nodes (11): probe_ocr_api_key(), Session, _probe_with_session(), api_key_for_request(), Return True when the OCR API accepts ``token`` as a bearer key.      Uses GET /v, API key to send upstream: the caller's ``ocr_live_`` token, else OCR_API_KEY., OcrApiError, Exception (+3 more)
+
+### Community 24 - "MCP Auth Verifier"
+Cohesion: 0.14
+Nodes (6): McpTokenVerifier, TokenVerifier, AccessToken, Accept the static MCP_AUTH_TOKEN or a validated ``ocr_live_`` API key.      ``oc, McpTokenVerifierTest, McpHardeningPhase3Test
+
+### Community 21 - "MCP HTTP Client"
+Cohesion: 0.22
+Nodes (6): Any, OcrApiClient, Session, Response, _validate_run_id(), HTTP client used by the remote MCP adapter.
+
+### Community 64 - "Tools"
+Cohesion: 0.42
+Nodes (12): handle_api_error(), OcrApiError, Any, process_submit_response(), submit_scoresheet_from_path(), submit_scoresheet_base64(), poll_run(), wait_for_run() (+4 more)
+
+### Community 99 - "Eslint.Config"
 Cohesion: 0.40
-Nodes (9): AirtableConfig, AirtableRecord, airtableUrl(), GET(), notConfigured(), POST(), readConfig(), validateLeagueSubmissionPayload() (+1 more)
+Nodes (4): __filename, __dirname, compat, eslintConfig
+
+### Community 7 - "Package"
+Cohesion: 0.05
+Nodes (39): name, version, private, scripts, dev, build, start, lint (+31 more)
+
+### Community 6 - "Api"
+Cohesion: 0.10
+Nodes (35): AccountKeysPanel(), KeyStatusChip(), NewApiKeyBanner(), ApiKeysPanel(), ApiKeyRecord, ApiEnvelope, RunStatus, RunRecord (+27 more)
+
+### Community 52 - "Nav"
+Cohesion: 0.16
+Nodes (10): AdminLayout(), QuickstartPage(), TestLayout(), AccountRole, AssignedDemo, adminLinks, testerLinks, Nav() (+2 more)
+
+### Community 84 - "Admin Page"
+Cohesion: 0.46
+Nodes (7): demoLabels, AdminPage(), inviteTester(), redirectWithMessage(), DEMOS, requireAdminAccount(), createAdminClient()
+
+### Community 75 - "Submissions Route"
+Cohesion: 0.40
+Nodes (9): AirtableConfig, readConfig(), airtableUrl(), notConfigured(), GET(), POST(), AirtableRecord, validateLeagueSubmissionPayload() (+1 more)
+
+### Community 36 - "Account"
+Cohesion: 0.17
+Nodes (17): POST(), LoginPayload, POST(), getSafeNextPath(), Home(), AssignedDemo, AccountRole, Account (+9 more)
+
+### Community 60 - "Invite-Setup-Card"
+Cohesion: 0.18
+Nodes (8): AssignedDemo, AccountRole, AccountPayload, InviteStatus, demoLabels, demoHomePaths, InviteSetupCard(), destinationForAccount()
+
+### Community 88 - "App Layout"
+Cohesion: 0.33
+Nodes (4): headingFont, bodyFont, metadata, AppToaster()
+
+### Community 96 - "Login Page"
+Cohesion: 0.47
+Nodes (3): flowSteps, AuthCard(), getSafeNextPath()
+
+### Community 0 - "Result-Utils"
+Cohesion: 0.06
+Nodes (58): INITIAL_STORE, CaptureClient(), NameMatch, findBestRosterNameMatch(), hasRosterNameMatch(), normalizePlayerName(), nameSimilarity(), tokenContainmentScore() (+50 more)
+
+### Community 53 - "Club Layout"
+Cohesion: 0.17
+Nodes (10): metadata, ClubDemoLayout(), metadata, PlayerDemoLayout(), metadata, RefereeDemoLayout(), DemoTabs(), DemoTabs() (+2 more)
+
+### Community 2 - "Stats-Utils"
+Cohesion: 0.07
+Nodes (45): ACCEPTED_IMAGE_TYPES, RunStatusBadge(), UploadIcon(), CheckIcon(), extractRunError(), CaptureClient(), StepState, HistoryClient() (+37 more)
+
+### Community 56 - "Plugins"
+Cohesion: 0.23
+Nodes (9): formatFileSize(), CaptureClient(), buttonLabel(), writeDraft(), RefereePlugin, REFEREE_PLUGINS, DEFAULT_REFEREE_PLUGIN_IDS, pluginLabel() (+1 more)
+
+### Community 67 - "League-Store"
+Cohesion: 0.29
+Nodes (7): LeagueClient(), LeagueStoreError, listSubmissions(), createSubmission(), errorText(), safeJson(), LeagueRecord
+
+### Community 30 - "Sections"
+Cohesion: 0.16
+Nodes (17): ReconcileClient(), pluginsFromWarnings(), ReconcileSectionEditor(), gameTitle(), SheetSectionId, SheetSection, SECTION_ORDER, buildSheetSections() (+9 more)
+
+### Community 31 - "Ui"
+Cohesion: 0.14
+Nodes (14): readDraft(), formatFinalScore(), buildSubmissionPayload(), text(), SubmitClient(), buildPreview(), IssueSeverity, OcrResult (+6 more)
+
+### Community 47 - "Referee Demo Types"
+Cohesion: 0.12
+Nodes (16): LeagueValidationResult, RunStatus, ValidationWarning, PlayerPoints, OcrPlayer, OcrTeam, ProgressiveEvent, QuarterScore (+8 more)
+
+### Community 16 - "Reconcile-Utils"
+Cohesion: 0.16
+Nodes (28): QUARTERS, FooterScoreSection(), TeamPlayersSection(), TeamFoulsSection(), ProgressiveScoreSection(), HeaderSection(), SectionProps, collectSuspiciousProgressiveIndices() (+20 more)
+
+### Community 57 - "Validation"
+Cohesion: 0.28
+Nodes (14): REQUIRED_QUARTERS, RECOMPUTED_TYPES, finalScore(), quarterScore(), quartersSum(), playerPointsSum(), computeReconciliation(), quarterLabel() (+6 more)
+
+### Community 80 - "Origin"
+Cohesion: 0.39
+Nodes (8): HeaderReader, OriginEnv, resolveAppOrigin(), firstHeaderValue(), cleanHost(), isLocalHost(), withHttpsScheme(), parseHttpOrigin()
+
+### Community 89 - "Env"
+Cohesion: 0.52
+Nodes (3): siteConfig, assertBrowserEnv(), createClient()
+
+### Community 81 - "Middleware"
+Cohesion: 0.36
+Nodes (7): MiddlewareAccount, matchesPrefix(), updateSession(), getAccountForUser(), destinationForMiddlewareAccount(), middleware(), config
+
+### Community 18 - "Tsconfig"
+Cohesion: 0.07
+Nodes (28): compilerOptions, target, lib, dom, dom.iterable, esnext, allowJs, skipLibCheck (+20 more)
+
+### Community 32 - "Tsconfig.Test"
+Cohesion: 0.09
+Nodes (21): extends, ./tsconfig.json, compilerOptions, noEmit, outDir, module, moduleResolution, target (+13 more)
+
+### Community 90 - "Create Admin User"
+Cohesion: 0.43
+Nodes (6): parse_args(), Namespace, require_env(), find_user_by_email(), Any, main()
+
+### Community 61 - "Deploy Cloudrun"
+Cohesion: 0.31
+Nodes (11): deploy_cloudrun.sh script, g(), secret_exists(), grant_secret_access(), supabase_secret_bindings(), ensure_secret(), infra(), build() (+3 more)
+
+### Community 85 - "Graphify Check"
+Cohesion: 0.43
+Nodes (7): fail(), md5_file(), Path, is_sensitive(), source_locations(), Any, main()
+
+### Community 86 - "Issue Api Key"
+Cohesion: 0.43
+Nodes (7): parse_args(), Namespace, require_env(), find_user_by_email(), Any, resolve_user_id(), main()
+
+### Community 87 - "Serve"
+Cohesion: 0.50
+Nodes (6): serve.sh script, ensure_token(), is_running(), start_service(), stop_service(), print_urls()
+
+### Community 40 - "Smoke Async Api"
+Cohesion: 0.26
+Nodes (18): main(), parse_args(), Namespace, make_run_id(), wait_for_run(), Session, Any, get_json() (+10 more)
+
+### Community 73 - "Smoke Async Mcp"
+Cohesion: 0.33
+Nodes (10): main(), run_smoke(), Path, _call_tool_data(), Client, Any, _assert_success(), _resolve_image() (+2 more)
+
+### Community 48 - "Test Grid Removal"
+Cohesion: 0.21
+Nodes (16): remove_grid_lines(), ndarray, isolate_colored_ink(), remove_grid_protect_ink(), remove_grid_protect_handwriting(), extract_progressive_score(), Path, compare_with_gt() (+8 more)
+
+### Community 37 - "Test Mcp Client"
+Cohesion: 0.20
+Nodes (4): OcrApiClientTest, FakeSession, FakeResponse, Any
+
+### Community 49 - "Docs"
+Cohesion: 0.16
+Nodes (12): AGENTS.md (Agent Guardrails & Skill Index), Graphify & Engram Agent Workflow, CLAUDE.md (@AGENTS.md Pointer), DOCS.md (Canonical Technical Reference), Documentation Authority Matrix, Documentation Surface Catalog, Canonical Env, API, MCP, CLI & Supabase Contracts, README.md (Project Landing & Quickstart) (+4 more)
+
+### Community 62 - "Repo Guardrails & Contributing"
+Cohesion: 0.17
+Nodes (10): Hard Inward Dependency Direction, Trunk-Based Git Workflow (--ff-only), Hybrid Skill Authoring Standard, Codebase Compass & Runtime Split, Golden Placement Rule & Package Ownership, skills/catalog.md (Centralized Skills Catalog), Skill: architecture-guardrails, Skill: commit-hygiene (+2 more)
+
+### Community 82 - "Cloud Run & Vercel Deployment"
+Cohesion: 0.25
+Nodes (6): cloudbuild.yaml (Cloud Run Continuous Deployment), Image-Only Cloud Run Swap Rationale, docs/DEPLOYMENT.md (Cloud Run, Vercel & Supabase Ops), Vercel Post-Deploy OCR_CORS_ORIGINS Sync, packages/mcp/AGENTS.md (MCP Guardrails Stub), packages/web/AGENTS.md (Web Guardrails Stub)
 
 ## Knowledge Gaps
-- **268 isolated node(s):** `ocr-engine-mcp`, `__filename`, `__dirname`, `compat`, `eslintConfig` (+263 more)
+- **138 isolated node(s):** `ocr-engine-mcp`, `__filename`, `__dirname`, `compat`, `eslintConfig` (+133 more)
   These have ≤1 connection - possible missing edges or undocumented components.
-- **11 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
+- **9 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `TokenUsage` connect `exceptions.py` to `.detect_and_crop_team_fouls`, `Extractor`, `create_provider`, `HttpJsonProvider`, `OcrToolbox`, `output_builder.py`, `PipelineConfig`, `extractor.py`, `OpenrouterProvider`, `_StubProvider`, `ValidationEngine`, `Artifact`, `TokenUsage`, `MatchStatusTest`, `enhance_sections`?**
-  _High betweenness centrality (0.044) - this node is a cross-community bridge._
-- **Why does `ToolResult` connect `OcrToolbox` to `McpTokenVerifier`, `CoreContractsTest`, `sanitize_for_public_response`, `ApiTest`, `OpenrouterProvider`, `Artifact`, `RunRepository`, `enhance_sections`?**
-  _High betweenness centrality (0.032) - this node is a cross-community bridge._
-- **Why does `ValidationPlugin` connect `ValidationPlugin` to `generate_api_key`, `create_warning`, `plugins/__init__.py`, `validation/__init__.py`?**
-  _High betweenness centrality (0.031) - this node is a cross-community bridge._
+- **Why does `authorizeDemoApiAccess()` connect `Submissions Route` to `CLI & Adapters Docs`, `Account`, `Nav`?**
+  _High betweenness centrality (0.207) - this node is a cross-community bridge._
+- **Why does `main()` connect `CLI & Adapters Docs` to `Pipeline Config`, `Image Utils`, `Run Dataset`, `Core Pipeline Docs`, `Exceptions`, `Test Hardening`, `FibaOcrPipeline Orchestrator`?**
+  _High betweenness centrality (0.173) - this node is a cross-community bridge._
+- **Why does `TokenUsage` connect `Docstrange` to `Extractor`, `Output Builder`, `Openrouter`, `Base`, `Interfaze`, `Test Provider Http Base`, `Http Base`, `Core Pipeline Docs`, `Qubrid`, `Base`, `Test Phase2 Quality`, `Gemini`, `Cropper`, `Tracing`, `FibaOcrPipeline Orchestrator`, `Toolbox`, `Cropper`?**
+  _High betweenness centrality (0.086) - this node is a cross-community bridge._
 - **Are the 24 inferred relationships involving `TokenUsage` (e.g. with `Cropper` and `ExtractionTarget`) actually correct?**
   _`TokenUsage` has 24 INFERRED edges - model-reasoned connections that need verification._
-- **Are the 8 inferred relationships involving `OcrApiClient` (e.g. with `McpTokenVerifier` and `FakeResponse`) actually correct?**
-  _`OcrApiClient` has 8 INFERRED edges - model-reasoned connections that need verification._
+- **Are the 9 inferred relationships involving `OcrApiClient` (e.g. with `McpTokenVerifier` and `Middleware JSONResponse vs FastAPI HTTPException(detail=...) Split`) actually correct?**
+  _`OcrApiClient` has 9 INFERRED edges - model-reasoned connections that need verification._
 - **Are the 6 inferred relationships involving `RunRepository` (e.g. with `RunExecutor` and `ApiHardeningPhase3Test`) actually correct?**
   _`RunRepository` has 6 INFERRED edges - model-reasoned connections that need verification._
-- **Are the 18 inferred relationships involving `HttpJsonProvider` (e.g. with `GeminiProvider` and `GlmProvider`) actually correct?**
-  _`HttpJsonProvider` has 18 INFERRED edges - model-reasoned connections that need verification._
+- **Are the 19 inferred relationships involving `OcrToolbox` (e.g. with `RunExecutor` and `FibaOcrPipeline`) actually correct?**
+  _`OcrToolbox` has 19 INFERRED edges - model-reasoned connections that need verification._

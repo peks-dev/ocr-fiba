@@ -1,134 +1,29 @@
 # web — AGENTS.md
 
-> Domain-specific guidance for AI agents working on `packages/web/`.
-> Cross-cutting rules live in [`/AGENTS.md`](../../../AGENTS.md). Read both before editing.
+> Local guardrails for `packages/web/` (`web`).
+> Read [`/AGENTS.md`](../../AGENTS.md) and [`/docs/codebase/adapters-and-web.md`](../../docs/codebase/adapters-and-web.md) before modifying code here.
 
-## Context
+## Context & Stack
 
-Next.js 15 web app for the FIBA OCR engine. It now separates the admin surface (`/admin`, including API key management) from invite-only tester demos under `/test/player`, `/test/referee`, and `/test/club`, plus a `/docs/quickstart` page.
+Next.js 15 App Router + React 19 + Tailwind CSS v4 + `@supabase/ssr` + `sonner` + TypeScript 5. Separates `/admin` (invites + API key management), `/test/{player,referee,club}` invite-only demos, `/api/league/submissions` (server-side Airtable proxy), and authenticated `/docs/quickstart`. Calls `ocr-engine-api` over HTTPS via `src/lib/api.ts`.
 
-## Stack
+## Local Verification
 
-- Next.js 15 (App Router)
-- React 19
-- Tailwind CSS v4 (`@tailwindcss/postcss`)
-- Supabase SSR (`@supabase/ssr`) + `@supabase/supabase-js`
-- `sonner` for toast notifications
-- TypeScript 5
-- ESLint 9 with `eslint-config-next`
-
-## Structure
-
-```text
-packages/web/
-├── package.json
-├── next.config.ts (if present)
-└── src/
-    ├── app/
-    │   ├── layout.tsx              # Root layout + global metadata
-    │   ├── page.tsx                # Public landing
-    │   ├── globals.css             # Tailwind entry
-    │   ├── login/page.tsx          # Login + signup (AuthCard)
-    │   ├── auth/callback/route.ts  # Supabase email-confirmation code exchange
-    │   ├── admin/
-    │   │   ├── layout.tsx          # Admin auth gate + Nav
-    │   │   ├── page.tsx            # Tester invitations + account overview
-    │   │   └── api-keys/page.tsx   # AccountKeysPanel + ApiKeysPanel for admins
-    │   ├── test/
-    │   │   ├── layout.tsx          # Signed-in tester/admin Nav
-    │   │   ├── player/             # Single-player demo
-    │   │   ├── referee/            # Referee helper demo
-    │   │   └── club/               # Club analysis demo
-    │   └── docs/
-    │       ├── layout.tsx
-    │       └── quickstart/         # Signed-in API/MCP quickstart
-    ├── components/
-    │   ├── nav.tsx                 # Signed-in navigation (logout via Supabase)
-    │   ├── auth-card.tsx           # Email/password signup & login
-    │   ├── api-keys-panel.tsx      # Bootstrap / list / delete the signed-in admin's keys
-    │   ├── account-keys-panel.tsx  # Issue / revoke keys for another account
-    │   └── …
-    └── lib/
-        ├── api.ts                  # Fetch helpers for the OCR API (bearer)
-        ├── env.ts                  # Typed NEXT_PUBLIC_* env access
-        ├── site.ts                 # siteConfig (URLs, branding)
-        └── supabase/
-            ├── server.ts           # createClient (RSC) — cookie-based session
-            └── client.ts           # createClient (browser) — for client components
+```bash
+npm --prefix packages/web run lint
+npm --prefix packages/web test
+npm --prefix packages/web run build
 ```
 
-## Patterns
+## Non-Negotiable Rules (`NEVER`)
 
-### 1. App Router only, RSC by default
+- **NEVER** add `pages/` routes; App Router (`src/app/`) only.
+- **NEVER** instantiate Supabase `createClient` directly inside components; use `src/lib/supabase/{server,client,admin,middleware}.ts`.
+- **NEVER** store `ocr_live_` keys or `SUPABASE_SERVICE_KEY` / `AIRTABLE_TOKEN` in client storage or `NEXT_PUBLIC_*` env vars.
+- **NEVER** duplicate layout auth checks inside individual pages under `/admin/*` or `/test/{demo}/*` (layouts call `requireAdminAccount()` / `requireDemoAccess()`).
+- **NEVER** trigger client `useEffect` loops depending on unstable session objects; fetch once on mount and refresh explicitly on mutations.
 
-- No `pages/` directory.
-- Components are server components unless they need state, effects, or browser APIs — then add `'use client'` at the top.
-- All Supabase I/O goes through `lib/supabase/server.ts` (RSC) or `lib/supabase/client.ts` (client). **Never** instantiate `createClient` directly in a component or page.
+## Pointers
 
-### 2. Auth and role gates live in shared layouts/helpers
-
-`app/admin/layout.tsx` calls `requireAdminAccount()` and is the source of truth for admin-only pages. `app/test/layout.tsx` loads the signed-in account for navigation, while each demo segment (`app/test/<demo>/layout.tsx`) calls `requireDemoAccess("player" | "referee" | "club")`. Individual pages inside those segments should not duplicate auth checks.
-
-```tsx
-// src/app/admin/layout.tsx — pattern
-const { user, account } = await requireAdminAccount();
-return <Nav email={user.email} role={account.role} assignedDemo={account.assigned_demo} />;
-```
-
-### 3. API calls go through `lib/api.ts`
-
-Browser-side API calls use the helpers in `lib/api.ts`, which attach the signed-in Supabase session JWT as `Authorization: Bearer <access_token>`. Do not paste `ocr_live_` keys into the browser. API key management lives under `/admin/api-keys` (own keys plus issuing keys for another account); testers should not see API-key routes or nav links.
-
-### 4. Toasts via `sonner`
-
-UI feedback uses `sonner`. There's a global `AppToaster` mounted in the root layout. To show a toast from a client component:
-
-```tsx
-import { toast } from "sonner";
-toast.success("API key created");
-toast.error(error.message);
-```
-
-Follow the same pattern in `components/nav.tsx` (logout).
-
-### 5. Docs under `app/docs/*`
-
-`/docs/quickstart` uses `requireCurrentUserAccount()` (and middleware protection under `/docs/*`) so only active signed-in accounts see local API/MCP quickstart examples with their session identity. To add a new authenticated doc, create `app/docs/<slug>/page.tsx` and guard it with `requireCurrentUserAccount()`.
-
-### 6. Avoid infinite re-fetch loops in client effects
-
-A common bug in this app: an effect depending on `session`/`refresh` triggers a request loop. The pattern used in `api-keys-panel.tsx` is:
-
-- Load session and keys **once per mount** with an empty `useEffect` dependency list.
-- Refresh on explicit user actions (create/delete), not on focus or session ticks.
-
-## Rules specific to web
-
-- **NEVER** add `pages/`. App Router only.
-- **NEVER** put a Supabase client instance at module scope. Always go through `lib/supabase/*`.
-- **NEVER** store an API key in localStorage or any client-side storage. Testers authenticate with the session JWT; issued `ocr_live_` keys are shown once and copied out of band.
-- Vercel Root Directory is `packages/web`. Required env vars are listed in `packages/web/README.md`. Do not add a `vercel.json` unless a build proves it is necessary.
-- **NEVER** redirect on the client when the layout already redirects on the server.
-- New env vars prefixed with `NEXT_PUBLIC_` must be added to `lib/env.ts` with a typed accessor.
-- Components should not block the admin/test render waiting for non-essential data. Use `<Suspense>` with a fallback.
-
-## Auto-invoke skills (per task)
-
-| Task | Skill |
-|---|---|
-| Adding/editing Next.js code | `next-best-practices` + `vercel-react-best-practices` |
-| Performance optimization | `react-performance-optimization` |
-| Tailwind / design tokens | `design-tailwind-system` |
-| Motion / animation | `design-motion-animation` + the appropriate `library-gsap-*` skill |
-| Pre-completion security check (new data surfaces, dynamic URLs, metadata) | `audit-security-implementation` |
-| Git operations | `git-commit-creation` |
-
-## References
-
-- `app/admin/layout.tsx` — admin auth gate
-- `app/test/layout.tsx` and `app/test/<demo>/layout.tsx` — signed-in/demo gates
-- `lib/supabase/server.ts` — RSC Supabase client
-- `lib/supabase/client.ts` — browser Supabase client
-- `components/api-keys-panel.tsx` — fetch-once pattern for client effects
-- `components/nav.tsx` — `signOut` + toast pattern
-- `app/docs/quickstart/` — docs structure
+- Web architecture & auth gates: [`docs/codebase/adapters-and-web.md`](../../docs/codebase/adapters-and-web.md)
+- Local setup & Vercel deploy: [`packages/web/README.md`](./README.md) · [`docs/DEPLOYMENT.md`](../../docs/DEPLOYMENT.md)

@@ -1,28 +1,26 @@
 # Evaluation
 
-Scripts para comparar `dataset/results` contra los `ground_truth.json` del dataset.
+Scripts for comparing `dataset/results*` outputs against ground-truth `ground_truth.json` files under `dataset/`.
 
-Uso principal:
+For full documentation of flags and scoring behavior, see [docs/EVALUATION.md](../docs/EVALUATION.md).
+
+## Quick usage
 
 ```bash
 python evaluation/evaluate_dataset.py
-```
-
-Para evaluar un directorio de resultados experimental:
-
-```bash
 python evaluation/evaluate_dataset.py --results-dir dataset/results-experiment
+python evaluation/evaluate_dataset.py --sheet sheet-004 --verbose
 ```
 
-Evaluadores especificos:
+## Focused evaluators
 
 ```bash
-python evaluation/evaluate_progressive_score.py --results-dir dataset/results
-python evaluation/evaluate_player_fouls.py --results-dir dataset/results
-python evaluation/evaluate_entry_marks.py --results-dir dataset/results
-python evaluation/evaluate_team_identity.py --results-dir dataset/results
-python evaluation/evaluate_player_points.py --results-dir dataset/results
 python evaluation/evaluate_header.py --results-dir dataset/results
+python evaluation/evaluate_team_identity.py --results-dir dataset/results
+python evaluation/evaluate_entry_marks.py --results-dir dataset/results
+python evaluation/evaluate_player_points.py --results-dir dataset/results
+python evaluation/evaluate_player_fouls.py --results-dir dataset/results
+python evaluation/evaluate_progressive_score.py --results-dir dataset/results
 ```
 
-Todos aceptan `--sheet sheet-XXX` para evaluar una sola hoja.
+All scripts accept `--sheet <sheet-XXX>`, `--results-dir <dir>`, `--verbose` (`-v`), and `--json`.
