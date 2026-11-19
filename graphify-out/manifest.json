@@ -745,9 +745,9 @@
     "semantic_hash": "fc2f515243ce9ca61f282de433042e53"
   },
   "AGENTS.md": {
-    "mtime": 1795076352.2811327,
-    "ast_hash": "b19742db88ab0888ff9235d7f7c2eab6",
-    "semantic_hash": "b19742db88ab0888ff9235d7f7c2eab6"
+    "mtime": 1795111271.2993605,
+    "ast_hash": "6ad6bfd6019565c73e47126b66f15dec",
+    "semantic_hash": ""
   },
   "README.md": {
     "mtime": 1795076352.2811327,
@@ -1285,12 +1285,12 @@
     "semantic_hash": "2b7f50f1e6f91e37b4c4b3516980f71a"
   },
   "tests/test_docs_links.py": {
-    "mtime": 1795076882.4364352,
+    "mtime": 1795111254.7605603,
     "ast_hash": "284a99127e88aa03454cbc3844484de5",
     "semantic_hash": ""
   },
   ".github/pull_request_template.md": {
-    "mtime": 1795076829.4289339,
+    "mtime": 1795111254.7538362,
     "ast_hash": "803c659bf779743d121167abb2607e43",
     "semantic_hash": ""
   }
