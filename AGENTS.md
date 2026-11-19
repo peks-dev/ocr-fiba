@@ -12,15 +12,19 @@ Cross-cutting instructions for AI agents working in `ocr-engine`. Before editing
 3. **Never commit runtime or local state:** Exclude `runs/`, `outputs/`, `dataset/results*`, `.env*` (except `.env*.example`), `.server/`, `.server-token`, `.cloud-token`, `.cloud-image`, `.venv/`, `.graphify-venv/`, `node_modules/`, `.next/`, `.codex/`, `.devin/`, `.agents/`.
 4. **Canonical contracts live in [`DOCS.md`](DOCS.md):** Document verified current behavior, never duplicate full API/env/schema tables elsewhere, and keep sibling surfaces in [Documentation Authority](DOCS.md#documentation-authority) aligned.
 
+## Autonomous Pre-Completion Gate
+
+Before reporting **any** task that changes code, config, migrations, scripts, or contracts as done — **without waiting for the user to ask**:
+
+1. **Sync contracts & docs:** Check [Documentation Authority](DOCS.md#documentation-authority) and follow [`skills/docs-alignment/SKILL.md`](skills/docs-alignment/SKILL.md) whenever routes, MCP tools, CLI flags, env vars, `PipelineConfig`, providers, plugins, migrations, or deploy scripts changed; update `DOCS.md` and affected sibling surfaces in the same change.
+2. **Run verification:** Run applicable tests (`uv run pytest -q`, which enforces relative Markdown links via `tests/test_docs_links.py`) and `packages/web` lint/test/build when frontend files changed.
+3. **Update Graphify:** Run `./scripts/graphify-update` and `./scripts/graphify-check` (`$graphify . --update` when documentation semantics changed) and inspect `git diff -- graphify-out/`.
+
 ## Graphify (Required Repository Knowledge)
 
 Graphify `0.9.26` is required (see [`docs/graphify.md`](docs/graphify.md)); canonical outputs live in `graphify-out/`.
 
 - Start architecture, dependency, or impact work with `graphify query`, `graphify path`, or `graphify explain`, then verify against source files.
-- After logical changes to code, tests, scripts, or architecture docs:
-  1. Run applicable tests and lint.
-  2. Run `./scripts/graphify-update` and `./scripts/graphify-check`.
-  3. Review the `graphify-out/` diff (`$graphify . --update` for semantic doc changes).
 - Never edit `graphify-out/` manually, never install Graphify Git hooks, and never auto-stage/commit.
 
 ## Engram (Shared Technical Memory)
